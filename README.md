@@ -90,9 +90,9 @@ Grab `gald3r.exe` from the [latest release](../../releases/latest) and drop it a
 PATH. Same binary the MSI installs.
 
 ```powershell
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.localin" | Out-Null
-Move-Item .\gald3r.exe "$env:USERPROFILE\.localin\gald3r.exe"
-# ensure %USERPROFILE%\.localin is on your PATH, then restart your terminal
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.local\bin" | Out-Null
+Move-Item .\gald3r.exe "$env:USERPROFILE\.local\bin\gald3r.exe"
+# ensure %USERPROFILE%\.local\bin is on your PATH, then restart your terminal
 ```
 </details>
 
