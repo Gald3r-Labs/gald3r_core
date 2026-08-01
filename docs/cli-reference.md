@@ -88,15 +88,19 @@ authoritative than this page if the two ever disagree; ask the tool, not this fi
 | `gald3r env` | Bring up and inspect the agent's run-this-project environment |
 | `gald3r connectivity-benchmark` | Measure online-vs-offline verb latency |
 
-## Coordination (Valkyrie / WPAC / world_tree)
+## Coordination — your projects and agents, talking to each other
+
+Most AI tooling stops at one assistant in one repo. These verbs are what make gald3r *multiplayer*:
+projects that answer each other's questions, agents you can message mid-run, and shared state
+across your machines and your team.
 
 | Verb | What it does |
 |---|---|
-| `gald3r valk` | Manage the resident Valkyrie world_tree connector |
-| `gald3r workspace` | Workspace-coordination verbs (WPAC inbox; touch-set preflight; member marker governance) |
-| `gald3r connect` | Connect a provider account via world_tree device-code flow (reports an honest "not yet supported" today — `gald3r login --token` works) |
-| `gald3r login` / `gald3r logout` | Authenticate against / clear a world_tree session |
-| `gald3r version-check` | Check world_tree for a newer gald3r version (JWT-gated; offline-safe fallback) |
+| `gald3r valk` | Let your projects and agents talk to each other — and to you — while they work. Ask another project a question and get a grounded, cited answer from its real context; message a running swarm without interrupting it; keep state in sync across machines and teammates. |
+| `gald3r workspace` | Run several repos as one coordinated workspace: see what's waiting for you, check every repo is safe to touch before agents start, and keep member projects honest about what they own. |
+| `gald3r connect` | Link this machine to your account for team features. *(Device-code sign-in is still landing — use `gald3r login --token` today; the verb tells you so rather than pretending.)* |
+| `gald3r login` / `gald3r logout` | Sign in or out of your shared workspace. |
+| `gald3r version-check` | Find out when a newer gald3r is available — works offline, tells you the truth either way. |
 
 ## Release & distribution (mostly relevant if you're shipping *your own* gald3r-based tool)
 
