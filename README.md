@@ -68,26 +68,47 @@ below, and we'd rather you did.
 
 ## Install
 
-Grab `gald3r.exe` and `gald3r.exe.sha256` from the [latest release](../../releases).
+**Download the installer, double-click, done.**
 
-```powershell
-# Verify before you trust it
-(Get-AuthenticodeSignature .\gald3r.exe).Status          # -> Valid
-(Get-FileHash .\gald3r.exe -Algorithm SHA256).Hash.ToLower()
-Get-Content .\gald3r.exe.sha256                          # -> must match
+### [⬇ gald3r-windows-x86_64.msi](../../releases/latest) — Windows
 
-# Put it on PATH
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.local\bin" | Out-Null
-Move-Item .\gald3r.exe "$env:USERPROFILE\.local\bin\gald3r.exe"
-```
+Run it. It puts `gald3r` on your PATH and shows up in Add/Remove Programs like anything else.
+Signed by Gald3r Labs LLC, so Windows won't fight you about it.
 
-Then **fully restart your IDE** — running processes inherit the old PATH and won't see it.
+Then open a **new** terminal (or restart your IDE — running processes keep the old PATH):
 
 ```powershell
 gald3r --version
-gald3r setup      # in any project
+gald3r setup      # in any project — this is the good part
 gald3r status
 ```
+
+<details>
+<summary><strong>Prefer the standalone binary?</strong> (no installer, portable)</summary>
+
+Grab `gald3r.exe` from the [latest release](../../releases/latest) and drop it anywhere on your
+PATH. Same binary the MSI installs.
+
+```powershell
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.localin" | Out-Null
+Move-Item .\gald3r.exe "$env:USERPROFILE\.localin\gald3r.exe"
+# ensure %USERPROFILE%\.localin is on your PATH, then restart your terminal
+```
+</details>
+
+<details>
+<summary><strong>Paranoid? Good.</strong> Verify the signature and hash</summary>
+
+Every artifact is Authenticode-signed and ships a SHA-256 sidecar:
+
+```powershell
+(Get-AuthenticodeSignature .\gald3r-windows-x86_64.msi).Status   # -> Valid
+(Get-FileHash .\gald3r-windows-x86_64.msi -Algorithm SHA256).Hash.ToLower()
+Get-Content .\gald3r-windows-x86_64.msi.sha256                   # -> must match
+```
+</details>
+
+**macOS and Linux** ship at 4.0.0 — signed, notarized, same release.
 
 ## Part of a larger system
 
