@@ -341,6 +341,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Usage (Commands, Skills, Rules, Hooks, Agents)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../task-bug-workflow/" class="md-tabs__link">
         
   
@@ -405,6 +424,25 @@
     
   
   Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
 
       </a>
     </li>
@@ -618,13 +656,52 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-signed-binary-recommended-once-a-release-exists" class="md-nav__link">
+  <a href="#1-signed-binary-and-per-os-installers-recommended-once-a-release-exists" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Signed binary (recommended, once a release exists)
+        1. Signed binary and per-OS installers (recommended, once a release exists)
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="1. Signed binary and per-OS installers (recommended, once a release exists)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos-pkg-installer-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS — .pkg installer (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linux-install-tarball" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux — install tarball
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -873,6 +950,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Usage (Commands, Skills, Rules, Hooks, Agents)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../task-bug-workflow/" class="md-nav__link">
         
   
@@ -962,6 +1066,33 @@
     
   
     Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
   
 
     
@@ -1093,13 +1224,52 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-signed-binary-recommended-once-a-release-exists" class="md-nav__link">
+  <a href="#1-signed-binary-and-per-os-installers-recommended-once-a-release-exists" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Signed binary (recommended, once a release exists)
+        1. Signed binary and per-OS installers (recommended, once a release exists)
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="1. Signed binary and per-OS installers (recommended, once a release exists)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos-pkg-installer-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS — .pkg installer (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linux-install-tarball" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux — install tarball
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1259,7 +1429,7 @@ and Linux. This page covers every supported install path, in the order you shoul
 <tbody>
 <tr>
 <td>Trying gald3r for the first time, don't want to build anything</td>
-<td><a href="#1-signed-binary-recommended-once-a-release-exists">Signed binary</a></td>
+<td><a href="#1-signed-binary-and-per-os-installers-recommended-once-a-release-exists">Signed binary and per-OS installers</a></td>
 </tr>
 <tr>
 <td>A contributor, or want the latest unreleased code</td>
@@ -1275,29 +1445,61 @@ and Linux. This page covers every supported install path, in the order you shoul
 </tr>
 </tbody>
 </table>
-<h2 id="1-signed-binary-recommended-once-a-release-exists">1. Signed binary (recommended, once a release exists)<a class="headerlink" href="#1-signed-binary-recommended-once-a-release-exists" title="Permanent link">&para;</a></h2>
+<h2 id="1-signed-binary-and-per-os-installers-recommended-once-a-release-exists">1. Signed binary and per-OS installers (recommended, once a release exists)<a class="headerlink" href="#1-signed-binary-and-per-os-installers-recommended-once-a-release-exists" title="Permanent link">&para;</a></h2>
 <p><code>.github/workflows/binary-build.yml</code> builds signed Windows/Linux/macOS binaries and attaches
-them to a GitHub Release on <code>Gald3r-Labs/gald3r_core</code> whenever a <code>v*</code> tag is pushed to this
-repo. <strong>As of this writing no such tag has been pushed</strong> (<code>git tag -l "v*"</code> is empty in
-<code>gald3r_core_dev</code>) — so this path is documented for when it goes live, not as something you
-can do today. Once a release exists:</p>
-<pre><code class="language-powershell"># Windows
-gald3r install update
+them, plus per-OS installers (T611), to a GitHub Release on <code>Gald3r-Labs/gald3r_core</code> whenever
+a <code>v*</code> tag is pushed to this repo. <strong>As of this writing no such tag has been pushed</strong> (<code>git tag
+-l "v*"</code> is empty in <code>gald3r_core_dev</code>) — so this path is documented for when it goes live, not
+as something you can do today.</p>
+<h3 id="macos-pkg-installer-recommended">macOS — <code>.pkg</code> installer (recommended)<a class="headerlink" href="#macos-pkg-installer-recommended" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Download <code>gald3r-macos-arm64.pkg</code> from the release page.</li>
+<li>Double-click it, follow the installer prompts. Installs to <code>/usr/local/bin/gald3r</code>.</li>
+<li>Open a new terminal and run <code>gald3r --version</code>.</li>
+</ol>
+<p>The binary inside the <code>.pkg</code> is codesigned as <strong>Gald3r Labs LLC</strong> and notarized by Apple
+(verified in CI via <code>codesign --verify</code> + <code>spctl --assess</code>, see <code>binary-build.yml</code>) — as of the
+first <code>v4</code> release tag, this replaces the earlier "macOS binary is currently unsigned" state.
+The <code>.pkg</code> itself is submitted for notarization + stapling too; the one remaining rough edge is
+that the <code>.pkg</code> <strong>container</strong> is not yet codesigned at the installer level (a <em>different</em>
+Apple certificate — "Developer ID Installer" — from the one used to sign the binary inside it
+has not been issued yet), so macOS may show a one-time "unidentified developer" confirmation
+when you first open the <code>.pkg</code> — confirm it once and the install proceeds normally.</p>
+<p>Prefer the bare binary instead? Download <code>gald3r-macos-arm64</code> (no <code>.pkg</code> suffix) + its
+<code>.sha256</code> sidecar, verify the checksum, <code>chmod +x</code>, and place it on your <code>PATH</code> yourself.</p>
+<h3 id="linux-install-tarball">Linux — install tarball<a class="headerlink" href="#linux-install-tarball" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">curl -LO https://github.com/Gald3r-Labs/gald3r_core/releases/latest/download/gald3r-linux-x86_64.tar.gz
+tar xzf gald3r-linux-x86_64.tar.gz
+cd gald3r-*-linux-x86_64
+./install.sh          # ~/.local/bin, or /usr/local/bin if run with sudo
+gald3r --version
 </code></pre>
-<pre><code class="language-bash"># macOS / Linux
-gald3r install update
+<p><code>install.sh</code> verifies the bundled <code>gald3r.sha256</code> before installing and refuses (loudly) if it
+doesn't match. Run <code>./uninstall.sh</code> from the same extracted directory to remove it later.</p>
+<p>Prefer the bare binary, <code>.deb</code>, or an Arch Linux <code>PKGBUILD</code> instead? See
+<code>packaging/deb/README.md</code> / <code>packaging/aur/README.md</code> for those (config-complete as of Task 17,
+not yet wired into this release's CI matrix).</p>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<pre><code class="language-powershell">gald3r install update
 </code></pre>
 <p><code>install update</code> downloads the latest signed release for your OS from
 <code>Gald3r-Labs/gald3r_core</code>, verifies its SHA-256 checksum, and replaces whatever <code>gald3r</code>
 currently resolves to on <code>PATH</code>. The Windows binary is Authenticode-signed as <strong>Gald3r Labs
 LLC</strong> via Azure Trusted Signing (verified in CI with <code>Get-AuthenticodeSignature</code>, see
-<code>binary-build.yml</code>); the macOS binary is currently <strong>unsigned</strong> (Gatekeeper will flag it —
-right-click → Open to bypass; full notarization is tracked separately). A Windows <code>.msi</code>
-installer (WiX-built, unsigned) is also published for environments that require the Windows
-Installer service instead of an ad hoc <code>.exe</code>.</p>
+<code>binary-build.yml</code>). A Windows <code>.msi</code> installer (WiX-built, unsigned) is also published for
+environments that require the Windows Installer service instead of an ad hoc <code>.exe</code> — the
+<code>.msi</code> installs <strong>both</strong> <code>gald3r.exe</code> and <code>gald3rw.exe</code> (T607) onto the same <code>PATH</code> entry in
+one step.</p>
+<blockquote>
+<p><strong>Known gap (T607 follow-up):</strong> <code>gald3r install update</code>'s raw-<code>.exe</code> self-update path
+(as opposed to the <code>.msi</code> installer above) currently downloads and replaces only
+<code>gald3r.exe</code> — it does not yet also fetch/refresh <code>gald3rw.exe</code> alongside it. Use the
+<code>.msi</code> installer if you need both binaries kept in sync via <code>gald3r install update</code>
+directly; this is tracked as follow-up work on the CLI self-update path.</p>
+</blockquote>
 <p>Bootstrapping the very first <code>gald3r</code> (before you have one on <code>PATH</code> to run <code>install update</code>
-with) is a plain download-and-run of the OS-appropriate asset from the release's GitHub page —
-no separate installer script exists yet for that zero-to-one step.</p>
+with) is the <code>.pkg</code>/tarball/<code>.msi</code> install above, or — on any OS — a plain download-and-run of
+the OS-appropriate bare-binary asset from the release's GitHub page.</p>
 <h2 id="2-from-source-uv-works-today">2. From source (<code>uv</code>) — works today<a class="headerlink" href="#2-from-source-uv-works-today" title="Permanent link">&para;</a></h2>
 <p>This is the <strong>only install path verified working today</strong>.</p>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
@@ -1391,6 +1593,22 @@ platform install claude: wrote 638 file(s) into &lt;path&gt; (embedded generator
 <p><code>gald3r platform verify</code> checks an installed platform tree is complete; <code>gald3r platform
 parity</code> diffs your installed overlay against the canonical generator output (used internally
 by this repo's own CI, not something most users need to run).</p>
+<p>Once installed, see <a href="../platform-usage/"><code>platform-usage.md</code></a> for what to actually do with
+that overlay — the <code>/g-</code>/<code>@g-</code> command layer, skills, rules, hooks, and agents you now have
+available inside your IDE, plus a per-platform quick-start matrix.</p>
+<p><strong><code>gald3r setup</code>/<code>gald3r onboard</code> do NOT install a platform overlay by default (BUG-635).</strong>
+Those two verbs only ever scaffold <code>.gald3r/</code> — no <code>.claude/</code>/<code>.cursor/</code>/etc., no wired
+<code>settings.json</code> — unless you ask. Pass the same opt-in, repeatable <code>--platform NAME</code> flag to
+either verb to also run the exact install path above in the same command:</p>
+<pre><code>gald3r setup --platform claude              # scaffold .gald3r/ AND write .claude/
+gald3r onboard --platform claude --platform cursor   # both, in one command
+</code></pre>
+<p>Omit <code>--platform</code> and both verbs print a hint (<code>no IDE overlay installed -- run: gald3r
+platform install &lt;platform&gt; --into .</code>) instead of leaving you with an unwired project and no
+indication anything is missing. Full auto-detection (installing a platform automatically
+without <code>--platform</code>, based on which IDE's own conventions are already present) is a possible
+future addition, not implemented today — this flag is the honest, conservative middle ground
+until that gets an owner ruling.</p>
 <h3 id="hook-wiring-claudesettingsjson-vs-cursorhooksjson">Hook wiring: <code>.claude/settings.json</code> vs. <code>.cursor/hooks.json</code><a class="headerlink" href="#hook-wiring-claudesettingsjson-vs-cursorhooksjson" title="Permanent link">&para;</a></h3>
 <p>Installing an overlay copies every hook <em>script</em> (<code>.claude/hooks/*.py</code>) in either case, but
 each IDE has its own separate file that actually <strong>registers</strong> those scripts against
@@ -1444,6 +1662,16 @@ tells you if it couldn't reach anything rather than silently assuming you're cur
 <p>See the <a href="../quickstart/">quickstart</a> for full real output of this command and what each line
 means, and <a href="../troubleshooting/">Troubleshooting</a> if anything comes back <code>FAIL</code> instead of
 <code>OK</code>/<code>WARN</code>.</p>
+<blockquote>
+<p><strong>Windows note (T607 — two executables ship on <code>PATH</code>):</strong> the release installs BOTH
+<code>gald3r.exe</code> (console subsystem — terminals, scripts, agent shells; always prints and
+returns a real exit code, even from a console-less PowerShell host) and <code>gald3rw.exe</code>
+(GUI-subsystem attach — Throne, IDE hooks, the valk daemon; never flashes a console
+window when spawned from a console-less parent, per BUG-556). Type <code>gald3r</code>, not
+<code>gald3rw</code>, in a terminal or script. If a <code>gald3r</code> command ever returns <em>instantly with
+no output at all</em>, see <a href="../troubleshooting/#windows-gald3r-returns-instantly-with-no-output-at-all-blank-exit-code">Troubleshooting → "Windows: <code>gald3r</code> returns instantly with no
+output"</a>.</p>
+</blockquote>
 
 
 
