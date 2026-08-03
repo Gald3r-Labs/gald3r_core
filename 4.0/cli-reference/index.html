@@ -339,6 +339,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Usage (Commands, Skills, Rules, Hooks, Agents)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../task-bug-workflow/" class="md-tabs__link">
         
   
@@ -403,6 +422,25 @@
     
   
   Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
 
       </a>
     </li>
@@ -682,6 +720,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Usage (Commands, Skills, Rules, Hooks, Agents)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../task-bug-workflow/" class="md-nav__link">
         
   
@@ -771,6 +836,33 @@
     
   
     Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
   
 
     
@@ -1138,6 +1230,10 @@
 source, 2026-08-01, <code>gald3r 4.0.0 build a7242bba63ea</code>) — not written from memory or from
 reading source code. Every verb also answers its own <code>--help</code>; that is always more
 authoritative than this page if the two ever disagree; ask the tool, not this file.</p>
+<p><strong>Driving these verbs from inside an AI IDE instead of a terminal?</strong> Most of them also exist
+as an in-IDE slash command (<code>/g-status</code> in Claude Code, <code>@g-status</code> in Cursor, and so on) once
+you've installed that platform's overlay — see <a href="../platform-usage/"><code>platform-usage.md</code></a> for
+the command/skill/rule/hook/agent tour and the per-platform quick-start matrix.</p>
 <h2 id="getting-started-health">Getting started &amp; health<a class="headerlink" href="#getting-started-health" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1358,11 +1454,19 @@ authoritative than this page if the two ever disagree; ask the tool, not this fi
 <tbody>
 <tr>
 <td><code>gald3r init-providers</code></td>
-<td>Get set up to use local LLMs (Ollama, LM Studio, vLLM, llama.cpp) — auto-detects what's installed and writes the config for you</td>
+<td>Get set up to use local LLMs (Ollama, LM Studio, vLLM, llama.cpp) — auto-detects what's installed and writes the config for you. Full guide: <a href="../providers/#gald3r-init-providers"><code>providers.md</code></a></td>
+</tr>
+<tr>
+<td><code>gald3r providers</code></td>
+<td>List, add/remove/edit providers and models in <code>providers.yaml</code> without hand-editing YAML (round-trip safe), validate the whole file, and store API keys securely in your OS's keyring. Full guide: <a href="../providers/#managing-providersyaml-from-the-cli-t610"><code>providers.md</code></a></td>
+</tr>
+<tr>
+<td><code>gald3r providers set-key</code></td>
+<td>Store a provider's API key in your OS keyring instead of a plaintext file. Full guide: <a href="../providers/#gald3r-providers-set-key-keys-keyring-vs-plaintext"><code>providers.md</code></a></td>
 </tr>
 <tr>
 <td><code>gald3r local-model</code></td>
-<td>Find out which local LLM your hardware can actually run well, and get the exact command to serve it</td>
+<td>Find out which local LLM your hardware can actually run well, and get the exact command to serve it. Full guide: <a href="../providers/#gald3r-local-model-assess"><code>providers.md</code></a></td>
 </tr>
 <tr>
 <td><code>gald3r config</code></td>
@@ -1475,7 +1579,7 @@ across your machines and your team.</p>
 </tr>
 <tr>
 <td><code>gald3r connect</code></td>
-<td>Link a provider account with a device code, like signing into a streaming app on a TV. <em>(Not live yet — use <code>gald3r login --token</code> today; the verb tells you so rather than pretending.)</em></td>
+<td>Link a provider account with a device code, like signing into a streaming app on a TV. See <a href="../providers/#gald3r-connect"><code>providers.md</code></a> for a real, current capture of what this returns.</td>
 </tr>
 <tr>
 <td><code>gald3r login</code> / <code>gald3r logout</code></td>

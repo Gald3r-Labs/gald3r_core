@@ -341,6 +341,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Usage (Commands, Skills, Rules, Hooks, Agents)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../task-bug-workflow/" class="md-tabs__link">
         
   
@@ -405,6 +424,25 @@
     
   
   Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
 
       </a>
     </li>
@@ -806,6 +844,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Usage (Commands, Skills, Rules, Hooks, Agents)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../task-bug-workflow/" class="md-nav__link">
         
   
@@ -895,6 +960,33 @@
     
   
     Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
   
 
     
@@ -1193,7 +1285,9 @@ this in practice.</p>
 generates a starter one). It supports local OpenAI-compatible backends (Ollama, LM Studio,
 vLLM, llama.cpp) as well as cloud providers, configured per-provider with model lists and
 roles (<code>coding</code>, <code>general</code>, <code>reasoning</code>, <code>vision</code>, ...). Nothing about gald3r requires a
-specific cloud vendor.</p>
+specific cloud vendor. See <a href="../providers/"><code>providers.md</code></a> for the full guide — annotated
+<code>providers.yaml</code> anatomy, a worked recipe per local backend, OpenRouter/cloud setup, and
+real provider-error troubleshooting.</p>
 <h2 id="world_tree-optional-online-only"><code>world_tree</code> (optional, online-only)<a class="headerlink" href="#world_tree-optional-online-only" title="Permanent link">&para;</a></h2>
 <p>Several verbs (<code>gald3r valk</code>, <code>gald3r login</code>, <code>gald3r version-check</code>, cross-project
 <code>workspace</code>/WPAC coordination) talk to an optional hosted coordination service called
@@ -1209,6 +1303,8 @@ reports <code>world_tree ok</code> / connectivity status but treats it as inform
 <li><a href="../coordination/"><code>coordination.md</code></a> — Valkyrie (live) and WPAC (file-based) multi-project
   coordination, and <code>world_tree</code></li>
 <li><a href="../memory/"><code>memory.md</code></a> — scoped memory records and the vault</li>
+<li><a href="../providers/"><code>providers.md</code></a> — <code>providers.yaml</code> anatomy, local backend recipes
+  (Ollama/LM Studio/vLLM/llama.cpp), cloud providers, and provider troubleshooting</li>
 </ul>
 <p>If you outgrow this whole doc set — e.g. you're building ON gald3r_core itself, not just
 using the finished CLI — the root <a href="../../GALD3R.md"><code>GALD3R.md</code></a> is the canonical framework

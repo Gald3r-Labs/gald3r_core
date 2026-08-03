@@ -341,6 +341,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Usage (Commands, Skills, Rules, Hooks, Agents)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../task-bug-workflow/" class="md-tabs__link">
         
   
@@ -405,6 +424,25 @@
     
   
   Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
 
       </a>
     </li>
@@ -828,6 +866,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Usage (Commands, Skills, Rules, Hooks, Agents)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../task-bug-workflow/" class="md-nav__link">
         
   
@@ -917,6 +982,33 @@
     
   
     Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
   
 
     
@@ -1265,7 +1357,9 @@ command once you've installed that platform's overlay (<code>gald3r platform ins
 <code>gald3r task add</code> becomes <code>/g-task-add</code> in Claude Code or <code>@g-task-add</code> in Cursor, <code>gald3r
 task update T1 --status in-progress</code> becomes <code>/g-task-upd</code>, and so on — the CLI verb and the
 <code>/g-</code>/<code>@g-</code> command dispatch to the same underlying logic, just from inside your editor's chat
-instead of a terminal. See <a href="../crash/"><code>crash.md</code></a> for how that dispatch actually works.</p>
+instead of a terminal. See <a href="../crash/"><code>crash.md</code></a> for how that dispatch actually works, or
+<a href="../platform-usage/"><code>platform-usage.md</code></a> for the full command/skill/rule/hook/agent tour
+from the IDE-user's perspective, including a per-platform quick-start matrix.</p>
 <h2 id="7-optional-a-real-agent-run-with-a-provider">7. Optional: a real agent run with a provider<a class="headerlink" href="#7-optional-a-real-agent-run-with-a-provider" title="Permanent link">&para;</a></h2>
 <p><code>gald3r run</code> without <code>--backend dev-echo</code> talks to a real provider. Generate a starter
 config first:</p>
@@ -1286,6 +1380,8 @@ sandboxed drafting pass) — everything above it in this quickstart was.</p>
 <li><a href="../first-project/"><code>first-project.md</code></a> — a deeper walkthrough: scaffold a project, run a
   task through its full lifecycle, real output at every step</li>
 <li><a href="../concepts/"><code>concepts.md</code></a> — CRASH, <code>.gald3r/</code>, and the DB-vs-markdown state model</li>
+<li><a href="../platform-usage/"><code>platform-usage.md</code></a> — driving gald3r from inside Cursor, Claude
+  Code, Kimi Code, Codex, Copilot, and the rest of the AI IDE roster</li>
 <li><a href="../task-bug-workflow/"><code>task-bug-workflow.md</code></a> — the full task/bug command surface</li>
 <li><a href="../autopilot/"><code>autopilot.md</code></a> — letting gald3r work the queue itself</li>
 <li><a href="../cli-reference/"><code>cli-reference.md</code></a> — the full verb catalog</li>
