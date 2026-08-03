@@ -1,0 +1,1343 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/">
+      
+      
+      
+        <link rel="next" href="install/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gald3r_core-product-docs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-gald3r" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is gald3r?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-this-is-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who this is for
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#honest-status-as-of-this-writing-2026-08-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Honest status (as of this writing, 2026-08-02)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope note
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docs-site-publishing-t564" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docs site publishing (T564)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-docs-site-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the docs site locally
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-gald3r" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is gald3r?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-this-is-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who this is for
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#honest-status-as-of-this-writing-2026-08-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Honest status (as of this writing, 2026-08-02)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope note
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docs-site-publishing-t564" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docs site publishing (T564)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-docs-site-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the docs site locally
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="gald3r_core-product-docs">gald3r_core — Product Docs<a class="headerlink" href="#gald3r_core-product-docs" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>This is the <strong>end-user product documentation</strong> for <code>gald3r_core</code>: the thing you install
+and run to get task/bug tracking, agent runs, and the CRASH (Commands/Rules/Agents/Skills/
+Hooks) system in your own project. It is deliberately separate from this repo's
+<strong>contributor</strong> docs (root <a href="../../README.md"><code>README.md</code></a>, <a href="../../AGENTS.md"><code>AGENTS.md</code></a>,
+<a href="../../CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a>), which describe how to work <em>on</em> gald3r_core
+itself, not how to use the finished <code>gald3r</code> command in a project of your own.</p>
+</blockquote>
+<h2 id="what-is-gald3r">What is gald3r?<a class="headerlink" href="#what-is-gald3r" title="Permanent link">&para;</a></h2>
+<p><code>gald3r</code> is a single-binary CLI coding-agent platform: a task/bug tracker, a multi-provider
+agent runtime (local models via Ollama/LM Studio/vLLM, or cloud providers), and the CRASH
+component system (Commands, Rules, Agents, Skills, Hooks) that turns those into enforced,
+executing behavior in a project — not just markdown instructions an LLM might follow.</p>
+<p>It is built to be comparable to tools like Claude Code, Cursor's <code>agent</code>, or OpenCode, but
+standalone: one binary, no required IDE.</p>
+<h2 id="who-this-is-for">Who this is for<a class="headerlink" href="#who-this-is-for" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Someone who wants to <strong>use</strong> the <code>gald3r</code> command in their own project (task tracking,
+  agent runs, project scaffolding).</li>
+<li>Someone evaluating gald3r_core as a product, distinct from the frameworks/templates it
+  absorbs capability from.</li>
+</ul>
+<p>If you are instead working on gald3r_core's own source code, start with the root
+<a href="../../AGENTS.md"><code>AGENTS.md</code></a> and <a href="../../CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a> instead — this
+directory is not for you.</p>
+<h2 id="where-to-go-next">Where to go next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Doc</th>
+<th>Covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="install/"><code>install.md</code></a></td>
+<td>Every supported install path — signed binary (once released), from-source <code>uv</code>, per-platform IDE overlays</td>
+</tr>
+<tr>
+<td><a href="quickstart/"><code>quickstart.md</code></a></td>
+<td>Install → first run → first useful command, verified against the CLI as it exists today</td>
+</tr>
+<tr>
+<td><a href="first-project/"><code>first-project.md</code></a></td>
+<td>A complete walkthrough — scaffold a new project, create real tasks, run one through to <code>completed</code></td>
+</tr>
+<tr>
+<td><a href="concepts/"><code>concepts.md</code></a></td>
+<td>The handful of ideas you need before anything else makes sense: CRASH, <code>.gald3r/</code>, tasks/bugs, sessions</td>
+</tr>
+<tr>
+<td><a href="crash/"><code>crash.md</code></a></td>
+<td>CRASH (Commands/Rules/Agents/Skills/Hooks) explained with real component examples from this repo</td>
+</tr>
+<tr>
+<td><a href="task-bug-workflow/"><code>task-bug-workflow.md</code></a></td>
+<td>The full task/bug lifecycle — create, claim, verify, archive — with real command output</td>
+</tr>
+<tr>
+<td><a href="autopilot/"><code>autopilot.md</code></a></td>
+<td><code>go</code> / <code>go-code</code> / <code>go-review</code> / <code>autoclaim</code> / <code>swarm</code> / <code>autopilot</code> — letting gald3r work the queue itself</td>
+</tr>
+<tr>
+<td><a href="coordination/"><code>coordination.md</code></a></td>
+<td>Multi-project coordination: Valkyrie (live) and WPAC (file-based, offline-first)</td>
+</tr>
+<tr>
+<td><a href="memory/"><code>memory.md</code></a></td>
+<td>Scoped memory records and the file-first vault knowledge base</td>
+</tr>
+<tr>
+<td><a href="plugins/"><code>plugins.md</code></a></td>
+<td>Installing community plugins and curated skill packs</td>
+</tr>
+<tr>
+<td><a href="cli-reference/"><code>cli-reference.md</code></a></td>
+<td>Every top-level <code>gald3r</code> verb, grouped by what you're trying to do</td>
+</tr>
+<tr>
+<td><a href="troubleshooting/"><code>troubleshooting.md</code></a></td>
+<td><code>doctor</code>/<code>selftest</code>/<code>errors</code> output explained, and fixes for the most common issues</td>
+</tr>
+</tbody>
+</table>
+<h2 id="honest-status-as-of-this-writing-2026-08-02">Honest status (as of this writing, 2026-08-02)<a class="headerlink" href="#honest-status-as-of-this-writing-2026-08-02" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>gald3r_core is pre-1.0</strong> (<code>4.0.0</code> in <code>pyproject.toml</code> — this doc set previously said
+  <code>0.2.0</code>, which had gone stale; the version climbed faster than this page was updated. Some
+  verbs are fully wired, some are stubs, some depend on optional network services
+  (<code>world_tree</code>). This doc set only documents what was verified working by actually running
+  the commands — see each page for specifics, and treat anything not shown running here as
+  unverified.</li>
+<li><strong>No packaged binary release exists yet.</strong> <code>.github/workflows/binary-build.yml</code> builds
+  signed Windows/Linux/macOS binaries on a <code>v*</code> git tag, but no such tag has been pushed
+  to this repo as of this writing (<code>git tag -l "v*"</code> is empty). The only install path that
+  actually works today is <strong>from source</strong> — see <a href="install/"><code>install.md</code></a>. Once a tagged
+  release ships, that page's binary-install section becomes the recommended path.</li>
+<li><strong>No PyPI package.</strong> <code>gald3r-core</code> is not published to PyPI; <code>pip install gald3r-core</code>
+  does not work. Don't tell users to do that until it's true.</li>
+</ul>
+<h2 id="scope-note">Scope note<a class="headerlink" href="#scope-note" title="Permanent link">&para;</a></h2>
+<p>This directory's Markdown is also <strong>wrapped in a real generated static site</strong> (MkDocs +
+Material, T485; expanded T564) — see "Building the docs site locally" below. The Markdown
+itself remains the source of truth (readable directly on GitHub, no build step required to
+read it); the site is a richer presentation of the same pages with navigation and search.
+<code>docs/product/</code>'s introduction task (T69) deliberately shipped Markdown-only first and wrote
+the original four pages so a generator could be pointed at this folder later with minimal
+rework (<code>README.md</code> as the index/home page, one topic per file, relative links only) — T485
+was that follow-up, and T564 is the content-depth follow-up to THAT: per-platform install,
+a full first-project walkthrough, CRASH explained with real examples, the full task/bug
+lifecycle, autopilot/swarm coordination, Valkyrie/WPAC multi-project coordination, memory,
+and plugins/skill packs — each page built from commands actually run against this repo (or a
+disposable scratch project), not written from memory.</p>
+<h2 id="docs-site-publishing-t564">Docs site publishing (T564)<a class="headerlink" href="#docs-site-publishing-t564" title="Permanent link">&para;</a></h2>
+<p><strong>What's live today:</strong> the MkDocs Material build itself (<code>uv run mkdocs build --strict</code>,
+verified passing in this repo's own CI-equivalent local run) and a GitHub Actions workflow
+(<code>.github/workflows/docs-publish.yml</code>) that builds this site and publishes it to the
+<strong>public</strong> <code>Gald3r-Labs/gald3r_core</code> repo's <code>gh-pages</code> branch, under a version-labeled
+subdirectory (<code>/4.0/</code>, plus a <code>/latest/</code> alias), whenever a <code>v*</code> release tag is pushed to
+<code>gald3r_core_dev</code> — the same private-build/public-publish pattern
+<code>.github/workflows/binary-build.yml</code> already uses for the compiled binaries, reusing the same
+<code>RELEASE_PAT</code> secret.</p>
+<p><strong>What is NOT live, and why it's outside this repo's reach:</strong></p>
+<ol>
+<li><strong>The <code>docs.gald3r.ai</code> DNS record and GitHub Pages custom-domain configuration</strong> on the
+   public <code>Gald3r-Labs/gald3r_core</code> repo — both are one-time manual setup steps on
+   infrastructure this repo's CI does not have access to (DNS is not code in this repo; GitHub
+   Pages settings are a repo-admin UI action, not something <code>git push</code> triggers).</li>
+<li><strong>Whether <code>gald3r_web</code></strong> (a separate sibling repo — see <code>.gald3r/linking/link_topology.md</code>)
+   ends up serving these docs itself instead of GitHub Pages, e.g. if <code>docs.gald3r.ai</code> should
+   live inside <code>gald3r_web</code>'s own Cloudflare Pages/Next.js stack rather than a bare static
+   GitHub Pages site. That is <code>gald3r_web</code>'s decision to make, not <code>gald3r_core_dev</code>'s — this
+   repo notified <code>gald3r_web</code> of the finished content + the CI-publish shape via the WPAC
+   INBOX (<code>INFO-002</code>, see that repo's <code>.gald3r/linking/INBOX.md</code>) so the two teams can decide
+   together rather than <code>gald3r_core_dev</code> unilaterally claiming a domain it doesn't own.</li>
+<li><strong>No <code>v*</code> tag has been pushed yet</strong>, so <code>docs-publish.yml</code> has never actually run for real
+   — it is written, syntax-validated, and follows the exact pattern of the already-working
+   <code>binary-build.yml</code>, but is unverified end-to-end until the first tagged release.</li>
+</ol>
+<p><strong>Versioning:</strong> each publish lands under <code>/&lt;major&gt;.&lt;minor&gt;/</code> (matching the <code>4.0</code> line today)
+plus a <code>/latest/</code> alias that always points at the newest release — so a docs URL for a given
+release line stays stable even as patch releases ship, without needing a heavier
+multi-version tool (e.g. <code>mike</code>) wired in before there is a second version to actually
+distinguish.</p>
+<h2 id="building-the-docs-site-locally">Building the docs site locally<a class="headerlink" href="#building-the-docs-site-locally" title="Permanent link">&para;</a></h2>
+<p>The site config lives at <a href="../../mkdocs.yml"><code>mkdocs.yml</code></a> (repo root) and builds every page
+in this directory (see the "Where to go next" table above for the full list) into a
+searchable static site with Material for MkDocs navigation. It does <strong>not</strong> include this
+repo's contributor docs (root <code>README.md</code>/<code>AGENTS.md</code>/<code>CONTRIBUTING.md</code>) — see the scope note
+above for why those stay separate.</p>
+<pre><code class="language-powershell"># One-time: install the docs build tooling (kept out of the default `uv sync`
+# dev group since it's only needed when building/serving the site — see
+# pyproject.toml's [project.optional-dependencies].docs)
+uv sync --extra docs
+# or: uv pip install mkdocs mkdocs-material
+
+# Build a static site into ./site/ (gitignored — never commit build output)
+uv run mkdocs build --strict
+
+# Or serve it locally with live-reload at http://127.0.0.1:8000
+uv run mkdocs serve
+</code></pre>
+<p><code>mkdocs build --strict</code> is the verification command — it fails the build on any content
+warning. Links from these pages out to the repo-root contributor docs (<code>../../README.md</code>,
+<code>../../AGENTS.md</code>, <code>../../GALD3R.md</code>, <code>../../CONTRIBUTING.md</code>) are expected to resolve
+outside <code>docs_dir</code>; <code>mkdocs.yml</code>'s <code>validation.links</code> config downgrades that specific,
+known pattern from <code>warn</code> to <code>info</code> so the build stays clean without masking genuine
+in-site broken links.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
