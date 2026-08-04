@@ -24,6 +24,11 @@ recommended for general use.
 
 ---
 
+## [4.0.0-beta.3] - 2026-08-04
+
+_No public release notes have been written yet for the next tag. Replace this line with
+business-level notes before running `gald3r release stage --apply`._
+
 ## [Unreleased] — v4.0.0
 
 Targeting all three platforms — Windows, macOS, and Linux — in one release.
