@@ -492,6 +492,26 @@
   
   
   
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
     <li class="md-tabs__item">
       <a href="../troubleshooting/" class="md-tabs__link">
         
@@ -1109,6 +1129,203 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../troubleshooting/" class="md-nav__link">
         
@@ -1442,9 +1659,14 @@ second one runs the real status report. This is enforced in every skill's own pr
 </tr>
 </tbody>
 </table>
-<p>For the complete 192-command catalog (arguments included), see <code>docs/COMMANDS.md</code> in the
-repo, or <a href="../cli-reference/"><code>cli-reference.md</code></a> for the equivalent bare-CLI verbs these
-commands dispatch to — the command and the CLI verb run the same underlying logic either way.</p>
+<p>For the complete 192-command catalog — one usage card per command (purpose, when to use,
+arguments, a <code>/g-</code>/<code>@g-</code> example, related commands) — see the <strong>generated</strong>
+<a href="../reference/crash/commands/">Commands reference</a>. It is produced straight from each
+command's own frontmatter by <code>gald3r platform crash-reference</code> (T619), so it regenerates every
+release and cannot drift from what actually ships; <code>docs/COMMANDS.md</code> in the repo is the same
+data in a flatter table form. <a href="../cli-reference/"><code>cli-reference.md</code></a> documents the equivalent
+bare-CLI verbs these commands dispatch to, if you want the binary-verb side instead — the
+command and the CLI verb run the same underlying logic either way.</p>
 <h2 id="3-skills-the-instructions-behind-the-commands">3. Skills: the instructions behind the commands<a class="headerlink" href="#3-skills-the-instructions-behind-the-commands" title="Permanent link">&para;</a></h2>
 <p>A <strong>skill</strong> (<code>SKILL.md</code>) is the actual instruction package a command hands off to — commands
 themselves are thin dispatchers (see the real <code>g-wpac-notify</code> example on
@@ -1454,17 +1676,22 @@ themselves are thin dispatchers (see the real <code>g-wpac-notify</code> example
 <li><strong>Judgment-invoked</strong> — your agent decides a skill is relevant on its own, based on that
   skill's frontmatter <code>description:</code> field, without you typing a slash command at all.</li>
 </ul>
-<p>This repo ships 127 skills in <code>neutral_source/skills/</code> (one directory per skill, each holding
-a <code>SKILL.md</code>). As with commands, <strong>you don't hand-edit them</strong> — they're regenerated verbatim
-by <code>platform install</code>/<code>update</code>. If a skill's behavior needs to change, that happens upstream
-in the source tree, not by patching your local copy.</p>
+<p>This repo ships 121 skills in <code>neutral_source/skills/</code> (one directory per skill, each holding
+a <code>SKILL.md</code>; a handful of additional platform-support directories carry only a
+<code>PLATFORM_SPEC.md</code> with no <code>SKILL.md</code> yet — not counted as shipped skills). As with commands,
+<strong>you don't hand-edit them</strong> — they're regenerated verbatim by <code>platform install</code>/<code>update</code>. If
+a skill's behavior needs to change, that happens upstream in the source tree, not by patching
+your local copy. See the generated <a href="../reference/crash/skills/">Skills reference</a> for a usage
+card per skill — purpose, when to use, and which commands (if any) dispatch to it, derived
+straight from source so the count above can never go stale again.</p>
 <h2 id="4-rules-always-apply-every-session">4. Rules: always-apply, every session<a class="headerlink" href="#4-rules-always-apply-every-session" title="Permanent link">&para;</a></h2>
 <p>Rules (<code>g-rl-*.md</code>, e.g. <code>.claude/rules/g-rl-33-enforcement_catchall.md</code>) load automatically
 at the start of every session — no command needed. They encode standing constraints a project
 should never have to restate: for example <code>g-rl-43</code> mandates <code>gald3r search</code> over raw <code>grep</code>
 for anything that might touch a gitignored tree, because a plain ripgrep search silently skips
 gitignored directories. This repo ships 17 rules; a fresh install of your own project gets
-whichever subset the framework currently defines.</p>
+whichever subset the framework currently defines. See the generated
+<a href="../reference/crash/rules/">Rules reference</a> for what each one does and when it applies.</p>
 <p>Rules are <strong>framework-managed, not user-managed</strong>: they load as plain optional context (how
 strictly an IDE enforces "always apply" varies by platform — see the <code>Rules</code> column in the
 <a href="#7-per-platform-quick-start-matrix">quick-start matrix</a>), and updates arrive the same way
@@ -1494,7 +1721,9 @@ return 2
 g-qa-engineer / g-planner / ...)"</em>. That's the pattern across every gald3r hook: a block always
 comes with a stated reason and a next step, never a bare failure. If you instead see a
 traceback, an unhandled exception, or output with no stated reason, that's a genuine error —
-worth reporting, not a hook doing its job.</p>
+worth reporting, not a hook doing its job. See the generated
+<a href="../reference/crash/hooks/">Hooks reference</a> for what each hook does and which lifecycle
+event fires it.</p>
 <h2 id="6-agents-the-g-agnt-roster">6. Agents: the <code>@g-agnt-*</code> roster<a class="headerlink" href="#6-agents-the-g-agnt-roster" title="Permanent link">&para;</a></h2>
 <p>An agent definition narrows a whole session to one job. Invoke one directly with
 <code>@g-agnt-&lt;name&gt;</code> when you specifically want that narrower framing (for example, forcing a
@@ -1562,6 +1791,8 @@ own — most day-to-day work never needs a direct agent invocation.</p>
 </tr>
 </tbody>
 </table>
+<p>See the generated <a href="../reference/crash/agents/">Agents reference</a> for a fuller usage card per
+agent, including the Claude Code Task-tool invocation form.</p>
 <h2 id="7-per-platform-quick-start-matrix">7. Per-platform quick-start matrix<a class="headerlink" href="#7-per-platform-quick-start-matrix" title="Permanent link">&para;</a></h2>
 <p>Sourced from this repo's own <code>layout_map.yaml</code> (what <code>platform install</code> actually writes) and
 each platform's <code>g-skl-platform-*/SKILL.md</code> (native capability truth) — not guessed. Where a
@@ -1625,6 +1856,11 @@ than glossed over. The full 35-platform capability grid lives in
 </table>
 <h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
 <ul>
+<li><strong>The generated CRASH reference</strong> — one usage card per item, regenerated every release from
+  <code>neutral_source/</code> frontmatter (never hand-maintained, so it cannot drift from what ships):
+  <a href="../reference/crash/commands/">Commands</a>, <a href="../reference/crash/rules/">Rules</a>,
+  <a href="../reference/crash/agents/">Agents</a>, <a href="../reference/crash/skills/">Skills</a>,
+  <a href="../reference/crash/hooks/">Hooks</a>.</li>
 <li><a href="../install/#3-per-platform-ide-integration-crash-overlay"><code>install.md</code> §3</a> — the exact
   <code>platform install</code> mechanics, real output, and the <code>.claude/settings.json</code> non-destructive
   merge behavior.</li>

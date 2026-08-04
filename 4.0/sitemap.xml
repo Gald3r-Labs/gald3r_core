@@ -60,4 +60,24 @@
          <loc>https://gald3r-labs.github.io/gald3r_core/latest/troubleshooting/</loc>
          <lastmod>2026-08-04</lastmod>
     </url>
+    <url>
+         <loc>https://gald3r-labs.github.io/gald3r_core/latest/reference/crash/agents/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://gald3r-labs.github.io/gald3r_core/latest/reference/crash/commands/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://gald3r-labs.github.io/gald3r_core/latest/reference/crash/hooks/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://gald3r-labs.github.io/gald3r_core/latest/reference/crash/rules/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
+    <url>
+         <loc>https://gald3r-labs.github.io/gald3r_core/latest/reference/crash/skills/</loc>
+         <lastmod>2026-08-04</lastmod>
+    </url>
 </urlset>
