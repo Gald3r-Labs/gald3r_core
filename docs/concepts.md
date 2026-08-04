@@ -68,7 +68,9 @@ this in practice.
 generates a starter one). It supports local OpenAI-compatible backends (Ollama, LM Studio,
 vLLM, llama.cpp) as well as cloud providers, configured per-provider with model lists and
 roles (`coding`, `general`, `reasoning`, `vision`, ...). Nothing about gald3r requires a
-specific cloud vendor.
+specific cloud vendor. See [`providers.md`](./providers.md) for the full guide — annotated
+`providers.yaml` anatomy, a worked recipe per local backend, OpenRouter/cloud setup, and
+real provider-error troubleshooting.
 
 ## `world_tree` (optional, online-only)
 
@@ -80,10 +82,20 @@ reports `world_tree ok` / connectivity status but treats it as informational, an
 
 ## Where the deeper reference lives
 
-If you outgrow this page — e.g. you're setting up gald3r's full multi-agent/cross-project
-coordination model, not just single-project task tracking — the root
-[`GALD3R.md`](../../GALD3R.md) is the canonical framework reference (CRASH internals, the
-`.gald3r/` authority model, Valkyrie vs. WPAC coordination, the parity/build model), and
-[`AGENTS.md`](../../AGENTS.md) is the full agent-behavior contract. Both are written for
-people/agents working inside a gald3r-native project day to day, so expect more depth (and
-more internal jargon) than this page.
+Each idea above has its own full page in this doc set:
+
+- [`crash.md`](./crash.md) — CRASH, with real component examples from this repo
+- [`task-bug-workflow.md`](./task-bug-workflow.md) — the full task/bug lifecycle
+- [`autopilot.md`](./autopilot.md) — `go`/`go-code`/`go-review`/`autoclaim`/`swarm`/`autopilot`
+- [`coordination.md`](./coordination.md) — Valkyrie (live) and WPAC (file-based) multi-project
+  coordination, and `world_tree`
+- [`memory.md`](./memory.md) — scoped memory records and the vault
+- [`providers.md`](./providers.md) — `providers.yaml` anatomy, local backend recipes
+  (Ollama/LM Studio/vLLM/llama.cpp), cloud providers, and provider troubleshooting
+
+If you outgrow this whole doc set — e.g. you're building ON gald3r_core itself, not just
+using the finished CLI — the root [`GALD3R.md`](../../GALD3R.md) is the canonical framework
+reference (CRASH internals, the `.gald3r/` authority model, Valkyrie vs. WPAC coordination,
+the parity/build model), and [`AGENTS.md`](../../AGENTS.md) is the full agent-behavior
+contract. Both are written for people/agents working inside a gald3r-native project day to
+day, so expect more depth (and more internal jargon) than this page.

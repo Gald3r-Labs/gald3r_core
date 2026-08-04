@@ -1,92 +1,108 @@
 # CLI Reference
 
 This table is transcribed directly from `gald3r --help` (run against this repo's own
-source, 2026-07-26, `gald3r 0.2.0 build 03badb80c277`) — not written from memory or from
+source, 2026-08-01, `gald3r 4.0.0 build a7242bba63ea`) — not written from memory or from
 reading source code. Every verb also answers its own `--help`; that is always more
 authoritative than this page if the two ever disagree; ask the tool, not this file.
+
+**Driving these verbs from inside an AI IDE instead of a terminal?** Most of them also exist
+as an in-IDE slash command (`/g-status` in Claude Code, `@g-status` in Cursor, and so on) once
+you've installed that platform's overlay — see [`platform-usage.md`](./platform-usage.md) for
+the command/skill/rule/hook/agent tour and the per-platform quick-start matrix, or go straight
+to the generated [Commands reference](./reference/crash/commands.md) for a usage card per
+`/g-`/`@g-` command (purpose, arguments, example invocation, related commands).
 
 ## Getting started & health
 
 | Verb | What it does |
 |---|---|
-| `gald3r setup` | Scaffold (or repair) a fresh `.gald3r/` project in `--root` (default: cwd) |
+| `gald3r setup` | Turn this folder into a gald3r project — tasks, bugs, plans, and agent coordination, ready to use in one command. Safe to re-run if anything's missing or damaged. |
 | `gald3r init` | Alias for `setup` — identical flags and behavior (verified: same `--help` text) |
-| `gald3r onboard` | One-command onboarding into the linked gald3r ecosystem: scaffold → project-type pick → curated skill set → identity → parent/sibling linking |
-| `gald3r doctor` | Diagnose the local install (python/build fingerprint/torch/providers/env/identity/daemon/world_tree/auth) |
+| `gald3r onboard` | Get a new project fully set up in one command — scaffold, pick a workflow, install a curated skill set, and link it to related projects. Safe to re-run, and works offline. |
+| `gald3r doctor` | Find out why gald3r isn't working right — one command checks your Python setup, providers, credentials, and background services, and tells you exactly what's broken. |
 | `gald3r selftest` | Run the install self-diagnostic ("gald3r is N% functional") |
 | `gald3r sessions` | Read-only listing of local chat sessions for the current directory |
-| `gald3r status` | Compiled project status report -- task/bug counts, completion %, awaiting-verification `release_hold` groups, dependency-blocked tasks, active milestone, WPAC topology gate (`--min-severity N`, `--json`) |
+| `gald3r status` | See where your project actually stands at a glance — task/bug counts, completion %, what's blocked and why, and what's waiting on you (`--min-severity N`, `--json`) |
 | `gald3r --version` | Print version + build fingerprint |
 
 ## Tasks, bugs, and project state
 
 | Verb | What it does |
 |---|---|
-| `gald3r task add/list/show/update/next/ready` | Manage tasks (create, browse, claim, complete) |
+| `gald3r task add/list/show/update/next/ready` | Track the work that needs doing — create tasks, see what's ready to pick up, and move them through to done. |
 | `gald3r task ac-check` | Tick an acceptance-criterion checkbox for a task (per-criterion attestation) |
 | `gald3r task verify` | Record a reviewer verdict (`--pass` → completed, `--fail` → back to pending) |
 | `gald3r task regenerate-index` | Rebuild `TASKS.md` from the on-disk task files |
+| `gald3r task archive` / `gald3r bug archive` | Move finished tasks/bugs out of the active list into long-term history, so `TASKS.md`/`BUGS.md` stay short and readable |
+| `gald3r task delete` / `gald3r bug delete` | Permanently remove a task/bug that was created in the wrong project or by mistake — not for ones you simply decided not to do |
 | `gald3r task-sync-check` | Validate `TASKS.md` against the `tasks/` files |
-| `gald3r bug` | Report and list bugs (same shape as `task`) |
-| `gald3r db backfill/verify/rebuild` | SQLite state-layer maintenance — import files into the DB, check for drift, or regenerate files from the DB |
+| `gald3r bug` | Log a defect the moment you find it and keep it visible until it's actually fixed — no bug silently lost in a chat transcript (same shape as `task`) |
+| `gald3r db backfill/verify/rebuild` | Keep your local task/bug database in sync with the `.gald3r/` files — import them in, check for drift, or rebuild the files from the database |
+| `gald3r db render-history` | Render `status_history`/`op_log` to append-only, git-tracked `.gald3r/history/*.ndjson` files, so a rollback + `db backfill` can reconstruct history that has no file of its own (T559) |
+| `gald3r logs ingest/status/prune` | Ingest gald3r's own logs and platform-native chat transcripts (Claude Code, Cursor, ...) into a separate, gitignored `.gald3r/logs.db` — keeps bulk log volume out of the coordination database, with automatic retention/rotation (T559) |
 | `gald3r validate` | Validate `.gald3r/tasks|bugs` frontmatter (schema, status vocabulary, folder placement); `--fix` normalizes what's safely fixable |
-| `gald3r verify` | Deterministic verification ladder for a task (the completion gate) |
+| `gald3r verify` | Check whether a task actually meets its acceptance criteria before you call it done (the completion gate) |
 | `gald3r schema-migrate` | Migrate a project's `.gald3r/` files forward to the current schema version (dry-run by default) |
-| `gald3r inbox` | Absorb queued task/bug drafts from `tasks/inbox/` + `bugs/inbox/` into tracked state |
-| `gald3r wishlist` | Mine a human-prose wishlist/intent doc into tasks (read-only against the source doc) |
+| `gald3r inbox` | Turn quick task/bug drafts left in the inbox into fully tracked tasks and bugs |
+| `gald3r wishlist` | Turn a free-form wishlist or notes doc into real, tracked tasks (read-only against the source doc) |
 | `gald3r idea` | Capture, list, review, and promote ideas (`IDEA_BOARD.md`) |
-| `gald3r feature` / `gald3r subsystem` | Feature and subsystem data operations |
-| `gald3r prd` | Manage PRDs (add/list/show/revise) |
-| `gald3r dependency-graph` | Render the task dependency graph (Mermaid + analysis) from `gald3r.db` |
-| `gald3r medic` | Self-heal and curation verbs for a project's `.gald3r/` tree |
+| `gald3r feature` | Catch broken feature-hierarchy links before they drift into `FEATURES.md` |
+| `gald3r subsystem` | Catch drift between your subsystem specs and `SUBSYSTEMS.md`'s index |
+| `gald3r prd` | Keep a formal, sign-off-ready spec for a feature — Product Requirements Docs (PRDs) that stay frozen once released, with a clean revision trail when they need to change |
+| `gald3r dependency-graph` | See what's blocking what — a visual map of task dependencies, the critical path, and which blocked tasks are stuck waiting |
+| `gald3r medic` | Diagnose and repair problems in your project's gald3r setup — broken links, stale indexes, drifted files — fixing what's safe to fix automatically |
 
 ## Agent work
 
 | Verb | What it does |
 |---|---|
-| `gald3r chat` | Persistent chat REPL (resumes this directory's latest session) |
-| `gald3r run "<message>"` | One-shot agent message (`--backend dev-echo` for an offline, no-provider smoke test; `--model provider:model` to pick a target; `--resume <id>` to continue a session) |
-| `gald3r agent` | Author and run declarative agent specs |
-| `gald3r go` | Claim the next pending task, run one agent iteration, mark awaiting-verification |
+| `gald3r chat` | Have an ongoing conversation with your gald3r agent right in the terminal — it picks back up where you left off in this folder, so context carries across sessions. |
+| `gald3r run "<message>"` | Send gald3r a single instruction and get one response back — no session to manage, ideal for scripts and one-off asks (`--backend dev-echo` for an offline, no-provider smoke test; `--model provider:model` to pick a target; `--resume <id>` to continue a session) |
+| `gald3r agent` | Define an agent's behavior — tools, prompts, guardrails — in a plain YAML spec file, then run it |
+| `gald3r go` | Have gald3r pick up the next task on your queue and work it, one step at a time, then hand it back to you for review |
 | `gald3r go-code T123` | Implement a specific task, then mark awaiting-verification |
 | `gald3r go-review T123` | Review a task's acceptance criteria; mark completed (pass) or pending (fail) |
-| `gald3r go-status` | Whether an active autopilot loop is alive, idle-waiting, or stalled |
-| `gald3r autoclaim` | Autonomously claim and work pending tasks off the local board (`--online` for the world_tree board) |
-| `gald3r swarm` | Launch and manage multi-agent swarm runs |
-| `gald3r autopilot` | Manage the autopilot task queue (enqueue/status/run/loop) |
-| `gald3r worktree` | Manage agent worktrees (create/report/remove/cleanup + lifecycle) |
-| `gald3r claim` | Claim a task UUID against world_tree's atomic collision arbiter |
-| `gald3r housekeep` | Safe controller `.gald3r/` housekeeping classifier |
+| `gald3r go-status` | Check on a running autopilot loop without interrupting it — is it still working, waiting, or stuck |
+| `gald3r autoclaim` | Work through several pending tasks in a row without stopping to ask which one's next (`--online` extends this across your whole team's shared board) |
+| `gald3r swarm` | Split a big batch of work across several agents running in parallel |
+| `gald3r autopilot` | Turn gald3r loose on your task queue — it implements, reviews, and repeats on its own until the backlog is clear or you call it off. |
+| `gald3r worktree` | Give each agent its own isolated git checkout to work in, so parallel agents never step on each other's uncommitted changes |
+| `gald3r claim` | Claim a task safely when multiple agents might grab the same one at once — only one of them wins |
+| `gald3r housekeep` | Auto-commit safe, routine `.gald3r/` coordination changes so an autonomous run doesn't stall waiting on a human |
+| `gald3r go-preflight` / `gald3r go-reconcile` / `gald3r go-verdicts` | Internal plumbing the `go`/swarm coordinators call to batch pre-flight checks, merge parallel work, and record verdicts in one call each — not typically run by hand |
 
 ## Providers & configuration
 
 | Verb | What it does |
 |---|---|
-| `gald3r init-providers` | Write a starter `providers.yaml`, auto-discovering local Ollama/LM Studio/vLLM/llama.cpp models |
-| `gald3r local-model` | Local-model hardware assessment + serve-command helpers |
-| `gald3r config` | Inspect or modify agent configuration |
-| `gald3r profile` / `gald3r user-profile` | User profile and preferences (global + per-project) |
-| `gald3r pers` | Manage personality overlay packs (list/pick/add/del/save) |
-| `gald3r skill-pack` | Manage optional skill packs (add/del/list/save) |
-| `gald3r skills-lock` | Read/write/verify the skills anti-tamper lockfile |
-| `gald3r plugin` | Manage external git-cloned `SKILL.md` plugins |
-| `gald3r policy` | Org policy-as-code guardrail (Team/Org tier only; empty bundle otherwise) |
+| `gald3r init-providers` | Get set up to use local LLMs (Ollama, LM Studio, vLLM, llama.cpp) — auto-detects what's installed and writes the config for you. Full guide: [`providers.md`](./providers.md#gald3r-init-providers) |
+| `gald3r providers` | List, add/remove/edit providers and models in `providers.yaml` without hand-editing YAML (round-trip safe), validate the whole file, and store API keys securely in your OS's keyring. Full guide: [`providers.md`](./providers.md#managing-providersyaml-from-the-cli-t610) |
+| `gald3r providers set-key` | Store a provider's API key in your OS keyring instead of a plaintext file. Full guide: [`providers.md`](./providers.md#gald3r-providers-set-key-keys-keyring-vs-plaintext) |
+| `gald3r local-model` | Find out which local LLM your hardware can actually run well, and get the exact command to serve it. Full guide: [`providers.md`](./providers.md#gald3r-local-model-assess) |
+| `gald3r config` | Reserved for future agent configuration — not yet implemented |
+| `gald3r profile` | See or change your personal display preferences for this gald3r install (voice/tone and similar settings) |
+| `gald3r user-profile` | Manage your gald3r account settings across every project on this machine, with per-project overrides where you need them |
+| `gald3r pers` | Give your agent a distinct voice and style — switch between personality packs, or customize your own |
+| `gald3r skill-pack` | Install ready-made bundles of skills your agents can use, without writing them from scratch |
+| `gald3r skills-lock` | Verify your installed skills haven't been tampered with, using a signed checksum lockfile |
+| `gald3r plugin` | Add new capabilities to gald3r from the community — install, update, and enable third-party skills without hand-editing your own project files. |
+| `gald3r policy` | Enforce your org's own rules automatically (Team/Org tier only; a no-op on free/retail installs) |
 | `gald3r prompt` | Judgment/prompt-asset library (role briefs, rubrics, playbooks, voice) |
-| `gald3r project-type` | Manage gald3r Workflow Profiles (list/use/copy/edit/validate/resolve) |
-| `gald3r pricing` | Read-only model pricing lookups |
+| `gald3r project-type` | Switch between preset workflows (solo dev, team, enterprise, ...) that tune how gald3r behaves in this project |
+| `gald3r pricing` | Look up what an LLM model costs per token, right from the terminal |
 
 ## Diagnostics
 
 | Verb | What it does |
 |---|---|
-| `gald3r context` | Report this agent's own live context usage, measured from its session transcript (never estimated) |
+| `gald3r context` | See exactly how much of your context window an agent is actually using, measured from its session transcript (never a guess) |
 | `gald3r errors` / `gald3r trace` | Summarize agent errors/failures from trace logs |
-| `gald3r crash-stats` | CRASH activation stats (Commands/Rules/Agents/Skills/Hooks) |
-| `gald3r muninn` | Query the local codebase knowledge graph: symbol search, caller/callee chains, import-impact analysis |
-| `gald3r search` | Gitignore-agnostic content search (sees `.gald3r/` the same as any other directory) |
-| `gald3r lint` | Syntax lint verbs (delta-lint gate, subsystem-tag check, dangerous-command guard) |
-| `gald3r env` | Bring up and inspect the agent's run-this-project environment |
-| `gald3r connectivity-benchmark` | Measure online-vs-offline verb latency |
+| `gald3r crash-stats` | See which of your Commands, Rules, Agents, Skills, and Hooks are actually firing during real sessions — not just installed, but used |
+| `gald3r muninn` | Ask questions about your codebase's structure — what calls this function, what breaks if I change that file — without grepping by hand |
+| `gald3r search` | Find text anywhere in the project, including files your normal search tool silently skips because they're gitignored |
+| `gald3r lint` | Catch problems the moment they happen: syntax errors right after a file is written, missing component tags, or a dangerous-looking shell command |
+| `gald3r env` | Start and check the services your project needs to run (databases, local servers, test accounts) with one command |
+| `gald3r connectivity-benchmark` | Measure how much slower coordination gets when offline vs. online, instead of guessing |
 
 ## Coordination — your projects and agents, talking to each other
 
@@ -97,37 +113,42 @@ across your machines and your team.
 | Verb | What it does |
 |---|---|
 | `gald3r valk` | Let your projects and agents talk to each other — and to you — while they work. Ask another project a question and get a grounded, cited answer from its real context; message a running swarm without interrupting it; keep state in sync across machines and teammates. |
-| `gald3r workspace` | Run several repos as one coordinated workspace: see what's waiting for you, check every repo is safe to touch before agents start, and keep member projects honest about what they own. |
-| `gald3r connect` | Link this machine to your account for team features. *(Device-code sign-in is still landing — use `gald3r login --token` today; the verb tells you so rather than pretending.)* |
-| `gald3r login` / `gald3r logout` | Sign in or out of your shared workspace. |
-| `gald3r version-check` | Find out when a newer gald3r is available — works offline, tells you the truth either way. |
+| `gald3r workspace` | Coordinate work across multiple related projects — read incoming requests from linked repos, check what's safe to touch before a multi-repo change, and keep member repos in the expected shape. |
+| `gald3r connect` | Link a provider account with a device code, like signing into a streaming app on a TV. See [`providers.md`](./providers.md#gald3r-connect) for a real, current capture of what this returns. |
+| `gald3r login` / `gald3r logout` | Sign in or out of your gald3r account so team and multi-device features work. |
+| `gald3r version-check` | Find out if a newer gald3r is available — works offline, tells you the truth either way. |
 
 ## Release & distribution (mostly relevant if you're shipping *your own* gald3r-based tool)
 
 | Verb | What it does |
 |---|---|
 | `gald3r ship` | Ship a release: bump version, promote CHANGELOG, tag, update badge |
-| `gald3r push-gate` | Pre-push gate: regular (never blocks) vs. release (CHANGELOG/version discipline) |
-| `gald3r release` | Publish a built payload to a remote, or emit a `release.published` event to world_tree |
-| `gald3r tier` | Product-tier onboarding — scaffold release profiles + annotate subsystems |
-| `gald3r template` | Emit embedded CI/release scaffolding templates |
-| `gald3r install` | Download and install a signed gald3r product (Agent CLI binary, Throne desktop app) from its public GitHub Releases |
-| `gald3r platform` | Cross-IDE freshness loop: doc-scan proposals + `PLATFORM_STATUS.md` regeneration |
-| `gald3r throne` | Launch the installed Gald3r Throne desktop app |
-| `gald3r acp` | Launch the gald3r-agent ACP (Agent Client Protocol) adapter server over stdio |
-| `gald3r parity-audit` | Diff the product CLI's wired verbs against `gald3r-agent` (internal go/no-go tool) |
+| `gald3r push-gate` | Catch a missing CHANGELOG entry or version bump before a release push goes out, not after |
+| `gald3r release` | Push a built release out to a remote destination, and let your team know it went out |
+| `gald3r template` | Get ready-made CI/release config files (GitHub Actions, release-please, ...) written into your project instead of writing them by hand |
+| `gald3r install update` | Get the latest signed `gald3r_core` release, replacing whatever `gald3r` currently resolves to on PATH (`install agent` is a deprecated alias) |
+| `gald3r install throne` | Get the signed Throne desktop app from its public GitHub Releases |
+| `gald3r platform` | Keep gald3r's support for Cursor, Claude Code, Copilot, and every other AI IDE up to date as their own docs change |
+| `gald3r throne` | Open Gald3r Throne, the visual desktop companion to this CLI |
+| `gald3r acp` | Let ACP-compatible editors (like Zed) drive gald3r as an embedded agent over stdio |
+| `gald3r parity-audit` | Check this CLI for missing commands compared to the legacy `gald3r-agent` binary (internal go/no-go tool) |
 | `gald3r broadcast` | Show cached Gald3r Labs vendor broadcast alerts (release notices, advisories) |
 
 ## Other
 
 | Verb | What it does |
 |---|---|
-| `gald3r vault` | File-first knowledge vault (ingest, list, reindex, lint, search, export/import) |
-| `gald3r tel` | Terminal Event Layer: pattern-to-action rules over agent/CLI output |
-| `gald3r ui-test` | OS-level UI-test verbs |
-| `gald3r learn` | Continual-learning loop — nightly session-summary fact extraction |
-| `gald3r compress-memory` | Compress the non-gald3r regions of memory files, preserving managed ranges |
-| `gald3r mcp` | Native MCP (Model Context Protocol) stdio server surface |
+| `gald3r vault` | Build a searchable knowledge base from the docs, repos, and web pages you feed it — plain markdown files you own, not locked away in a database. |
+| `gald3r memory` | Small, scoped memory records (user/project/workspace/team/company/client) plus chat-native recall over them and your vault notes together (T557: `add`/`list`/`show`/`supersede`/`migrate-learned-facts`/`recall`) |
+| `gald3r tel` | Watch your terminal output for patterns and react automatically — alert, log, or trigger a follow-up command |
+| `gald3r telemetry` | Opt in (or out) of local-only usage telemetry — a count of crashes, your gald3r version, and OS/architecture; off by default, nothing ever leaves your machine |
+| `gald3r ui-test` | Drive real mouse/keyboard/screenshot steps against a native desktop app to verify a UI change actually works |
+| `gald3r learn` | Have gald3r learn from your sessions — extracts durable facts from recent chats so it remembers them next time |
+| `gald3r compress-memory` | Shrink your AGENTS.md/CLAUDE.md memory files to save context space, without touching gald3r's own managed sections |
+| `gald3r mcp` | Expose gald3r's prompt/judgment library to any MCP-compatible client (Claude Desktop, Cursor, and others) over stdio |
+| `gald3r hearth` | Run a small local background service so other tools (dashboards, IDE extensions) can check your project's status without shelling out to the CLI each time |
+| `gald3r serve` | Host gald3r over HTTP for multiple isolated tenants/users to connect to at once |
+| `gald3r sync` | For gald3r's own contributors: redeploy this repo's hooks/commands/rules/agents/skills into its local IDE copies. Dry-run by default; `--apply` writes, `--prune` (also dry-run-first, opt-in) safely removes only overlay orphans it can prove it generated |
 
 ---
 
