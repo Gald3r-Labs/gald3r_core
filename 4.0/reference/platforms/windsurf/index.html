@@ -1,0 +1,1840 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/windsurf/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Devin Desktop (formerly Windsurf; Cascade, by Cognition) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-devin-desktop-formerly-windsurf-cascade-by-cognition" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Devin Desktop (formerly Windsurf; Cascade, by Cognition)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0-rebrand-notice-verified-2026-07-18-t388" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Rebrand Notice (verified 2026-07-18, T388)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-partial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ⚠️ PARTIAL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-other-extensibility-notable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Other Extensibility / Notable
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-07-18-httpsdocsdevinai-product-renamed-from-windsurf-to-devin-desktop-2026-06-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-07-18, https://docs.devin.ai — product renamed from Windsurf to Devin Desktop 2026-06-02)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-devin-desktop-formerly-windsurf-cascade-by-cognition">PLATFORM_SPEC.md — Devin Desktop (formerly Windsurf; Cascade, by Cognition)<a class="headerlink" href="#platform_specmd-devin-desktop-formerly-windsurf-cascade-by-cognition" title="Permanent link">&para;</a></h1>
+<h2 id="0-rebrand-notice-verified-2026-07-18-t388">0. Rebrand Notice (verified 2026-07-18, T388)<a class="headerlink" href="#0-rebrand-notice-verified-2026-07-18-t388" title="Permanent link">&para;</a></h2>
+<p>Cognition acquired Windsurf and renamed the standalone editor <strong>Devin Desktop</strong>, effective
+<strong>2026-06-02</strong>. Live verification performed 2026-07-18:</p>
+<ul>
+<li><code>https://windsurf.com</code> → 200 at <code>https://devin.ai/desktop</code> (redirect chain followed via <code>curl -L</code>).</li>
+<li><code>https://docs.windsurf.com</code> → two <code>308 Permanent Redirect</code> hops → final 200 at
+  <code>https://docs.devin.ai/desktop/getting-started</code>. <code>curl -I</code> on the root shows
+  <code>Location: /windsurf/getting-started</code>; that intermediate page itself then 308s to
+  <code>https://docs.devin.ai/desktop/getting-started</code> (confirmed via the page's embedded
+  <code>NEXT_REDIRECT</code> digest and by following with <code>-L</code>).</li>
+<li>Page <code>&lt;title&gt;</code> at the resolved URL: "Welcome to Devin Desktop - Devin Docs"; meta description:
+  "Download and install Devin Desktop IDE for Mac, Windows, or Linux...".</li>
+<li><code>https://docs.devin.ai/desktop/devin-desktop-faq</code> ("Frequently asked questions about the
+  transition from Windsurf to Devin Desktop") independently confirms the <strong>2026-06-02</strong> cutover
+  date: "Before June 2, 2026, add Devin to the allowlist in your device management ... policies."</li>
+<li>The doc site's URL structure moved from <code>/windsurf/cascade/*</code> (404s directly on docs.devin.ai) to
+  <strong><code>/desktop/cascade/*</code></strong> for the standalone-app docs; confirmed against <code>docs.devin.ai/llms.txt</code>
+  (the site's own current-content manifest) and by a 200 on every <code>/desktop/cascade/*</code> page tested.</li>
+<li><strong>Important disambiguation found during research</strong>: <code>docs.devin.ai/windsurf/plugins/*</code> is a
+  <strong>different, still-actively-branded product</strong> — "Windsurf Plugins" (the JetBrains / VS Code / other-IDE
+  <em>extension</em>, e.g. <code>docs.devin.ai/windsurf/plugins/compatibility</code> lists JetBrains, Visual Studio,
+  NeoVim, Vim, Emacs, Xcode, Sublime Text, Eclipse). It is NOT the standalone Devin Desktop IDE this
+  skill documents, and must not be confused with it when re-scanning docs.</li>
+<li><strong>gald3r decision</strong>: keep the internal platform id <strong><code>windsurf</code></strong> (registry/roster stability —
+  no <code>PLATFORM_REGISTRY.yaml</code> or other <code>display_name:</code> field exists in this repo to update
+  separately; branding is carried in this spec's prose/frontmatter instead), update all
+  user-facing text to <strong>Devin Desktop (formerly Windsurf)</strong>, and repoint every <code>docs.windsurf.com</code>
+  URL to its verified <code>docs.devin.ai</code> equivalent.</li>
+</ul>
+<hr />
+<p>Devin Desktop (formerly Windsurf) is a VS Code-based AI-first IDE built around the <strong>Cascade</strong>
+agentic assistant. As of mid-2026 Cascade natively supports <strong>five</strong> of the six gald3r-relevant
+extension primitives — <strong>Workflows (slash commands), Rules + Memories, Agent Skills (<code>SKILL.md</code>),
+Cascade Hooks, and MCP</strong> — with only <strong>named user-defined sub-agents</strong> absent (Cascade provides
+modes, Plan Mode, a background planning agent, and Wave 13 parallel agents instead). Critically for
+gald3r, Cascade discovers <code>SKILL.md</code> skills from <strong><code>.claude/skills/</code> and <code>.agents/skills/</code></strong> in
+addition to <code>.windsurf/skills/</code>, and reads <strong><code>AGENTS.md</code></strong> as location-scoped rules, so gald3r's
+Claude-Code / agents skill artifacts are <strong>largely drop-in reusable</strong> on Devin Desktop.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-07-18</strong> against https://docs.devin.ai (see
+Verification Evidence and the Rebrand Notice above). This <strong>supersedes</strong> the prior spec
+(<code>last_doc_scan: 2026-06-02</code>) which still carried the pre-rebrand <code>docs.windsurf.com</code> URLs — Skills,
+Hooks, and Workflows remain all NATIVE in Cascade; only the branding and doc URLs changed. The only
+honest capability gap vs. a Claude-Code-style platform is still the <strong>named sub-agent primitive</strong>
+(AGENTS = ⚠️).</p>
+<blockquote>
+<p><strong>Instruction-file convention:</strong> Devin Desktop reads <strong><code>AGENTS.md</code></strong> (and legacy <code>.windsurfrules</code>)
+as Rules-engine input — it does <strong>NOT</strong> read <code>CLAUDE.md</code> as a primary instruction file the way the
+Claude-convention platforms do. Root-level <code>AGENTS.md</code> = always-on; subdirectory <code>AGENTS.md</code> =
+auto-glob. Durable shareable context belongs in <code>AGENTS.md</code> / <code>.windsurf/rules/</code>, NOT in the
+auto-generated, machine-local Memories store.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                       ← instruction file Cascade reads as Rules (root = always-on)
+├── .windsurfrules                  ← legacy single-file project rules (still honored)
+└── .windsurf/
+    ├── rules/      *.md             ← per-rule files; activation: always_on / model_decision / glob / manual
+    ├── workflows/  *.md             ← Workflows = /slash commands (manual-invoke, 12,000-char/file)
+    ├── skills/     &lt;name&gt;/SKILL.md  ← Agent Skills (auto-invokable, progressive disclosure)
+    └── hooks.json                   ← Cascade lifecycle hooks (12 events, bash + powershell keys)
+
+~/.codeium/windsurf/                 ← user/global home (outside repo)
+    ├── global_workflows/  *.md      ← global workflows
+    ├── memories/global_rules.md     ← global rules (6,000-char) + Cascade auto-memories
+    ├── skills/  &lt;name&gt;/SKILL.md      ← global skills
+    ├── hooks.json                    ← user-level hooks
+    └── mcp_config.json               ← Cascade MCP config (see §8)
+</code></pre>
+<p>Cascade <strong>also</strong> discovers skills in <code>.claude/skills/</code>, <code>~/.claude/skills/</code>, <code>.agents/skills/</code>, and
+<code>~/.agents/skills/</code> — the <strong>same <code>SKILL.md</code> files that work in Claude Code and Cursor work
+unmodified</strong>. Enterprise/system-level config (hooks, rules, workflows, skills) is supported via OS
+paths (e.g. <code>C:\ProgramData\Windsurf\</code>, <code>/etc/windsurf/</code>, <code>/Library/Application Support/Windsurf/</code>),
+with system overriding workspace/global for governance.</p>
+<p><strong>gald3r writes</strong>: <code>AGENTS.md</code> / <code>.windsurfrules</code>, <code>.windsurf/rules/*.md</code>, <code>.windsurf/workflows/*.md</code>,
+<code>.windsurf/skills/&lt;name&gt;/SKILL.md</code>, <code>.windsurf/hooks.json</code> — or simply reuse the gald3r <code>.claude/skills/</code>
+tree, which Cascade loads as-is.
+<strong>Devin Desktop owns</strong>: the <code>.windsurf/</code> namespace (unchanged post-rename), the rule activation-mode
+schema, the Cascade-managed <strong>Memories</strong> store under <code>~/.codeium/windsurf/memories/</code> (machine-local,
+workspace-specific, does <strong>not</strong> sync — not a gald3r-writable surface), and the workflow
+<code>/</code>-invocation mechanism.</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Cascade's persistent-instruction surface is the <strong>Rules engine</strong>, fed by (in increasing locality):</p>
+<ul>
+<li><strong><code>~/.codeium/windsurf/memories/global_rules.md</code></strong> — global user rules (6,000-char limit).</li>
+<li><strong><code>AGENTS.md</code></strong> (project root) — read as an <strong>always-on</strong> rule; subdirectory <code>AGENTS.md</code> files are
+  applied with <strong>auto-glob</strong> scoping. This is the first-class gald3r instruction input.</li>
+<li><strong><code>.windsurfrules</code></strong> (project root) — legacy single-file always-apply rules; still honored.</li>
+<li><strong><code>.windsurf/rules/*.md</code></strong> — per-rule files with explicit activation modes (see §7).</li>
+</ul>
+<p>No <code>CLAUDE.md</code> is consumed. Docs explicitly recommend writing durable knowledge to <code>AGENTS.md</code> or
+<code>.windsurf/rules/</code> rather than relying on auto-generated Memories. gald3r generates/merges <code>AGENTS.md</code>
+(or <code>.windsurfrules</code>) from its always-apply rule subset; keep it within the per-file context budget.</p>
+<hr />
+<h2 id="3-agents-support-partial">3. Agents Support — ⚠️ PARTIAL<a class="headerlink" href="#3-agents-support-partial" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Cascade offers <strong>Code and Chat modes</strong>, a background <strong>planning agent</strong> that refines the long-term
+  plan, <strong>Plan Mode</strong> for structured task decomposition, and (Wave 13, mid-March 2026) <strong>parallel
+  multi-agent sessions</strong> spawning <strong>up to 5</strong> autonomous agents in isolated git worktrees.</li>
+<li><strong>No user-definable named sub-agent primitive</strong>: the docs describe no per-agent config file with
+  its own instructions/tool allowlist comparable to Claude Code subagents or Cursor's
+  <code>.cursor/agents/g-agnt-*.md</code>. Agent behavior is shaped via <strong>Skills, Rules, and Workflows</strong>, not
+  first-class custom agent definitions.</li>
+<li>gald3r <code>g-agnt-*</code> personas therefore collapse to <strong>Skill / Rule content</strong>, not a selectable agent.
+  This is the one true gap vs. the Cursor reference → rated <strong>⚠️ partial</strong> (real multi-agent
+  capability, no named-persona config surface).</li>
+<li>Source: https://docs.devin.ai/desktop/cascade/cascade</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Cascade Skills</strong> — each skill is a directory containing a <code>SKILL.md</code> with YAML frontmatter
+  (required: <code>name</code>, <code>description</code>), bundling reference scripts, templates, and checklists Cascade can
+  invoke. <strong>Progressive disclosure</strong>: only <code>name</code>+<code>description</code> are loaded until Cascade auto-invokes
+  by task relevance or the user <code>@mentions</code> the skill.</li>
+<li>Discovered in <code>.windsurf/skills/&lt;name&gt;/</code>, <code>~/.codeium/windsurf/skills/&lt;name&gt;/</code>, enterprise system
+  paths, <strong>and</strong> <code>.claude/skills/</code>, <code>~/.claude/skills/</code>, <code>.agents/skills/</code>, <code>~/.agents/skills/</code> — the
+  <strong>same <code>SKILL.md</code> packs that work in Claude Code and Cursor load unmodified</strong>.</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively — including straight from <code>.claude/skills/</code>.</li>
+<li>Source: https://docs.devin.ai/desktop/cascade/skills</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Workflows</strong> = markdown files in <code>.windsurf/workflows/*.md</code> (global at
+  <code>~/.codeium/windsurf/global_workflows/*.md</code>; system/enterprise paths also supported), invoked in
+  Cascade via a slash command <code>/[name-of-workflow]</code>. Each workflow is a <strong>series of steps</strong> Cascade
+  follows. <strong>Manual-only</strong> (Cascade never auto-invokes a workflow — that is Skills' job). <strong>12,000-char</strong>
+  limit per file.</li>
+<li>gald3r's <code>@g-*</code> / <code>/g-*</code> command catalog maps to workflow files (<code>/&lt;name&gt;</code> slash-invoked). Note the
+  Workflows-vs-Skills split: <strong>Workflows = manual <code>/</code>-invoked scripts; Skills = auto-invokable
+  multi-step capabilities</strong> — pick the surface per command's intended trigger.</li>
+<li>Source: https://docs.devin.ai/desktop/cascade/workflows</li>
+</ul>
+<h2 id="6-hooks-system-native">6. Hooks System — ✅ NATIVE<a class="headerlink" href="#6-hooks-system-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Cascade Hooks</strong> — shell commands that run automatically on Cascade lifecycle actions, defined in
+  <strong><code>hooks.json</code></strong> at system / user (<code>~/.codeium/windsurf/hooks.json</code>) / workspace
+  (<code>.windsurf/hooks.json</code>) levels (merged). <strong>12 events</strong>: <code>pre_read_code</code>, <code>post_read_code</code>,
+  <code>pre_write_code</code>, <code>post_write_code</code>, <code>pre_run_command</code>, <code>post_run_command</code>, <code>pre_mcp_tool_use</code>,
+  <code>post_mcp_tool_use</code>, <code>pre_user_prompt</code>, <code>post_cascade_response</code>,
+  <code>post_cascade_response_with_transcript</code>, <code>post_setup_worktree</code>.</li>
+<li>Hooks receive <strong>JSON context on stdin</strong>; <strong>pre-hooks can BLOCK</strong> an action by exiting with <strong>exit
+  code 2</strong>. Each hook supports a <strong><code>command</code></strong> (bash) key <strong>and</strong> a <strong><code>powershell</code></strong> key, plus
+  <code>show_output</code> / <code>working_directory</code> — so gald3r <code>g-hk-*.py</code> hooks wire <strong>natively</strong> via the
+  <code>bash</code> key running <code>python &lt;path&gt;</code>
+  (session/prompt context injection via <code>pre_user_prompt</code>, <code>.gald3r/</code> write guards via
+  <code>pre_write_code</code>, command guards via <code>pre_run_command</code>, worktree setup via <code>post_setup_worktree</code>).</li>
+<li>Source: https://docs.devin.ai/desktop/cascade/hooks — this page explicitly disambiguates by
+  product for the <em>user-level</em> hooks path: <strong>Devin Desktop IDE</strong>: <code>~/.codeium/windsurf/hooks.json</code>
+  (unchanged) vs. <strong>JetBrains Plugin</strong> (a separate "Windsurf Plugins" product): the flattened
+  <code>~/.codeium/hooks.json</code>. Do not conflate the two when re-scanning.</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Rules</strong> are developer-authored instructions stored as <strong><code>.windsurf/rules/*.md</code></strong> (one file per
+  rule, up to <strong>12,000 chars</strong> each, each with its own activation mode), plus legacy <code>.windsurfrules</code>
+  (root) and global <code>~/.codeium/windsurf/memories/global_rules.md</code> (<strong>6,000-char</strong> limit). Cascade also
+  reads <code>AGENTS.md</code> (§2) through the same Rules engine.</li>
+<li><strong>Four activation modes</strong>: <code>always_on</code>, <code>model_decision</code>, <code>glob</code>, <code>manual</code> (<code>@rule-name</code>). The
+  extension is <strong><code>.md</code></strong> (vs. Cursor's <code>.mdc</code>) — the parity sync maps the extension. These modes are the
+  Devin Desktop analog of Cursor's <code>alwaysApply:</code> / <code>globs:</code> / <code>description:</code>.</li>
+<li><strong>Memories</strong> are auto-generated, <strong>machine-local, workspace-specific, and do NOT sync</strong>; for durable
+  shareable context the docs recommend Rules or <code>AGENTS.md</code> instead. Memories are Cascade-managed, not
+  gald3r-authored.</li>
+<li>gald3r <code>g-rl-*</code> map to <code>always_on</code> (for <code>alwaysApply: true</code>), <code>glob</code> (for <code>globs:</code>-scoped), or
+  <code>model_decision</code> (for <code>description:</code>-scoped) rule files.</li>
+<li>Source: https://docs.devin.ai/desktop/cascade/memories — confirms the global rules file is
+  still <strong><code>~/.codeium/windsurf/memories/global_rules.md</code></strong> (unchanged post-rename).</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MCP servers extend Cascade's capabilities, configured via <strong><code>~/.codeium/windsurf/mcp_config.json</code></strong>
+  (<code>mcpServers</code> object: <code>command</code>/<code>args</code>/<code>env</code>) or the one-click <strong>MCP Marketplace</strong> in the Cascade
+  panel. Supports <strong>stdio</strong> and <strong>Streamable HTTP</strong> transports. Per-tool toggling enables specific
+  tools; <strong>hard limit of 100 active tools</strong> in Cascade's MCP panel.</li>
+<li>Config file name/location (<code>mcp_config.json</code> under <code>~/.codeium/windsurf/</code>) <strong>differs</strong> from Cursor's
+  <code>.cursor/mcp.json</code> — MCP is fully supported but <strong>not single-path portable</strong>; gald3r cannot ship one
+  <code>mcp.json</code> that both Cursor and Devin Desktop read.</li>
+<li>Source: https://docs.devin.ai/desktop/cascade/mcp (body text, verified 2026-07-18) states the
+  path unchanged: <code>~/.codeium/windsurf/mcp_config.json</code>.</li>
+<li><strong>Discrepancy found and documented (2026-07-18), not resolved by this task</strong>: the migration FAQ's
+  summary table (https://docs.devin.ai/desktop/devin-desktop-faq, "Per-user configuration
+  directory") lists <code>MCP config: ~/.codeium/mcp_config.json</code> — the <em>flattened</em> path, without a
+  Desktop/JetBrains split — while the dedicated <code>desktop/cascade/mcp</code> reference page AND the
+  dedicated <code>desktop/cascade/hooks</code> reference page (which explicitly disambiguates "Devin Desktop
+  IDE" vs. "JetBrains Plugin" for the analogous <code>hooks.json</code> path and keeps <code>/windsurf/</code> for
+  Desktop) both point to <code>~/.codeium/windsurf/mcp_config.json</code> for the Desktop app. Two
+  product-specific, self-consistent sources vs. one ambiguous summary table → this spec keeps the
+  <strong>unchanged</strong> path (<code>~/.codeium/windsurf/mcp_config.json</code>) as the documented value, flags the FAQ
+  table entry as a likely doc inconsistency (it may be conflating the JetBrains Plugin's confirmed
+  flattened path), and recommends re-verifying on the next <code>@g-platform-scan-docs windsurf</code> pass.</li>
+</ul>
+<h2 id="9-other-extensibility-notable">9. Other Extensibility / Notable<a class="headerlink" href="#9-other-extensibility-notable" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>VS Code / Cursor extension compatibility</strong>: Devin Desktop imports VS Code / Cursor extensions
+  (AI code-complete and certain proprietary extensions excluded).</li>
+<li><strong>Enterprise system-level governance</strong>: hooks, rules, workflows, and skills can be set at OS
+  system paths (<code>C:\ProgramData\Windsurf\</code>, <code>/etc/windsurf/</code>, <code>/Library/Application Support/Windsurf/</code>)
+  with system overriding workspace/global. These OS-level paths still say "Windsurf" in the live
+  docs (confirmed on <code>desktop/cascade/hooks</code>, 2026-07-18) — Cognition has not renamed the
+  system-install directory names, only the product's marketing/display name.</li>
+<li><strong>Workflows vs. Skills</strong>: Workflows are the manual <code>/</code>-invoked complement; Skills are the
+  auto-trigger complement. Cross-tool skill discovery in <code>.claude/skills</code> / <code>.agents/skills</code> makes
+  gald3r <code>SKILL.md</code> packs drop-in compatible.</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Devin Desktop (formerly Windsurf) now reaches <strong>near-full parity</strong> with the Cursor reference
+(<code>g-skl-platform-cursor</code>): native <strong>commands (Workflows), rules, skills, hooks, and MCP</strong>. The
+single caveat is <strong>agents</strong> — Cascade provides modes, Plan Mode, a planning agent, and Wave 13
+parallel agents (up to 5) but <strong>no user-definable named sub-agent file</strong>, so gald3r <code>g-agnt-*</code>
+personas surface as Skill/Rule content (⚠️). The Cascade-managed <strong>Memories</strong> layer is a Devin
+Desktop-native bonus with no Cursor analog — machine-local recall, not a gald3r-writable store.</p>
+<p><strong>Reuse note (important):</strong> because Cascade reads <code>AGENTS.md</code> and discovers <code>.claude/skills/</code> +
+<code>.agents/skills/</code> trees, gald3r's <strong>Skill artifacts are largely reusable on Devin Desktop without a
+separate port</strong> — the cheapest path to a high-parity Devin Desktop install is to ship the gald3r
+<code>.claude/skills/</code> tree (+ <code>AGENTS.md</code>) and add <code>.windsurf/workflows/</code> + <code>.windsurf/hooks.json</code> for the
+command and hook surfaces. Note Devin Desktop reads <code>AGENTS.md</code>, <strong>not</strong> <code>CLAUDE.md</code>.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (<code>hooks.json</code>)</li>
+<li><strong>Config file</strong>: <code>.windsurf/hooks.json</code> (workspace), <code>~/.codeium/windsurf/hooks.json</code> (user), system path (merged)</li>
+<li><strong>Events available</strong>: pre_read_code, post_read_code, pre_write_code, post_write_code, pre_run_command, post_run_command, pre_mcp_tool_use, post_mcp_tool_use, pre_user_prompt, post_cascade_response, post_cascade_response_with_transcript, post_setup_worktree (12 total)</li>
+<li><strong>Event payload format</strong>: JSON via stdin; pre-hooks BLOCK via exit code 2</li>
+<li><strong>Command extensions</strong>: <code>command</code> (bash) key <strong>and</strong> <code>powershell</code> key per hook (+ <code>show_output</code>, <code>working_directory</code>) — gald3r <code>g-hk-*.py</code> hooks wire via the <code>bash</code> key running <code>python &lt;path&gt;</code></li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> wire natively via the <code>bash</code> key running <code>python &lt;path&gt;</code> on the events above</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Instruction file is <strong><code>AGENTS.md</code></strong> (and legacy <code>.windsurfrules</code>), <strong>not</strong> <code>CLAUDE.md</code> — Cascade
+  reads it through the Rules engine (root = always-on, subdir = auto-glob).</li>
+<li><strong>Memories</strong> (<code>~/.codeium/windsurf/memories/</code>) are auto-generated, machine-local, and do <strong>not</strong>
+  sync — never treat them as a shippable gald3r surface; use <code>AGENTS.md</code> / <code>.windsurf/rules/</code> instead.</li>
+<li><strong>Workflows ≠ Skills</strong>: Workflows are manual <code>/</code>-invoked; Skills auto-invoke. Map gald3r commands to
+  Workflows and gald3r skills to Skills accordingly.</li>
+<li>Rule files use <code>.md</code> (not Cursor's <code>.mdc</code>); MCP config path (<code>mcp_config.json</code>) is Devin
+  Desktop-specific.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's <code>.claude/skills/</code> tree (Cascade discovers it) + <code>.windsurf/workflows/</code> for commands +
+  <code>.windsurf/hooks.json</code> (gald3r <code>g-hk-*.py</code> hooks wire via the <code>bash</code> key running <code>python &lt;path&gt;</code>)
+  for hooks; write instructions to <code>AGENTS.md</code>.</li>
+<li>Hooks fire natively (<code>bash</code> key runs <code>python &lt;path&gt;</code>) — no need to degrade session/pre-commit hooks to
+  manual or to git <code>core.hooksPath</code>.</li>
+<li><code>g-agnt-*</code> personas have no native agent file — express them as Skills/Rules until Devin Desktop
+  ships a named sub-agent primitive.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs windsurf</code> (crawl_max_age_days: 14).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<p>Rationale (agents tracked separately from the 5-column summary):
+- <strong>Hooks ✅</strong> — native <code>hooks.json</code>, 12 lifecycle events, <code>bash</code> key runs gald3r <code>g-hk-*.py</code> via <code>python &lt;path&gt;</code>; pre-hooks block via exit code 2.
+- <strong>Rules ✅</strong> — <code>.windsurf/rules/*.md</code> (4 activation modes, 12,000-char) + <code>AGENTS.md</code> + legacy <code>.windsurfrules</code> + global_rules.md.
+- <strong>Skills ✅</strong> — Cascade Skills <code>SKILL.md</code>; discovers <code>.claude/skills/</code> + <code>.agents/skills/</code> → gald3r packs install verbatim.
+- <strong>Commands ✅</strong> — Workflows <code>.windsurf/workflows/*.md</code>, <code>/</code>-invoked (manual; 12,000-char); maps gald3r <code>g-*</code> commands.
+- <strong>MCP ✅</strong> — <code>~/.codeium/windsurf/mcp_config.json</code> + Marketplace; stdio + Streamable HTTP; 100-tool cap (Devin Desktop-specific path, unchanged post-rename — see §8 discrepancy note).
+- <strong>Agents ⚠️</strong> — modes/Plan Mode/planning agent/Wave 13 parallel agents (up to 5), but no named sub-agent config file.
+- <strong>Docs Fresh ✅</strong> — re-crawled 2026-07-18 against https://docs.devin.ai (formerly https://docs.windsurf.com — see Rebrand Notice, §0).</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-07-18-httpsdocsdevinai-product-renamed-from-windsurf-to-devin-desktop-2026-06-02">Verification Evidence (docs crawl 2026-07-18, https://docs.devin.ai — product renamed from Windsurf to Devin Desktop 2026-06-02)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-07-18-httpsdocsdevinai-product-renamed-from-windsurf-to-devin-desktop-2026-06-02" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rebrand</td>
+<td><code>windsurf.com</code> → 200 at <code>devin.ai/desktop</code>; <code>docs.windsurf.com</code> → two 308 hops → <code>docs.devin.ai/desktop/getting-started</code> (title "Welcome to Devin Desktop - Devin Docs"); <code>docs.devin.ai/desktop/devin-desktop-faq</code> confirms 2026-06-02 cutover date</td>
+</tr>
+<tr>
+<td>Instruction file</td>
+<td>/desktop/cascade/memories — Cascade reads <code>AGENTS.md</code> as Rules (root always-on, subdir auto-glob); legacy <code>.windsurfrules</code>; NOT <code>CLAUDE.md</code></td>
+</tr>
+<tr>
+<td>Commands</td>
+<td>/desktop/cascade/workflows — Workflows <code>.windsurf/workflows/*.md</code>, <code>/[name]</code> slash-invoked, manual-only, 12,000-char; global <code>~/.codeium/windsurf/global_workflows/</code></td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/desktop/cascade/memories — <code>.windsurf/rules/*.md</code> (always_on/model_decision/glob/manual, 12,000-char), <code>global_rules.md</code> (6,000-char) at <code>~/.codeium/windsurf/memories/global_rules.md</code>; Memories are local-only</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/desktop/cascade/cascade — Code/Chat modes, planning agent, Plan Mode, Wave 13 parallel agents (≤5 in worktrees); NO named sub-agent config primitive → partial</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/desktop/cascade/skills — Cascade Skills <code>SKILL.md</code> (name+description); discovered in <code>.windsurf</code> / <code>.claude</code> / <code>.agents</code> skills dirs; progressive disclosure</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/desktop/cascade/hooks — <code>hooks.json</code> (workspace/user/system); 12 events; stdin JSON; pre-hooks block on exit code 2; <code>command</code> (bash) + <code>powershell</code> keys; explicitly disambiguates Devin Desktop IDE (<code>~/.codeium/windsurf/hooks.json</code>) vs. JetBrains Plugin (<code>~/.codeium/hooks.json</code>)</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/desktop/cascade/mcp — <code>~/.codeium/windsurf/mcp_config.json</code> + Marketplace; stdio + Streamable HTTP; 100-tool hard limit. <strong>Caveat</strong>: <code>/desktop/devin-desktop-faq</code>'s config-directory table lists the flattened <code>~/.codeium/mcp_config.json</code> without a Desktop/JetBrains split — likely conflating the JetBrains Plugin path; treated as a doc inconsistency (see §8)</td>
+</tr>
+<tr>
+<td>Cross-compat</td>
+<td>Cascade discovers <code>.claude/skills/</code> + <code>.agents/skills/</code> and reads <code>AGENTS.md</code> → gald3r Skill artifacts reusable (path differs from Cursor <code>.cursor/mcp.json</code>)</td>
+</tr>
+<tr>
+<td>Product disambiguation</td>
+<td><code>docs.devin.ai/windsurf/plugins/*</code> is a <strong>separate</strong> product ("Windsurf Plugins" — JetBrains/VS Code/other-IDE extension), not this skill's subject (the standalone Devin Desktop IDE, documented at <code>/desktop/*</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-windsurf/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

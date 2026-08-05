@@ -1,0 +1,1732 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/cline/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Cline (VS Code / JetBrains extension + CLI + SDK) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-cline-vs-code-jetbrains-extension-cli-sdk" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Cline (VS Code / JetBrains extension + CLI + SDK)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native-sdk-cli-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE (SDK / CLI runtime)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native-macoslinux-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE (macOS/Linux only)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-sdk-plugins-distribution-code-driven-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. SDK / Plugins — distribution + code-driven path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsclinebot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://docs.cline.bot)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-cline-vs-code-jetbrains-extension-cli-sdk">PLATFORM_SPEC.md — Cline (VS Code / JetBrains extension + CLI + SDK)<a class="headerlink" href="#platform_specmd-cline-vs-code-jetbrains-extension-cli-sdk" title="Permanent link">&para;</a></h1>
+<p>Cline is an <strong>open-source autonomous coding agent</strong> shipped as a VS Code / JetBrains extension, a
+<strong>CLI</strong>, and a public <strong>SDK / agent runtime</strong>. As of mid-2026 it natively supports <strong>all six</strong>
+gald3r-relevant extension primitives — custom slash commands (<strong>Workflows</strong>), always-on rules
+(<code>.clinerules</code>) plus cross-tool <code>AGENTS.md</code>, native <strong>subagents / multi-agent teams</strong> (via the Cline
+SDK), <strong>Agent Skills</strong> (<code>SKILL.md</code>, progressive disclosure), lifecycle <strong>Hooks</strong> (6 event types,
+executable scripts), and full <strong>MCP</strong> with a marketplace. Skills, Workflows, and Hooks all accept an
+optional <code>scripts/</code> directory — genuine script-execution extensibility beyond pure-prompt injection.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://docs.cline.bot (see Verification
+Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code>, <code>status: ⚠️</code>) which incorrectly
+marked hooks/skills/agents as ❌ and commands as ⚠️ — they are now all <strong>NATIVE</strong>. The prior
+"<code>.clinerules</code> + memory-bank only" model is obsolete.</p>
+<blockquote>
+<p><strong>Two platform-specific caveats (do not drop on re-sync):</strong>
+1. <strong>Hooks are macOS/Linux only</strong> at time of research (v3.36, Nov 2025) — <strong>no Windows support yet</strong>.
+   The <gald3r_source> dev environment is Windows, so verify Windows hook support before relying
+   on <code>g-hk-*</code> file-watch / pre-tool gating in Cline installs.
+2. <strong>Native subagents / teams require the Cline SDK or CLI runtime</strong>, not the bare IDE chat.</p>
+<p><strong>Instruction-file convention:</strong> Cline reads <strong><code>.clinerules</code> and <code>AGENTS.md</code></strong> (plus <code>.cursorrules</code>
+/ <code>.windsurfrules</code> for cross-tool compat). It does <strong>NOT</strong> read <code>CLAUDE.md</code>. gald3r's <code>AGENTS.md</code> is
+the first-class input on Cline; <code>CLAUDE.md</code> is not auto-loaded.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                       ← instruction file Cline reads (cross-tool standard; NOT CLAUDE.md)
+├── .clinerules                     ← (legacy) single always-on rules FILE
+└── .clinerules/                    ← (modern) rules DIRECTORY — every .md/.txt auto-injected
+    ├── gald3r-rules.md             ← gald3r always-on rules (toggleable per-file, v3.13)
+    ├── workflows/   *.md           ← custom slash commands (/&lt;filename&gt;)
+    └── hooks/       &lt;hooktype&gt;     ← project lifecycle hooks (executable, no extension)
+
+&lt;workspace-or-home&gt;/
+├── .cline/skills/    &lt;name&gt;/SKILL.md   ← Agent Skills (workspace)  | ~/.cline/skills/ (global)
+├── .cline/mcp.json                     ← MCP config (CLI)          | cline_mcp_settings.json (IDE)
+└── ~/Documents/Cline/Rules/Hooks/      ← global hooks dir          | + global rules dir
+</code></pre>
+<p>Cline <strong>also</strong> auto-detects <code>.cursorrules</code> and <code>.windsurfrules</code> for cross-tool compatibility, and
+reads <code>~/.agents/AGENTS.md</code>. The bare project-root <code>AGENTS.md</code> is now a listed supported source.</p>
+<p><strong>gald3r writes</strong>: <code>.clinerules/</code> (rules), <code>.clinerules/workflows/</code> (commands), <code>.cline/skills/</code>
+(skills), <code>.clinerules/hooks/</code> (hooks, non-Windows), MCP via <code>cline_mcp_settings.json</code> / <code>~/.cline/mcp.json</code>.
+<strong>Cline owns</strong>: the Workflow <code>&lt;explicit_instructions&gt;</code> wrapping, the 3-tier Skill loader, and the
+MCP Marketplace catalog (Cline-managed, not a gald3r-writable surface).</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Cline's rules table recognizes, in addition to <code>.clinerules</code>: <strong><code>AGENTS.md</code></strong> (project root and
+<code>~/.agents/AGENTS.md</code>, "standard format for cross-tool compatibility"), <code>.cursorrules</code>, and
+<code>.windsurfrules</code>, plus a global <code>~/Documents/Cline/Rules</code> store. <strong>No <code>CLAUDE.md</code></strong> — gald3r ships
+its instruction content as <code>AGENTS.md</code> for Cline. (Community issues #5033/#7062/#6162 historically
+requested project-root <code>AGENTS.md</code> auto-loading; the current docs page now lists bare <code>AGENTS.md</code> as
+a supported source.)</p>
+<hr />
+<h2 id="3-agents-support-native-sdk-cli-runtime">3. Agents Support — ✅ NATIVE (SDK / CLI runtime)<a class="headerlink" href="#3-agents-support-native-sdk-cli-runtime" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Subagents + Multi-Agent Teams</strong> via the <strong>Cline SDK</strong> (open-sourced ~May 2026, powers the CLI
+  and Kanban board). "The SDK includes agent teams and subagents natively, so a session can delegate
+  to specialists, track progress, and exchange handoff notes, all inside the same core runtime."</li>
+<li>Each subagent gets its own <code>Agent</code> instance with a dedicated <strong>model, tool set, and system prompt</strong>;
+  teams coordinate through a <strong>shared task board</strong> with one coordinator delegating to specialists.</li>
+<li><strong>Caveat</strong>: requires the <strong>Cline SDK / CLI runtime</strong>, not the bare IDE chat. Coordinator agents can
+  be run on <strong>cron</strong> for recurring automations (relevant to gald3r scheduled / heartbeat workflows).</li>
+<li>gald3r <code>g-agnt-*</code> definitions map to SDK subagent definitions (CLI surface).</li>
+<li>Source: https://docs.cline.bot/sdk/guides/multi-agent-teams</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> ("natively integrated into Cline, using a simple directory structure with
+  <code>SKILL.md</code> files and optional supporting documents or scripts"). Each skill is a folder with
+  <code>SKILL.md</code> (YAML <code>name</code> + <code>description</code> ≤1024 chars) plus optional <code>docs/</code> / <code>templates/</code> /
+  <code>scripts/</code>.</li>
+<li>Discovered from <strong><code>.cline/skills/</code></strong> (workspace) or <strong><code>~/.cline/skills/</code></strong> (global). Loaded in
+  <strong>3 tiers</strong> — metadata (~100 tokens, always) → instructions (on trigger) → resources (on demand) —
+  and activated via the <strong><code>use_skill</code></strong> tool. Enabled Skills are also triggerable as slash commands.</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively (folder name = skill id). <strong>Note:</strong> Cline discovers
+  <code>.cline/skills/</code>, <strong>not</strong> <code>.claude/skills/</code> — gald3r must place skills under <code>.cline/skills/</code>.</li>
+<li>Source: https://docs.cline.bot/features/skills</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Workflows = custom slash commands.</strong> Any markdown file in <strong><code>.clinerules/workflows/</code></strong> becomes a
+  slash command invoked by typing <code>/</code> + the filename (e.g. <code>/deploy.md</code>). Built-in commands include
+  <code>/newtask</code>, <code>/smol</code>, <code>/newrule</code>, <code>/deep-planning</code>.</li>
+<li>Workflows inject <strong>on-demand only when invoked</strong> (token-efficient), wrapped in
+  <code>&lt;explicit_instructions&gt;</code> tags — distinct from rules, which append to every system prompt.</li>
+<li>gald3r <code>@g-*</code> / <code>/g-*</code> commands map to <code>.clinerules/workflows/*.md</code>.</li>
+<li>Source: https://docs.cline.bot/features/slash-commands/workflows</li>
+</ul>
+<h2 id="6-hooks-system-native-macoslinux-only">6. Hooks System — ✅ NATIVE (macOS/Linux only)<a class="headerlink" href="#6-hooks-system-native-macoslinux-only" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Lifecycle hooks</strong> (v3.36, Nov 2025): "a system for injecting custom logic into the AI workflow at
+  critical decision points." <strong>Six hook types</strong>: <strong>PreToolUse, PostToolUse, UserPromptSubmit,
+  TaskStart, TaskResume, TaskCancel</strong>.</li>
+<li>Hooks are <strong>executable scripts</strong> (no extension, named after the hook type) in
+  <strong><code>~/Documents/Cline/Rules/Hooks/</code></strong> (global) or <strong><code>.clinerules/hooks/</code></strong> (project). Each receives
+  <strong>JSON via stdin</strong> and returns <strong>JSON</strong> with <code>cancel</code> + <code>contextModification</code> fields. Lifecycle
+  hooks can also be registered programmatically via the <strong>SDK plugin system</strong>.</li>
+<li><strong>⚠️ OS LIMIT — macOS/Linux only at time of research; Windows NOT yet supported.</strong> gald3r's
+  <code>g-hk-*.py</code> hooks therefore do <strong>not</strong> wire natively on Windows Cline regardless of invocation
+  (<code>python &lt;path&gt;</code>) — the limit is Cline's own OS support, not the hook's script language. On Windows, hook
+  behaviors (SessionStart context injection, PreToolUse <code>.gald3r/</code> guards, pre-commit gates) must run
+  out-of-band (git <code>core.hooksPath</code>, manual invocation) until Windows hook support lands.</li>
+<li>Source: https://cline.bot/blog/cline-v3-36-hooks</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>.clinerules</code></strong> — single file OR a <strong><code>.clinerules/</code> folder</strong>. "Cline processes all <code>.md</code> and
+  <code>.txt</code> files inside <code>.clinerules/</code>, combining them into a unified set of rules" so preferences are
+  not repeated each task. A <strong>toggleable popover (v3.13)</strong> enables/disables individual rule files.</li>
+<li><strong>Conditional rules</strong>: YAML frontmatter scopes rules to <strong>matching file paths</strong> (path-glob scoping
+  IS supported via frontmatter — an upgrade over the prior spec's "no glob scoping" claim).</li>
+<li>gald3r <code>g-rl-*</code> map to files in <code>.clinerules/</code>. Always-on rules → plain files; path-scoped rules →
+  frontmatter path conditions.</li>
+<li>Source: https://docs.cline.bot/customization/cline-rules</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Model Context Protocol</strong> servers + a built-in <strong>MCP Marketplace</strong> (one-click install). "MCP lets
+  Cline use external tools and data sources through MCP servers." Supports <strong>STDIO</strong> (local process)
+  and <strong>Remote HTTP/SSE</strong> transports.</li>
+<li>Config: <strong><code>cline_mcp_settings.json</code></strong> (IDE) or <strong><code>~/.cline/mcp.json</code></strong> (CLI).</li>
+<li>Source: https://docs.cline.bot/mcp/mcp-overview</li>
+</ul>
+<h2 id="9-sdk-plugins-distribution-code-driven-path">9. SDK / Plugins — distribution + code-driven path<a class="headerlink" href="#9-sdk-plugins-distribution-code-driven-path" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The <strong>Cline SDK</strong> (open-sourced ~May 2026) is the upgraded agent runtime powering the CLI and
+  Kanban board. It exposes a <strong>plugin system</strong> where a plugin can register <strong>tools, observe lifecycle
+  events, AND add rules and commands programmatically</strong> — a second, code-driven path to all of the
+  above primitives.</li>
+<li>Community library <strong>github.com/cline/clinerules</strong> hosts shareable rules, skills, workflows, and
+  <code>AGENTS.md</code> files — a distribution channel gald3r tiers could publish into.</li>
+<li>Source: https://docs.cline.bot/sdk/guides/multi-agent-teams</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Cline now reaches <strong>full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>commands, rules, agents, skills, hooks, and MCP</strong>, with MCP a <strong>standout strength</strong> (in-editor
+marketplace, STDIO + remote). The two honest caveats are <strong>(a)</strong> hooks are <strong>macOS/Linux only</strong>
+(Windows gap — material for the Windows-based <gald3r_source> dev env), and <strong>(b)</strong> native subagents
+/ teams require the <strong>Cline SDK / CLI runtime</strong>, not the bare IDE chat.</p>
+<p><strong>Reuse note:</strong> gald3r maps cleanly — rules → <code>.clinerules/</code>, commands → <code>.clinerules/workflows/</code>,
+skills → <code>.cline/skills/SKILL.md</code>, hooks → <code>.clinerules/hooks/</code> (non-Windows). Cline reads <code>AGENTS.md</code>
+(not <code>CLAUDE.md</code>) and discovers <code>.cline/skills/</code> (not <code>.claude/skills/</code>), so the Cline install ships
+<code>AGENTS.md</code> + the <code>.cline*</code> trees rather than reusing the Claude-Code <code>.claude/</code> tree as-is.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (executable lifecycle scripts) — <strong>macOS/Linux only (no Windows support yet)</strong></li>
+<li><strong>Config dir</strong>: <code>~/Documents/Cline/Rules/Hooks/</code> (global) or <code>.clinerules/hooks/</code> (project)</li>
+<li><strong>Events available</strong>: PreToolUse, PostToolUse, UserPromptSubmit, TaskStart, TaskResume, TaskCancel</li>
+<li><strong>Event payload format</strong>: JSON via stdin; result JSON with <code>cancel</code> + <code>contextModification</code> fields</li>
+<li><strong>Script form</strong>: executable, no extension, named after the hook type; SDK plugins may register hooks programmatically</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> do <strong>NOT</strong> wire natively on Windows (Cline hook system is macOS/Linux only, independent of script language); on macOS/Linux, adapt <code>g-hk-*.py</code> to the executable-script-named-after-event convention</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>OS gate on hooks</strong>: Windows is unsupported at time of research — degrade Windows hook behaviors to
+  git <code>core.hooksPath</code> / manual until Windows support lands.</li>
+<li><strong>Two agent surfaces</strong>: the <strong>IDE chat</strong> (single-agent) vs the <strong>SDK / CLI runtime</strong> (subagents +
+  teams + cron). Target the SDK/CLI for full gald3r multi-agent parity.</li>
+<li><strong>Instruction file is <code>AGENTS.md</code>, not <code>CLAUDE.md</code></strong>; skills live under <code>.cline/skills/</code>, not
+  <code>.claude/skills/</code> — Cline-specific placement, not Claude-Code drop-in.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship <code>AGENTS.md</code> + <code>.clinerules/</code> (rules) + <code>.clinerules/workflows/</code> (commands) + <code>.cline/skills/</code>
+  (skills) + MCP via <code>cline_mcp_settings.json</code> / <code>~/.cline/mcp.json</code>.</li>
+<li>Hooks fire natively only on macOS/Linux — on Windows do <strong>not</strong> rely on <code>g-hk-*</code> for session-start /
+  pre-tool gating; use git hooks or manual invocation.</li>
+<li>Subagents / teams require the Cline SDK or CLI runtime (and can run on cron for heartbeat flows).</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs cline</code> (crawl_max_age_days: 14) — confirm Windows hook
+  support status.</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<p>Note: ✅ Hooks is <strong>macOS/Linux only</strong> (no Windows support at time of research). ✅ Agents
+(subagents/teams) require the <strong>Cline SDK / CLI runtime</strong>, not the bare IDE chat.</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsdocsclinebot">Verification Evidence (docs crawl 2026-06-02, https://docs.cline.bot)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsclinebot" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>/features/slash-commands/workflows — <code>.clinerules/workflows/*.md</code> → <code>/&lt;filename&gt;</code>; built-ins <code>/newtask</code>, <code>/smol</code>, <code>/newrule</code>, <code>/deep-planning</code>; injected in <code>&lt;explicit_instructions&gt;</code></td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/customization/cline-rules — <code>.clinerules</code> file OR <code>.clinerules/</code> folder (all <code>.md</code>/<code>.txt</code> combined); toggleable popover (v3.13); YAML frontmatter path-scoping; reads <code>AGENTS.md</code> (NOT <code>CLAUDE.md</code>)</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/sdk/guides/multi-agent-teams — SDK subagents + teams (own model/tools/prompt, shared task board); CLI/SDK runtime only; cron-able coordinators</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/features/skills — <code>SKILL.md</code> (YAML name + ≤1024-char description) in <code>.cline/skills/</code> or <code>~/.cline/skills/</code>; 3-tier progressive disclosure; <code>use_skill</code> tool</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/blog/cline-v3-36-hooks — 6 events (PreToolUse/PostToolUse/UserPromptSubmit/TaskStart/TaskResume/TaskCancel); executable scripts; JSON stdin/stdout (<code>cancel</code>+<code>contextModification</code>); <strong>macOS/Linux only, no Windows</strong></td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/mcp/mcp-overview — STDIO + Remote HTTP/SSE; MCP Marketplace; <code>cline_mcp_settings.json</code> (IDE) / <code>~/.cline/mcp.json</code> (CLI)</td>
+</tr>
+<tr>
+<td>Cross-compat</td>
+<td>Reads <code>AGENTS.md</code> + <code>.cursorrules</code> + <code>.windsurfrules</code>; community <code>github.com/cline/clinerules</code> distribution library; SDK plugins add tools/rules/commands programmatically</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-cline/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

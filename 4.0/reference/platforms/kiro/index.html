@@ -1,0 +1,1761 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/kiro/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Kiro (Amazon) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-kiro-amazon" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Kiro (Amazon)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-specs-kiros-flagship-workflow-adoptable-seam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Specs — Kiro's flagship workflow (adoptable seam)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpskirodevdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://kiro.dev/docs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-kiro-amazon">PLATFORM_SPEC.md — Kiro (Amazon)<a class="headerlink" href="#platform_specmd-kiro-amazon" title="Permanent link">&para;</a></h1>
+<p>Kiro ships in <strong>two product lines</strong>: an <strong>agentic IDE</strong> (VS Code-based) and the <strong>Kiro CLI</strong> (the
+rebrand of Amazon Q Developer CLI). As of mid-2026 (Kiro 0.9) Kiro natively supports <strong>all six</strong>
+gald3r-relevant extension primitives — slash commands + local prompts, steering rules, custom
+subagents, <strong>Agent Skills</strong>, agent hooks, and MCP — with config under <strong><code>.kiro/</code></strong> (workspace) and
+<strong><code>~/.kiro/</code></strong> (global). Critically for gald3r, Kiro's skills follow the <strong>same open Agent Skills
+standard</strong> (<code>agentskills.io</code>, <code>SKILL.md</code> + <code>scripts/</code>/<code>references/</code>/<code>assets/</code>) that gald3r already
+uses, so gald3r skill packages drop straight into <code>.kiro/skills/</code>. Kiro also <strong>natively reads the
+<code>AGENTS.md</code> standard</strong> (always-included) alongside its own Steering files.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://kiro.dev/docs (see Verification
+Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code>) which incorrectly marked
+skills/agents as unsupported and commands as partial — they are now all <strong>NATIVE</strong> in Kiro 0.9.</p>
+<blockquote>
+<p><strong>Surface split:</strong> extension mechanisms are largely shared between the IDE and the CLI, but two
+diverge by surface. <strong>Agents</strong>: IDE uses markdown + YAML front matter (<code>.kiro/agents/*.md</code>); the
+CLI uses JSON config files. <strong>Hooks</strong>: the IDE hook engine is <strong>file/event-trigger</strong> driven (file
+save/create/delete, prompt submit, before/after tool, before/after spec task, manual); the CLI
+exposes classic <strong>lifecycle hooks</strong> (<code>agentSpawn</code>/<code>userPromptSubmit</code>/<code>preToolUse</code>/<code>postToolUse</code>/
+<code>Stop</code>). Where a feature is IDE- or CLI-specific it is noted inline.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                      ← instruction file Kiro reads (always-included, agents standard)
+└── .kiro/
+    ├── steering/    *.md          ← persistent rules/context (product.md, tech.md, structure.md + custom)
+    │                                 inclusion modes: Always | Conditional/fileMatch | Manual | Auto
+    ├── prompts/     *.md          ← user-defined local prompts (invoked @name)
+    ├── agents/      *.md          ← custom subagents (IDE: markdown + YAML front matter)
+    ├── skills/      &lt;name&gt;/SKILL.md  ← Agent Skills (agentskills.io standard)
+    ├── specs/       {feature}/    ← spec-driven dev unit (requirements.md / design.md / tasks.md)
+    ├── hooks                      ← IDE Agent Hooks (file-event triggers; authored via hook UI / config)
+    └── settings/
+        └── mcp.json              ← MCP server config (workspace)
+
+~/.kiro/                          ← GLOBAL (user-wide) tree
+├── steering/   *.md              ← global steering (all workspaces)
+├── agents/     *.md              ← global subagents
+├── skills/     &lt;name&gt;/SKILL.md   ← global Agent Skills
+└── settings/
+    └── mcp.json                  ← global MCP config (merged; workspace takes precedence)
+</code></pre>
+<p>CLI custom agents are <strong>JSON</strong> config files (not <code>.md</code>) and CLI lifecycle hooks are configured in
+the <strong>agent config file</strong>, not a separate <code>hooks/</code> dir.</p>
+<p><strong>gald3r writes</strong>: <code>.kiro/skills/&lt;name&gt;/SKILL.md</code> (drop-in — same standard), <code>.kiro/steering/*.md</code>
+(rules/context), <code>.kiro/agents/*.md</code> (subagents), <code>.kiro/prompts/*.md</code> (commands), <code>.kiro/hooks</code>
+(IDE) / agent-config lifecycle hooks (CLI), <code>.kiro/settings/mcp.json</code> (MCP).
+<strong>Kiro owns</strong>: the <code>.kiro/</code> namespace, the steering auto-injection engine, the spec workflow, the
+hook trigger engine, and the MCP connection lifecycle.</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Kiro <strong>natively supports the <code>AGENTS.md</code> standard</strong> — placed in the workspace root (or
+<code>~/.kiro/steering/</code>), it is treated as markdown and is <strong>always included</strong> (note: <code>AGENTS.md</code> files
+do <strong>not</strong> support steering inclusion modes — they are always on). Kiro's own native instruction
+convention is <strong>Steering files</strong> under <code>.kiro/steering/</code> (<code>product.md</code>, <code>tech.md</code>, <code>structure.md</code>
++ custom). Kiro does <strong>not</strong> read <code>CLAUDE.md</code> or <code>GEMINI.md</code>. gald3r therefore ships <code>AGENTS.md</code>
+(first-class) and/or a <code>.kiro/steering/gald3r.md</code> file — no <code>KIRO.md</code> root file is required.</p>
+<hr />
+<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom subagents</strong>. <strong>IDE</strong>: define a markdown (<code>.md</code>) file with YAML front matter in
+  <code>~/.kiro/agents</code> (global) or <code>&lt;workspace&gt;/.kiro/agents</code>. <strong>CLI</strong>: custom agents are JSON config
+  files. Two built-in subagents ship (context-gathering + general-purpose). Subagents run in
+  <strong>parallel</strong>, each with its <strong>own context window</strong> (main agent context is not polluted), and also
+  appear as <strong>slash commands</strong> (e.g. <code>/code-reviewer find performance issues in my code</code>).</li>
+<li>gald3r <code>g-agnt-*</code> definitions map directly to Kiro subagent files (IDE md+YAML; CLI JSON).</li>
+<li>Source: https://kiro.dev/docs/chat/subagents/ ; https://kiro.dev/docs/cli/custom-agents/creating/</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> following the <strong>open Agent Skills standard</strong> (<code>agentskills.io</code>): <code>SKILL.md</code>
+  (required) plus optional <code>scripts/</code>, <code>references/</code>, <code>assets/</code> dirs. Stored in <code>.kiro/skills/</code>
+  (workspace) or <code>~/.kiro/skills/</code> (global). <strong>Progressive disclosure</strong> — name+description loaded at
+  startup, full instructions on demand. Invoked automatically or as a <code>/skill-name</code> slash command.
+  Portable/importable across compatible tools. <strong>Added in Kiro 0.9.</strong></li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load <strong>natively and directly</strong> — Kiro uses the <strong>same standard</strong>, so
+  gald3r skill packages are <strong>directly portable</strong> into <code>.kiro/skills/</code> with no per-platform port.</li>
+<li>Source: https://kiro.dev/docs/skills/ ; https://kiro.dev/docs/cli/skills/</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Slash commands + user-defined local prompts</strong>. Prompts: <code>/prompts create --name &lt;name&gt;
+  [--content &lt;content&gt;]</code> creates project-specific prompts saved to <code>.kiro/prompts/</code> in the current
+  workspace, invoked via the <code>@</code> prefix (e.g. <code>@code-review</code>). The <code>/</code> slash surface also unifies
+  <strong>hooks, steering files, skills, and subagents</strong> on demand (type <code>/</code> in chat to list).</li>
+<li>gald3r <code>@g-*</code> / <code>/g-*</code> commands map to <code>.kiro/prompts/*.md</code> (and skills/subagents auto-register as
+  slash commands too).</li>
+<li>Source: https://kiro.dev/docs/cli/chat/manage-prompts/ ; https://kiro.dev/docs/chat/slash-commands/</li>
+</ul>
+<h2 id="6-hooks-system-native">6. Hooks System — ✅ NATIVE<a class="headerlink" href="#6-hooks-system-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Hooks</strong>. <strong>IDE</strong> hooks trigger on <strong>file save/create/delete</strong>, <strong>prompt submission</strong>,
+  <strong>agent turn completion</strong>, <strong>before/after tool invocation</strong>, <strong>before/after spec task execution</strong>,
+  and <strong>manual</strong> triggers; the action is either <strong>"Ask Kiro"</strong> (agent prompt) or <strong>"Run Command"</strong>
+  (shell command). <strong>CLI lifecycle hooks</strong>: <code>agentSpawn</code>, <code>userPromptSubmit</code>, <code>preToolUse</code>,
+  <code>postToolUse</code>, <code>Stop</code> — configured in the agent config file, receive event JSON via <strong>STDIN</strong>,
+  control flow via <strong>exit codes</strong> (<code>0</code> ok, <code>2</code> blocks <code>PreToolUse</code>).</li>
+<li>gald3r mapping: the <strong>CLI</strong> lifecycle events (<code>agentSpawn</code> ≈ session start, <code>userPromptSubmit</code>,
+  <code>preToolUse</code>/<code>postToolUse</code>, <code>Stop</code>) line up closely with gald3r's <code>g-hk-*</code> lifecycle hooks; the
+  <strong>IDE</strong> file-event triggers are a different (file/save-centric) model and map only where a
+  <code>fileEdited</code>-style trigger fits.</li>
+<li>Source: https://kiro.dev/docs/hooks/ ; https://kiro.dev/docs/cli/hooks/</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Steering</strong> — persistent markdown rule/context files in <code>.kiro/steering/</code> (workspace) and
+  <code>~/.kiro/steering/</code> (global), with <strong>four inclusion modes</strong>: <strong>Always</strong> (default),
+  <strong>Conditional/<code>fileMatch</code></strong>, <strong>Manual</strong> (<code>#file-ref</code>), <strong>Auto</strong> (description-matched). Default
+  foundation files: <code>product.md</code>, <code>tech.md</code>, <code>structure.md</code>. The <code>AGENTS.md</code> standard is also read
+  (always-included; no inclusion modes).</li>
+<li>gald3r <code>g-rl-*</code> map to steering <code>.md</code> files. Note Kiro's <code>.md</code> (no Cursor <code>.mdc</code>) — parity sync
+  swaps the extension. gald3r's <code>alwaysApply: true</code> rules → <strong>Always</strong> mode; <code>description:</code>-scoped
+  rules → <strong>Auto</strong> / <strong>Conditional</strong> (<code>fileMatch</code>) mode. This is <strong>richer</strong> than the prior spec's
+  "no per-rule scoping" claim — Kiro <em>does</em> support conditional/auto/manual inclusion.</li>
+<li>Source: https://kiro.dev/docs/steering/ ; https://kiro.dev/docs/cli/steering/</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Model Context Protocol</strong> servers. Config in <code>.kiro/settings/mcp.json</code> (workspace) and
+  <code>~/.kiro/settings/mcp.json</code> (global), <strong>merged with workspace precedence</strong>. Standard <code>mcpServers</code>
+  object (<code>command</code>, <code>args</code>, <code>env</code>, <code>disabled</code>, <code>autoApprove</code>). Per-agent access via the
+  <code>mcpServers</code> field; subagents can <strong>scope tools with wildcards</strong> like <code>@figma/*</code>. MCP servers can
+  also expose reusable prompts.</li>
+<li>Transport (stdio/SSE/HTTP) was <strong>not specified</strong> on the config page reviewed — ❓ confirm on the
+  next crawl.</li>
+<li>Source: https://kiro.dev/docs/mcp/ ; https://kiro.dev/docs/mcp/configuration/</li>
+</ul>
+<h2 id="9-specs-kiros-flagship-workflow-adoptable-seam">9. Specs — Kiro's flagship workflow (adoptable seam)<a class="headerlink" href="#9-specs-kiros-flagship-workflow-adoptable-seam" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Spec-driven development</strong>: <code>requirements.md</code>, <code>design.md</code>, <code>tasks.md</code> generated and tracked per
+  feature under <code>.kiro/specs/</code>; hooks can fire <strong>before/after spec task execution</strong>. This is a
+  strong adoptable surface for gald3r task/PRD parity. Spec/PRD mapping (Kiro specs ↔ gald3r PRDs)
+  is the natural integration seam: <code>requirements.md</code> → PRD acceptance criteria, <code>design.md</code> → PRD
+  technical design, <code>tasks.md</code> ↔ gald3r task breakdown.</li>
+<li>Source: https://kiro.dev/docs/specs/</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Kiro now reaches <strong>full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>commands, rules, agents, skills, hooks, and MCP</strong>. Caveats: agents and hooks diverge by surface
+(IDE md+YAML / file-event hooks vs CLI JSON / lifecycle hooks); MCP transport types and steering
+size limits were not documented on the pages crawled (❓). The <strong>spec-driven workflow</strong> is a
+Kiro-native bonus with no Cursor analog and the best gald3r integration seam.</p>
+<p><strong>Reuse note (important):</strong> because Kiro skills follow the <strong>identical open Agent Skills standard</strong>
+gald3r uses, gald3r <code>g-skl-*/SKILL.md</code> packages are <strong>directly portable</strong> into <code>.kiro/skills/</code> — the
+cheapest high-parity install ships the gald3r skill tree plus <code>AGENTS.md</code> (always-read) and a
+<code>.kiro/steering/gald3r.md</code> context file.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (IDE Agent Hooks — file/event triggers; CLI lifecycle hooks)</li>
+<li><strong>Config file</strong>: IDE — <code>.kiro/hooks</code> (authored via hook UI / config); CLI — the agent config file</li>
+<li><strong>Events available</strong>:</li>
+<li><strong>IDE</strong>: file save / create / delete, prompt submission, agent turn completion, before/after
+    tool invocation, before/after spec task execution, manual trigger</li>
+<li><strong>CLI</strong>: <code>agentSpawn</code>, <code>userPromptSubmit</code>, <code>preToolUse</code>, <code>postToolUse</code>, <code>Stop</code></li>
+<li><strong>Event payload format</strong>: CLI — event JSON via <strong>STDIN</strong>; flow control via <strong>exit codes</strong>
+  (<code>0</code> ok, <code>2</code> blocks <code>PreToolUse</code>). IDE — action is <strong>"Ask Kiro"</strong> (agent prompt) or
+  <strong>"Run Command"</strong> (shell command).</li>
+<li><strong>Command extensions</strong>: shell <code>Run Command</code> (IDE) / shell command (CLI). gald3r <code>g-hk-*.py</code> hooks
+  wire via <code>python &lt;path&gt;</code> (post-T1584 Python port; no PowerShell involved) as the shell command,
+  wired under the CLI lifecycle events.</li>
+<li><strong>gald3r hook files</strong>: gald3r <code>g-hk-*.py</code> map most cleanly to the <strong>CLI</strong> lifecycle events
+  (<code>agentSpawn</code> ≈ session start, <code>userPromptSubmit</code>, <code>preToolUse</code>/<code>postToolUse</code>, <code>Stop</code>). The IDE
+  file-event model fits file-save-style hooks only.</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Two surfaces: the <strong>IDE</strong> (file-event hooks, md+YAML agents) and the <strong>CLI</strong> (lifecycle hooks,
+  JSON agents). Skills, steering, prompts, and MCP are shared.</li>
+<li>Steering files live under <code>.kiro/steering/</code> with four inclusion modes (Always/Conditional/Manual/
+  Auto) — richer than a flat rules folder.</li>
+<li><code>AGENTS.md</code> is the read instruction file (always-included); Kiro does <strong>not</strong> read <code>CLAUDE.md</code>.</li>
+<li>Specs (<code>requirements.md</code>/<code>design.md</code>/<code>tasks.md</code>) are a first-class workflow, not a gald3r artifact.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's <code>g-skl-*/SKILL.md</code> tree straight into <code>.kiro/skills/</code> — same open standard, no port.</li>
+<li>Wire gald3r lifecycle hooks to the <strong>CLI</strong> events (<code>agentSpawn</code>/<code>userPromptSubmit</code>/<code>preToolUse</code>/
+  <code>postToolUse</code>/<code>Stop</code>); use the IDE hook engine only for file-save-style automation.</li>
+<li>Map gald3r rules to steering inclusion modes (Always for <code>alwaysApply: true</code>; Auto/Conditional for
+  <code>description:</code>-scoped). Use <code>AGENTS.md</code> for top-level instructions.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs kiro</code> (crawl_max_age_days: 7) — confirm MCP transport
+  types and any steering size limit.</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<ul>
+<li><strong>Hooks ✅</strong>: native — IDE file-event Agent Hooks + CLI lifecycle hooks (<code>agentSpawn</code>/
+  <code>userPromptSubmit</code>/<code>preToolUse</code>/<code>postToolUse</code>/<code>Stop</code>); model differs by surface.</li>
+<li><strong>Rules ✅</strong>: native Steering (<code>.kiro/steering/*.md</code>) with four inclusion modes + <code>AGENTS.md</code>.</li>
+<li><strong>Skills ✅</strong>: native Agent Skills (agentskills.io <code>SKILL.md</code>) — same standard gald3r uses (Kiro 0.9).</li>
+<li><strong>Commands ✅</strong>: native slash commands + local prompts (<code>.kiro/prompts/</code>, <code>@name</code>); skills/subagents
+  auto-register as slash commands.</li>
+<li><strong>MCP ✅</strong>: native — <code>.kiro/settings/mcp.json</code> (+ global, workspace precedence); per-agent scoping.</li>
+<li><strong>Docs Fresh ✅</strong>: crawled 2026-06-02 against kiro.dev/docs.</li>
+</ul>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpskirodevdocs">Verification Evidence (docs crawl 2026-06-02, https://kiro.dev/docs)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpskirodevdocs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>/cli/chat/manage-prompts/ + /chat/slash-commands/ — <code>/prompts create</code> saves to <code>.kiro/prompts/</code>, invoked <code>@name</code>; <code>/</code> lists hooks+steering+skills+subagents</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/steering/ + /cli/steering/ — <code>.kiro/steering/*.md</code> (product/tech/structure + custom); inclusion modes Always/Conditional(<code>fileMatch</code>)/Manual(<code>#file-ref</code>)/Auto; <code>AGENTS.md</code> always-included</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/chat/subagents/ + /cli/custom-agents/creating/ — IDE md+YAML in <code>~/.kiro/agents</code> or <code>&lt;ws&gt;/.kiro/agents</code>; CLI JSON; parallel, own context window; appear as slash commands</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/skills/ + /cli/skills/ — agentskills.io <code>SKILL.md</code>(+scripts/references/assets) in <code>.kiro/skills/</code>; progressive disclosure; importable; added Kiro 0.9</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/hooks/ + /cli/hooks/ — IDE: file save/create/delete, prompt submit, agent-turn complete, before/after tool, before/after spec task, manual (Ask Kiro / Run Command); CLI: agentSpawn/userPromptSubmit/preToolUse/postToolUse/Stop via STDIN, exit codes (2 blocks PreToolUse)</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/mcp/ + /mcp/configuration/ — <code>.kiro/settings/mcp.json</code> (+ <code>~/.kiro/...</code>), merged workspace-precedence; <code>mcpServers</code> field; subagent wildcard scoping (<code>@figma/*</code>); transport types ❓</td>
+</tr>
+<tr>
+<td>Specs</td>
+<td>/specs/ — <code>requirements.md</code>/<code>design.md</code>/<code>tasks.md</code> per feature under <code>.kiro/specs/</code>; hooks fire before/after spec task execution</td>
+</tr>
+<tr>
+<td>Instruction file</td>
+<td>Kiro reads <code>AGENTS.md</code> (always-included, no inclusion modes) + Steering; no <code>CLAUDE.md</code>/<code>GEMINI.md</code></td>
+</tr>
+<tr>
+<td>Recency</td>
+<td>Subagents (IDE), Agent Skills, new hook triggers shipped in <strong>Kiro 0.9</strong> (changelog /changelog/ide/0-9/); Skills doc last updated 2026-02-18; all six mechanisms current as of June 2026</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-kiro/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

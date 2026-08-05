@@ -1,0 +1,1839 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/pi/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Pi (badlogic/pi-mono coding harness) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-pi-badlogicpi-mono-coding-harness" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Pi (badlogic/pi-mono coding harness)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-not-supported-no-native-subagent-roster-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ❌ NOT SUPPORTED (no native subagent-roster file)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-prompt-templates-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Prompt Templates — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-extensions-native-via-typescript-not-json-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks / Extensions — ✅ NATIVE (via TypeScript, not JSON config)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native-hierarchical-agentsmd-no-glob-scoped-rule-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE (hierarchical AGENTS.md, no glob-scoped rule files)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-not-supported-explicitly-by-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ❌ NOT SUPPORTED (explicitly, by design)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-settings-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Settings / Distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-gaps-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Gaps vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-07-03-httpspidevdocslatest-githubcombadlogicpi-mono" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-07-03, https://pi.dev/docs/latest/* + github.com/badlogic/pi-mono)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-pi-badlogicpi-mono-coding-harness">PLATFORM_SPEC.md — Pi (badlogic/pi-mono coding harness)<a class="headerlink" href="#platform_specmd-pi-badlogicpi-mono-coding-harness" title="Permanent link">&para;</a></h1>
+<p><strong>Pi</strong> (<code>badlogic/pi-mono</code>, package <code>packages/coding-agent</code>) is a minimal, open-source terminal
+coding-agent harness — "AI agent toolkit: unified LLM API, agent loop, TUI, coding agent CLI"
+(67.5k+ GitHub stars at verification time). It is a bare CLI/TUI, not an IDE or GUI app: no
+Settings panels, no marketplace — everything is files-on-disk plus TypeScript extensions.</p>
+<p><strong>Authoring path</strong>: NEW. <strong>Verified 2026-07-03</strong> against https://pi.dev/docs/latest/usage,
+/skills, /prompt-templates, /extensions, /settings, and the pi-mono <code>coding-agent</code> README (see
+Verification Evidence). No prior gald3r spec existed for this platform.</p>
+<blockquote>
+<p><strong>Instruction-file truth (read carefully):</strong> Pi reads <strong><code>AGENTS.md</code></strong> (or <code>CLAUDE.md</code> as an
+alias) via <strong>true hierarchical directory-walk concatenation</strong> — global <code>~/.pi/agent/AGENTS.md</code>,
+then every matching file found walking <strong>up from the current working directory to the
+project/global roots</strong>, all concatenated together. This is closer to Cursor/Qwen/Gemini's
+hierarchical model than to ZCode's flat two-scope append. Pi additionally supports a full
+<strong>system-prompt override</strong> (<code>SYSTEM.md</code> replaces the default system prompt; <code>APPEND_SYSTEM.md</code>
+appends to it) at both global (<code>~/.pi/agent/</code>) and project (<code>.pi/</code>) scope — a capability none of
+gald3r's other AGENTS.md-native platforms expose as a first-class file.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                        ← project instructions (CLAUDE.md also accepted as alias)
+└── .pi/
+    ├── SYSTEM.md                    ← optional: REPLACES the default system prompt (project scope)
+    ├── APPEND_SYSTEM.md             ← optional: APPENDS to the system prompt (project scope)
+    ├── skills/   &lt;name&gt;/SKILL.md    ← Agent Skills (project scope; agentskills.io standard)
+    ├── prompts/  &lt;name&gt;.md          ← prompt templates == custom slash commands (project scope)
+    ├── extensions/ &lt;name&gt;.ts        ← TypeScript extensions: tools, commands, hooks, UI (project)
+    │   or &lt;name&gt;/index.ts
+    └── settings.json                ← project settings (merges over global; `extensions:` array)
+
+~/.pi/agent/                         ← global config root (override via $PI_CODING_AGENT_DIR)
+├── AGENTS.md                        ← global instructions (read first in the walk-up concat)
+├── SYSTEM.md / APPEND_SYSTEM.md     ← global system-prompt override/append
+├── skills/   &lt;name&gt;/SKILL.md        ← global Agent Skills
+├── prompts/  &lt;name&gt;.md              ← global prompt templates
+├── extensions/ &lt;name&gt;.ts            ← global TypeScript extensions
+└── settings.json                    ← global settings
+
+~/.agents/skills/                    ← ALSO discovered (cross-tool shared skills location)
+</code></pre>
+<p><strong>gald3r writes</strong>: project-root <code>AGENTS.md</code>, <code>.pi/skills/&lt;name&gt;/SKILL.md</code>, <code>.pi/prompts/&lt;name&gt;.md</code>,
+and a single <code>.pi/extensions/gald3r-hooks.ts</code> lifecycle-hook extension. <strong>Pi owns</strong>: the <code>.pi/</code>
+namespace mechanics (settings merge order, extension loading/trust gating, skill scan order).</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Pi reads <strong><code>AGENTS.md</code></strong> (or <strong><code>CLAUDE.md</code></strong> as an accepted alias — the docs state these are
+treated equivalently) via genuine <strong>hierarchical concatenation</strong>:</p>
+<ol>
+<li><code>~/.pi/agent/AGENTS.md</code> (global)</li>
+<li>Every <code>AGENTS.md</code>/<code>CLAUDE.md</code> found walking <strong>up</strong> from the current working directory</li>
+<li>The current directory's own file</li>
+</ol>
+<p>"All matching files are concatenated." Loading can be disabled entirely with <code>--no-context-files</code>
+/ <code>-nc</code>. This is a closer match to gald3r's <code>AGENTS.md</code>-hierarchy platforms (Cursor, Qwen, Gemini)
+than to ZCode's flat two-scope append — gald3r's rule content can be split across directory levels
+if useful, but a single project-root <code>AGENTS.md</code> is the simplest, most portable install target.</p>
+<ul>
+<li>Pi <strong>also</strong> supports full system-prompt control distinct from <code>AGENTS.md</code>: <code>.pi/SYSTEM.md</code>
+  (project) or <code>~/.pi/agent/SYSTEM.md</code> (global) <strong>replaces</strong> the default system prompt outright;
+  <code>APPEND_SYSTEM.md</code> at either scope <strong>appends</strong> to it instead. gald3r does not need this for a
+  standard install (<code>AGENTS.md</code> is sufficient) but it is documented here because a future
+  persona/system-prompt override skill could target it.</li>
+<li>Source: https://pi.dev/docs/latest/usage</li>
+</ul>
+<hr />
+<h2 id="3-agents-support-not-supported-no-native-subagent-roster-file">3. Agents Support — ❌ NOT SUPPORTED (no native subagent-roster file)<a class="headerlink" href="#3-agents-support-not-supported-no-native-subagent-roster-file" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Pi has <strong>no documented <code>agents/&lt;name&gt;.md</code>-style subagent roster</strong> the way Claude Code, Cursor,
+  Goose, or Mistral Vibe do. The TypeScript extension API exposes session-control primitives
+  (<code>ctx.newSession()</code>, <code>ctx.fork()</code>, <code>pi.sendMessage()</code>) that a <strong>custom extension</strong> could use to
+  spawn or fork sub-sessions programmatically, but that is imperative extension code, not a
+  declarative per-agent file gald3r can drop in.</li>
+<li><strong>gald3r gap</strong>: gald3r's <code>g-agnt-*.md</code> set has no project-scoped landing zone on Pi today. Do not
+  fabricate an <code>agents/*.md</code> folder that Pi does not read — this mirrors the ZCode precedent
+  (<code>g-skl-platform-zcode</code> §3) of documenting the gap honestly rather than inventing a file format.</li>
+<li>Source: absence confirmed against https://pi.dev/docs/latest/extensions (ExtensionAPI surface)
+  and https://pi.dev/docs/latest/usage (no agents/subagents section in either).</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong>: implements "the Agent Skills standard" — a <code>SKILL.md</code> file per skill directory
+  with YAML frontmatter (<code>name</code>: lowercase alphanumeric + hyphens, 1-64 chars; <code>description</code>: max
+  1024 chars; optional <code>license</code>, <code>compatibility</code>, <code>metadata</code>, <code>allowed-tools</code>,
+  <code>disable-model-invocation</code>) plus a Markdown body.</li>
+<li><strong>Locations</strong> (all scanned, merged): <code>~/.pi/agent/skills/</code> (global), <code>~/.agents/skills/</code> (shared
+  cross-tool location), <code>.pi/skills/</code> (project), <code>.agents/skills/</code> (project — searched from cwd up
+  through parent directories), and skills bundled inside Pi packages.</li>
+<li><strong>Discovery/invocation</strong>: at startup Pi scans all skill locations and extracts metadata; the
+  system prompt lists available skills in XML. Skills load on-demand via <strong><code>/skill:name</code></strong> (e.g.
+  <code>/skill:pdf-tools extract</code>) or automatically when a task matches the skill's <code>description</code>.</li>
+<li><strong>Leniency note</strong>: "Pi allows skill names to differ from their parent directory even though the
+  standard disallows it" (for cross-harness compatibility) — gald3r's <code>g-skl-*</code> directory-name ==
+  frontmatter-<code>name</code> convention is already standard-compliant, so no adaptation is needed.</li>
+<li><strong>gald3r mapping</strong>: <code>g-skl-*/SKILL.md</code> files are <strong>drop-in compatible</strong> at <code>.pi/skills/&lt;name&gt;/</code> —
+  same frontmatter shape as agentskills.io, identical to how gald3r already ships for
+  Claude/Cursor/ZCode.</li>
+<li>Source: https://pi.dev/docs/latest/skills</li>
+</ul>
+<h2 id="5-commands-prompt-templates-native">5. Commands / Prompt Templates — ✅ NATIVE<a class="headerlink" href="#5-commands-prompt-templates-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Prompt templates</strong>: Markdown files that "expand from slash commands", stored at
+  <code>~/.pi/agent/prompts/</code> (global), <code>.pi/prompts/</code> (project), or bundled in Pi packages. Invoked as
+  <strong><code>/templatename</code></strong>.</li>
+<li>Built-in slash commands (not gald3r's concern, but confirms the command surface is real and
+  populated): <code>/login</code>, <code>/logout</code>, <code>/model</code>, <code>/scoped-models</code>, <code>/settings</code>, <code>/resume</code>, <code>/new</code>,
+  <code>/name</code>, <code>/session</code>, <code>/tree</code>, <code>/trust</code>, <code>/fork</code>, <code>/clone</code>, <code>/compact</code>, <code>/copy</code>, <code>/export</code>,
+  <code>/import</code>, <code>/share</code>, <code>/reload</code>, <code>/hotkeys</code>, <code>/changelog</code>, <code>/quit</code>.</li>
+<li><strong>gald3r mapping</strong>: gald3r's <code>@g-*</code> / <code>/g-*</code> command files map to <code>.pi/prompts/&lt;name&gt;.md</code> as
+  simple prompt-body files, invoked <code>/name</code> (no <code>g-</code> prefix stripping needed — the filename <strong>is</strong>
+  the command name).</li>
+<li>Source: https://pi.dev/docs/latest/prompt-templates, https://pi.dev/docs/latest/usage</li>
+</ul>
+<h2 id="6-hooks-extensions-native-via-typescript-not-json-config">6. Hooks / Extensions — ✅ NATIVE (via TypeScript, not JSON config)<a class="headerlink" href="#6-hooks-extensions-native-via-typescript-not-json-config" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Pi has <strong>no <code>hooks.json</code>-style declarative config</strong>. Instead, <strong>TypeScript extensions</strong> register
+  event handlers programmatically via <code>pi.on(eventName, handler)</code> on an <code>ExtensionAPI</code> object
+  passed to the extension's default export.</li>
+<li><strong>Extension locations</strong>: <code>~/.pi/agent/extensions/*.ts</code> or <code>*/index.ts</code> (global), <code>.pi/extensions/
+  *.ts</code> or <code>*/index.ts</code> (project — <strong>loads only after the project is trusted</strong>), plus package-based
+  extensions and paths/npm-packages/git-repos declared in <code>settings.json</code>'s <code>extensions:</code> array.</li>
+<li><strong>Real lifecycle events available</strong> (confirmed, not fabricated): <code>session_start</code>,
+  <code>session_shutdown</code>, <code>before_agent_start</code>, <code>agent_start</code>, <code>agent_end</code>, <code>tool_call</code>, <code>tool_result</code>,
+  <code>message_start</code>, <code>message_update</code>, <code>message_end</code>, <code>input</code>, <code>model_select</code>,
+  <code>thinking_level_select</code>, and the trust-gate event <code>project_trust</code> (fires before project-local
+  extensions load, so global/CLI-<code>-e</code> extensions can observe the trust decision).</li>
+<li><strong>gald3r mapping</strong>: a single <code>.pi/extensions/gald3r-hooks.ts</code> extension registers
+  <code>pi.on("session_start", ...)</code>, <code>pi.on("session_shutdown", ...)</code>, <code>pi.on("tool_call", ...)</code>, and
+  <code>pi.on("tool_result", ...)</code> handlers that shell out to the <strong>same shared canonical hook core</strong>
+  gald3r already uses for Goose (<code>g_hk_core.dispatch(&lt;canonical-event&gt;)</code>), passing the event
+  payload as JSON on stdin — the identical contract <code>_hook_common.read_stdin_json()</code> already
+  parses. This is the "TypeScript extensions" surface named in the platform brief.</li>
+<li>Source: https://pi.dev/docs/latest/extensions, https://pi.dev/docs/latest/usage</li>
+</ul>
+<h2 id="7-rules-memory-native-hierarchical-agentsmd-no-glob-scoped-rule-files">7. Rules / Memory — ✅ NATIVE (hierarchical <code>AGENTS.md</code>, no glob-scoped rule files)<a class="headerlink" href="#7-rules-memory-native-hierarchical-agentsmd-no-glob-scoped-rule-files" title="Permanent link">&para;</a></h2>
+<ul>
+<li>See §2. There is <strong>no</strong> <code>.mdc</code>-equivalent scoped/glob rule system (no <code>alwaysApply:</code>/<code>globs:</code>
+  frontmatter semantics like Cursor's <code>.cursor/rules/</code>) — <code>AGENTS.md</code> is a single concatenated
+  instruction body per directory level.</li>
+<li>gald3r <code>g-rl-*</code> rules are concatenated into the project-root <code>AGENTS.md</code> body (the same pattern
+  used for every other <code>AGENTS.md</code>-native platform gald3r ships).</li>
+<li>Source: https://pi.dev/docs/latest/usage</li>
+</ul>
+<h2 id="8-mcp-support-not-supported-explicitly-by-design">8. MCP Support — ❌ NOT SUPPORTED (explicitly, by design)<a class="headerlink" href="#8-mcp-support-not-supported-explicitly-by-design" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The <code>coding-agent</code> README states plainly: <strong>"No MCP. Build CLI tools with READMEs (see Skills),
+  or build an extension that adds MCP support."</strong> This is an explicit design choice, not a gap —
+  do not fabricate an <code>mcp.json</code>/<code>.mcp.json</code> file for Pi.</li>
+<li><strong>gald3r mapping</strong>: no MCP surface to wire. Any gald3r MCP server integration would require a
+  bespoke TypeScript extension bridging to an MCP client — out of scope for a template-source
+  install.</li>
+<li>Source: https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/README.md</li>
+</ul>
+<h2 id="9-settings-distribution">9. Settings / Distribution<a class="headerlink" href="#9-settings-distribution" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>settings.json</code></strong> at <code>~/.pi/agent/settings.json</code> (global) and <code>.pi/settings.json</code> (project);
+  project settings merge over global (nested objects merge, not replace). The <code>extensions:</code> array
+  accepts local paths, npm package names, or git repository URLs — this is Pi's closest analog to
+  a plugin/marketplace distribution channel, though there is no built-in marketplace UI (it is a
+  bare-CLI/TUI harness).</li>
+<li>Source: https://pi.dev/docs/latest/settings</li>
+</ul>
+<hr />
+<h2 id="known-gaps-vs-cursor-reference">Known Gaps vs. Cursor Reference<a class="headerlink" href="#known-gaps-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gap</th>
+<th>Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>No MCP</strong> — explicit design choice ("No MCP" per the README); no <code>.mcp.json</code>/<code>mcp_servers</code> surface exists to wire gald3r's MCP server into. (§8)</td>
+<td>High</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>No project-level agents</strong> — no <code>agents/&lt;name&gt;.md</code> roster convention; gald3r's <code>g-agnt-*.md</code> set has no declarative landing zone (session-spawning is imperative-extension-only). (§3)</td>
+<td>High</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Hooks require authoring TypeScript</strong>, not dropping in a JSON/shell config — the gald3r hook surface must ship as a compiled/interpretable <code>.ts</code> extension file rather than a data file. (§6)</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Flat rule model within <code>AGENTS.md</code></strong> — no <code>.mdc</code>-equivalent glob-scoped rule loading; gald3r's <code>g-rl-*</code> set is concatenated into one body per directory level (same limitation as most AGENTS.md-native platforms). (§7)</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Strongest parity points</strong> (not gaps): Skills (§4) are a byte-for-byte drop-in match for gald3r's
+<code>SKILL.md</code> convention (same standard used for Claude/Cursor/ZCode). Commands (§5) map cleanly to
+simple prompt-template files. Rules (§2/§7) use genuine hierarchical <code>AGENTS.md</code> concatenation,
+which is actually a <em>closer</em> fit to gald3r's typical rule-authoring pattern than ZCode's flat
+two-scope append.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native, via TypeScript extension event handlers (not a declarative <code>hooks.json</code>) ✅</li>
+<li><strong>Config file</strong>: none — hooks are code. Extension file: <code>.pi/extensions/gald3r-hooks.ts</code>
+  (project) or <code>~/.pi/agent/extensions/gald3r-hooks.ts</code> (global), auto-loaded at startup (project
+  scope gated on project trust).</li>
+<li><strong>Events available</strong>: <code>session_start</code>, <code>session_shutdown</code>, <code>before_agent_start</code>, <code>agent_start</code>,
+  <code>agent_end</code>, <code>tool_call</code>, <code>tool_result</code>, <code>message_start</code>, <code>message_update</code>, <code>message_end</code>,
+  <code>input</code>, <code>model_select</code>, <code>thinking_level_select</code>, <code>project_trust</code>.</li>
+<li><strong>Event payload format</strong>: handler signature <code>pi.on(event, async (event, ctx) =&gt; {...})</code>; gald3r's
+  extension shells out to the shared Python dispatcher with the event payload serialized as JSON on
+  stdin, matching the existing Goose/Claude Code hook contract (<code>_hook_common.read_stdin_json()</code>).</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-on-session-start.py</code>, <code>g-hk-on-session-end.py</code>,
+  <code>g-hk-on-tool-start.py</code>, <code>g-hk-on-tool-end.py</code> — invoked via a <code>node</code>/<code>bun</code>-spawned Python
+  subprocess from the single <code>gald3r-hooks.ts</code> extension, not one file per hook (Pi has one
+  extension file registering multiple <code>pi.on(...)</code> calls, unlike Goose's per-event <code>hooks.json</code>
+  entries).</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Hierarchical <code>AGENTS.md</code>, not flat two-scope</strong> — unlike <code>g-skl-platform-zcode</code>, Pi's
+  <code>AGENTS.md</code>/<code>CLAUDE.md</code> walk genuinely merges up the directory tree; do not apply the ZCode
+  "inline everything into one workspace file" caveat as strictly (though a single project-root
+  file remains the simplest install).</li>
+<li><strong>Hooks are TypeScript code, not JSON</strong> — gald3r's usual <code>hooks.json</code>-style data file has no
+  Pi analog; the install surface is a single <code>.ts</code> extension file.</li>
+<li><strong>No MCP by design</strong> — do not fabricate an MCP config surface (see Mistral/ZCode precedent of
+  honestly documenting explicit absence vs. undocumented-but-possibly-present).</li>
+<li><strong>CLI/TUI only, no GUI</strong> — unlike ZCode (a desktop app with Settings panels), Pi has zero UI
+  surface beyond the terminal; all configuration is files-on-disk plus <code>--flag</code> CLI overrides.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's rule content in the project-root <code>AGENTS.md</code> (hierarchical concat is compatible
+  with gald3r's usual single-file install).</li>
+<li>gald3r skills (<code>g-skl-*/SKILL.md</code>) load natively under <code>.pi/skills/</code>; no adaptation needed —
+  identical frontmatter shape to the Claude/Cursor/ZCode ports already shipped.</li>
+<li>gald3r commands (<code>@g-*</code>) map to <code>.pi/prompts/&lt;name&gt;.md</code> as simple prompt-body Markdown files.</li>
+<li>Ship the lifecycle-hook surface as a single <code>.pi/extensions/gald3r-hooks.ts</code> TypeScript extension
+  (see <code>.pi/extensions/gald3r-hooks.ts</code> in this overlay) rather than fabricating a JSON hook config.</li>
+<li>Do not ship a project-level <code>agents/</code> folder or an <code>.mcp.json</code>/MCP config — neither has a
+  documented landing zone on Pi today.</li>
+<li>Re-check on the next <code>@g-platform-scan-docs pi</code> (crawl_max_age_days: 14) — Pi is an actively
+  developed OSS project (67.5k+ stars) with frequent releases; re-verify MCP absence and any new
+  agents/subagents documentation.</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<ul>
+<li><strong>Hooks ✅</strong> — native TypeScript extension event handlers (<code>pi.on(...)</code>); no JSON config, code
+  IS the hook.</li>
+<li><strong>Rules ✅</strong> — hierarchical <code>AGENTS.md</code>/<code>CLAUDE.md</code> concatenation (global then walk-up); flat body
+  per level, no glob-scoped rule files.</li>
+<li><strong>Skills ✅</strong> — native Agent Skills (<code>SKILL.md</code>, <code>name</code>/<code>description</code> frontmatter) in
+  <code>.pi/skills/</code>, agentskills.io-compatible, same standard as Claude/Cursor/ZCode.</li>
+<li><strong>Commands ✅</strong> — native prompt templates (<code>.md</code> files) at <code>.pi/prompts/</code>, invoked <code>/name</code>.</li>
+<li><strong>MCP ❌</strong> — explicitly unsupported by design ("No MCP" per README); would require a bespoke
+  extension bridge.</li>
+<li><strong>Docs Fresh ✅</strong> — <code>last_doc_scan: 2026-07-03</code>.</li>
+</ul>
+<p>(Agents are ❌ and not one of the 5 summary columns tracked in <code>PLATFORM_STATUS.md</code>, consistent
+with how ZCode's Beta-agents gap is handled outside the table.)</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-07-03-httpspidevdocslatest-githubcombadlogicpi-mono">Verification Evidence (docs crawl 2026-07-03, https://pi.dev/docs/latest/* + github.com/badlogic/pi-mono)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-07-03-httpspidevdocslatest-githubcombadlogicpi-mono" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Global config dir + override env var</td>
+<td>/usage — <code>~/.pi/agent/</code> global config directory, overridable via <code>PI_CODING_AGENT_DIR</code></td>
+</tr>
+<tr>
+<td><code>AGENTS.md</code>/<code>CLAUDE.md</code> hierarchical concat</td>
+<td>/usage — "Pi loads AGENTS.md or CLAUDE.md at startup from: <code>~/.pi/agent/AGENTS.md</code> (global), parent directories walking upward from cwd, current directory. All matching files are concatenated."; disable via <code>--no-context-files</code>/<code>-nc</code></td>
+</tr>
+<tr>
+<td><code>SYSTEM.md</code> / <code>APPEND_SYSTEM.md</code></td>
+<td>/usage — <code>.pi/SYSTEM.md</code> (project) or <code>~/.pi/agent/SYSTEM.md</code> (global) replaces the default system prompt; <code>APPEND_SYSTEM.md</code> at either scope appends instead</td>
+</tr>
+<tr>
+<td>Skills (<code>SKILL.md</code>, Agent Skills standard, <code>/skill:name</code>)</td>
+<td>/skills — locations <code>~/.pi/agent/skills/</code>, <code>~/.agents/skills/</code>, <code>.pi/skills/</code>, <code>.agents/skills/</code> (cwd-upward), package skills; frontmatter <code>name</code>/<code>description</code> + optional fields; "Pi allows skill names to differ from their parent directory even though the standard disallows it"</td>
+</tr>
+<tr>
+<td>Prompt templates (<code>/templatename</code>)</td>
+<td>/prompt-templates — Markdown files at <code>~/.pi/agent/prompts/</code>, <code>.pi/prompts/</code>, package prompts; "reusable prompts that expand from slash commands"</td>
+</tr>
+<tr>
+<td>Built-in slash commands</td>
+<td>/usage — <code>/login</code>, <code>/logout</code>, <code>/model</code>, <code>/scoped-models</code>, <code>/settings</code>, <code>/resume</code>, <code>/new</code>, <code>/name</code>, <code>/session</code>, <code>/tree</code>, <code>/trust</code>, <code>/fork</code>, <code>/clone</code>, <code>/compact</code>, <code>/copy</code>, <code>/export</code>, <code>/import</code>, <code>/share</code>, <code>/reload</code>, <code>/hotkeys</code>, <code>/changelog</code>, <code>/quit</code></td>
+</tr>
+<tr>
+<td>TypeScript extensions + <code>pi.on(...)</code> events</td>
+<td>/extensions — <code>~/.pi/agent/extensions/*.ts</code> (global), <code>.pi/extensions/*.ts</code> (project, trust-gated); <code>ExtensionAPI</code> with <code>on()</code>, <code>registerTool()</code>, <code>registerCommand()</code>, <code>sendMessage()</code>, etc.; events <code>session_start</code>, <code>session_shutdown</code>, <code>before_agent_start</code>, <code>agent_start</code>, <code>agent_end</code>, <code>tool_call</code>, <code>tool_result</code>, <code>message_start</code>, <code>message_update</code>, <code>message_end</code>, <code>input</code>, <code>model_select</code>, <code>thinking_level_select</code></td>
+</tr>
+<tr>
+<td><code>project_trust</code> event / trust gating</td>
+<td>/usage + /extensions — "Before the trust decision, pi loads only context files, user/global extensions, and CLI <code>-e</code> extensions so they can handle the <code>project_trust</code> event"; project-local <code>.pi/extensions</code> load only after trust</td>
+</tr>
+<tr>
+<td><code>settings.json</code> two-tier config</td>
+<td>/settings — <code>~/.pi/agent/settings.json</code> (global), <code>.pi/settings.json</code> (project); project overrides global, nested objects merge; <code>extensions:</code> array accepts local paths/npm packages/git repos</td>
+</tr>
+<tr>
+<td>No MCP (explicit)</td>
+<td>github.com/badlogic/pi-mono coding-agent README — "No MCP. Build CLI tools with READMEs (see Skills), or build an extension that adds MCP support."</td>
+</tr>
+<tr>
+<td>No hooks.json / no agents roster file</td>
+<td>absence confirmed against full doc set (/usage, /skills, /prompt-templates, /extensions, /settings) — no dedicated hooks-config page, no agents/subagents page</td>
+</tr>
+<tr>
+<td>Star count / project scale</td>
+<td><code>gh repo view badlogic/pi-mono</code> — 67,526 stars at verification time (2026-07-03); description "AI agent toolkit: unified LLM API, agent loop, TUI, coding agent CLI"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-pi/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

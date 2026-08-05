@@ -1,0 +1,1751 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/warp/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Warp (AI terminal + Oz agent platform) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-warp-ai-terminal-oz-agent-platform" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Warp (AI terminal + Oz agent platform)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-partial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ⚠️ PARTIAL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ❌ NONE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-other-capabilities-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Other Capabilities &amp; Distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-warp-ai-terminal-oz-agent-platform">PLATFORM_SPEC.md — Warp (AI terminal + Oz agent platform)<a class="headerlink" href="#platform_specmd-warp-ai-terminal-oz-agent-platform" title="Permanent link">&para;</a></h1>
+<p>Warp is an <strong>AI-native terminal</strong> (not an IDE) whose 2026 <strong>Agent Platform</strong> adds a real,
+first-class extensibility surface. As of mid-2026 Warp natively supports <strong>rules, Agent Skills
+(<code>SKILL.md</code>), agents (profiles + Oz subagent orchestration), and MCP</strong>, exposes a <strong>partial</strong>
+command surface (built-in slash commands + Warp Drive Workflows, but <strong>no user-defined custom
+slash-command syntax</strong>), and has <strong>no native lifecycle-hook system</strong>. This yields a mix of genuine
+parity (rules, skills, agents, MCP) and honest gaps (hooks absent; commands partial) — the correct
+factual picture for a terminal-native platform, not an implementation failure.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://docs.warp.dev (see Verification
+Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code>) which incorrectly marked
+<strong>skills and agents as hard gaps</strong> — both are now <strong>NATIVE</strong> on the Warp Agent Platform. Crucially,
+Warp's Skills system discovers cross-vendor <code>SKILL.md</code> trees (<code>.agents/skills/</code>, <code>.warp/skills/</code>,
+<strong><code>.claude/skills/</code></strong>, <code>.codex/skills/</code>, <code>.cursor/skills/</code>, …), so gald3r's Claude-Code skill
+artifacts are <strong>largely drop-in reusable</strong> on Warp.</p>
+<blockquote>
+<p><strong>Surface split:</strong> Warp's primitives live across <strong>on-disk rules/skills files</strong> (repo root +
+standard skill dirs), <strong>app/Warp Drive settings</strong> (Agent Profiles, MCP, Workflows), and the
+<strong>Oz cloud control plane</strong> (subagent orchestration, Cloud Triggers/Schedules). There is <strong>no
+<code>.warp/</code> tree of every gald3r primitive</strong> — rules live in <code>AGENTS.md</code>/<code>WARP.md</code>, agents are
+app-managed profiles, and commands/Workflows are Warp Drive (cloud) objects. Where a feature is
+cloud-managed or has a caveat it is noted inline.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p>Warp is <strong>not</strong> uniformly folder-namespaced like Cursor (<code>.cursor/rules|skills|agents|commands|hooks</code>).
+It reads root-level rules files and standard skill dirs on disk, and keeps agents/commands/MCP in
+app settings or the cloud (Warp Drive):</p>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                ← default project rules file (vendor-neutral) — gald3r writes
+├── WARP.md                  ← legacy native rules file (ALL-CAPS); wins precedence if both exist — gald3r writes
+├── &lt;subdir&gt;/AGENTS.md       ← per-subdirectory rules (best-effort inclusion) — optional
+├── .agents/skills/  &lt;name&gt;/SKILL.md  ← Agent Skills (SKILL.md standard) — gald3r writes
+├── .warp/skills/    &lt;name&gt;/SKILL.md  ← Warp-native skill dir — gald3r writes (optional)
+└── .claude/skills/  &lt;name&gt;/SKILL.md  ← also discovered (Claude-Code interop) — gald3r reuse
+
+~/ (home equivalents)        ← ~/.agents/skills, ~/.warp/skills, ~/.claude/skills, … — global skills
+~/.warp/                     ← Warp local app state (themes, launch configs) — platform-owned
+
+(App / Cloud — not a repo-installable folder tree)
+├── Agent Profiles &amp; permissions   ← named agents (base model, autonomy, tool/MCP allow-deny) — app-managed
+├── MCP servers                    ← Settings &gt; Agents &gt; MCP servers (CLI + HTTP/SSE) — app-managed
+└── Warp Drive (CLOUD)             ← Workflows, Notebooks, Prompts, Env Vars — cloud-backed
+</code></pre>
+<ul>
+<li><strong>gald3r writes</strong>: <code>AGENTS.md</code> and/or <code>WARP.md</code> (project rules); <code>SKILL.md</code> trees under
+  <code>.agents/skills/</code>, <code>.warp/skills/</code>, or reuse <code>.claude/skills/</code>.</li>
+<li><strong>Warp owns</strong>: the rules-file recognition mechanism, the Skills discovery list, Agent Profiles,
+  the MCP registry (app settings), Warp Drive cloud store, and <code>~/.warp/</code> state.</li>
+<li>There is <strong>no</strong> <code>.warp/rules/</code>, <code>.warp/agents/</code>, <code>.warp/commands/</code>, or <code>.warp/hooks/</code> folder.
+  Rules → root file; agents → app profiles; commands → Warp Drive Workflows; hooks → unsupported.</li>
+</ul>
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Warp's project-rules convention is <strong><code>AGENTS.md</code></strong> (vendor-neutral, the recommended path), with
+<strong><code>WARP.md</code></strong> as the legacy native name. The filename must be <strong>ALL-CAPS</strong> to be recognized. <strong>If
+both <code>AGENTS.md</code> and <code>WARP.md</code> exist in the same directory, <code>WARP.md</code> takes priority.</strong> Warp
+auto-applies the file from the <strong>repo root and the current directory</strong>, with best-effort inclusion
+of subdirectory files.</p>
+<ul>
+<li><strong>Note (instruction-file convention):</strong> unlike Augment/Claude-Code platforms that read <code>CLAUDE.md</code>,
+  Warp's instruction file is <strong><code>AGENTS.md</code> (or <code>WARP.md</code>)</strong> — it does <strong>not</strong> read <code>CLAUDE.md</code> as a
+  rules file. Fold gald3r enforcement into the root <code>AGENTS.md</code>/<code>WARP.md</code>.</li>
+<li><strong>Precedence</strong> (most specific first): subdirectory rules file → repo-root rules file → Global
+  Rules (app-level, all projects). gald3r enforcement belongs in the <strong>root <code>AGENTS.md</code>/<code>WARP.md</code></strong>.</li>
+<li>Project Rules apply <strong>automatically</strong> when an agent operates inside the project — no manual pin.</li>
+<li>Source: https://docs.warp.dev/agent-platform/capabilities/rules/</li>
+</ul>
+<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Profiles &amp; permissions</strong>: users create multiple named agent profiles, each with a distinct
+  <strong>base model, autonomy level, tool/command allow-deny lists, and MCP access</strong> — <em>"Set up different
+  profiles for different workflows (e.g., 'Safe &amp; cautious', 'YOLO mode', etc.)."</em> These are
+  app-managed profiles (not on-disk <code>g-agnt-*.md</code> files).</li>
+<li><strong>Oz subagent orchestration (multi-harness)</strong>: Oz can <em>"orchestrate subagents automatically,
+  deploying and tracking multiple agents in parallel"</em> (swarm, supervisor/worker, fan-out/fan-in,
+  critic/verifier patterns) and run <strong>Claude Code and Codex subagents</strong> alongside the default Warp
+  Agent harness through one control plane with shared Agent Memory. Only the default Warp Agent
+  harness can orchestrate subagents.</li>
+<li>gald3r's agent roster maps to Agent Profiles (behavior/permission sets) rather than discoverable
+  agent files; orchestration patterns (g-go swarm) map to Oz subagent orchestration.</li>
+<li>Source: https://docs.warp.dev/agent-platform/capabilities/agent-profiles-permissions/</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills (<code>SKILL.md</code> format)</strong>: <em>"Skills allow you to create reusable, shareable instructions
+  that agents can invoke when performing tasks."</em> Each skill is a subdirectory containing a <code>SKILL.md</code>
+  with YAML frontmatter (<code>name</code>, <code>description</code>) plus markdown instructions.</li>
+<li><strong>Discovery dirs</strong> (project-scoped and <code>~/</code> global equivalents): <code>.agents/skills/</code>, <code>.warp/skills/</code>,
+  <strong><code>.claude/skills/</code></strong>, <code>.codex/skills/</code>, <code>.cursor/skills/</code>, <code>.gemini/skills/</code>, <code>.copilot/skills/</code>,
+  <code>.factory/skills/</code>, <code>.github/skills/</code>, <code>.opencode/skills/</code>. <strong>Cross-vendor <code>SKILL.md</code>
+  interoperability is explicit.</strong></li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively — including straight from <code>.claude/skills/</code> — so the
+  Claude-Code skill tree is reusable on Warp with no Warp-specific port.</li>
+<li><strong>Recency</strong>: the Skills docs page was last updated <strong>2026-05-28</strong> (recently added capability).</li>
+<li>Source: https://docs.warp.dev/agent-platform/capabilities/skills/</li>
+</ul>
+<h2 id="5-commands-workflows-partial">5. Commands / Workflows — ⚠️ PARTIAL<a class="headerlink" href="#5-commands-workflows-partial" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Built-in slash commands</strong> (static): <code>/agent</code>, <code>/plan</code>, <code>/skills</code>, <code>/fork</code>, <code>/model</code>, plus
+  <strong>Agent Prompts saved in your Warp Drive</strong> appear in the <code>/</code> menu.</li>
+<li><strong>No user-defined custom slash-command syntax</strong> (e.g. <code>/my-command</code>) and <strong>no file-based custom
+  command definition</strong>. Open feature request <strong>#6857</strong> explicitly asks Warp to add the ability to
+  <em>"create and upload your slash commands"</em> like Claude Code — confirming it is <strong>not yet supported</strong>.</li>
+<li><strong>Warp Drive Workflows</strong> are the closest user-authorable primitive: parameterized, named,
+  searchable commands with descriptions and arguments, scopable to a <strong>user or a git repo</strong>,
+  accessible from the Command Palette. They <strong>partially</strong> cover the custom-commands gap but are
+  <strong>cloud-backed Warp Drive objects, not on-disk <code>commands/g-*.md</code></strong> installed from the repo.</li>
+<li>Net: gald3r <code>@g-*</code>/<code>/g-*</code> commands cannot be installed as native custom slash commands; they map
+  to manually-authored Warp Drive Workflows or are driven by the underlying shell invocation.</li>
+<li>Source: https://docs.warp.dev/agent-platform/capabilities/slash-commands</li>
+</ul>
+<h2 id="6-hooks-system-none">6. Hooks System — ❌ NONE<a class="headerlink" href="#6-hooks-system-none" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No lifecycle/event hook capability in official docs.</strong> The Agent Platform Capabilities navigation
+  lists <strong>no Hooks page</strong>. There is no <code>sessionStart</code>/<code>stop</code>/<code>preToolUse</code>/<code>postToolUse</code>/
+  <code>beforeShellExecution</code> event surface and no <code>hooks.json</code> / settings hook table for user scripts.</li>
+<li>The only references to agent hooks are <strong>open GitHub feature requests</strong>: <strong>#7834</strong> (<em>"Feature
+  Request: Agent Lifecycle Hooks for Observability"</em>, proposing <code>agent_tool_use_pre</code> etc.) and
+  <strong>#6857</strong> (requesting <em>"hook-like mechanisms"</em>) — both <strong>Open with no maintainer commitment</strong>.</li>
+<li><strong>Adjacent (not equivalent):</strong> <strong>Cloud Triggers &amp; Schedules</strong> on Oz can react to Slack/Linear/GitHub
+  events or run recurring tasks — an event-automation surface, <strong>not</strong> a hook bus that runs local
+  gald3r <code>.py</code> scripts on session/tool lifecycle.</li>
+<li><strong>Interop caveat:</strong> the <code>warpdotdev/claude-code-warp</code> plugin implements hooks via <strong>Claude Code's
+  own <code>hooks.json</code></strong> (SessionStart/Stop/Notification) — i.e. it <em>consumes</em> Claude Code's hook system
+  rather than providing a native Warp one.</li>
+<li>Consequence for gald3r: the session-start / inbox-check / pre-commit <code>g-hk-*.py</code> hooks
+  that auto-fire on Cursor and Claude Code <strong>do not fire on Warp</strong>. They must be run manually in the
+  terminal, referenced from rules text, or wired through git <code>core.hooksPath</code> (pre-commit/pre-push).</li>
+<li>Source: https://github.com/warpdotdev/warp/issues/7834</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><em>"Warp's Rules feature lets you create reusable guidelines that inform how agents respond."</em> Two
+  scopes: <strong>Global Rules</strong> (apply across all projects) and <strong>Project Rules</strong> (repo-specific, stored
+  in <code>AGENTS.md</code>/<code>WARP.md</code>, auto-applied from root + current dir).</li>
+<li><strong>Agent Memory (Research Preview)</strong>: gives agents persistent, <strong>cross-harness</strong> memory on Oz (Warp
+  Agent, Claude Code, Codex) that agents <strong>read from and write to across conversations</strong> — a durable
+  memory effect beyond the rules file.</li>
+<li><strong>Format note vs. Cursor</strong>: Warp rules are plain markdown in a single root file (+ optional
+  per-subdir files), <strong>not</strong> Cursor's <code>.mdc</code> files with <code>alwaysApply</code>/<code>globs:</code> frontmatter. There is
+  no per-glob rule scoping beyond the directory the rules file sits in, so gald3r's fine-grained
+  <code>g-rl-*</code> set must be <strong>flattened into <code>AGENTS.md</code>/<code>WARP.md</code></strong> prose. The persistent-memory <em>effect</em>
+  is achieved (rules re-apply every session automatically; Agent Memory persists facts); the <em>file
+  model</em> differs.</li>
+<li>gald3r also keeps <code>.gald3r/learned-facts.md</code> for durable project facts, but Warp only "sees" them
+  if referenced from <code>AGENTS.md</code>/<code>WARP.md</code> (or captured into Agent Memory).</li>
+<li>Source: https://docs.warp.dev/agent-platform/capabilities/rules/</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><em>"Configure MCP servers in the Warp app to extend local agents with custom tools and data sources
+  through a standardized interface."</em> Added via <strong>Settings &gt; Agents &gt; MCP servers</strong> (or the Warp Drive
+  MCP page) with two types: <strong>CLI Server</strong> (Command, e.g. <code>npx</code>/Docker) and <strong>Streamable HTTP/SSE
+  Server</strong> (URL).</li>
+<li><strong>Per-profile MCP access rules</strong> and env-var/OAuth auth are supported; MCP servers are <strong>shared
+  context across local and cloud (Oz) agents</strong>.</li>
+<li>For gald3r, MCP is a clean portability path: configure the server set once in the Warp app and it is
+  reused across local and Oz agents.</li>
+<li>⚠️ The concrete active server set is per-machine and untested in CI; the <em>mechanism</em> is verified
+  from docs, not from a live install in this environment.</li>
+<li>Source: https://docs.warp.dev/agent-platform/capabilities/mcp/</li>
+</ul>
+<h2 id="9-other-capabilities-distribution">9. Other Capabilities &amp; Distribution<a class="headerlink" href="#9-other-capabilities-distribution" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Warp Drive</strong> is the knowledge/collaboration store (Notebooks, Workflows, Prompts, Env Vars).
+  Shared context (Warp Drive, Rules, MCP) works across both <strong>local and cloud agents</strong>.</li>
+<li><strong>Oz cloud agents</strong>: the cloud agent orchestration platform. <strong>Cloud Triggers &amp; Schedules</strong> can
+  react to Slack/Linear/GitHub events or run recurring tasks (event automation adjacent to hooks).</li>
+<li><strong>Multi-harness</strong>: Oz runs <strong>Warp Agent</strong> (default, the only harness that can orchestrate
+  subagents), <strong>Claude Code</strong>, and <strong>Codex</strong> through one control plane with shared Agent Memory.</li>
+<li><strong>Agent API/SDK</strong>: Warp exposes an Agent API/SDK (<code>docs.warp.dev/reference/api-and-sdk/agent</code>) for
+  programmatic agent invocation.</li>
+<li><strong>Other Capabilities pages</strong>: Planning, Task lists, Agent notifications, Full terminal use, Computer
+  use, Codebase Context, Web search.</li>
+<li><strong>Instruction-file interop</strong>: adopting <code>AGENTS.md</code> (vendor-neutral) is the recommended path; <code>WARP.md</code>
+  is the legacy native name and <strong>wins precedence if both are present</strong>.</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Warp now reaches <strong>strong parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>) on the surfaces
+that matter: native <strong>rules, skills, agents, and MCP</strong>. Caveats: <strong>commands are partial</strong> (built-in
+slash commands + cloud Warp Drive Workflows; <strong>no user-defined custom slash commands</strong> — open RFC</p>
+<h1 id="6857-and-hooks-are-absent-no-lifecycle-event-system-open-rfcs-7834-6857-rules-are">6857), and <strong>hooks are absent</strong> (no lifecycle-event system; open RFCs #7834 / #6857). Rules are<a class="headerlink" href="#6857-and-hooks-are-absent-no-lifecycle-event-system-open-rfcs-7834-6857-rules-are" title="Permanent link">&para;</a></h1>
+<p>single-file markdown (no <code>.mdc</code>/glob scoping); agents are app-managed profiles (no on-disk
+<code>g-agnt-*.md</code>). <strong>Oz subagent orchestration</strong> and <strong>cross-harness Agent Memory</strong> are Warp-native
+bonuses with no direct Cursor analog.</p>
+<p><strong>Reuse note (important):</strong> because Warp's Skills system discovers <code>.claude/skills/</code> (and <code>.agents/</code>,
+<code>.warp/</code>, <code>.cursor/</code>, …) <code>SKILL.md</code> trees, gald3r's <strong>Claude-Code skill artifacts are largely
+reusable on Warp without a separate port</strong>. Rules still require flattening into <code>AGENTS.md</code>/<code>WARP.md</code>;
+agents map to Agent Profiles; commands map to manual Warp Drive Workflows; hooks have no wiring point.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: none</li>
+<li><strong>Config file</strong>: n/a (no <code>hooks.json</code>; no settings hook table for user scripts)</li>
+<li><strong>Events available</strong>: none — no <code>sessionStart</code>/<code>stop</code>/<code>preToolUse</code>/<code>postToolUse</code>/<code>beforeShellExecution</code>. Agent <strong>lifecycle hooks</strong> are an OPEN feature request (warpdotdev/warp <strong>#7834</strong>); custom slash commands + hook-like mechanisms are OPEN RFC <strong>#6857</strong>. Neither is shipped.</li>
+<li><strong>Event payload format</strong>: none</li>
+<li><strong>OS limits</strong>: n/a — there is no native hook surface on any OS (Warp is macOS/Linux/Windows, but the gap is platform-wide, not OS-specific).</li>
+<li><strong>Limitations</strong>: nearest event-driven concept is <strong>Oz Cloud Triggers &amp; Schedules</strong> (event-triggered cloud agent runs) — an agent-execution trigger, NOT a hook bus for local <code>g-hk-*.py</code> scripts. The <code>warpdotdev/claude-code-warp</code> plugin reuses Claude Code's own <code>hooks.json</code>, not a native Warp hook system.</li>
+<li><strong>gald3r hook files</strong>: none auto-fire — a gald3r <code>g-hk-*.py</code> hook can only be run manually in the terminal, referenced from <code>AGENTS.md</code>/<code>WARP.md</code> rules text, or wired via git <code>core.hooksPath</code> (pre-commit/pre-push only).</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Instruction file is <strong><code>AGENTS.md</code> (or legacy <code>WARP.md</code>)</strong>, ALL-CAPS, <code>WARP.md</code> wins if both exist —
+  Warp does <strong>not</strong> read <code>CLAUDE.md</code> as a rules file.</li>
+<li>Skills are real and <strong>cross-vendor</strong>: ship gald3r's <code>.claude/skills/</code> (or <code>.agents/skills/</code>) tree
+  and Warp discovers it.</li>
+<li>Agents are <strong>app-managed Agent Profiles</strong> (+ Oz subagent orchestration), not on-disk agent files.</li>
+<li>Commands are <strong>partial</strong>: built-in slash commands + cloud Warp Drive Workflows; no custom slash
+  commands (open RFC #6857).</li>
+<li>No hook bus for local scripts — agent lifecycle hooks are an explicitly open feature request
+  (#7834 / #6857). Oz Cloud Triggers are platform-side event triggers, not a local hook surface.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's <code>.claude/skills/</code> (or <code>.agents/skills/</code>) <code>SKILL.md</code> tree — Warp's Skills system
+  discovers it natively (no Warp-specific port).</li>
+<li>Flatten gald3r <code>g-rl-*</code> into the root <code>AGENTS.md</code>/<code>WARP.md</code>; Warp auto-applies it every session.</li>
+<li>Configure MCP once in the Warp app (Settings &gt; Agents &gt; MCP servers) — reused across local + Oz.</li>
+<li>Map agent roster → Agent Profiles; map g-go swarm orchestration → Oz subagent orchestration.</li>
+<li>gald3r hooks do <strong>not</strong> fire on Warp — run them manually, reference from rules text, or use git
+  <code>core.hooksPath</code>. Track warpdotdev/warp <strong>#7834</strong> and <strong>#6857</strong>; if lifecycle/agent hooks ship,
+  re-verify the Hooks section before changing it from ❌.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs warp</code> (crawl_max_age_days: 14).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>⚠️</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<ul>
+<li><strong>Hooks ❌</strong> — no lifecycle-event system, no <code>hooks.json</code>; agent lifecycle hooks are open RFCs
+  (#7834 / #6857). Oz Cloud Triggers fire agent runs, not local gald3r <code>.py</code> hooks.</li>
+<li><strong>Rules ✅</strong> — real native auto-applying project rules via <code>AGENTS.md</code>/<code>WARP.md</code> (+ Global Rules +
+  cross-harness Agent Memory). Single-file markdown only (no <code>.mdc</code>/glob); <code>g-rl-*</code> flattened in.</li>
+<li><strong>Skills ✅</strong> — native Agent Skills (<code>SKILL.md</code>); discovers <code>.agents/.warp/.claude/.cursor/…</code>
+  skills dirs (cross-vendor). gald3r <code>g-skl-*/SKILL.md</code> reusable, including from <code>.claude/skills/</code>.</li>
+<li><strong>Commands ⚠️</strong> — built-in slash commands + cloud Warp Drive Workflows (parameterized, repo/user
+  scoped); <strong>no user-defined custom slash commands</strong> (open RFC #6857); not installed from repo <code>commands/</code>.</li>
+<li><strong>MCP ✅</strong> — first-class; Settings &gt; Agents &gt; MCP servers (CLI + HTTP/SSE), per-profile access,
+  shared across local + Oz agents.</li>
+<li><strong>Agents ✅ (bonus column)</strong> — Agent Profiles &amp; permissions + Oz subagent orchestration (multi-harness).</li>
+<li><strong>Docs Fresh ✅</strong> — <code>last_doc_scan: 2026-06-02</code> against https://docs.warp.dev.</li>
+</ul>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsdocswarpdev">Verification Evidence (docs crawl 2026-06-02, https://docs.warp.dev)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsdocswarpdev" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Instruction file</td>
+<td>/agent-platform/capabilities/rules/ — <code>AGENTS.md</code> default + legacy <code>WARP.md</code> (ALL-CAPS, <code>WARP.md</code> wins if both); auto-applied root + current dir, best-effort subdirs</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/agent-platform/capabilities/rules/ — Global Rules + Project Rules (<code>AGENTS.md</code>/<code>WARP.md</code>); plus Agent Memory (Research Preview) cross-harness persistent memory</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/agent-platform/capabilities/skills/ — <code>SKILL.md</code> (name/description frontmatter); discovers <code>.agents/.warp/.claude/.codex/.cursor/.gemini/.copilot/.factory/.github/.opencode</code> skills dirs (+ <code>~/</code>); cross-vendor; page updated 2026-05-28</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/agent-platform/capabilities/agent-profiles-permissions/ — named profiles (base model, autonomy, tool/MCP allow-deny); Oz subagent orchestration (parallel; Claude Code + Codex harnesses)</td>
+</tr>
+<tr>
+<td>Commands</td>
+<td>/agent-platform/capabilities/slash-commands — built-in <code>/agent /plan /skills /fork /model</code> + Warp Drive Agent Prompts; <strong>no custom slash-command syntax</strong> (open RFC #6857); Workflows are closest user-authorable primitive</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>github.com/warpdotdev/warp/issues/7834 — no Hooks capability page; agent lifecycle hooks (#7834) + hook-like mechanisms (#6857) both Open, no commitment; <code>claude-code-warp</code> reuses Claude Code's <code>hooks.json</code></td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/agent-platform/capabilities/mcp/ — Settings &gt; Agents &gt; MCP servers; CLI Server + Streamable HTTP/SSE; per-profile access; env-var/OAuth; shared local + Oz</td>
+</tr>
+<tr>
+<td>Other</td>
+<td>Warp Drive (Notebooks/Workflows/Prompts/Env); Oz Cloud Triggers &amp; Schedules (Slack/Linear/GitHub events, recurring); multi-harness (Warp Agent/Claude Code/Codex) shared Agent Memory; Agent API/SDK</td>
+</tr>
+</tbody>
+</table>
+<p><strong>No live install test was run</strong> in this environment; findings rest on the 2026-06-02 doc scan of
+https://docs.warp.dev plus the cited GitHub feature requests. <code>status: ⚠️</code> reflects the honest mix:
+<strong>rules, skills, agents, and MCP are native</strong>; <strong>commands are partial</strong> (no custom slash commands,
+cloud-only Workflows); <strong>hooks are an absent capability</strong> (open RFCs #7834 / #6857). Re-confirm the
+slash-command and agent-hook RFC status on the then-current Warp release at the next
+<code>@g-platform-scan-docs warp</code>.</p>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-warp/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

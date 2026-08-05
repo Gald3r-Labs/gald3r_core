@@ -1,0 +1,1802 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/claude/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Claude Code (Anthropic) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-claude-code-anthropic" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Claude Code (Anthropic)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-other-extensibility-distribution-surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Other Extensibility — distribution &amp; surfaces
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpscodeclaudecomdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://code.claude.com/docs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-claude-code-anthropic">PLATFORM_SPEC.md — Claude Code (Anthropic)<a class="headerlink" href="#platform_specmd-claude-code-anthropic" title="Permanent link">&para;</a></h1>
+<p><strong>Claude Code</strong> is Anthropic's agentic coding tool — the same engine across the Terminal CLI
+(<code>claude</code>), VS Code, JetBrains, the Desktop app, Web (<code>claude.ai/code</code>), iOS, Slack (<code>@Claude</code>), and
+Chrome. As of <strong>June 2026</strong> Claude Code natively supports <strong>all six</strong> gald3r-relevant extension
+primitives — custom slash commands, rules/memory, subagents, Agent Skills, lifecycle hooks, and MCP —
+plus Plugins, the Agent SDK, Routines (scheduling), and Channels. Every core mechanism is <strong>NATIVE</strong>;
+there are <strong>no gaps in the six core mechanisms</strong>.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://code.claude.com/docs (see
+Verification Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code>, <code>status: ⚠️</code>),
+which marked Hooks ⚠️ over a lowercase-<code>hooks.json</code> config-shape inconsistency and cited the retired
+<code>docs.anthropic.com/en/docs/claude-code</code> URLs. Both issues are resolved here:</p>
+<blockquote>
+<p><strong>Docs moved:</strong> the documentation relocated from <code>docs.anthropic.com/en/docs/claude-code</code> to
+<strong><code>code.claude.com/docs</code></strong> (301 redirect). All <code>source_url</code>s below use the new host.</p>
+<p><strong>Hook config corrected:</strong> the canonical, supported hook surface is <strong><code>settings.json</code></strong> (key
+<code>"hooks"</code>) with <strong>PascalCase</strong> event names and a matcher-grouped shape — <strong>not</strong> a lowercase
+top-level <code>hooks.json</code>. gald3r hook wiring must target <code>settings.json</code>.</p>
+<p><strong>Platform truth — instruction file:</strong> Claude Code reads <strong><code>CLAUDE.md</code>, NOT <code>AGENTS.md</code></strong>. If a
+repo already uses <code>AGENTS.md</code>, create a <code>CLAUDE.md</code> that imports it (<code>@AGENTS.md</code>) or symlink it;
+<code>/init</code> also reads an existing <code>AGENTS.md</code> and incorporates it. This is the one structural
+difference from <code>AGENTS.md</code>-native platforms (Amp, Aider, etc.) and is handled in gald3r by the
+<code>.claude/CLAUDE.md</code> → <code>@AGENTS.md</code> import the framework already ships.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── CLAUDE.md                     ← instruction file Claude reads (imports @AGENTS.md); also ./.claude/CLAUDE.md
+├── CLAUDE.local.md               ← personal project-specific overrides (gitignored)
+├── .mcp.json                     ← project-scoped MCP servers (committable, shareable)
+└── .claude/
+    ├── CLAUDE.md                 ← project, team-shared instructions (alt location)
+    ├── settings.json             ← permissions, env, hooks, MCP (committable, official schema)
+    ├── settings.local.json       ← user-local overrides (gitignored)
+    ├── rules/        *.md         ← path-scoped modular rules (optional `paths:` glob frontmatter)
+    ├── commands/     *.md         ← custom slash commands (legacy, still supported; merged into Skills)
+    ├── agents/       *.md         ← subagents (markdown + YAML frontmatter)
+    ├── skills/       &lt;name&gt;/SKILL.md  ← Agent Skills (agentskills.io standard); each = /&lt;name&gt;
+    └── hooks/        *.ps1/.sh    ← hook scripts referenced from settings.json
+</code></pre>
+<p>Claude Code also reads a <strong>user-global</strong> tree at <code>~/.claude/</code> (<code>CLAUDE.md</code>, <code>settings.json</code>,
+<code>agents/</code>, <code>skills/</code>, <code>commands/</code>) and <strong>managed/enterprise policy</strong> settings. Auto memory lives at
+<code>~/.claude/projects/&lt;project&gt;/memory/MEMORY.md</code> (first 200 lines / 25 KB loaded each session).</p>
+<p><strong>gald3r writes</strong>: <code>.claude/CLAUDE.md</code> (+ root <code>CLAUDE.md</code> importing <code>@AGENTS.md</code>), <code>.claude/rules/</code>,
+<code>.claude/commands/</code>, <code>.claude/agents/</code>, <code>.claude/skills/</code>, <code>.claude/hooks/</code>, and seeds
+<code>.claude/settings.json</code> (<code>"hooks"</code> + <code>"mcpServers"</code>) / <code>.mcp.json</code>.
+<strong>Claude Code owns</strong>: the <code>settings.json</code> schema, the auto-memory <code>MEMORY.md</code> store, and the
+user-global <code>~/.claude/</code> tree (gald3r does not write the user-global tree).</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Claude Code's instruction file is <strong><code>CLAUDE.md</code></strong> (project <code>./CLAUDE.md</code> or <code>./.claude/CLAUDE.md</code>,
+team-shared; <code>~/.claude/CLAUDE.md</code> user-global; <code>./CLAUDE.local.md</code> personal/gitignored; managed
+policy paths per OS). It loads at the start of <strong>every</strong> session as persistent context.</p>
+<ul>
+<li><strong><code>AGENTS.md</code> is NOT read directly</strong> — support is <strong>partial via import only</strong>. gald3r's
+  <code>.claude/CLAUDE.md</code> does <code>@AGENTS.md</code>, making the shared cross-platform <code>AGENTS.md</code> first-class.</li>
+<li><strong>Import syntax</strong>: <code>@path/to/import</code> (relative or absolute, <strong>max depth 4 hops</strong>).</li>
+<li><strong>Managed policy locations</strong>: <code>/Library/Application Support/ClaudeCode/CLAUDE.md</code> (macOS),
+  <code>/etc/claude-code/CLAUDE.md</code> (Linux/WSL), <code>C:\Program Files\ClaudeCode\CLAUDE.md</code> (Windows).</li>
+<li>Source: https://code.claude.com/docs/en/memory</li>
+</ul>
+<hr />
+<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Subagents</strong>: specialized assistants, each in its own context window with a custom system prompt,
+  specific tool access, and independent permissions. Markdown + YAML frontmatter (<code>name</code>,
+  <code>description</code>, <code>tools</code>, <code>model</code>, …) in <code>./.claude/agents/&lt;name&gt;.md</code> (project) or
+  <code>~/.claude/agents/&lt;name&gt;.md</code> (user); create manually or via <code>/agents</code>. Also bundleable via plugins.</li>
+<li><strong>Built-in subagents</strong>: Explore (Haiku, read-only), Plan (read-only, plan mode), general-purpose
+  (all tools). Subagents can carry their own hooks, skills, tool restrictions, permission modes, and
+  persistent memory. Up to ~7 parallel agents; subagents cannot spawn other subagents. Separate
+  features exist for background agents (agent-view) and agent teams.</li>
+<li>gald3r <code>g-agnt-*.md</code> map directly to <code>.claude/agents/</code> subagent files (auto-delegated when their
+  <code>description</code> matches, or invoked via <code>@g-agnt-&lt;name&gt;</code>).</li>
+<li>Source: https://code.claude.com/docs/en/sub-agents</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> (agentskills.io <code>SKILL.md</code> open standard): create a <code>SKILL.md</code> with instructions
+  and Claude adds it to its toolkit. Used automatically when relevant, or invoked directly with
+  <code>/skill-name</code>. <strong>Progressive disclosure</strong> — the body loads only when used.</li>
+<li><strong>Locations</strong>: Personal <code>~/.claude/skills/&lt;name&gt;/SKILL.md</code>; Project <code>.claude/skills/&lt;name&gt;/SKILL.md</code>;
+  Plugin <code>&lt;plugin&gt;/skills/&lt;name&gt;/SKILL.md</code>; Enterprise via managed settings. Frontmatter: <code>name</code>
+  (optional — defaults to dir name), <code>description</code>.</li>
+<li>Claude Code <strong>extends</strong> the standard with invocation control (frontmatter), subagent execution, and
+  dynamic context injection (<code>!`cmd`</code> inlines command output). Supporting files allowed in the
+  skill dir; live change detection within a session.</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively (folder-per-skill). <code>.claude/skills/</code> is also consumed by
+  OpenCode and Copilot installs — keep content platform-neutral.</li>
+<li>Source: https://code.claude.com/docs/en/skills</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom slash commands</strong> have been <strong>merged into Skills</strong>. A file at <code>.claude/commands/deploy.md</code>
+  and a skill at <code>.claude/skills/deploy/SKILL.md</code> both create <code>/deploy</code> and work the same way.
+  Existing <code>.claude/commands/*.md</code> files keep working (legacy, still supported).</li>
+<li><strong>File convention</strong>: <code>.claude/commands/&lt;name&gt;.md</code> (legacy) <strong>OR</strong> <code>.claude/skills/&lt;name&gt;/SKILL.md</code>
+  (current path; invoke via <code>/&lt;name&gt;</code>). Markdown body is the prompt; subdirectories namespace commands.</li>
+<li>gald3r <code>@g-*</code> / <code>/g-*</code> commands map directly.</li>
+<li>Source: https://code.claude.com/docs/en/skills</li>
+</ul>
+<h2 id="6-hooks-system-native">6. Hooks System — ✅ NATIVE<a class="headerlink" href="#6-hooks-system-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Lifecycle hooks</strong> are user-defined <strong>shell commands, HTTP endpoints, or LLM prompts</strong> that execute
+  automatically at specific points in Claude Code's lifecycle, giving <strong>deterministic</strong> control.</li>
+<li><strong>Config surface (canonical)</strong>: <code>settings.json</code> under a <code>"hooks"</code> key — <code>~/.claude/settings.json</code>
+  (user), <code>.claude/settings.json</code> (project, committable), <code>.claude/settings.local.json</code> (gitignored),
+  managed policy settings, plugin <code>hooks/hooks.json</code>, or skill/agent frontmatter. Config uses
+  <strong>three-level nesting</strong> (event → matcher → <code>hooks[]</code>).</li>
+<li><strong>Events</strong> (PascalCase): <code>SessionStart</code>, <code>SessionEnd</code>, <code>Setup</code>, <code>UserPromptSubmit</code>,
+  <code>UserPromptExpansion</code>, <code>Stop</code>, <code>StopFailure</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, <code>PostToolUseFailure</code>,
+  <code>PostToolBatch</code>, <code>PermissionRequest</code>, <code>PermissionDenied</code>, <code>SubagentStart</code>, <code>SubagentStop</code>,
+  <code>TaskCreated</code>, <code>TaskCompleted</code>, <code>TeammateIdle</code>, <code>CwdChanged</code>, <code>FileChanged</code>, <code>ConfigChange</code>,
+  <code>InstructionsLoaded</code>, <code>PreCompact</code>, <code>PostCompact</code>, <code>Elicitation</code>, <code>ElicitationResult</code>,
+  <code>MessageDisplay</code>, <code>WorktreeCreate</code>, <code>WorktreeRemove</code>, <code>Notification</code>.</li>
+<li><strong>PreToolUse can block a tool call.</strong> Covers session start, pre/post tool, pre-commit-style gating
+  (via <code>PostToolUse</code>/<code>Stop</code>), and file-watch (<code>FileChanged</code>). <code>InstructionsLoaded</code> logs which
+  instruction files loaded.</li>
+<li><strong>gald3r wiring</strong>: <code>g-hk-*.py</code> invoked via <code>{ "type": "command", "command": "python &lt;path&gt;" }</code>
+  (post-T1584 Python port; no PowerShell involved) under the matching PascalCase event in <code>settings.json</code>. SessionStart
+  context injection, <code>PreToolUse</code> <code>.gald3r/</code> guards, and <code>Stop</code>/<code>PostToolUse</code> gates all wire natively.
+  <strong>On Windows the command MUST be <code>pythonw &lt;path&gt;</code>, not <code>python &lt;path&gt;</code></strong> (BUG-495): <code>python.exe</code>
+  is a console-subsystem binary, so every hook fire pops a visible, focus-stealing console window —
+  a busy session fires the Stop chain (12 hooks) per turn plus 3-4 PreToolUse/PostToolUse hooks per
+  tool call, which rendered the desktop unusable. <code>pythonw.exe</code> never allocates a console; hook
+  stdout/stderr still reach Claude Code through the spawn pipes. On macOS/Linux keep <code>python</code>
+  (<code>pythonw</code> does not exist on stock Linux; POSIX has no console-window concept). Child spawns
+  inside hooks are covered separately by <code>_hook_common.py</code>'s win32 <code>CREATE_NO_WINDOW</code> Popen patch.
+  <strong>Migrate any legacy lowercase <code>hooks.json</code> entries (<code>sessionStart</code>/<code>stop</code>/<code>beforeShellExecution</code>)
+  to PascalCase events in <code>settings.json</code></strong> — <code>beforeShellExecution</code> is a Cursor-era name with no
+  Claude Code equivalent (use <code>PreToolUse</code> with a <code>Bash</code> matcher instead).</li>
+<li>Source: https://code.claude.com/docs/en/hooks</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>CLAUDE.md</code></strong> persistent instructions (read at the start of every session) + <strong><code>.claude/rules/*.md</code></strong>
+  path-scoped modular rules (scoped to file paths via a <code>paths:</code> YAML glob in frontmatter) + <strong>auto
+  memory</strong> (<code>MEMORY.md</code>, accumulates learnings across sessions; first 200 lines / 25 KB loaded each
+  session). gald3r rules are plain <code>.md</code> (NOT Cursor's <code>.mdc</code> — parity sync swaps the extension).</li>
+<li><strong>Enforcement caveat (platform truth):</strong> <code>CLAUDE.md</code> / rules / memory are <strong>context (advisory), not
+  hard enforcement</strong>. For guaranteed always-on framework constraints, gald3r should use a <strong><code>PreToolUse</code>
+  hook</strong> rather than relying on a rules file. Auto memory requires <strong>v2.1.59+</strong> (on by default).</li>
+<li>gald3r <code>g-rl-*</code> map to <code>CLAUDE.md</code> always-apply context (and optionally <code>.claude/rules/</code> with
+  <code>paths:</code> scoping for path-specific rules).</li>
+<li>Source: https://code.claude.com/docs/en/memory</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Model Context Protocol</strong> client — connects to hundreds of external tools/data sources.</li>
+<li><strong>Config</strong>: Project <code>.mcp.json</code> at project root (committable; <code>type</code> accepts the <code>streamable-http</code>
+  alias); Local/User <code>~/.claude.json</code>; CLI <code>claude mcp add</code> / <code>add-json</code>. Scopes: local (default),
+  project, user; plus plugin-provided and claude.ai connectors.</li>
+<li><strong>Transports</strong>: <code>stdio</code>, <code>http</code> (streamable-http), <code>sse</code> (deprecated), <code>ws</code> (WebSocket).</li>
+<li>Supports OAuth 2.0 auth, env-var expansion in <code>.mcp.json</code>, dynamic headers (<code>headersHelper</code>), MCP
+  resources via <code>@</code> mentions, MCP prompts as <code>/mcp__server__prompt</code> commands, elicitation,
+  <code>list_changed</code> dynamic tool updates, auto-reconnect, and <strong>MCP Tool Search</strong> (deferred tool loading,
+  default on). Claude Code can also run <strong>as</strong> an MCP server via <code>claude mcp serve</code>. Managed/enterprise
+  control via <code>managed-mcp.json</code> (<code>allowedMcpServers</code>/<code>deniedMcpServers</code>).</li>
+<li>gald3r MCP servers wire via <code>.claude/settings.json</code> <code>"mcpServers"</code> or <code>.mcp.json</code> (e.g.
+  <code>gald3r_docker</code> streamable-http + stdio tools).</li>
+<li>Source: https://code.claude.com/docs/en/mcp</li>
+</ul>
+<h2 id="9-other-extensibility-distribution-surfaces">9. Other Extensibility — distribution &amp; surfaces<a class="headerlink" href="#9-other-extensibility-distribution-surfaces" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Plugins</strong> (✅): bundle skills, agents, hooks (<code>hooks/hooks.json</code>), and MCP servers (<code>.mcp.json</code> or
+  inline in <code>plugin.json</code>). Installable via <code>/plugin install</code> from marketplaces (e.g.
+  <code>claude-plugins-official</code>). A skill folder with <code>.claude-plugin/plugin.json</code> loads as a plugin. <strong>This
+  is the natural distribution channel for a gald3r Claude Code plugin.</strong>
+  (https://code.claude.com/docs/en/plugins)</li>
+<li><strong>Agent SDK</strong> (✅): TypeScript and Python SDKs to build custom agents powered by Claude Code's tools,
+  with full control over orchestration, tool access, and permissions.
+  (https://code.claude.com/docs/en/agent-sdk/overview)</li>
+<li><strong>Routines / scheduling</strong> (✅): cron-scheduled runs on Anthropic-managed infra (also trigger on API
+  calls or GitHub events; create via <code>/schedule</code>); Desktop scheduled tasks run locally; <code>/loop</code> repeats
+  a prompt within a CLI session. (https://code.claude.com/docs/en/routines)</li>
+<li><strong>Channels</strong> (✅): an MCP server declaring the <code>claude/channel</code> capability can push external events
+  (Telegram, Discord, iMessage, webhooks, CI/monitoring) into a session.
+  (https://code.claude.com/docs/en/channels)</li>
+<li><strong>CLI / CI</strong> (✅): composable Unix-style CLI (headless <code>-p</code>/print, pipe input,
+  <code>--append-system-prompt</code>, <code>--add-dir</code>, <code>--teleport</code>); GitHub Actions, GitLab CI/CD, GitHub Code
+  Review. Same engine + CLAUDE.md + settings + MCP carry across Terminal, VS Code, JetBrains, Desktop,
+  Web, iOS, Slack, and Chrome. (https://code.claude.com/docs/en/cli-reference)</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Claude Code reaches <strong>full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>commands, rules, agents, skills, hooks, and MCP</strong>, with <strong>no gaps in the six core mechanisms</strong>.
+<strong>Strengths over Cursor</strong>: first-class native subagents (§3) and native Agent Skills (§4) require no
+shimming, and Plugins + Agent SDK + Routines + Channels extend well beyond the Cursor surface.</p>
+<p><strong>Platform-specific truths to honor:</strong>
+- Instruction file is <strong><code>CLAUDE.md</code>, not <code>AGENTS.md</code></strong> — ship the <code>@AGENTS.md</code> import (or symlink).
+- <code>CLAUDE.md</code> / rules / memory are <strong>advisory context</strong>, not hard enforcement — use a <strong><code>PreToolUse</code>
+  hook</strong> for guaranteed always-on constraints.
+- Hook config lives in <strong><code>settings.json</code></strong> with <strong>PascalCase</strong> events — not a lowercase <code>hooks.json</code>.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (<code>settings.json</code> <code>"hooks"</code> key)</li>
+<li><strong>Config file</strong>: <code>.claude/settings.json</code> (project) / <code>~/.claude/settings.json</code> (user) /
+  <code>.claude/settings.local.json</code> (gitignored); also plugin <code>hooks/hooks.json</code> + skill/agent frontmatter</li>
+<li><strong>Events available</strong>: SessionStart, SessionEnd, Setup, UserPromptSubmit, UserPromptExpansion, Stop,
+  StopFailure, PreToolUse, PostToolUse, PostToolUseFailure, PostToolBatch, PermissionRequest,
+  PermissionDenied, SubagentStart, SubagentStop, TaskCreated, TaskCompleted, TeammateIdle, CwdChanged,
+  FileChanged, ConfigChange, InstructionsLoaded, PreCompact, PostCompact, Elicitation,
+  ElicitationResult, MessageDisplay, WorktreeCreate, WorktreeRemove, Notification</li>
+<li><strong>Event payload format</strong>: JSON; three-level nesting (event → matcher → <code>hooks[]</code>), entries shaped
+  <code>{ "type": "command", "command": "..." }</code> (also <code>http</code> / LLM-prompt hook types)</li>
+<li><strong>Blocking</strong>: <code>PreToolUse</code> can block a tool call</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> wire natively under the matching PascalCase event via
+  <code>python &lt;path&gt;</code> (post-T1584 Python port; no PowerShell involved; migrate legacy lowercase <code>hooks.json</code> entries here)</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Instruction file is <code>CLAUDE.md</code>, not <code>AGENTS.md</code></strong> — <code>AGENTS.md</code> is supported only via <code>@AGENTS.md</code>
+  import or symlink (and <code>/init</code> ingestion). The one structural difference vs. AGENTS.md-native tools.</li>
+<li><strong>Hooks live in <code>settings.json</code> (PascalCase events)</strong>, not a lowercase top-level <code>hooks.json</code>. The
+  prior gald3r <code>hooks.json</code> (<code>sessionStart</code>/<code>stop</code>/<code>beforeShellExecution</code>, flat shape) is legacy —
+  <code>beforeShellExecution</code> has no Claude Code equivalent (use <code>PreToolUse</code> + <code>Bash</code> matcher).</li>
+<li><strong>Commands merged into Skills</strong> — <code>/&lt;name&gt;</code> resolves from either <code>.claude/commands/&lt;name&gt;.md</code> or
+  <code>.claude/skills/&lt;name&gt;/SKILL.md</code>.</li>
+<li><strong>Rules/memory are advisory</strong> — for hard enforcement use a <code>PreToolUse</code> hook, not a rules file.</li>
+<li>Rules are plain <code>.md</code> (NOT <code>.mdc</code>).</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship <code>.claude/CLAUDE.md</code> importing <code>@AGENTS.md</code>; gald3r's <code>.claude/</code> tree (commands/skills/agents/
+  hooks/rules) loads natively. Or package a Claude-Code-format <strong>plugin bundle</strong> and publish via a
+  marketplace (<code>/plugin install</code>).</li>
+<li>Wire hooks under <strong><code>settings.json</code> <code>"hooks"</code></strong> with PascalCase events; reserve <code>PreToolUse</code> for the
+  <code>.gald3r/</code> agent-required guard and any hard-enforcement constraint that a rules file cannot guarantee.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs claude</code> (crawl_max_age_days: 7); watch the
+  <code>docs.anthropic.com</code> → <code>code.claude.com</code> redirect and the hook-config-in-<code>settings.json</code> history.</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpscodeclaudecomdocs">Verification Evidence (docs crawl 2026-06-02, https://code.claude.com/docs)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpscodeclaudecomdocs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Instruction file</td>
+<td>/en/memory — reads <code>CLAUDE.md</code> (root or <code>.claude/</code>), not <code>AGENTS.md</code>; <code>@path</code> imports (max depth 4); <code>AGENTS.md</code> only via <code>@AGENTS.md</code>/symlink/<code>/init</code></td>
+</tr>
+<tr>
+<td>Commands</td>
+<td>/en/skills — <code>.claude/commands/&lt;name&gt;.md</code> (legacy) OR <code>.claude/skills/&lt;name&gt;/SKILL.md</code> → <code>/&lt;name&gt;</code>; commands merged into Skills</td>
+</tr>
+<tr>
+<td>Rules / Memory</td>
+<td>/en/memory — <code>CLAUDE.md</code> + <code>.claude/rules/*.md</code> (<code>paths:</code> glob) + auto memory <code>MEMORY.md</code> (v2.1.59+); advisory, not enforcement</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/en/sub-agents — <code>.claude/agents/&lt;name&gt;.md</code> (md+YAML); built-in Explore/Plan/general-purpose; ~7 parallel; own hooks/skills/memory</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/en/skills — agentskills.io <code>SKILL.md</code> in <code>~/.claude</code> / <code>.claude</code> / plugin skills dirs; progressive disclosure; <code>!`cmd`</code> injection</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/en/hooks — <code>settings.json</code> <code>"hooks"</code> (PascalCase events, event→matcher→hooks[]); shell/HTTP/LLM; <code>PreToolUse</code> blocks; NOT lowercase <code>hooks.json</code></td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/en/mcp — <code>.mcp.json</code> + <code>~/.claude.json</code> + <code>claude mcp add</code>; stdio/http/sse/ws; OAuth, Tool Search, <code>claude mcp serve</code></td>
+</tr>
+<tr>
+<td>Plugins</td>
+<td>/en/plugins — bundle skills+agents+hooks+MCP; <code>/plugin install</code> from marketplaces; <code>.claude-plugin/plugin.json</code></td>
+</tr>
+<tr>
+<td>Agent SDK / Routines / Channels</td>
+<td>/en/agent-sdk, /en/routines, /en/channels — TS+Python SDK; cron via <code>/schedule</code>; <code>claude/channel</code> event push</td>
+</tr>
+<tr>
+<td>Docs host</td>
+<td>/en/overview — docs moved <code>docs.anthropic.com/en/docs/claude-code</code> → <code>code.claude.com/docs</code> (301); assessment current June 2026</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-claude/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

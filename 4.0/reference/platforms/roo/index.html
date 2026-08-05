@@ -1,0 +1,1758 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/roo/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Roo Code (formerly Roo Cline) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-roo-code-formerly-roo-cline" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Roo Code (formerly Roo Cline)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE (modes)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-not-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ❌ NOT SUPPORTED
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-other-extensibility-not-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Other Extensibility (not hooks)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsroocodecom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://docs.roocode.com)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-roo-code-formerly-roo-cline">PLATFORM_SPEC.md — Roo Code (formerly Roo Cline)<a class="headerlink" href="#platform_specmd-roo-code-formerly-roo-cline" title="Permanent link">&para;</a></h1>
+<p>Roo Code is an open-source agentic coding extension for <strong>VS Code</strong>, forked from Cline. As of its
+final documented state it natively supports <strong>five of the six</strong> gald3r-relevant extension primitives —
+custom slash commands, rules/memory, modes (the agent/sub-agent analog), Agent Skills, and MCP —
+making it one of the most gald3r-aligned platforms <strong>by documented capability</strong>. The only missing
+mechanism is <strong>lifecycle hooks</strong>. For gald3r, Roo auto-loads <strong><code>AGENTS.md</code></strong> (not <code>CLAUDE.md</code>) from
+the workspace root and discovers commands/rules/skills/modes from the <strong><code>.roo/</code></strong> tree, with a
+cross-agent <strong><code>.agents/skills/</code></strong> path for Skills.</p>
+<blockquote>
+<p><strong>⚠️ PRIMARY CAVEAT — DISCONTINUED.</strong> Roo Code (VS Code extension, Roo Code Cloud, and Roo Code
+Router) was officially <strong>shut down on 2026-05-15</strong> (announced 2026-04-21 by Matt Rubens). The
+company pivoted to a cloud product (Roomote), concluding "IDEs are not the future of coding."
+Docs and the open-source GitHub repos remain available and the archived extension still functions,
+but the tool is <strong>no longer actively developed</strong>; migration is directed to <strong>Cline / Kilo Code</strong>.
+Capability is rated on documented features; the shutdown is the dominant practical caveat. Treat
+any gald3r <code>roo</code> platform target as <strong>legacy/frozen</strong>.</p>
+</blockquote>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://docs.roocode.com (see
+Verification Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: 2026-05-20</code>) which marked
+skills/commands/agents/mcp as ⚠️ — they are now confirmed <strong>NATIVE</strong> (Skills shipped ~v3.38; the
+official Skills feature page is dated 2026-05-15).</p>
+<blockquote>
+<p><strong>Docs host note:</strong> <code>docs.roocode.com</code> 301-redirects to
+<code>https://roocodeinc.github.io/Roo-Code/</code>; canonical <code>/features/*</code> paths still resolve to live
+content.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                     ← auto-loaded agent rules (unless roo-cline.useAgentRules:false)
+├── .roomodes                     ← custom mode definitions (YAML preferred; JSON accepted)
+├── .rooignore                    ← gitignore-style agent file-access control
+└── .roo/
+    ├── rules/        *.md        ← general rules, ALL modes (recursive, alphabetical)
+    ├── rules-{slug}/ *.md        ← mode-specific rules (e.g. rules-code/, rules-architect/)
+    ├── commands/     *.md        ← project slash commands (filename = command name)
+    ├── skills/       &lt;name&gt;/SKILL.md     ← Agent Skills (progressive disclosure)
+    ├── skills-{mode}/&lt;name&gt;/SKILL.md     ← mode-specific Agent Skills
+    └── mcp.json                  ← project-level MCP server config (team-shareable)
+
+  ── cross-agent + legacy fallbacks ──
+├── .agents/skills/   &lt;name&gt;/SKILL.md     ← cross-agent Skills path (shared standard)
+├── .roorules                     ← general rules fallback (≈ .roo/rules/)
+├── .roorules-{slug}              ← mode-specific rules fallback
+└── .clinerules                   ← Cline-compatibility fallback (Roo reads it)
+</code></pre>
+<p><strong>Global (per-user) equivalents</strong> live under <code>~/.roo/rules/</code>, <code>~/.roo/commands/</code>, <code>~/.roo/skills/</code>,
+<code>~/.agents/skills/</code>, and <code>custom_modes.yaml</code>. <strong>Project config takes precedence over global</strong> on
+conflict (workspace wins).</p>
+<p><strong>gald3r writes</strong>: <code>AGENTS.md</code> (root), <code>.roo/rules/</code> (g-rl-<em>), <code>.roo/skills/&lt;name&gt;/SKILL.md</code>
+(g-skl-</em>), <code>.roo/commands/g-*.md</code> (g-<em> slash commands), <code>.roomodes</code> (g-agnt-</em> personas as custom
+modes), and <code>.roo/mcp.json</code> (if MCP servers are shared).
+<strong>Roo owns</strong>: the <code>.roo/</code> namespace, the rules/skills load order, the <code>.roomodes</code> schema, and mode
+selection.</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Roo auto-loads <strong><code>AGENTS.md</code></strong> (fallback <code>AGENT.md</code>) from the workspace root by default — disable via
+<code>"roo-cline.useAgentRules": false</code>. It loads <strong>after</strong> mode-specific rules but <strong>before</strong> generic
+rule directories. There is <strong>no <code>CLAUDE.md</code>/<code>GEMINI.md</code> variant</strong>; the legacy single-file <code>.roorules</code>
+is a separate rules surface. <code>AGENTS.md</code> is the natural canonical gald3r instruction file for Roo
+(matches the ecosystem default).</p>
+<p>gald3r generates/merges <code>AGENTS.md</code> via the setup + parity pipeline.</p>
+<h2 id="3-agents-support-native-modes">3. Agents Support — ✅ NATIVE (modes)<a class="headerlink" href="#3-agents-support-native-modes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Roo has <strong>no separate <code>agents/</code> folder</strong>; its agent/sub-agent analog is the <strong>mode system</strong> —
+  built-in modes (Code, Architect, Debug, Ask, Orchestrator) plus <strong>custom modes</strong> in <code>.roomodes</code>
+  (project, YAML/JSON) or <code>custom_modes.yaml</code> (global).</li>
+<li>A custom mode has: <code>slug</code>, <code>name</code>, <code>description</code>, <code>roleDefinition</code>, <code>groups</code> (tool/file-access
+  perms incl. <code>fileRegex</code>), optional <code>customInstructions</code>, and <code>whenToUse</code> (drives the Orchestrator /
+  boomerang auto-delegation).</li>
+<li>The <strong>Orchestrator</strong> mode decomposes complex tasks and delegates subtasks to other modes
+  (boomerang) — model-driven workflow orchestration.</li>
+<li>gald3r <code>g-agnt-*</code> personas map to <code>.roomodes</code> entries (<code>roleDefinition</code> from the agent body).</li>
+<li>Source: https://docs.roocode.com/features/custom-modes</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> — <code>SKILL.md</code> packages in <code>.roo/skills/&lt;name&gt;/</code> and <code>.roo/skills-{mode}/&lt;name&gt;/</code>
+  (project, Roo-specific), <code>.agents/skills/&lt;name&gt;/</code> (cross-agent), and global <code>~/.roo/skills/</code> +
+  <code>~/.agents/skills/</code>. Frontmatter requires <code>name</code> + <code>description</code>.</li>
+<li><strong>Auto-discovered at startup</strong> by directory scan with <strong>progressive disclosure</strong> — metadata is
+  indexed; the full body loads only when a request matches the skill's <code>description</code> ("skills remain
+  dormant until activated — they don't bloat your base prompt"). No registration required.</li>
+<li>Priority: project &gt; global, <code>.roo/</code> &gt; <code>.agents/</code>, mode-specific &gt; generic.</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively — the Cursor auto-relevance contract IS honored here.</li>
+<li><strong>Recency note</strong>: relatively new — the Skills page is dated <strong>2026-05-15</strong> (introduced ~v3.38, late
+  2025, expanded into 2026), the same day the product shut down.</li>
+<li>Source: https://docs.roocode.com/features/skills</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom slash commands</strong>: markdown files in <code>.roo/commands/</code> (project) or <code>~/.roo/commands/</code>
+  (global); <strong>filename = command name</strong> (e.g. <code>.roo/commands/deploy.md</code> → <code>/deploy</code>). Optional
+  <code>mode</code> frontmatter switches mode. Precedence: project &gt; global &gt; built-in.</li>
+<li>Also invokable <strong>programmatically by the agent</strong> via the <code>run_slash_command</code> tool (e.g. chain
+  <code>/init</code>, <code>/review</code> into automated workflows).</li>
+<li>gald3r <code>@g-*</code> commands map cleanly to <code>.roo/commands/g-*.md</code> (the <code>/g-*</code> form).</li>
+<li>Source: https://docs.roocode.com/features/slash-commands</li>
+</ul>
+<h2 id="6-hooks-system-not-supported">6. Hooks System — ❌ NOT SUPPORTED<a class="headerlink" href="#6-hooks-system-not-supported" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Roo has <strong>NO native lifecycle/event hook system</strong>. There is no docs "Hooks" feature page and no
+  <code>sessionStart</code> / <code>preToolUse</code> / <code>postToolUse</code> / <code>beforeShellExecution</code> / file-watch wiring, and no
+  <code>hooks.json</code> / <code>.roo/hooks/</code> config.</li>
+<li>The closest official automation feature is <strong>experimental Custom Tools</strong> (TypeScript/JavaScript
+  tool definitions Roo calls like <code>read_file()</code> / <code>execute_command()</code>) — but these are
+  <strong>model-invoked tools, NOT deterministic event hooks</strong>. Lifecycle/prompt-based hooks and a
+  <code>.roo/hooks/</code> JSON design exist only as community ENHANCEMENT requests (GitHub issues #11504,
+  #12025; discussion #6147) and were <strong>never shipped or documented before shutdown</strong>.</li>
+<li>gald3r's <code>g-hk-*.py</code> hooks <strong>cannot be auto-fired</strong> by Roo. They must run manually,
+  via VS Code tasks, or via git hooks (<code>core.hooksPath</code>) for the commit/push subset. This is the
+  largest gap vs. the Cursor reference.</li>
+<li>Source: https://docs.roocode.com/features/experimental/custom-tools</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Modern form</strong>: <code>.roo/rules/</code> (all modes) and <code>.roo/rules-{slug}/</code> (per-mode). Files are read
+  <strong>recursively, sorted alphabetically (case-insensitive)</strong>, and appended to the system prompt;
+  mode-specific rules appear <strong>before</strong> general rules.</li>
+<li><strong>Legacy fallback</strong>: single files <code>.roorules</code> / <code>.roorules-{slug}</code> at repo root (used when the
+  <code>.roo/</code> dirs are empty/missing). Roo also reads <strong><code>.clinerules</code></strong> for Cline compatibility.</li>
+<li><strong>Precedence</strong>: Global (<code>~/.roo/rules/</code>) vs Project (<code>.roo/rules/</code>) — <strong>workspace rules win on
+  conflict</strong> and take precedence over global. Within the prompt: mode-specific rules → <code>AGENTS.md</code> →
+  generic rules.</li>
+<li><strong>Extension</strong>: plain <strong><code>.md</code></strong> (NOT Cursor's <code>.mdc</code>) — parity sync maps <code>.mdc</code> → <code>.md</code>.</li>
+<li><strong>Memory</strong>: no native "memory bank"; <code>memory-bank/</code> is an inherited Cline convention (markdown the
+  agent is instructed to read), not Roo-native. gald3r durable facts live in
+  <code>.gald3r/learned-facts.md</code>, surfaced by <code>g-rl-25</code>.</li>
+<li>gald3r <code>g-rl-*</code> map to <code>.roo/rules/</code> (for <code>alwaysApply: true</code>) or mode-scoped <code>.roo/rules-{slug}/</code>.</li>
+<li>Source: https://docs.roocode.com/features/custom-instructions</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Model Context Protocol</strong> — first-class support. Project-level <strong><code>.roo/mcp.json</code></strong> (committable,
+  team-shareable, auto-detected) and global <code>mcp_settings.json</code>; <strong>project config takes precedence</strong>
+  on name collision.</li>
+<li>Agent tools <code>use_mcp_tool</code> and <code>access_mcp_resource</code>; a server-management UI with per-server
+  enable/disable + timeout; <strong>STDIO</strong> and <strong>SSE/streamable-HTTP</strong> transports. Disabling MCP globally
+  removes <code>use_mcp_tool</code> / <code>access_mcp_resource</code>.</li>
+<li>Source: https://docs.roocode.com/features/mcp/using-mcp-in-roo</li>
+</ul>
+<h2 id="9-other-extensibility-not-hooks">9. Other Extensibility (not hooks)<a class="headerlink" href="#9-other-extensibility-not-hooks" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Experimental Custom Tools</strong> — TS/JS tool definitions Roo calls like native tools; ship tool
+  schemas alongside the repo so teammates share workflow steps. Experimental, model-invoked.</li>
+<li><strong><code>run_slash_command</code> tool</strong> — agent-callable execution of slash commands for chained workflows.</li>
+<li><strong><code>.rooignore</code></strong> — gitignore-style file controlling which files the agent can access.</li>
+<li><strong>Settings Management</strong> — Import/Export/Reset of settings for sharing config across machines.</li>
+<li><strong>Cross-agent <code>.agents/skills/</code></strong> — Skills also resolve from the shared <code>.agents/</code> path, in
+  addition to the Roo-specific <code>.roo/skills/</code>.</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Roo reaches <strong>near-full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>commands, rules, agents (modes), skills, and MCP</strong>. The single hard gap is <strong>hooks</strong> — no native
+lifecycle events, so gald3r <code>g-hk-*.py</code> must run via git <code>core.hooksPath</code> / VS Code tasks. The
+Orchestrator/boomerang mode is the nearest analog to deterministic pipelines but is model-driven, not
+a hook system.</p>
+<p><strong>gald3r mapping is strong</strong>: <code>AGENTS.md</code> (canonical), <code>.roo/rules/</code> (g-rl-<em>), <code>.roo/skills/</code>
+(g-skl-</em>/SKILL.md, auto-relevance honored), <code>.roo/commands/</code> (g-<em> slash commands), <code>.roomodes</code>
+(g-agnt-</em> personas as custom modes), <code>.roo/mcp.json</code>. <strong>Only the lifecycle hooks (<code>g-hk-*.py</code>) have no
+auto-fire host.</strong> The dominant caveat remains that the platform is <strong>discontinued (2026-05-15)</strong> — any
+investment targets a frozen tool.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: none</li>
+<li><strong>Config file</strong>: n/a (no <code>hooks.json</code>; no <code>.roo/hooks/</code>; no event wiring)</li>
+<li><strong>Events available</strong>: none — no <code>sessionStart</code> / <code>preToolUse</code> / <code>postToolUse</code> /
+  <code>beforeShellExecution</code> / file-watch</li>
+<li><strong>Event payload format</strong>: none</li>
+<li><strong>Command extensions</strong>: n/a</li>
+<li><strong>Limitations</strong>: closest in-product automation is experimental <strong>Custom Tools</strong> (model-invoked TS/JS
+  tools) + <strong>Orchestrator/boomerang</strong> task spawning and the <code>run_slash_command</code> tool — model-driven,
+  not deterministic lifecycle events. A <code>.roo/hooks/</code> design exists only as unshipped community
+  proposals (GitHub #11504, #12025, discussion #6147).</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> do <strong>not</strong> auto-fire — run manually, via VS Code tasks, or via
+  git hooks (<code>core.hooksPath</code>) for the commit/push subset.</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li>VS Code extension; <strong>discontinued 2026-05-15</strong> — frozen/archived, not maintained. Migration is to
+  Cline / Kilo Code.</li>
+<li>Agents are <strong>modes</strong> (<code>.roomodes</code>), not files. Rules live in <code>.roo/rules/</code> (+ legacy <code>.roorules*</code> /
+  <code>.clinerules</code>). Skills use the <code>SKILL.md</code> standard via <code>.roo/skills/</code> + <code>.agents/skills/</code>.</li>
+<li><code>docs.roocode.com</code> 301-redirects to <code>roocodeinc.github.io/Roo-Code/</code>.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship <code>AGENTS.md</code> + <code>.roo/rules/</code> + <code>.roo/skills/</code> + <code>.roo/commands/</code> + <code>.roomodes</code> + <code>.roo/mcp.json</code>
+  — Roo discovers all of them natively.</li>
+<li>Hooks cannot be auto-fired: use git <code>core.hooksPath</code> for commit/push gates; express the rest as
+  rule text, custom modes, or VS Code tasks.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs roo</code> (crawl_max_age_days: 14) — but note the platform
+  is discontinued, so the docs are unlikely to change.</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsdocsroocodecom">Verification Evidence (docs crawl 2026-06-02, https://docs.roocode.com)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsroocodecom" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>/features/slash-commands — <code>.roo/commands/*.md</code> (filename = command), optional <code>mode</code> frontmatter, <code>run_slash_command</code> tool; project &gt; global &gt; built-in</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/features/custom-instructions — <code>.roo/rules/</code> + <code>.roo/rules-{slug}/</code> (recursive, alphabetical); <code>.roorules</code> / <code>.clinerules</code> fallback; workspace rules win over global</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/features/custom-modes — <code>.roomodes</code> (YAML/JSON); slug/name/roleDefinition/groups(fileRegex)/whenToUse; Orchestrator/boomerang delegation</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/features/skills — <code>SKILL.md</code> in <code>.roo/skills/</code> + <code>.roo/skills-{mode}/</code> + <code>.agents/skills/</code>; auto-discovered, progressive disclosure; page dated 2026-05-15 (~v3.38)</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>No "Hooks" feature page — no <code>hooks.json</code> / lifecycle events (negative confirmation). Custom Tools (/features/experimental/custom-tools) are model-invoked tools, not hooks; <code>.roo/hooks/</code> is unshipped community proposal (#11504, #12025, #6147)</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/features/mcp/using-mcp-in-roo — project <code>.roo/mcp.json</code> (precedence over global), <code>use_mcp_tool</code>/<code>access_mcp_resource</code>, STDIO + SSE/HTTP</td>
+</tr>
+<tr>
+<td>AGENTS.md</td>
+<td>/features/custom-instructions — auto-loaded unless <code>roo-cline.useAgentRules:false</code>; loads after mode rules before generic</td>
+</tr>
+<tr>
+<td>Lifecycle</td>
+<td>Roo Code <strong>discontinued 2026-05-15</strong> (announced 2026-04-21); docs/repos archived, extension still functions; migrate to Cline / Kilo Code</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-roo/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

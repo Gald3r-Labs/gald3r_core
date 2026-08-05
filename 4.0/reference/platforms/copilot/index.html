@@ -1,0 +1,1764 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/copilot/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — GitHub Copilot - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-github-copilot" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — GitHub Copilot
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native-surface-limited" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE (surface-limited)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native-cli-ga-vs-code-preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE (CLI GA; VS Code preview)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-distribution-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Distribution / Catalog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsgithubcomencopilotreferencecustomization-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://docs.github.com/en/copilot/reference/customization-cheat-sheet)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-github-copilot">PLATFORM_SPEC.md — GitHub Copilot<a class="headerlink" href="#platform_specmd-github-copilot" title="Permanent link">&para;</a></h1>
+<p>GitHub Copilot is GitHub's AI coding assistant. It runs across multiple <strong>surfaces</strong> (VS Code,
+Visual Studio 2026 18.4+, JetBrains, the Copilot CLI, and the Copilot coding agent on
+GitHub.com), and as of mid-2026 the customization stack natively supports <strong>all six</strong>
+gald3r-relevant extension primitives — <strong>prompt-file slash commands, custom instructions (rules),
+custom agents + subagents, Agent Skills, lifecycle hooks, and MCP</strong>. Critically for gald3r, Copilot
+reads the cross-tool <strong><code>AGENTS.md</code></strong> instruction convention <em>and</em> discovers Agent Skills from
+<strong><code>.github/skills/</code>, <code>.claude/skills/</code>, and <code>.agents/skills/</code></strong>, so gald3r's Claude-Code skill tree
+is <strong>largely drop-in reusable</strong> on Copilot.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against
+https://docs.github.com/en/copilot/reference/customization-cheat-sheet (see Verification Evidence).
+This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code>) which marked skills as <code>❓</code>, commands as
+<code>❌</code>, and hooks/MCP as <code>⚠️</code> — Copilot's customization surface has since matured and all six
+primitives are now <strong>NATIVE</strong> (<code>overall_readiness: full</code>).</p>
+<blockquote>
+<p><strong>Surface split (the central caveat):</strong> features land at <strong>different times across surfaces</strong>. The
+richest surface varies per primitive — e.g. prompt-file slash commands work in the <strong>VS Code</strong>
+extension but <strong>NOT</strong> the Copilot CLI (built-in commands only; issues #618/#1113); custom agents
+require <strong>VS 2026 v18.4+</strong>; hooks are GA on the Copilot <strong>CLI</strong> and in <strong>preview</strong> for VS Code.
+Where a feature is surface-limited it is noted inline.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p>Copilot customization spans GitHub's native <code>.github/</code> tree plus cross-tool discovery paths, and a
+gald3r convention folder:</p>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                         ← cross-tool instruction file Copilot reads (nearest in tree wins)
+├── CLAUDE.md / GEMINI.md             ← also natively read (cross-tool instruction conventions)
+└── .github/
+    ├── copilot-instructions.md       ← repo-wide always-on custom instructions (auto-loaded)
+    ├── instructions/  *.instructions.md  ← path-scoped instructions (frontmatter applyTo: &quot;glob&quot;)
+    ├── prompts/       *.prompt.md     ← reusable slash commands (YAML frontmatter; /command-name)
+    ├── agents/        AGENT-NAME.md   ← custom agents (specialist persona; tool restrictions)
+    ├── skills/        &lt;name&gt;/SKILL.md ← Agent Skills (YAML frontmatter: name + description)
+    └── hooks/         *.json          ← Copilot CLI lifecycle hooks (bash variant runs gald3r `g-hk-*.py` via `python &lt;path&gt;`)
+
+.claude/skills/&lt;name&gt;/SKILL.md        ← Copilot ALSO discovers Agent Skills here  (cross-tool)
+.agents/skills/&lt;name&gt;/SKILL.md        ← Copilot ALSO discovers Agent Skills here  (cross-tool)
+
+mcp.json                              ← MCP config (VS Code / JetBrains / Xcode)
+~/.copilot/mcp-config.json            ← MCP config (Copilot CLI)
+(repo/org settings)                   ← MCP config (cloud coding agent)
+
+.copilot/                             ← gald3r CONVENTION folder — NOT a Copilot-native path
+├── README.md                         ← platform orientation for gald3r users
+└── commands/  g-*.md                 ← gald3r command reference docs (human/agent reference only)
+</code></pre>
+<p>Copilot <strong>also</strong> discovers Agent Skills from <code>.claude/skills/</code> and <code>.agents/skills/</code> (not just
+<code>.github/skills/</code>), so gald3r's <code>.claude/</code>-style skill tree works on Copilot with <strong>no
+Copilot-specific port</strong>.</p>
+<p><strong>gald3r writes</strong>: <code>.github/copilot-instructions.md</code> (generated from always-apply rules),
+<code>.github/instructions/</code> (adv-tier optional), <code>.github/prompts/</code>, <code>.github/agents/</code>,
+<code>.github/hooks/*.json</code>, plus the <code>.copilot/</code> convention folder; gald3r's <code>.claude/skills/</code> tree is
+loaded as-is.
+<strong>Copilot owns</strong>: the <em>meaning</em> of <code>.github/copilot-instructions.md</code>, <code>.github/instructions/</code>,
+<code>.github/prompts/</code>, MCP config, and the <strong>Agentic Memory</strong> store (agent-authored repo/user facts —
+Copilot-managed, not a gald3r-writable surface). <code>.copilot/</code> is purely a gald3r invention; Copilot
+does not read it.</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Copilot reads the cross-tool <strong><code>AGENTS.md</code></strong> convention (root <strong>or nested</strong>; the <strong>nearest in the
+directory tree takes precedence</strong>). It additionally natively reads GitHub's own
+<strong><code>.github/copilot-instructions.md</code></strong> (repo-wide, auto-loaded) and <strong><code>.github/instructions/**.instructions.md</code></strong>
+(path-scoped via <code>applyTo:</code> glob), plus the cross-tool <strong><code>CLAUDE.md</code></strong> and <strong><code>GEMINI.md</code></strong>. No
+dedicated <code>COPILOT.md</code> is required — gald3r's <code>AGENTS.md</code> is a first-class input.</p>
+<blockquote>
+<p><strong>Instruction-convention truth:</strong> unlike Claude Code (which reads <code>CLAUDE.md</code>, importing
+<code>@AGENTS.md</code>), Copilot reads <strong><code>AGENTS.md</code> directly</strong> as its primary cross-tool instruction file,
+while still honoring its GitHub-native <code>.github/copilot-instructions.md</code>. gald3r generates
+<code>copilot-instructions.md</code> from always-apply rules via <code>generate_copilot_instructions.py</code>; keep
+consumer installs lean (large instruction files compete for context window — under ~500 lines).</p>
+</blockquote>
+<hr />
+<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom agents</strong> (formerly "custom chat modes"; terminology updated, functionality unchanged):
+  a "specialist persona with its own instructions, tool restrictions, and context" stored as
+  <code>.github/agents/AGENT-NAME.md</code>. <strong>Subagents</strong> are "a separate agent spawned by the main agent to
+  handle delegated work in an isolated context." Custom agents, sub-agents, and the plan agent are
+  <strong>GA in Copilot for JetBrains (2026)</strong>; custom agents in the VS family require <strong>VS 2026 v18.4+</strong>.</li>
+<li>Org/enterprise scope: agents (and instructions) can be distributed centrally via a
+  <strong><code>.github-private</code></strong> repository (<code>agents/AGENT-NAME.md</code>).</li>
+<li>gald3r <code>g-agnt-*</code> definitions map directly to <code>.github/agents/AGENT-NAME.md</code> files.</li>
+<li>Source: https://docs.github.com/en/copilot/reference/customization-cheat-sheet</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> (<code>SKILL.md</code> open standard) — "a folder of instructions, scripts, and resources
+  that Copilot loads when relevant to a task." <code>SKILL.md</code> uses YAML frontmatter (<code>name</code> +
+  <code>description</code> required). Added <strong>April 2026</strong>; the <strong>same SKILL.md format works across Claude Code,
+  Cursor, Codex, and 20+ agents</strong>.</li>
+<li><strong>Multi-path discovery</strong>: Copilot reads <code>.github/skills/&lt;name&gt;/SKILL.md</code> <strong>and</strong> <code>.claude/skills/</code>
+  <strong>and</strong> <code>.agents/skills/</code> — favorable for a single gald3r skill tree shared across tools.</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively — including straight from <code>.claude/skills/</code>.</li>
+<li>Source: https://docs.github.com/en/copilot/concepts/agents/about-agent-skills</li>
+</ul>
+<h2 id="5-commands-workflows-native-surface-limited">5. Commands / Workflows — ✅ NATIVE (surface-limited)<a class="headerlink" href="#5-commands-workflows-native-surface-limited" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Prompt files</strong> (<code>.github/prompts/*.prompt.md</code>) "turn repeated Copilot chat requests into slash
+  commands"; create with YAML frontmatter and invoke via <code>/command-name</code>.</li>
+<li><strong>Surface caveat</strong>: prompt-file slash commands work in the <strong>VS Code extension</strong> but <strong>NOT</strong> the
+  Copilot <strong>CLI</strong> (the CLI recognizes built-in commands only — issues #618/#1113). gald3r's 90+
+  <code>g-*</code> commands additionally ship to <code>.copilot/commands/*.md</code> as reference docs (not executed).</li>
+<li>gald3r <code>@g-*</code> / <code>/g-*</code> commands map to prompt files for the VS Code surface.</li>
+<li>Source: https://docs.github.com/en/copilot/reference/customization-cheat-sheet</li>
+</ul>
+<h2 id="6-hooks-system-native-cli-ga-vs-code-preview">6. Hooks System — ✅ NATIVE (CLI GA; VS Code preview)<a class="headerlink" href="#6-hooks-system-native-cli-ga-vs-code-preview" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Copilot CLI hooks</strong> are "custom shell commands that execute deterministically at specific points
+  in an agent's workflow." Events: <strong>sessionStart</strong>, <strong>userPromptSubmitted</strong>, <strong>preToolUse</strong>,
+  <strong>postToolUse</strong>, <strong>sessionEnd</strong>, <strong>errorOccurred</strong>. For <strong>preToolUse</strong>, a hook returning <strong><code>deny</code>
+  blocks the tool</strong>. Configured in <strong><code>.github/hooks/*.json</code></strong> with <strong>bash / any-executable variants</strong>
+  — so gald3r <code>g-hk-*.py</code> hooks wire via the bash variant running <code>python &lt;path&gt;</code> (post-T1584 Python
+  port; no PowerShell involved; sessionStart context injection,
+  preToolUse <code>.gald3r/</code> guards, etc.).</li>
+<li><strong>Surface caveat</strong>: hooks are GA on the <strong>Copilot CLI</strong>; <strong>Agent hooks are also in preview for
+  VS Code</strong>.</li>
+<li><strong>Scope note</strong>: Copilot hooks fire only during an <strong>active agent session</strong> (CLI / cloud) — they
+  are NOT git hooks, CI scripts, or GitHub Actions; normal commits/pushes are unaffected.</li>
+<li>Source: https://docs.github.com/en/copilot/reference/hooks-configuration</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom instructions (always-on)</strong> = "always-on context that automatically applies to every
+  interaction within its defined scope" via <code>.github/copilot-instructions.md</code> (repo-wide),
+  <code>.github/instructions/*.instructions.md</code> (path-specific via <code>applyTo:</code> glob), and
+  <code>AGENTS.md</code>/<code>CLAUDE.md</code>/<code>GEMINI.md</code>. Plain <code>.md</code> (not Cursor's <code>.mdc</code> — parity sync swaps the
+  extension). gald3r flattens always-apply rules into the single <code>copilot-instructions.md</code>.</li>
+<li><strong>Agentic Memory (Copilot Memory)</strong> is a <strong>distinct dynamic-context primitive</strong> beyond static
+  instruction files — agents <strong>self-author</strong> repo- and user-level facts. <strong>On by default for
+  Pro/Pro+ in public preview.</strong> This is a Copilot-managed store, not a gald3r-writable surface.</li>
+<li>gald3r <code>g-rl-*</code> map to <code>.github/copilot-instructions.md</code> (always-apply) or
+  <code>.github/instructions/</code> (path-scoped, adv tier).</li>
+<li>Source: https://docs.github.com/en/copilot/reference/customization-cheat-sheet</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MCP provides "connection to external systems, APIs, and databases" and "works across all major
+  Copilot surfaces — IDE, CLI, or coding agent on GitHub.com." Configured via an <code>mcpServers</code> object;
+  <strong>STDIO, HTTP, and SSE</strong> transports supported. The <strong>GitHub MCP Registry (public preview)</strong> lists
+  curated servers.</li>
+<li><strong>Per-surface config paths</strong>: <code>mcp.json</code> (VS Code / JetBrains / Xcode),
+  <code>~/.copilot/mcp-config.json</code> (CLI), repo/org settings (cloud agent). Fully supported but <strong>not
+  single-path portable</strong> — gald3r cannot ship one <code>mcp.json</code> that every surface reads.</li>
+<li>Source: https://docs.github.com/en/copilot/concepts/context/mcp</li>
+</ul>
+<h2 id="9-distribution-catalog">9. Distribution / Catalog<a class="headerlink" href="#9-distribution-catalog" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Org/enterprise: custom <strong>agents and instructions</strong> distribute centrally via a <strong><code>.github-private</code></strong>
+  repository.</li>
+<li><strong><code>github/awesome-copilot</code></strong> is the official community catalog of instructions, agents, skills,
+  and hooks — the natural distribution/discovery channel for a gald3r Copilot bundle.</li>
+<li>Output formats: prompt files and custom agents use <strong>YAML frontmatter</strong>; hooks use <strong>JSON</strong> config;
+  MCP uses <strong>JSON</strong> (<code>mcpServers</code> object).</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Copilot now reaches <strong>near-full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>commands, rules, agents, skills, hooks, and MCP</strong>. Caveats: <strong>surface fragmentation</strong> (prompt-file
+slash commands are VS Code-only; custom agents need VS 2026 v18.4+; hooks are CLI-GA / VS Code-preview)
+and <strong>per-surface MCP config paths</strong>. The <strong>Agentic Memory</strong> store is a Copilot-native bonus with no
+Cursor analog (agent-authored facts, not a gald3r-writable surface). Path-scoped instructions
+(<code>.github/instructions/</code> with <code>applyTo:</code>) are a Copilot superset with no Cursor equivalent.</p>
+<p><strong>Reuse note (important):</strong> because Copilot reads <code>AGENTS.md</code> and discovers <code>.claude/skills/</code> +
+<code>.agents/skills/</code>, gald3r's <strong>Claude-Code skill artifacts are largely reusable on Copilot without a
+separate port</strong> — the cheapest path to a high-parity Copilot install is to ship the gald3r
+<code>.claude/skills/</code> tree plus a generated <code>.github/copilot-instructions.md</code> and <code>AGENTS.md</code>.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (Copilot CLI lifecycle hooks; JSON config) — agent-session only (NOT git hooks / CI / Actions)</li>
+<li><strong>Config file</strong>: <code>.github/hooks/*.json</code></li>
+<li><strong>Events available</strong>: sessionStart, userPromptSubmitted, preToolUse (returning <code>deny</code> blocks the tool), postToolUse, sessionEnd, errorOccurred</li>
+<li><strong>Event payload format</strong>: JSON config; hook objects carry <strong>bash</strong> command variants (any executable)</li>
+<li><strong>Command extensions</strong>: <code>.sh</code> (bash variant) running any executable, incl. gald3r's <code>g-hk-*.py</code> via <code>python &lt;path&gt;</code></li>
+<li><strong>Surface limit</strong>: GA on the Copilot <strong>CLI</strong>; <strong>preview</strong> in VS Code</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> wire via the bash variant running <code>python &lt;path&gt;</code> across the events above (agent-session scope only)</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Surface fragmentation</strong> is the defining trait: a capability that is GA on one surface may be
+  preview/absent on another. Always state the surface (VS Code vs CLI vs JetBrains vs cloud agent).</li>
+<li>Instruction convention: Copilot reads <strong><code>AGENTS.md</code></strong> directly (nearest-in-tree wins), plus its
+  GitHub-native <code>.github/copilot-instructions.md</code> — it does <strong>not</strong> require a <code>CLAUDE.md</code> import.</li>
+<li><strong>Agentic Memory</strong> is a dynamic, agent-authored context store distinct from static instruction
+  files — do not conflate it with <code>copilot-instructions.md</code>.</li>
+<li>Skill discovery is multi-path (<code>.github/skills/</code> + <code>.claude/skills/</code> + <code>.agents/skills/</code>) — reuse
+  the existing gald3r <code>.claude/skills/</code> tree rather than duplicating into <code>.github/skills/</code>.</li>
+<li>MCP config path differs per surface; ship the right one for the target surface.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's <code>.claude/skills/</code> tree — Copilot discovers it; generate
+  <code>.github/copilot-instructions.md</code> (from always-apply rules) and <code>AGENTS.md</code>.</li>
+<li>Hooks wire on the Copilot <strong>CLI</strong> via the bash variant running <code>python &lt;path&gt;</code>; VS Code hook support is <strong>preview</strong>
+  — do not assume session-start/pre-commit hooks fire in the VS Code surface yet.</li>
+<li>Prompt-file slash commands are <strong>VS Code-only</strong> — gald3r commands are not executable on the CLI.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs copilot</code> (crawl_max_age_days: 7).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<p>Rationale (honest, surface-aware):
+- <strong>Hooks ✅</strong> — native Copilot CLI lifecycle hooks (<code>.github/hooks/*.json</code>; 6 events; preToolUse <code>deny</code> blocks). VS Code support is preview.
+- <strong>Rules ✅</strong> — <code>.github/copilot-instructions.md</code> (always-on) + <code>.github/instructions/</code> (path-scoped) + reads <code>AGENTS.md</code>; plus Agentic Memory.
+- <strong>Skills ✅</strong> — Agent Skills <code>SKILL.md</code> discovered in <code>.github/.claude/.agents</code> skills dirs (cross-tool standard).
+- <strong>Commands ✅</strong> — prompt-file slash commands (<code>.github/prompts/*.prompt.md</code>); VS Code-only (not the CLI).
+- <strong>MCP ✅</strong> — native across IDE/CLI/cloud (STDIO/HTTP/SSE); config path differs per surface.
+- <strong>Docs Fresh ✅</strong> — <code>last_doc_scan: 2026-06-02</code> against the customization cheat sheet.</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsdocsgithubcomencopilotreferencecustomization-cheat-sheet">Verification Evidence (docs crawl 2026-06-02, https://docs.github.com/en/copilot/reference/customization-cheat-sheet)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsgithubcomencopilotreferencecustomization-cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>Cheat sheet — prompt files <code>.github/prompts/*.prompt.md</code> become <code>/command-name</code> slash commands; VS Code only (CLI = built-in commands, issues #618/#1113)</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>Cheat sheet — custom instructions <code>.github/copilot-instructions.md</code> (repo) + <code>.github/instructions/*.instructions.md</code> (<code>applyTo:</code>) + <code>AGENTS.md</code>/<code>CLAUDE.md</code>/<code>GEMINI.md</code>; plus Agentic Memory (Pro/Pro+ preview)</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>Cheat sheet — custom agents <code>.github/agents/AGENT-NAME.md</code> (specialist persona, tool restrictions) + subagents; GA in JetBrains 2026; VS 2026 v18.4+; org via <code>.github-private</code></td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/concepts/agents/about-agent-skills — Agent Skills <code>SKILL.md</code> (name+description); discovered in <code>.github/skills/</code>, <code>.claude/skills/</code>, <code>.agents/skills/</code>; added Apr 2026; cross-tool standard</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/reference/hooks-configuration — <code>.github/hooks/*.json</code>; sessionStart/userPromptSubmitted/preToolUse/postToolUse/sessionEnd/errorOccurred; preToolUse <code>deny</code> blocks; bash variant runs gald3r <code>g-hk-*.py</code> via <code>python &lt;path&gt;</code>; CLI GA, VS Code preview</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/concepts/context/mcp — <code>mcpServers</code> object; STDIO/HTTP/SSE; <code>mcp.json</code> (IDE) / <code>~/.copilot/mcp-config.json</code> (CLI) / repo settings (cloud); GitHub MCP Registry (preview)</td>
+</tr>
+<tr>
+<td>Cross-compat</td>
+<td>Copilot reads <code>AGENTS.md</code> (nearest-in-tree) and discovers <code>.claude/</code> + <code>.agents/</code> skills → gald3r Claude-Code skill artifacts reusable</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-copilot/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

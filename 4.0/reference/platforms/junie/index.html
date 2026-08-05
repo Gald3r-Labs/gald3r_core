@@ -1,0 +1,1782 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/junie/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — JetBrains Junie (IDE plugin + Junie CLI) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-jetbrains-junie-ide-plugin-junie-cli" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — JetBrains Junie (IDE plugin + Junie CLI)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE (CLI)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-partial-sessionstart-only-early-access-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ⚠️ PARTIAL (SessionStart-only, Early Access, CLI)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-extensions-distribution-first-class-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Extensions / Distribution — first-class bundle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsjuniejetbrainscomdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://junie.jetbrains.com/docs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-jetbrains-junie-ide-plugin-junie-cli">PLATFORM_SPEC.md — JetBrains Junie (IDE plugin + Junie CLI)<a class="headerlink" href="#platform_specmd-jetbrains-junie-ide-plugin-junie-cli" title="Permanent link">&para;</a></h1>
+<p>JetBrains Junie ships as <strong>two delivery surfaces</strong>: a <strong>Junie IDE plugin</strong> (IntelliJ IDEA, PyCharm,
+WebStorm, GoLand, RubyMine, Rider, etc.) and a <strong>standalone Junie CLI</strong> (cross-platform —
+Linux/macOS/Windows — BYO-LLM / model-agnostic). The <strong>CLI is where the rich extensibility surface
+lives</strong>: it natively supports <strong>custom slash commands, always-on guidelines/memory,
+automatically-delegated custom subagents, open-standard Agent Skills (<code>SKILL.md</code>), and MCP servers</strong>.
+Lifecycle hooks also exist but only as an <strong>Early Access</strong> feature limited to the <strong>SessionStart</strong>
+event — so hooks are <strong>PARTIAL</strong>, not full-native. The IDE plugin supports the <strong><code>AGENTS.md</code></strong>
+guidelines convention, <strong>Agent Skills</strong>, and <strong>MCP</strong>, but the commands/subagents/hooks primitives are
+CLI-centric.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://junie.jetbrains.com/docs (see
+Verification Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code> / <code>2026-05-20</code>),
+which incorrectly marked commands/rules/agents/skills as unsupported — the Junie CLI now makes all of
+them <strong>NATIVE</strong>, and hooks moved from "none" to <strong>PARTIAL</strong> (SessionStart-only, EAP).</p>
+<blockquote>
+<p><strong>Surface split:</strong> the full extensibility (commands/guidelines/subagents/skills/MCP/EAP-hooks) lives
+in the <strong>Junie CLI</strong>. The IDE plugin exposes a narrower surface (<code>AGENTS.md</code> guidelines + Agent
+Skills + MCP). Subagents, custom slash commands, and hooks are documented as <strong>CLI features</strong>. Where
+a feature is CLI-only it is noted inline.</p>
+<p><strong>Instruction-file convention:</strong> Junie reads <strong><code>AGENTS.md</code></strong> (the cross-tool standard), NOT
+<code>CLAUDE.md</code> or <code>GEMINI.md</code>. Project <code>AGENTS.md</code> always takes precedence over global
+<code>~/.junie/AGENTS.md</code>. Legacy <code>.junie/guidelines.md</code> is deprecated but still read.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                       ← root guidelines (always-on; honored by CLI + IDE) — gald3r writes
+└── .junie/
+    ├── AGENTS.md                   ← preferred project guidelines location — gald3r writes
+    ├── guidelines.md               ← LEGACY guidelines (deprecated, still read); .junie/guidelines/ also legacy
+    ├── commands/    *.md           ← custom slash commands (md + YAML frontmatter)
+    ├── agents/      *.md           ← custom subagents (md + YAML; .agents/ also discovered)
+    ├── skills/      &lt;name&gt;/SKILL.md  ← Agent Skills (agentskills.io open standard)
+    ├── mcp/
+    │   └── mcp.json                ← project MCP server config (shared CLI + IDE format)
+    └── config.json                 ← Junie CLI settings (model/provider, *-locations, hooks block)
+
+(user / global scope, Junie-owned)
+~/.junie/AGENTS.md                  ← global guidelines (project AGENTS.md wins on collision)
+~/.junie/commands/  ~/.junie/agents/  ~/.junie/skills/  ~/.junie/mcp/mcp.json  ~/.junie/config.json
+</code></pre>
+<ul>
+<li><strong>gald3r writes</strong>: <code>AGENTS.md</code> / <code>.junie/AGENTS.md</code> (guidelines), <code>.junie/commands/*.md</code>,
+  <code>.junie/agents/*.md</code> (or <code>.agents/</code>), <code>.junie/skills/&lt;name&gt;/SKILL.md</code>, <code>.junie/mcp/mcp.json</code>, and
+  hooks via the <code>hooks</code> block in <code>~/.junie/config.json</code> (see §6 — <strong>project</strong> <code>config.json</code> hooks are
+  ignored for safety).</li>
+<li><strong>Junie owns</strong>: the guidelines search order, the IDE PSI/index mechanism, user-scope <code>~/.junie/</code>,
+  and the <code>config.json</code> schema.</li>
+</ul>
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Convention: <code>AGENTS.md</code></strong> (cross-tool standard). Junie CLI reads guidelines from <code>AGENTS.md</code> and
+  adds that context to <strong>every task</strong> it works on — this is the always-on / persistent-memory analogue.</li>
+<li><strong>Precedence</strong>: project <code>.junie/AGENTS.md</code> (or root <code>AGENTS.md</code>) <strong>always takes precedence</strong> over
+  global <code>~/.junie/AGENTS.md</code>. The legacy <code>.junie/guidelines.md</code> (and <code>.junie/guidelines/</code> folder) is
+  <strong>deprecated but still read</strong> for backward compatibility. The IDE plugin uses the same <code>AGENTS.md</code>
+  convention.</li>
+<li>Junie does <strong>not</strong> natively read <code>CLAUDE.md</code> or <code>GEMINI.md</code>. gald3r should write <strong><code>AGENTS.md</code></strong> as
+  the canonical surface; gald3r's existing <code>AGENTS.md</code> is a first-class input.</li>
+<li>Source: https://junie.jetbrains.com/docs/guidelines-and-memory.html</li>
+</ul>
+<h2 id="3-agents-support-native-cli">3. Agents Support — ✅ NATIVE (CLI)<a class="headerlink" href="#3-agents-support-native-cli" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom subagents</strong>: markdown + YAML frontmatter in <code>.junie/agents/</code> (or <code>.agents/</code>) and
+  <code>~/.junie/agents/</code>. Frontmatter fields: <code>name</code>, <code>description</code> (required), <code>tools</code> (allowlist),
+  <code>disallowedTools</code>, <code>model</code>, <code>skills</code>, <code>allowPromptArgument</code> (<code>$prompt</code>).</li>
+<li><strong>Automatic delegation</strong>: when the Junie CLI runs across a task that matches a subagent's name and
+  description, it delegates to that subagent, which works <strong>independently in its own context</strong> and
+  returns the result. Delegation is <strong>automatic only</strong> — subagents <strong>cannot</strong> be invoked manually via
+  slash commands.</li>
+<li>gald3r <code>g-agnt-*</code> role definitions map directly to Junie subagent files.</li>
+<li>Source: https://junie.jetbrains.com/docs/junie-cli-subagents.html</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> following the <strong>open Agent Skills format</strong> (<code>agentskills.io/specification</code>),
+  portable across agents. The Junie CLI scans <code>.junie/skills/</code> at <strong>user and project</strong> levels and
+  selects skills relevant to the current task via <strong>progressive disclosure</strong> (loaded only when
+  relevant).</li>
+<li>A skill is a folder <code>.junie/skills/&lt;skill-name&gt;/</code> (or <code>~/.junie/skills/&lt;skill-name&gt;/</code>) containing a
+  <code>SKILL.md</code> (markdown + YAML; required <code>name</code>, optional <code>description</code>) plus templates / scripts /
+  reference materials.</li>
+<li><strong>Supported across all JetBrains IDEs</strong> (IntelliJ, WebStorm, PyCharm, etc.) <strong>and the CLI</strong>.</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively.</li>
+<li>Source: https://junie.jetbrains.com/docs/agent-skills.html</li>
+</ul>
+<h2 id="5-commands-workflows-native-cli">5. Commands / Workflows — ✅ NATIVE (CLI)<a class="headerlink" href="#5-commands-workflows-native-cli" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom slash commands</strong>: markdown files with YAML frontmatter in <code>.junie/commands/</code> (project) or
+  <code>~/.junie/commands/</code> (user); invoked <code>/&lt;name&gt;</code> with <code>$argumentName</code> named arguments. <strong>Filename =
+  command name</strong> (e.g. <code>explain.md</code> → <code>/explain</code>).</li>
+<li>Built-in slash commands are accessed by typing <code>/</code> in the prompt; custom ones are created via
+  <code>/commands</code> → <strong>Create New Command</strong>. Project commands can be committed to version control.</li>
+<li>gald3r <code>@g-*</code> / <code>/g-*</code> commands map directly.</li>
+<li>Source: https://junie.jetbrains.com/docs/custom-slash-commands.html</li>
+</ul>
+<h2 id="6-hooks-system-partial-sessionstart-only-early-access-cli">6. Hooks System — ⚠️ PARTIAL (SessionStart-only, Early Access, CLI)<a class="headerlink" href="#6-hooks-system-partial-sessionstart-only-early-access-cli" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Mechanism</strong>: a <code>hooks</code> block in <code>config.json</code>:
+  <code>{ SessionStart: [ { matcher, hooks: [ { type: "command", command: "..." } ] } ] }</code>. Lets you run a
+  shell command automatically when the Junie CLI starts.</li>
+<li><strong><code>matcher</code></strong> is an optional regex over the session source (<code>startup</code> = fresh session, <code>resume</code> =
+  resumed; omit to run on every source).</li>
+<li><strong>Safety</strong>: hooks from the <strong>default PROJECT config are ignored</strong> — personal hooks must live in
+  <strong><code>~/.junie/config.json</code></strong> or be passed via <code>--config-location</code>.</li>
+<li><strong>Why PARTIAL</strong> (two reasons):</li>
+<li><strong>Only the <code>SessionStart</code> event is supported</strong> — there is <strong>no</strong> <code>PreToolUse</code> / <code>PostToolUse</code> /
+     <code>UserPromptSubmit</code> / <code>Stop</code> / pre-commit / file-watch.</li>
+<li>It is <strong>Early Access (EAP)</strong>, not GA.</li>
+<li>Notably, Junie's <strong>extension</strong> packaging concept (see §9) does <strong>NOT</strong> include hooks.</li>
+<li>A YouTrack request <strong>JUNIE-1961</strong> ("Add Event Hooks / Lifecycle Callbacks for Agent Execution")
+  tracks broader hook coverage.</li>
+<li><strong>gald3r consequence</strong>: SessionStart context injection (e.g. a <code>g-hk-*.py</code> that loads <code>.gald3r/</code>
+  context) <strong>is feasible now</strong> via the personal <code>~/.junie/config.json</code> hooks block. PreToolUse
+  <code>.gald3r/</code> guards, pre-commit gates, and file-watch automations are <strong>not yet supported</strong> — degrade
+  those to git <code>core.hooksPath</code> or manual invocation. The IDE plugin has no hook surface.</li>
+<li>Source: https://junie.jetbrains.com/docs/junie-cli-hooks.html</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Guidelines/memory via <code>AGENTS.md</code></strong> (see §2): project <code>.junie/AGENTS.md</code> / root <code>AGENTS.md</code> &gt;
+  global <code>~/.junie/AGENTS.md</code>; legacy <code>.junie/guidelines.md</code> still read. The guidelines content is
+  <strong>injected into every task automatically</strong> — Junie's always-apply / persistent-rules surface.</li>
+<li>This is single-file guidelines rather than a glob-scoped per-rule directory; gald3r <code>g-rl-*</code> content
+  is consolidated into <code>AGENTS.md</code>.</li>
+<li>Source: https://junie.jetbrains.com/docs/guidelines-and-memory.html</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>MCP servers (Model Context Protocol)</strong>: the Junie CLI uses the <strong>same MCP JSON configuration as
+  Junie in JetBrains IDEs</strong>, supporting both <strong>local</strong> (Docker / npx / binary) and <strong>remote</strong>
+  (HTTP/HTTPS) servers.</li>
+<li><strong>Config</strong>: <code>mcp.json</code> at <code>.junie/mcp/mcp.json</code> (project) or <code>~/.junie/mcp/mcp.json</code> (user) — shared
+  format between CLI and IDE plugin. An <strong>MCP Installation Assistant</strong> AI helper streamlines adding
+  servers from a registry or from scratch.</li>
+<li>MCP support was added to Junie in 2025 (announced alongside a ~30% agent speedup).</li>
+<li>gald3r marks MCP <strong>✅ for the mechanism</strong>; the concrete server set is machine/team-specific (no
+  <code>mcp.json</code> is committed in this template), so end-to-end server behavior is ❓ untested in CI.</li>
+<li>Source: https://junie.jetbrains.com/docs/junie-cli-mcp-configuration.html</li>
+</ul>
+<h2 id="9-extensions-distribution-first-class-bundle">9. Extensions / Distribution — first-class bundle<a class="headerlink" href="#9-extensions-distribution-first-class-bundle" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Junie has a first-class <strong>"extension"</strong> concept: a single extension can package <strong>any combination of
+  Agent Skills, MCP servers, Subagents, Custom slash commands, and Guidelines</strong> — making team
+  distribution easy. <strong>Notably the extension component list does NOT include hooks.</strong></li>
+<li>This is the <strong>ideal single-artifact distribution mechanism</strong> for a gald3r Junie pack (skills +
+  subagents + commands + guidelines + MCP in one bundle).</li>
+<li><strong>Config files</strong>: the CLI loads settings from JSON <code>config.json</code> (plus CLI flags and env vars) with
+  keys including <code>model</code>/<code>provider</code>, <code>mcp-locations</code>, <code>skill-locations</code>, <code>command-locations</code>,
+  <code>agent-locations</code>, <code>guidelines-location</code>, <code>byok</code>, proxies, and <code>hooks</code>.</li>
+<li><strong>CI/CD</strong>: Junie also runs in CI/CD via a <strong>Junie GitHub Action</strong> (<code>junie-on-github</code>), enabling
+  agentic tasks in pipelines.</li>
+<li><strong>BYO-LLM caveat</strong>: the CLI is model-agnostic; <strong>switching models mid-session can reset accumulated
+  agent context/memory</strong>.</li>
+<li>Sources: https://junie.jetbrains.com/docs/junie-cli-extensions.html ·
+  https://junie.jetbrains.com/docs/junie-cli-configuration.html</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Junie reaches <strong>near-full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>commands, rules (<code>AGENTS.md</code>), agents (subagents), skills (Agent Skills), and MCP</strong>. The single gap
+is <strong>hooks</strong>, which are <strong>PARTIAL</strong> — SessionStart-only and Early Access, with no PreToolUse /
+PostToolUse / pre-commit / file-watch events, and the extension bundle deliberately excludes hooks.</p>
+<p><strong>Surface caveats</strong>: subagents, custom slash commands, and hooks are <strong>CLI-only</strong>; the IDE plugin
+exposes <code>AGENTS.md</code> guidelines + Agent Skills + MCP. Instruction convention is <strong><code>AGENTS.md</code></strong> (not
+<code>CLAUDE.md</code>). The <strong>"extension"</strong> bundle (skills + subagents + commands + guidelines + MCP) is the
+natural single-artifact distribution channel for a gald3r Junie install.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: partial (Early Access; CLI <code>config.json</code> <code>hooks</code> block)</li>
+<li><strong>Config file</strong>: <code>~/.junie/config.json</code> (personal) or via <code>--config-location</code> — <strong>project</strong>
+  <code>config.json</code> hooks are <strong>ignored</strong> for safety</li>
+<li><strong>Events available</strong>: <strong><code>SessionStart</code> only</strong> (matcher regex over session source: <code>startup</code> /
+  <code>resume</code>) — NO PreToolUse / PostToolUse / UserPromptSubmit / Stop / pre-commit / file-watch</li>
+<li><strong>Event payload format</strong>: shell <code>command</code> execution (<code>{ type: "command", command: "..." }</code>)</li>
+<li><strong>Limitations</strong>: SessionStart-only <strong>and</strong> Early Access (not GA); the <strong>extension</strong> packaging
+  concept excludes hooks; broader coverage tracked in YouTrack <strong>JUNIE-1961</strong>. IDE plugin has no hook
+  surface.</li>
+<li><strong>gald3r hook files</strong>: a SessionStart <code>g-hk-*</code> (context injection) wires now via personal
+  <code>~/.junie/config.json</code>; PreToolUse <code>.gald3r/</code> guards / pre-commit gates must degrade to git
+  <code>core.hooksPath</code> or manual invocation.</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Instruction convention is <code>AGENTS.md</code></strong> — Junie does NOT read <code>CLAUDE.md</code> / <code>GEMINI.md</code>. Project
+  <code>AGENTS.md</code> wins over global <code>~/.junie/AGENTS.md</code>; legacy <code>.junie/guidelines.md</code> still read.</li>
+<li><strong>Two surfaces</strong>: full primitive set in the <strong>Junie CLI</strong>; the <strong>IDE plugin</strong> is narrower
+  (guidelines + skills + MCP). Subagents / slash commands / hooks are CLI features.</li>
+<li><strong>Subagents are auto-delegated only</strong> — no manual <code>/subagent</code> invocation.</li>
+<li><strong>Hooks are EAP + SessionStart-only</strong>, and personal-config-only (project hooks ignored).</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Cheapest high-parity install</strong>: ship gald3r's <code>.junie/</code> tree (commands + agents + skills + MCP) +
+  <code>AGENTS.md</code>, or bundle them as a single Junie <strong>extension</strong> for team distribution.</li>
+<li>Subagent delegation is automatic — author <code>g-agnt-*</code> files with strong <code>description:</code> fields so
+  Junie picks them up.</li>
+<li>Wire a <strong>SessionStart</strong> <code>g-hk-*</code> via <code>~/.junie/config.json</code> for <code>.gald3r/</code> context injection;
+  degrade pre-commit/pre-tool hooks to git <code>core.hooksPath</code> or manual runs (EAP, SessionStart-only).</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs junie</code> (crawl_max_age_days: 14) — confirm whether hooks
+  exit EAP / gain new events (track JUNIE-1961).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚠️</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<ul>
+<li><strong>Hooks ⚠️</strong> — <code>config.json</code> <code>hooks</code> block, but <strong>SessionStart-only</strong> and <strong>Early Access</strong>; no
+  PreToolUse/PostToolUse/pre-commit/file-watch; project hooks ignored (personal <code>~/.junie/config.json</code>
+  only); excluded from the extension bundle (JUNIE-1961 tracks more).</li>
+<li><strong>Rules ✅</strong> — guidelines/memory via <strong><code>AGENTS.md</code></strong> (project &gt; global; legacy <code>.junie/guidelines.md</code>
+  still read), injected into every task.</li>
+<li><strong>Skills ✅</strong> — native <strong>Agent Skills</strong> (agentskills.io <code>SKILL.md</code>) in <code>.junie/skills/</code> at user +
+  project scope; progressive disclosure; works across JetBrains IDEs + CLI.</li>
+<li><strong>Commands ✅</strong> — native custom slash commands <code>.junie/commands/*.md</code> (<code>/name</code>, <code>$arg</code> named args).</li>
+<li><strong>MCP ✅</strong> — native <code>.junie/mcp/mcp.json</code> (shared CLI + IDE format), local + remote servers, MCP
+  Installation Assistant; concrete server set per-machine (❓ in CI).</li>
+<li><strong>Docs Fresh ✅</strong> — <code>last_doc_scan: 2026-06-02</code> against https://junie.jetbrains.com/docs.</li>
+</ul>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsjuniejetbrainscomdocs">Verification Evidence (docs crawl 2026-06-02, https://junie.jetbrains.com/docs)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsjuniejetbrainscomdocs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>/docs/custom-slash-commands.html — <code>.junie/commands/</code> + <code>~/.junie/commands/</code>; <code>/name</code> with <code>$argumentName</code>; filename = command name; <code>/commands</code> → Create New Command</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/docs/guidelines-and-memory.html — <code>AGENTS.md</code> guidelines added to every task; project <code>.junie/AGENTS.md</code> &gt; global <code>~/.junie/AGENTS.md</code>; legacy <code>.junie/guidelines.md</code> still read</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/docs/junie-cli-subagents.html — <code>.junie/agents/</code> (and <code>.agents/</code>) md+YAML; auto-delegated by name/description; own context; no manual slash invocation</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/docs/agent-skills.html — open Agent Skills format (agentskills.io); <code>.junie/skills/&lt;name&gt;/SKILL.md</code> user+project; progressive disclosure; all JetBrains IDEs + CLI</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/docs/junie-cli-hooks.html — <code>config.json</code> <code>hooks</code> SessionStart-only (matcher startup/resume); EAP; project hooks ignored (personal <code>~/.junie/config.json</code>); JUNIE-1961 tracks more events</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/docs/junie-cli-mcp-configuration.html — <code>.junie/mcp/mcp.json</code> (shared CLI + IDE), local + remote servers, MCP Installation Assistant</td>
+</tr>
+<tr>
+<td>Extensions</td>
+<td>/docs/junie-cli-extensions.html — single bundle packages skills + MCP + subagents + slash commands + guidelines (NOT hooks)</td>
+</tr>
+<tr>
+<td>Config</td>
+<td>/docs/junie-cli-configuration.html — <code>config.json</code> keys: model/provider, mcp/skill/command/agent-locations, guidelines-location, byok, proxies, hooks</td>
+</tr>
+<tr>
+<td>Surfaces</td>
+<td>IDE plugin (AGENTS.md + skills + MCP) vs CLI (full set: commands/guidelines/subagents/skills/MCP/EAP-hooks); CLI is BYO-LLM / model-agnostic; CI/CD via junie-on-github GitHub Action</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-junie/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

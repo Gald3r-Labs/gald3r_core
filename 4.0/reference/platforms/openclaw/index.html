@@ -1,0 +1,1784 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/openclaw/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — OpenClaw (self-hosted AI agent gateway) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-openclaw-self-hosted-ai-agent-gateway" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — OpenClaw (self-hosted AI agent gateway)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native-typescript-handlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE (TypeScript handlers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native-client-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE (client + server)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-plugins-lobster-workflows-distribution-orchestration-channels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Plugins / Lobster Workflows — distribution + orchestration channels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsopenclawai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://docs.openclaw.ai)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-openclaw-self-hosted-ai-agent-gateway">PLATFORM_SPEC.md — OpenClaw (self-hosted AI agent gateway)<a class="headerlink" href="#platform_specmd-openclaw-self-hosted-ai-agent-gateway" title="Permanent link">&para;</a></h1>
+<p>OpenClaw is an <strong>open-source, self-hosted AI agent gateway</strong> oriented around chat channels
+(Discord / Telegram / Slack / WhatsApp). Despite a sparse landing page, the official docs document a
+<strong>deep, file-based extensibility surface</strong>: as of mid-2026 OpenClaw natively supports <strong>all six</strong>
+gald3r-relevant extension primitives — slash commands, rules/memory, sub-agents, Agent Skills,
+lifecycle hooks, and MCP (client <strong>and</strong> server). Critically for gald3r, OpenClaw's instruction-file
+convention is <strong><code>AGENTS.md</code> + <code>SOUL.md</code></strong> (it does <strong>not</strong> read <code>CLAUDE.md</code>), and its hook handlers
+are <strong>TypeScript</strong> (<code>HOOK.md</code> + <code>handler.ts</code>), so gald3r's <code>g-hk-*.py</code> hooks are <strong>not
+drop-in portable</strong> even though the hook mechanism itself is native.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://docs.openclaw.ai (see
+Verification Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code> / <code>status: ⚠️</code>)
+which marked hooks/skills/commands/MCP as merely ⚠️ partial and rules as ❌ — the 2026-06-02 crawl
+confirms all five mechanisms plus sub-agents are <strong>NATIVE</strong>. The honest residual caveats (TypeScript
+hook handlers, workspace-relative install path, depth-limited sub-agents, prose-only rules) are
+documented inline.</p>
+<blockquote>
+<p><strong>Surface split:</strong> OpenClaw is a <strong>single runtime</strong> (the gateway), not an IDE/CLI pair. The full
+extensibility (commands/rules/agents/skills/hooks/MCP) lives in the gateway and its file-based
+agent <strong>workspace</strong> (default <code>~/.openclaw/workspace</code>); config lives at <code>~/.openclaw/openclaw.json</code>.
+Where a feature is workspace-path-dependent or has a TypeScript-only caveat it is noted inline.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>~/.openclaw/
+├── openclaw.json                  ← primary config (mcp.servers, bindings, model registry, hooks)
+└── workspace/                     ← agent workspace (default; per-persona scope)
+    ├── AGENTS.md                  ← primary operating contract (loaded every session)
+    ├── SOUL.md                    ← persona / voice / hard &quot;never do X&quot; rules
+    ├── TOOLS.md / IDENTITY.md / USER.md / HEARTBEAT.md / MEMORY.md   ← workspace files (all load)
+    ├── memory/   YYYY-MM-DD-HHMM.md  ← auto-written by session-memory hook on /new, /reset
+    ├── skills/   &lt;name&gt;/SKILL.md  ← Agent Skills (YAML frontmatter + markdown body)
+    └── hooks/    &lt;name&gt;/HOOK.md + handler.ts   ← event-driven TypeScript hooks
+</code></pre>
+<p>Skills are resolved by <strong>precedence</strong> across multiple sources — workspace, <code>.agents/skills</code>,
+<code>~/.agents/skills</code>, <code>~/.openclaw/skills</code>, bundled, and plugin sources — and the <strong>highest source
+wins</strong> on a name collision. Starter <code>AGENTS.md</code>, <code>SOUL.md</code>, <code>TOOLS.md</code>, <code>IDENTITY.md</code>, <code>USER.md</code>,
+<code>HEARTBEAT.md</code> are created automatically on first run.</p>
+<p><strong>gald3r writes</strong>: <code>skills/&lt;name&gt;/SKILL.md</code> (folder-per-skill — matches gald3r exactly), plus
+<code>AGENTS.md</code> / <code>SOUL.md</code> prose for rules. <strong>OpenClaw owns</strong>: the <code>openclaw.json</code> schema
+(<code>mcp.servers</code>, <code>bindings</code>, <code>hooks</code>), the workspace directory contract, and the hook handler runtime
+(TypeScript).</p>
+<blockquote>
+<p><strong>Correction vs. prior spec:</strong> OpenClaw's canonical surface is the per-user
+<code>~/.openclaw/workspace/</code>, <strong>not</strong> the project repo root. gald3r skills are reachable either by
+pointing the workspace at the repo or by installing them into <code>~/.openclaw/workspace/skills/</code>.
+There is no documented project-local <code>.openclaw/</code> override.</p>
+</blockquote>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>OpenClaw's instruction-file convention is <strong><code>AGENTS.md</code> (primary operating contract) + <code>SOUL.md</code>
+(persona + hard rules)</strong>. <code>AGENTS.md</code> is <strong>loaded at the start of every session</strong> and injected
+directly into the agent context on the first turn of a new session. <code>SOUL.md</code>, <code>USER.md</code>,
+<code>IDENTITY.md</code>, <code>TOOLS.md</code>, <code>HEARTBEAT.md</code>, and <code>MEMORY.md</code> <strong>all load every time</strong> as well.</p>
+<blockquote>
+<p><strong>Instruction-file truth (differs from Claude Code):</strong> OpenClaw reads <strong><code>AGENTS.md</code></strong>, not
+<code>CLAUDE.md</code>. gald3r's <code>AGENTS.md</code> is a first-class input; ship gald3r rule prose into <code>AGENTS.md</code>
+(operating rules) and <code>SOUL.md</code> (hard "never do X" guardrails). No <code>OPENCLAW.md</code> exists. Do not
+confuse <code>SOUL.md</code> with <code>AGENTS.md</code> — OpenClaw reads both, for different purposes.</p>
+</blockquote>
+<ul>
+<li>Source: https://docs.openclaw.ai/concepts/agent-workspace</li>
+</ul>
+<hr />
+<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Two layers.</strong> (1) <strong>Multi-agent routing</strong> via <code>bindings</code> mapping channel accounts to isolated
+  per-persona agents — each agent is the full per-persona scope (workspace files, auth profiles,
+  model registry, session store). (2) <strong>Sub-agents</strong> spawned at runtime via the <strong><code>sessions_spawn</code>
+  tool</strong> — background agent runs in their own session (<code>agent:&lt;agentId&gt;:subagent:&lt;uuid&gt;</code>).</li>
+<li><code>sessions_spawn</code> is <strong>non-blocking</strong> (returns a run id immediately). Sub-agents run under
+  <strong>restricted tool policies</strong> (no message/session/system tools by default) and are <strong>depth-limited</strong>
+  via <code>maxSpawnDepth</code> (default <strong>1</strong>). The <code>/subagents</code> slash command is <strong>inspection / listing
+  only</strong>, not the spawn mechanism.</li>
+<li>gald3r <code>g-agnt-*</code> roles map to per-persona agents (<code>bindings</code>) or to runtime <code>sessions_spawn</code> runs.</li>
+<li>Source: https://docs.openclaw.ai/tools/subagents</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong>: a directory containing <code>SKILL.md</code> (YAML frontmatter + markdown body). Minimum
+  frontmatter: <code>name</code> + <code>description</code>. Additional keys: <code>user-invocable</code>, <code>disable-model-invocation</code>,
+  <code>command-dispatch</code>, <code>command-tool</code>, and <code>metadata.openclaw</code> (gating). Discovered by <strong>precedence</strong>
+  across workspace / <code>.agents/skills</code> / <code>~/.agents/skills</code> / <code>~/.openclaw/skills</code> / bundled / plugin —
+  highest source wins on a name collision.</li>
+<li><strong>Skills double as slash commands</strong> (see §5): a <code>user-invocable: true</code> skill is exposed as
+  <code>/skill &lt;name&gt;</code>.</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively — the folder-per-skill layout is identical. (Install path
+  is the OpenClaw <strong>workspace</strong> <code>skills/</code> dir, not the repo root automatically.)</li>
+<li>Source: https://docs.openclaw.ai/tools/skills</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Slash commands</strong> come from user-invocable <strong>Skills</strong> (<code>user-invocable: true</code>): the generic
+  <code>/skill &lt;name&gt; [input]</code> entrypoint <strong>always works</strong>; a skill may also register as a <strong>direct
+  command</strong> (e.g. <code>/prose</code>) via <code>command-dispatch</code> / <code>registerCommand()</code>. Built-ins come from the
+  core registry, generated dock commands, and plugin <code>registerCommand()</code> calls — including <strong>native
+  registration to Discord/Telegram</strong> interfaces (noted around <strong>v2026.2.23</strong>).</li>
+<li><strong>Inline built-in directives</strong> (<code>/think</code>, <code>/fast</code>, <code>/verbose</code>, <code>/trace</code>, <code>/reasoning</code>, <code>/elevated</code>,
+  <code>/exec</code>, <code>/model</code>, <code>/queue</code>, plus <code>/help</code>, <code>/commands</code>, <code>/status</code>, <code>/whoami</code>) are <strong>stripped before
+  the model sees the remaining text</strong>.</li>
+<li>gald3r <code>@g-*</code> / <code>/g-*</code> commands map to user-invocable skills (each becomes <code>/skill &lt;name&gt;</code>).</li>
+<li><strong>Workflows (Lobster):</strong> OpenClaw lists "Skills, plugins, and workflow <strong>pipelines (Lobster)</strong>" as
+  a first-class multi-step orchestration layer — adoptable for gald3r <code>g-go</code>-style pipelines.</li>
+<li>Source: https://docs.openclaw.ai/tools/slash-commands</li>
+</ul>
+<h2 id="6-hooks-system-native-typescript-handlers">6. Hooks System — ✅ NATIVE (TypeScript handlers)<a class="headerlink" href="#6-hooks-system-native-typescript-handlers" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Event-driven hooks</strong>: a directory with <strong><code>HOOK.md</code></strong> (YAML frontmatter declaring
+  <code>metadata.openclaw.events</code>) + <strong><code>handler.ts</code></strong> (an <strong>async TypeScript</strong> handler). Hooks are for
+  operator-managed side effects and command/lifecycle automation.</li>
+<li><strong>Event taxonomy</strong> (OpenClaw-specific, broad): <code>command:new</code> / <code>command:reset</code> / <code>command:stop</code>,
+  <code>session:compact:before</code> / <code>session:compact:after</code>, <code>agent:bootstrap</code>,
+  <code>gateway:startup</code> / <code>gateway:shutdown</code> / <code>gateway:pre-restart</code>,
+  <code>message:received</code> / <code>message:transcribed</code> / <code>message:preprocessed</code> / <code>message:sent</code>.</li>
+<li><strong>Built-ins</strong>: <code>session-memory</code>, <code>command-logger</code>, <code>compaction-notifier</code>, <code>bootstrap-extra-files</code>,
+  <code>boot-md</code> (runs <code>BOOT.md</code> when the gateway starts).</li>
+<li><strong>gald3r caveat (honest):</strong> the mechanism is native, but handlers are <strong>TypeScript</strong> (<code>handler.ts</code>),
+  and the event names differ from gald3r's (<code>gateway:startup</code> / <code>agent:bootstrap</code> / <code>command:new</code> vs
+  gald3r <code>SessionStart</code> / <code>Stop</code> / <code>PreToolUse</code>). gald3r's <code>g-hk-*.py</code> hooks are therefore
+  <strong>not drop-in portable</strong> — they must be re-expressed as <code>handler.ts</code> (or invoked as a child process
+  from one), and the gald3r event→hook mapping for OpenClaw is <strong>[STUB] / unverified</strong>. Do not
+  fabricate an event-to-hook mapping.</li>
+<li>Source: https://docs.openclaw.ai/automation/hooks</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Instruction/memory files</strong> are the rules mechanism: <code>AGENTS.md</code> (operating rules) + <code>SOUL.md</code>
+  (persona + hard "never do X" rules) + <code>MEMORY.md</code>, all <strong>injected into agent context every
+  session</strong>. Explicit "never do X" rules in <code>SOUL.md</code> are described as a <strong>last line of defense
+  against prompt injection</strong>.</li>
+<li><strong>Memory automation</strong>: the built-in <code>session-memory</code> hook <strong>auto-extracts the last 15 messages</strong> to
+  <code>&lt;workspace&gt;/memory/YYYY-MM-DD-HHMM.md</code> on <code>/new</code> and <code>/reset</code> — a ready-made persistence pattern,
+  conceptually aligned with gald3r <code>.gald3r/learned-facts.md</code>.</li>
+<li><strong>gald3r note (honest):</strong> there is <strong>no Cursor-style <code>rules/*.mdc</code> or per-glob rule scoping</strong>. gald3r
+  <code>g-rl-*</code> rules fold into <code>AGENTS.md</code> / <code>SOUL.md</code> prose (no <code>alwaysApply</code> / <code>globs</code> frontmatter
+  analog). The mechanism is native and always-loaded, but it is file-prose, not a typed rule registry.</li>
+<li>Source: https://docs.openclaw.ai/concepts/agent-workspace</li>
+</ul>
+<h2 id="8-mcp-support-native-client-server">8. MCP Support — ✅ NATIVE (client + server)<a class="headerlink" href="#8-mcp-support-native-client-server" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Client</strong>: saved server definitions under <strong><code>mcp.servers</code></strong> in <code>openclaw.json</code>; managed via
+  <code>openclaw mcp add</code> / <code>set</code> / <code>configure</code> (Control UI editor at <code>/mcp</code>). Transports: <strong>stdio</strong>
+  (command/args/env/cwd), <strong>HTTP/SSE</strong> (url/headers/timeout/auth: oauth), and <strong>streamable-http</strong>.</li>
+<li><strong>Server</strong>: <strong><code>openclaw mcp serve</code></strong> starts a <strong>stdio MCP server</strong> exposing channel conversations.
+  Built on <code>@modelcontextprotocol/sdk</code>.</li>
+<li><strong>gald3r note</strong>: gald3r MCP server definitions are not auto-imported — re-declare each under
+  <code>mcp.servers</code> via <code>openclaw mcp set</code>. The capability is fully present (both directions).</li>
+<li>Source: https://docs.openclaw.ai/cli/mcp</li>
+</ul>
+<h2 id="9-plugins-lobster-workflows-distribution-orchestration-channels">9. Plugins / Lobster Workflows — distribution + orchestration channels<a class="headerlink" href="#9-plugins-lobster-workflows-distribution-orchestration-channels" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Plugin system</strong> ("dock" / plugin channels) extends channels, tools, and commands; plugins can
+  call <code>registerCommand()</code> and <strong>ship skills/hooks</strong> — the natural distribution channel for a gald3r
+  OpenClaw bundle.</li>
+<li><strong>Lobster workflow pipelines</strong> are a first-class multi-step orchestration capability alongside
+  skills/plugins — adoptable for gald3r <code>g-go</code>-style pipelines.</li>
+<li><strong>Scheduling</strong>: the <code>HEARTBEAT.md</code> workspace file supports <strong>scheduled/recurring agent behavior</strong>
+  (cron-like heartbeat) — adoptable for gald3r heartbeat tasks.</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>OpenClaw reaches <strong>full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>commands, rules, agents, skills, hooks, and MCP</strong>, plus native MCP <strong>server</strong> mode, Lobster workflow
+pipelines, and a built-in memory hook as bonuses with no Cursor analog. Honest caveats: (1) hook
+handlers are <strong>TypeScript</strong> (<code>handler.ts</code>) with an OpenClaw-specific event taxonomy, so gald3r
+<code>.py</code> hooks are not directly portable; (2) rules are <strong>prose</strong> in <code>AGENTS.md</code> / <code>SOUL.md</code> (no <code>.mdc</code> typed
+rules or per-glob scoping); (3) skills install into the <strong>workspace</strong> dir (<code>~/.openclaw/workspace/
+skills/</code> by default), not the repo root automatically; (4) recursive sub-agent nesting is gated by
+<code>maxSpawnDepth</code> (default 1).</p>
+<p><strong>Reuse note:</strong> because OpenClaw reads <strong><code>AGENTS.md</code></strong> and discovers folder-per-skill <code>SKILL.md</code>,
+gald3r's <code>AGENTS.md</code> + <code>g-skl-*/SKILL.md</code> artifacts are largely reusable. The one real porting cost is
+<strong>hooks</strong> (rewrite <code>.py</code> → <code>handler.ts</code>) and pointing the workspace at the gald3r skills source.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (file-based, TypeScript handlers)</li>
+<li><strong>Config / declaration</strong>: per-hook directory with <code>HOOK.md</code> (YAML frontmatter,
+  <code>metadata.openclaw.events</code>) + <code>handler.ts</code>; hooks referenced from <code>~/.openclaw/openclaw.json</code></li>
+<li><strong>Events available</strong>: <code>command:new</code>, <code>command:reset</code>, <code>command:stop</code>, <code>session:compact:before</code>,
+  <code>session:compact:after</code>, <code>agent:bootstrap</code>, <code>gateway:startup</code>, <code>gateway:shutdown</code>,
+  <code>gateway:pre-restart</code>, <code>message:received</code>, <code>message:transcribed</code>, <code>message:preprocessed</code>,
+  <code>message:sent</code></li>
+<li><strong>Event payload format</strong>: async TypeScript handler (<code>handler.ts</code>) receives the event object; this
+  is <strong>not</strong> a stdin-JSON / exit-code contract</li>
+<li><strong>Command extensions</strong>: <code>.ts</code> (TypeScript) — <strong>not</strong> <code>.py</code> / <code>.sh</code>. gald3r's Python hooks must be
+  re-expressed as <code>handler.ts</code> or shelled out from one (e.g. spawning <code>python &lt;path&gt;</code>).</li>
+<li><strong>gald3r hook files</strong>: gald3r <code>g-hk-*.py</code> are <strong>[STUB] / unverified</strong> for OpenClaw — the
+  event→hook mapping is <strong>not</strong> fabricated here. Re-verify on the next <code>@g-platform-scan-docs openclaw</code>.</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Single runtime, file workspace</strong>: full extensibility lives in the gateway + <code>~/.openclaw/
+  workspace/</code>; config is <code>~/.openclaw/openclaw.json</code>. There is no documented project-local <code>.openclaw/</code>
+  override — the workspace must be <strong>pointed at the repo</strong>, or gald3r skills installed into the
+  workspace.</li>
+<li><strong>Skills == commands</strong>: a <code>user-invocable: true</code> skill is automatically a <code>/skill &lt;name&gt;</code> slash
+  command; no separate command-file system is required.</li>
+<li><strong>Sub-agents via tool, not file</strong>: spawn with the <code>sessions_spawn</code> <strong>tool</strong> (<code>/subagents</code> is
+  inspect-only); depth-limited (<code>maxSpawnDepth</code> default 1).</li>
+<li><strong>Chat-channel orientation</strong>: <code>bindings</code> map Discord / Telegram / Slack / WhatsApp accounts to
+  per-persona agents — multi-agent isolation is a first-class concept.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r rule prose into <strong><code>AGENTS.md</code></strong> (operating rules) + <strong><code>SOUL.md</code></strong> (hard guardrails) —
+  OpenClaw reads both every session. Do <strong>not</strong> rely on <code>CLAUDE.md</code>.</li>
+<li>Install gald3r <code>g-skl-*/SKILL.md</code> into the OpenClaw <strong>workspace</strong> <code>skills/</code> dir (or point the
+  workspace at the gald3r skills source); folder-per-skill is identical to gald3r.</li>
+<li>Hooks require a <strong>TypeScript rewrite</strong> (<code>handler.ts</code>) — do not assume <code>.py</code> portability. Treat the
+  gald3r hook wiring as <strong>[STUB]</strong> until verified on a live install.</li>
+<li>Re-declare MCP servers via <code>openclaw mcp set</code> (<code>mcp.servers</code> in <code>openclaw.json</code>).</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs openclaw</code> (crawl_max_age_days: 14).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<blockquote>
+<p>All six mechanisms are <strong>native</strong> per the 2026-06-02 docs crawl. The honest residual caveats
+(TypeScript hook handlers, prose-only rules, workspace-relative skill install, <code>maxSpawnDepth</code> 1)
+are documented in the sections above and do not downgrade native availability — but the gald3r
+<code>.py</code>→<code>handler.ts</code> hook wiring itself remains install-unverified.</p>
+</blockquote>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsdocsopenclawai">Verification Evidence (docs crawl 2026-06-02, https://docs.openclaw.ai)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsopenclawai" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>/tools/slash-commands — <code>/skill &lt;name&gt;</code> generic entrypoint; direct command registration (<code>/prose</code>, <code>registerCommand()</code>); native Discord/Telegram registration (~v2026.2.23); inline directives stripped pre-model</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/concepts/agent-workspace — <code>AGENTS.md</code> (operating rules) + <code>SOUL.md</code> ("never do X") + <code>MEMORY.md</code> injected every session; no <code>.mdc</code> typed rules</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/tools/subagents — per-persona agents via <code>bindings</code>; runtime <code>sessions_spawn</code> tool (non-blocking, <code>agent:&lt;id&gt;:subagent:&lt;uuid&gt;</code>); restricted tool policy; <code>maxSpawnDepth</code> default 1; <code>/subagents</code> inspect-only</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/tools/skills — <code>SKILL.md</code> (YAML frontmatter + body); <code>name</code>+<code>description</code> minimum; precedence loading (workspace/.agents/~/.openclaw/bundled/plugin); skills double as slash commands</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/automation/hooks — <code>HOOK.md</code> + <code>handler.ts</code> (async TS); events command:<em> / session:compact:</em> / agent:bootstrap / gateway:<em> / message:</em>; built-ins session-memory, command-logger, boot-md</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/cli/mcp — client <code>mcp.servers</code> in <code>openclaw.json</code> (<code>openclaw mcp add/set/configure</code>, /mcp UI); stdio / HTTP-SSE / streamable-http; server <code>openclaw mcp serve</code>; <code>@modelcontextprotocol/sdk</code></td>
+</tr>
+<tr>
+<td>Instruction file</td>
+<td>/concepts/agent-workspace — reads <code>AGENTS.md</code> + <code>SOUL.md</code> (NOT <code>CLAUDE.md</code>); both injected on first turn of a new session</td>
+</tr>
+<tr>
+<td>Workflows</td>
+<td>/tools/slash-commands + overview — Lobster workflow pipelines first-class alongside skills/plugins; <code>HEARTBEAT.md</code> cron-like scheduling</td>
+</tr>
+<tr>
+<td>Caveats</td>
+<td>Hook handlers TypeScript-only (<code>handler.ts</code>); rules prose-only (no <code>.mdc</code>); skills install to <code>~/.openclaw/workspace/skills/</code>; gald3r <code>.py</code> hook wiring [STUB] / unverified</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-openclaw/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

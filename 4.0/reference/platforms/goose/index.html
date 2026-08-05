@@ -1,0 +1,1793 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/goose/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Goose (Block) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-goose-block" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Goose (Block)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native-recent-announced-2026-05-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE (recent — announced 2026-05-14)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-plugins-distribution-extensibility-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Plugins / Distribution — extensibility surface
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsblockgithubiogoosedocs-goose-docsai-mirror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://block.github.io/goose/docs + goose-docs.ai mirror)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-goose-block">PLATFORM_SPEC.md — Goose (Block)<a class="headerlink" href="#platform_specmd-goose-block" title="Permanent link">&para;</a></h1>
+<p><strong>Goose</strong> (Block, Inc. / Block Open Source — fka Square) is an open-source, on-machine AI developer
+agent that runs in the terminal (<strong>goose CLI</strong>, headless/CI-friendly) and a one-click <strong>goose
+Desktop</strong> app. As of mid-2026 Goose natively supports <strong>all six</strong> gald3r-relevant extension
+primitives — custom slash commands (via Recipes), rules/memory (<code>.goosehints</code> + Memory Extension),
+subagents, Agent Skills (<code>SKILL.md</code> open standard), <strong>lifecycle hooks</strong>, and MCP. Critically for
+gald3r, Goose discovers Agent Skills from <strong><code>~/.claude/skills/</code></strong> (in addition to
+<code>~/.config/goose/skills/</code>), so gald3r's <code>SKILL.md</code> assets are <strong>cross-tool reusable</strong> between Goose
+and Claude with no duplication. Goose's instruction-file convention is <strong><code>.goosehints</code></strong> (native
+primary); it <strong>also reads <code>AGENTS.md</code></strong> (not <code>CLAUDE.md</code>).</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://block.github.io/goose/docs and
+the goose-docs.ai mirror (see Verification Evidence). This <strong>supersedes</strong> the prior spec
+(<code>last_doc_scan: never</code>) which incorrectly marked hooks as ❌ and agents/skills/commands/rules as
+⚠️ — they are now all NATIVE. The prior spec's <code>GOOSE.md</code> / <code>.goose/config.yaml</code> correction still
+stands (the real conventions are <code>.goosehints</code> for instructions and <code>~/.config/goose/config.yaml</code>
+for config).</p>
+<blockquote>
+<p><strong>Surface split:</strong> the full extensibility (commands/recipes, rules, agents, skills, hooks, MCP)
+is available across both the <strong>goose CLI</strong> (headless automation, CI, scheduled tasks) and <strong>goose
+Desktop</strong> (one-click recipe launch). Goose is <strong>global-config-first</strong> — the primary config lives
+in <code>~/.config/goose/</code>, not the repo. <strong>Hooks are a recent addition</strong> (announced 2026-05-14,
+~3 weeks before this assessment) — re-verify on the next crawl.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p>Goose is <strong>global-config-first</strong>: the primary config lives in the user's home directory; project
+scope is layered via <code>.goosehints</code>, project skills, and project plugin hooks.</p>
+<pre><code>~/.config/goose/
+├── config.yaml             ← GLOBAL config: provider, model, enabled extensions (MCP servers)
+├── .goosehints             ← GLOBAL static always-on instructions/rules
+└── skills/   &lt;name&gt;/SKILL.md  ← GLOBAL Agent Skills (auto-discovered at startup)
+
+~/.claude/skills/  &lt;name&gt;/SKILL.md  ← ALSO discovered (cross-tool — shared with Claude)
+
+~/.agents/plugins/&lt;name&gt;/hooks/hooks.json   ← USER lifecycle hooks (shell scripts)
+
+&lt;project-root&gt;/
+├── .goosehints             ← PROJECT static always-on instructions/rules (every line sent every request)
+├── AGENTS.md               ← read/supported (Agent Context); Goose can generate one for the repo
+└── .agents/plugins/&lt;name&gt;/hooks/hooks.json  ← PROJECT lifecycle hooks (auto-discovered at startup)
+</code></pre>
+<ul>
+<li><strong>gald3r writes</strong>: <code>.goosehints</code> (project rules), <code>g-skl-*/SKILL.md</code> into a discovered skills dir
+  (<code>~/.config/goose/skills/</code> or the shared <code>~/.claude/skills/</code>), Recipe YAML for workflows,
+  <code>hooks.json</code> under <code>.agents/plugins/&lt;name&gt;/hooks/</code> for lifecycle hooks. MCP extensions are
+  declared under <code>extensions:</code> in <code>~/.config/goose/config.yaml</code> (global, machine-specific).</li>
+<li><strong>Goose owns</strong>: the <code>~/.config/goose/</code> namespace, <code>config.yaml</code> schema, extension lifecycle, the
+  Skills-discovery contract, Recipe/Subrecipe execution, and the plugin/hook auto-discovery rules.</li>
+</ul>
+<blockquote>
+<p><strong>Correction vs. prior SKILL.md</strong>: there is <strong>no</strong> <code>GOOSE.md</code> or <code>.goose/config.yaml</code> convention.
+Instructions go in <code>.goosehints</code> (+ <code>AGENTS.md</code>); config is <code>~/.config/goose/config.yaml</code>.</p>
+</blockquote>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Goose reads <strong><code>.goosehints</code></strong> as its native static instruction surface — "the project's static
+context ... great for defining overarching rules, standards, and documentation that apply to all
+interactions. <strong>Every single line in your <code>.goosehints</code> file gets sent with every request.</strong>" Both a
+global file (<code>~/.config/goose/.goosehints</code>) and a per-project file are supported.</p>
+<p>Goose <strong>also reads <code>AGENTS.md</code></strong> — its Agent Context check looks for an <code>AGENTS.md</code> and can generate
+one tailored to the repo (Goose's own repo ships an <code>AGENTS.md</code>). Goose does <strong>not</strong> read
+<code>CLAUDE.md</code> as an instruction file (only Agent Skills are shared from the <code>~/.claude/skills/</code> path).</p>
+<ul>
+<li>gald3r <strong>generates</strong> <code>.goosehints</code> (task conventions, commit format, MCP pointer) and may also
+  ship/maintain <code>AGENTS.md</code>. The legacy <code>GOOSE.md</code> text in the old SKILL.md is <strong>not</strong> a Goose
+  convention.</li>
+<li>Source: https://block.github.io/goose/blog/2025/06/05/whats-in-my-goosehints-file/ ·
+  https://github.com/block/goose/blob/main/AGENTS.md</li>
+</ul>
+<hr />
+<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Subagents</strong>: independent goose instances spawned via <strong>natural-language delegation</strong> that
+  "execute tasks while keeping your main conversation clean ... goose automatically decides when to
+  spawn subagents and handles their lifecycle." Run <strong>sequentially or in parallel (up to 10
+  concurrent workers)</strong> with restricted tool access; pair with <strong>Subrecipes</strong> for reusable,
+  type-validated task definitions.</li>
+<li><strong>gald3r mapping</strong>: gald3r <code>g-agnt-*</code> definitions are expressed as <strong>Subrecipes</strong> (reusable recipe
+  files with typed parameters) or delegated via natural language. Note the distinction: <strong>subagents</strong>
+  are one-off, natural-language, auto-spawned; <strong>subrecipes</strong> are pre-written, parameter-validated,
+  parallelizable recipe files — that is the durable authoring surface for gald3r agent roles.</li>
+<li>Source: https://goose-docs.ai/docs/guides/subagents/</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> (<code>SKILL.md</code> folder open standard): "Goose <strong>automatically discovers skills at
+  startup</strong> from <code>~/.config/goose/skills/</code> (<strong>or <code>~/.claude/skills/</code></strong> ...). When you ask Goose to do
+  something, it checks if any skills match ... loads the full <code>SKILL.md</code> file and follows those
+  instructions." Block also runs a <strong>Skills Marketplace</strong> at block.github.io/goose/skills.</li>
+<li><strong>gald3r mapping</strong>: gald3r <code>g-skl-*/SKILL.md</code> load natively. Because Goose reads the <strong>same
+  <code>~/.claude/skills/</code> location</strong>, gald3r's Claude <code>SKILL.md</code> assets are shared with Goose <strong>with no
+  duplication</strong> — the cheapest install path.</li>
+<li><strong>Recipes / Subrecipes</strong> are a <em>second</em> portable workflow primitive (YAML) that overlaps with both
+  skills and commands — see §5.</li>
+<li>Source: https://goose-docs.ai/docs/guides/context-engineering/using-skills/</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom slash commands</strong>: "You can create <strong>custom slash commands for running recipes</strong> in goose
+  Desktop or the CLI." Goose also ships built-in slash commands (<code>/plan</code>, <code>/mode chat</code>, <code>/prompts</code>,
+  <code>/builtin</code>, <code>/clear</code>).</li>
+<li><strong>Recipes</strong> are Goose's primary reusable-workflow primitive: portable YAML bundling instructions /
+  system prompt + initial prompt + extensions + <strong>typed parameters</strong> + subrecipes; shareable with a
+  team, runnable in CI, and exposed as custom slash commands. <strong>Subrecipes</strong> are pre-written reusable
+  recipe files invoked from a parent recipe with type-safe parameter validation (can run in
+  parallel).</li>
+<li><strong>gald3r mapping</strong>: gald3r <code>@g-*</code> / <code>/g-*</code> workflows map to <strong>Recipes</strong> surfaced as custom slash
+  commands. Unlike markdown command files on other platforms, the durable form on Goose is recipe
+  YAML.</li>
+<li><strong>Implemented (T383, follow-up to BUG-295):</strong> the installer's overlay generator
+  (<code>platform/pipeline/generate.py</code>) now carries a real Recipe-YAML CONTENT TRANSFORM
+  (<code>_emit_recipe_yaml_commands</code>/<code>_render_recipe_yaml</code>, opted into via <code>layout_map.yaml</code>'s
+  <code>transform: "recipe_yaml"</code>), so each neutral <code>g-*</code> command lands at project-relative
+  <code>.goose/recipes/&lt;name&gt;.yaml</code> as a real Recipe (<code>instructions</code>/<code>prompt</code>/<code>extensions</code>/typed
+  <code>parameters</code>) instead of the flat, uninvokable <code>.md</code> drop BUG-295 correctly refused to fake.
+  Placement verified against https://block.github.io/goose/docs/guides/recipes/storing-recipes/
+  (project-relative <code>./.goose/recipes/</code>, also the CWD Goose searches by default).</li>
+<li>Source: https://block.github.io/goose/docs/guides/recipes/ ·
+  https://block.github.io/goose/docs/guides/recipes/sub-recipes/ ·
+  https://block.github.io/goose/docs/guides/recipes/recipe-reference/ ·
+  https://block.github.io/goose/docs/guides/recipes/storing-recipes/</li>
+</ul>
+<h2 id="6-hooks-system-native-recent-announced-2026-05-14">6. Hooks System — ✅ NATIVE (recent — announced 2026-05-14)<a class="headerlink" href="#6-hooks-system-native-recent-announced-2026-05-14" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Lifecycle hooks</strong>: "goose supports lifecycle hooks that <strong>run shell scripts</strong> when things happen
+  during a session." Configured in <strong><code>hooks.json</code></strong> at <code>~/.agents/plugins/&lt;name&gt;/hooks/hooks.json</code>
+  (user) or <code>&lt;project&gt;/.agents/plugins/&lt;name&gt;/hooks/hooks.json</code> (project), <strong>auto-discovered at
+  startup</strong>.</li>
+<li><strong>Events</strong> (11): <code>SessionStart</code>, <code>SessionEnd</code>, <code>Stop</code>, <code>UserPromptSubmit</code>, <code>PreToolUse</code>,
+  <code>PostToolUse</code>, <code>PostToolUseFailure</code>, <code>BeforeReadFile</code>, <code>AfterFileEdit</code>, <code>BeforeShellExecution</code>,
+  <code>AfterShellExecution</code>.</li>
+<li><strong>gald3r mapping</strong>: gald3r <code>g-hk-*.py</code> behaviors (SessionStart context injection, PreToolUse <code>.gald3r/</code>
+  guards, pre-commit/shell guards) wire natively. Hooks run <strong>shell commands</strong> — gald3r hooks are
+  invoked via <code>python &lt;path&gt;</code> (post-T1584 Python port; no PowerShell involved), which runs
+  identically on Windows and POSIX.</li>
+<li><strong>Recency caveat</strong>: this feature was <strong>announced 2026-05-14</strong>, ~3 weeks before this assessment.
+  Treat the event list and <code>hooks.json</code> schema as fresh-but-young; re-verify on the next crawl.</li>
+<li>Source: https://goose-docs.ai/blog/2026/05/14/goose-hooks/</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Static rules</strong>: <code>.goosehints</code> (global <code>~/.config/goose/.goosehints</code> + per-project) is the
+  always-on instruction surface — "<strong>every single line ... gets sent with every request</strong>." This is a
+  single always-apply blob: there is <strong>no</strong> <code>.mdc</code> extension and <strong>no</strong> <code>alwaysApply:</code> / <code>globs:</code>
+  per-file scoping like Cursor's <code>.cursor/rules/</code>.</li>
+<li><strong>Dynamic memory</strong>: the <strong>Memory Extension</strong> (MCP) stores and retrieves context on-demand via tags
+  — a complementary, queryable memory beyond the always-on <code>.goosehints</code> blob.</li>
+<li><strong>gald3r mapping</strong>: gald3r rules (<code>g-rl-*.md</code>) are concatenated/summarized into <code>.goosehints</code>
+  (all-or-nothing context, no glob scoping). gald3r's own <code>.gald3r/learned-facts.md</code> remains the
+  cross-session fact store; the Memory Extension can supplement it.</li>
+<li>Source: https://block.github.io/goose/docs/tutorials/memory-mcp/</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Extensions ARE MCP servers</strong>: "Goose 'Extensions' are just MCP servers ... Goose can connect to
+  70+ extensions ... via the Model Context Protocol open standard." Goose was one of the earliest MCP
+  adopters with one of the deepest integrations.</li>
+<li><strong>Config</strong>: declared under <code>extensions:</code> in <code>~/.config/goose/config.yaml</code> (global,
+  machine-specific) and managed interactively via <code>goose configure</code>; stdio + remote (SSE/HTTP)
+  servers. A built-in <strong>Developer</strong> extension (plus Memory, etc.) ships enabled.</li>
+<li><strong>gald3r mapping</strong>: the gald3r MCP server is added as a Goose extension in <code>config.yaml</code> (stdio or
+  remote URL) — the strongest, longest-standing integration surface on Goose.</li>
+<li>Source: https://block.github.io/goose/docs/getting-started/using-extensions/</li>
+</ul>
+<h2 id="9-plugins-distribution-extensibility-surface">9. Plugins / Distribution — extensibility surface<a class="headerlink" href="#9-plugins-distribution-extensibility-surface" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The <strong>plugin system</strong> (<code>~/.agents/plugins/</code>) is the host for <strong>hooks</strong> and a newer extensibility
+  surface beyond MCP. <strong>Recipes/Subrecipes</strong> (portable YAML) are the share/CI distribution channel
+  for workflows, and the <strong>Skills Marketplace</strong> (block.github.io/goose/skills) distributes Agent
+  Skills. A gald3r Goose install ships: <code>.goosehints</code> + skills (ideally via the shared
+  <code>~/.claude/skills/</code>) + recipe YAML + a <code>hooks.json</code> plugin + a <code>config.yaml</code> MCP extension entry.</li>
+<li><strong>Scheduler / Tasks</strong>: Goose supports scheduled and headless task execution (cron-like), useful for
+  unattended gald3r runs.</li>
+<li>Source: https://goose-docs.ai/blog/2026/05/14/goose-hooks/ ·
+  https://block.github.io/goose/docs/guides/recipes/</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Goose now reaches <strong>full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>commands (recipes), rules (<code>.goosehints</code> + Memory Extension), agents (subagents/subrecipes), skills
+(<code>SKILL.md</code>), hooks, and MCP</strong>. Caveats: it is <strong>global-config-first</strong> (<code>~/.config/goose/</code>, not the
+repo); rules are a single always-on <code>.goosehints</code> blob with <strong>no glob-scoped activation</strong>; <strong>hooks
+are new</strong> (2026-05-14) and run <strong>shell scripts</strong> (gald3r hooks invoke <code>python &lt;path&gt;</code>, cross-platform); and
+Recipes (not markdown command files) are the durable command/workflow form. MCP is Goose's strongest,
+oldest surface.</p>
+<p><strong>Reuse note (important):</strong> because Goose discovers Agent Skills from <strong><code>~/.claude/skills/</code></strong>,
+gald3r's Claude <code>SKILL.md</code> assets are <strong>reusable on Goose without a separate port</strong> — the cheapest
+high-parity path is to point Goose at the shared skills directory and add <code>.goosehints</code> + a recipe
+bundle + an MCP extension entry.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (plugin <code>hooks.json</code>) — <strong>recent (announced 2026-05-14)</strong></li>
+<li><strong>Config file</strong>: <code>~/.agents/plugins/&lt;name&gt;/hooks/hooks.json</code> (user) or
+  <code>&lt;project&gt;/.agents/plugins/&lt;name&gt;/hooks/hooks.json</code> (project); auto-discovered at startup</li>
+<li><strong>Events available</strong>: SessionStart, SessionEnd, Stop, UserPromptSubmit, PreToolUse, PostToolUse,
+  PostToolUseFailure, BeforeReadFile, AfterFileEdit, BeforeShellExecution, AfterShellExecution</li>
+<li><strong>Event payload / mechanism</strong>: hooks run <strong>shell scripts</strong> on the above events</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> wire natively — invoked via <code>python &lt;path&gt;</code> (post-T1584 Python
+  port; no PowerShell involved), which runs identically on Windows and POSIX</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Global-config-first</strong>: primary config + global skills + global hints live under
+  <code>~/.config/goose/</code>, not the repo. Project scope layers via <code>.goosehints</code>, project skills, and
+  <code>.agents/plugins/</code> hooks.</li>
+<li><strong>Skills shared with Claude</strong>: <code>~/.claude/skills/</code> is a discovery path — reuse, do not duplicate.</li>
+<li><strong>Two reusable-workflow primitives</strong>: Recipes (YAML, surfaced as slash commands) overlap with both
+  COMMANDS and SKILLS for gald3r mapping; Subrecipes vs subagents are distinct (pre-written/typed vs
+  one-off/natural-language).</li>
+<li><strong>Instruction file is <code>.goosehints</code></strong> (+ <code>AGENTS.md</code>), <strong>not</strong> <code>CLAUDE.md</code> and not the
+  prior-claimed <code>GOOSE.md</code>.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Point Goose at the shared <code>~/.claude/skills/</code> tree (or copy into <code>~/.config/goose/skills/</code>) so
+  gald3r <code>g-skl-*</code> load natively.</li>
+<li>Ship <code>.goosehints</code> (rules), recipe YAML (commands/workflows), and an MCP <code>extensions:</code> entry in
+  <code>~/.config/goose/config.yaml</code>.</li>
+<li>Hooks now fire natively — wire <code>g-hk-*.py</code> via a <code>hooks.json</code> plugin (<code>python &lt;path&gt;</code>, cross-
+  platform, no PowerShell involved). Re-verify the young hook surface on the next <code>@g-platform-scan-docs goose</code>
+  (crawl_max_age_days: 14).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsblockgithubiogoosedocs-goose-docsai-mirror">Verification Evidence (docs crawl 2026-06-02, https://block.github.io/goose/docs + goose-docs.ai mirror)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsblockgithubiogoosedocs-goose-docsai-mirror" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>/guides/recipes — "custom slash commands for running recipes" (Desktop + CLI) + built-in <code>/plan</code>, <code>/mode chat</code>, <code>/prompts</code>, <code>/builtin</code>, <code>/clear</code></td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/tutorials/memory-mcp + goosehints blog — <code>.goosehints</code> static always-on (global + project), "every line sent with every request"; Memory Extension for dynamic tagged memory</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/guides/subagents — independent goose instances, auto-spawned, sequential/parallel up to 10 workers, restricted tools; pairs with Subrecipes</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/guides/context-engineering/using-skills — auto-discovered at startup from <code>~/.config/goose/skills/</code> <strong>or <code>~/.claude/skills/</code></strong>; <code>SKILL.md</code> open standard; Skills Marketplace</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/blog/2026/05/14/goose-hooks — lifecycle hooks run shell scripts; 11 events; <code>hooks.json</code> at <code>~/.agents/plugins/&lt;name&gt;/hooks/</code> (user) or project; auto-discovered. ANNOUNCED 2026-05-14 (recent)</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/getting-started/using-extensions — extensions ARE MCP servers; 70+ extensions; <code>extensions:</code> in <code>~/.config/goose/config.yaml</code>; built-in Developer/Memory enabled</td>
+</tr>
+<tr>
+<td>Instruction file</td>
+<td>goosehints blog + github.com/block/goose/blob/main/AGENTS.md — native <code>.goosehints</code>; <code>AGENTS.md</code> also read/generated (NOT <code>CLAUDE.md</code>)</td>
+</tr>
+<tr>
+<td>Recipes / Subrecipes</td>
+<td>/guides/recipes + /guides/recipes/sub-recipes — portable YAML (instructions + prompt + extensions + typed params + subrecipes); CI-runnable; surfaced as slash commands</td>
+</tr>
+<tr>
+<td>Surfaces / Scheduler</td>
+<td>goose CLI (headless/CI) + goose Desktop (one-click); scheduled/headless cron-like task execution for unattended runs</td>
+</tr>
+<tr>
+<td>Install / live connection</td>
+<td>❓ Not install-tested in this repo; assessment is doc/mechanism-level against official docs + mirror</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-goose/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
