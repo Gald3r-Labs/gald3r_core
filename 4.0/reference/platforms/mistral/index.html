@@ -1,0 +1,1866 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/mistral/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Mistral Vibe CLI (mistral-vibe) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-mistral-vibe-cli-mistral-vibe" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Mistral Vibe CLI (mistral-vibe)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-partial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ⚠️ PARTIAL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-partial-experimental-minimal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ⚠️ PARTIAL (experimental, minimal)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-partial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ⚠️ PARTIAL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-other-extensibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Other Extensibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-gaps-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Gaps vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-docsmistralai-githubcommistralaimistral-vibe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, docs.mistral.ai + github.com/mistralai/mistral-vibe)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-mistral-vibe-cli-mistral-vibe">PLATFORM_SPEC.md — Mistral Vibe CLI (<code>mistral-vibe</code>)<a class="headerlink" href="#platform_specmd-mistral-vibe-cli-mistral-vibe" title="Permanent link">&para;</a></h1>
+<p>The "Mistral" coding surface is <strong>three distinct products</strong>, and gald3r integration targets the
+config-driven one — the <strong>Mistral Vibe CLI</strong> (<code>mistral-vibe</code>), an open-source terminal coding agent:</p>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>What it is</th>
+<th>Config-driven?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mistral Vibe CLI</strong></td>
+<td>Open-source terminal coding agent (<code>mistral-vibe</code>); <code>.vibe/</code> tree + <code>config.toml</code></td>
+<td>✅ Yes — the only gald3r-relevant surface</td>
+</tr>
+<tr>
+<td><strong>Mistral Code</strong></td>
+<td>Closed in-IDE plugin (JetBrains + VSCode, enterprise bundle)</td>
+<td>❌ No project config files</td>
+</tr>
+<tr>
+<td><strong>Le Chat</strong></td>
+<td>Web/app chat with MCP connectors + memories</td>
+<td>❌ Not a file-config surface</td>
+</tr>
+</tbody>
+</table>
+<p><strong>gald3r targets Mistral Vibe CLI</strong> — it is the only Mistral surface that reads project-level config
+files (<code>.vibe/</code> + <code>AGENTS.md</code>). Mistral Code (IDE plugin) and Le Chat are documented here for honesty
+but are <strong>not</strong> gald3r config targets.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://docs.mistral.ai/mistral-vibe/terminal
++ github.com/mistralai/mistral-vibe (see Verification Evidence). Latest version observed <strong>2.13.0
+(2026-05-29)</strong>. This <strong>upgrades</strong> the prior spec: <strong>Agents are now NATIVE</strong> (custom agents + subagents),
+and <strong>Hooks moved from ❓ to ⚠️</strong> (an experimental post-agent-turn lifecycle shipped v2.9.0, Apr 2026).</p>
+<blockquote>
+<p><strong>Instruction-file convention (platform-specific truth):</strong> Mistral Vibe reads <strong><code>AGENTS.md</code></strong>, NOT
+<code>CLAUDE.md</code>. There is <strong>no <code>.mistral/</code> directory</strong> and <strong>no YAML config</strong> — config is <strong>TOML</strong> under
+<code>.vibe/</code>. Any prior body describing a <code>.mistral/config.yaml</code> scheme was fabricated; corrected here.</p>
+<p><strong>Docs-URL migration note:</strong> doc paths are migrating from <code>/mistral-vibe/*</code> to <code>/vibe/code/cli/*</code>;
+both resolve as of the 2026-06-02 scan.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p>Mistral Vibe reads config from a <strong><code>.vibe/</code></strong> directory (NOT <code>.mistral/</code>), at both user and project
+scope. Project config layers over user config and <strong>only loads when the working directory is a trusted
+folder</strong>. Verified layout (configuration + skills + agents docs):</p>
+<pre><code>~/.vibe/                       ← user-global config
+├── config.toml                ← main config (TOML): models, providers, tools, [[mcp_servers]]
+├── .env                       ← API keys / provider credentials
+├── AGENTS.md                  ← user-level instructions (all projects)
+├── agents/&lt;name&gt;.toml         ← custom agent / subagent profiles (TOML)
+├── prompts/&lt;id&gt;.md            ← custom system prompts (referenced by system_prompt_id)
+├── skills/&lt;name&gt;/SKILL.md     ← user-level skills (Agent Skills spec)
+└── trusted_folders.toml       ← trusted-execution allowlist (gates project .vibe/ loading)
+
+&lt;project-root&gt;/
+├── AGENTS.md                  ← project instructions (overrides user-level; closer files win)
+└── .vibe/
+    ├── config.toml            ← project config overlay
+    ├── skills/&lt;name&gt;/SKILL.md ← project skills (also ./.agents/skills/)
+    ├── agents/&lt;name&gt;.toml     ← project agent / subagent profiles
+    ├── prompts/&lt;id&gt;.md        ← project prompts
+    └── (hooks)                ← experimental post-agent-turn lifecycle; file location/schema undocumented
+</code></pre>
+<p><strong>gald3r writes</strong> (project scope): <code>AGENTS.md</code>, <code>.vibe/skills/&lt;name&gt;/SKILL.md</code>, optionally
+<code>.vibe/agents/*.toml</code>, and <code>.vibe/config.toml</code> <code>[[mcp_servers]]</code> entries.
+<strong>Vibe owns</strong>: the <code>.vibe/</code> namespace, the <code>config.toml</code> (TOML) schema, and the trusted-folders
+mechanism (<code>trusted_folders.toml</code> decides whether project <code>.vibe/</code> — and its skills/agents/prompts/
+hooks — loads at all).</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Vibe reads <strong><code>AGENTS.md</code></strong> — the same cross-platform standard gald3r already uses as its primary
+instruction file (✅ direct parity). <strong>It does NOT read <code>CLAUDE.md</code>.</strong></p>
+<ul>
+<li><strong>Resolution order</strong>: <code>~/.vibe/AGENTS.md</code> (user-global) → project <code>AGENTS.md</code> files; files <strong>closer
+  to the working directory override</strong> more distant ones. Instructions augment/override the default
+  system prompt.</li>
+<li><strong>gald3r fit</strong>: gald3r already generates/merges <code>AGENTS.md</code>; Vibe consumes it directly with <strong>no
+  transformation needed</strong> — the strongest parity point for this platform.</li>
+<li>No <code>.cursorrules</code>-style legacy file; no <code>.mistral</code>-prefixed instruction file.</li>
+<li>Source: https://github.com/mistralai/mistral-vibe</li>
+</ul>
+<hr />
+<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Built-in agents</strong>: <code>default</code>, <code>plan</code>, <code>accept-edits</code>, <code>auto-approve</code>, <code>lean</code>.</li>
+<li><strong>Custom agents</strong>: <code>.toml</code> files in <code>~/.vibe/agents/</code> or <code>./.vibe/agents/</code>, selected via
+  <code>vibe --agent &lt;name&gt;</code>. Format keys: <code>display_name</code>, <code>description</code>, <code>safety</code>, <code>active_model</code>,
+  <code>system_prompt_id</code>, <code>enabled_tools</code> / <code>disabled_tools</code>, per-tool <code>permission = ask|always</code>.</li>
+<li><strong>Subagents</strong>: set <code>agent_type = "subagent"</code>; spawned by the model through the <code>task</code> tool, return
+  <strong>text-only</strong> results to the parent, and <strong>cannot ask the user questions</strong>.</li>
+<li><strong>Format mismatch vs gald3r</strong>: Vibe agents are <strong>TOML behavior profiles</strong>; gald3r agents
+  (<code>g-agnt-*.md</code>) are markdown — a real port requires markdown→TOML conversion (not done by the parity
+  pipeline). <code>safety</code> (<code>safe</code>/<code>neutral</code>/<code>destructive</code>/<code>yolo</code>) is a <strong>visual hint only, not enforcement</strong>.</li>
+<li>Source: https://docs.mistral.ai/vibe/code/cli/agents</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> (agentskills.io specification) — the <em>same</em> spec gald3r skills target, making
+  skills portable across conforming agents. CHANGELOG confirms agentskills.io support added <strong>v1.3.0
+  (2025-12-23)</strong>.</li>
+<li><strong>Discovery</strong>: <code>~/.vibe/skills/&lt;name&gt;/SKILL.md</code> (user), <code>./.vibe/skills/&lt;name&gt;/SKILL.md</code> (project),
+  <code>./.agents/skills/</code>, plus <code>skill_paths</code> in <code>config.toml</code>. Folder-per-skill <code>SKILL.md</code> ✅ matches
+  gald3r exactly.</li>
+<li><strong>Frontmatter</strong> keys: <code>name</code>, <code>description</code>, <code>license</code>, <code>compatibility</code>, <code>user-invocable</code>,
+  <code>allowed-tools</code>. Differs slightly from gald3r's <code>subsystem_memberships</code> / <code>token_budget</code> (a superset;
+  Vibe <strong>ignores unknown keys</strong> but expects <code>allowed-tools</code> / <code>user-invocable</code>).</li>
+<li><strong>Management</strong>: <code>enabled_skills</code> / <code>disabled_skills</code> glob patterns in <code>config.toml</code>.</li>
+<li>Source: https://docs.mistral.ai/vibe/code/cli/skills</li>
+</ul>
+<h2 id="5-commands-workflows-partial">5. Commands / Workflows — ⚠️ PARTIAL<a class="headerlink" href="#5-commands-workflows-partial" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No standalone command-file directory</strong> equivalent to <code>.cursor/commands/*.md</code> or
+  <code>.claude/commands/</code>. Slash commands exist but only <strong>via the skills mechanism</strong>: set
+  <code>user-invocable: true</code> in a skill's frontmatter and the skill name becomes available with
+  <code>/skill-name</code> autocompletion in the CLI prompt.</li>
+<li><strong>gald3r gap</strong>: gald3r's command files have <strong>no native 1:1 landing zone</strong>; each would need wrapping
+  as a skill (heavy) or describing in <code>AGENTS.md</code> (lossy — no executable invocation). A built-in
+  <code>/loop</code> command (v2.9.5, 2026-05-06) exists for recurring prompt execution, but that is a shipped
+  built-in, not a user-command-file surface.</li>
+<li>Source: https://docs.mistral.ai/vibe/code/cli/skills</li>
+</ul>
+<h2 id="6-hooks-system-partial-experimental-minimal">6. Hooks System — ⚠️ PARTIAL (experimental, minimal)<a class="headerlink" href="#6-hooks-system-partial-experimental-minimal" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Experimental hooks</strong> shipped <strong>v2.9.0 (2026-04-28)</strong>: "Experimental hooks system with
+  <strong>post-agent-turn lifecycle</strong>." The configuration docs list <code>hooks</code> among what each <code>.vibe/</code> path
+  contributes to a session, but publish <strong>NO event taxonomy, file location, or schema</strong>. The README
+  does not mention hooks and the dedicated <code>/cli/hooks</code> doc page 404s.</li>
+<li><strong>Only a single lifecycle point shipped</strong> (post-agent-turn), with no later CHANGELOG refinement
+  through v2.13.0. Broader event hooks remain <strong>unshipped</strong>: issue #250 ("feat: Hooks" — before/after
+  shell-command hooks, modeled on Claude Code) is <strong>CLOSED</strong> with no implementation; issue #531
+  ("feat: add BeforeTool hook") is still <strong>OPEN</strong>.</li>
+<li><strong>gald3r gap</strong>: gald3r's <code>g-hk-*.py</code> pre-tool / session-start / pre-commit hooks have <strong>no verified
+  wiring target</strong> — the one shipped event (post-agent-turn) does not cover them and its config schema
+  is undocumented. Tool <em>permissions</em> (<code>[tools.bash] permission = "ask"|"always"</code>) and agent <code>safety</code>
+  levels cover <em>some</em> guardrail ground hooks would otherwise serve, but they are not an event-hook
+  system. <strong>Do NOT fabricate a <code>hooks.json</code> equivalent.</strong></li>
+<li>Source: https://github.com/mistralai/mistral-vibe/blob/main/CHANGELOG.md</li>
+</ul>
+<h2 id="7-rules-memory-partial">7. Rules / Memory — ⚠️ PARTIAL<a class="headerlink" href="#7-rules-memory-partial" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No scoped/glob rule auto-loader</strong> (no <code>.cursor/rules/*.mdc</code> equivalent). Persistent project
+  instructions are injected via <strong><code>AGENTS.md</code> resolution</strong> (closer files override) — a single layered
+  instruction file, not per-file globbed or on-demand rules.</li>
+<li><strong>Custom system prompt</strong>: a file under <code>~/.vibe/prompts/&lt;id&gt;.md</code> can <strong>replace</strong> the default system
+  prompt via <code>system_prompt_id</code> in <code>config.toml</code> — another instruction-injection lever.</li>
+<li><strong>Custom compaction prompts</strong> (v2.11.1, 2026-05-27): user-definable context-compaction prompts.</li>
+<li><strong>Memory</strong>: Le Chat (the chat product) has a "Memories" feature, but that is the chat surface, <strong>not</strong>
+  Vibe CLI project config — not a gald3r file target.</li>
+<li><strong>gald3r gap</strong>: gald3r's scoped <code>g-rl-*</code> rules (alwaysApply / globs / on-demand) collapse into a
+  single <code>AGENTS.md</code> blob on Vibe — no per-file <code>globs</code> scoping, no per-rule on-demand loading.</li>
+<li>Source: https://github.com/mistralai/mistral-vibe</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MCP servers configured as <code>[[mcp_servers]]</code> entries in <code>config.toml</code>. Transports: <strong>http</strong>,
+  <strong>streamable-http</strong>, <strong>stdio</strong>. Keys: <code>name</code>, <code>transport</code>, <code>url</code> (http), <code>command</code>/<code>args</code> (stdio),
+  <code>headers</code>, <code>api_key_env</code>, <code>env</code>, <code>startup_timeout_sec</code>, <code>tool_timeout_sec</code>.</li>
+<li><strong>Tool namespacing/filtering</strong>: tools are namespaced <code>{server_name}_{tool_name}</code> and filtered via
+  <code>enabled_tools</code> / <code>disabled_tools</code> (exact, glob, or regex with <code>re:</code> prefix).</li>
+<li><strong>Limitation</strong>: "The CLI does not yet support MCP servers that require <strong>OAuth</strong> authentication."
+  v2.13.0 (2026-05-29) improved MCP HTTP transport.</li>
+<li><strong>Le Chat</strong> separately offers MCP connectors invoked via <code>/Connector_Name</code> — that is the chat
+  product, not Vibe CLI file config.</li>
+<li>Source: https://docs.mistral.ai/vibe/code/cli/mcp-servers</li>
+</ul>
+<pre><code class="language-toml">[[mcp_servers]]
+name = &quot;my_http_server&quot;
+transport = &quot;http&quot;            # http | streamable-http | stdio
+url = &quot;http://localhost:8000&quot;
+headers = { &quot;Authorization&quot; = &quot;Bearer my_token&quot; }
+api_key_env = &quot;MY_API_KEY_ENV_VAR&quot;
+startup_timeout_sec = 15
+tool_timeout_sec = 120
+</code></pre>
+<h2 id="9-other-extensibility">9. Other Extensibility<a class="headerlink" href="#9-other-extensibility" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Trusted folders</strong> (<code>trusted_folders.toml</code>) gate whether project <code>.vibe/</code> config (and its skills/
+  agents/prompts/hooks) loads at all.</li>
+<li><strong>Remote agents</strong> (powered by Mistral Medium 3.5) + a <strong>Vibe Code Web</strong> surface — orchestration
+  features, not file-config primitives.</li>
+<li><strong>Plugin support</strong> is requested (Discussion #497) but <strong>not yet a shipped extensibility surface</strong>.</li>
+</ul>
+<hr />
+<h2 id="known-gaps-vs-cursor-reference">Known Gaps vs. Cursor Reference<a class="headerlink" href="#known-gaps-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gap</th>
+<th>Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Three products, one config-driven</strong> — only Vibe CLI reads config files. Mistral Code (IDE plugin) and Le Chat are not gald3r config targets.</td>
+<td>High (scope)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Hooks experimental &amp; minimal</strong> — only a single post-agent-turn lifecycle point (v2.9.0), no published schema, no before-tool/session-start/pre-commit events; gald3r <code>g-hk-*.py</code> have no verified wiring target. (§6)</td>
+<td>High</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>No command-file directory</strong> — slash commands are skill-provided only; gald3r's command files have no native 1:1 landing zone. (§5)</td>
+<td>High</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>No scoped/glob rules</strong> — persistent instructions collapse into a single layered <code>AGENTS.md</code> (+ optional custom system prompt); no per-file <code>globs</code> or on-demand loading. (§7)</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Agent format mismatch</strong> — Vibe agents are TOML behavior profiles; gald3r agents are markdown. No automatic conversion. <code>safety</code> is visual-only, not enforcement. (§3)</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Skill frontmatter mismatch</strong> — folder-per-skill ✅ matches, but Vibe expects <code>allowed-tools</code> / <code>user-invocable</code>; gald3r skills emit <code>subsystem_memberships</code> / <code>token_budget</code>. Light adaptation needed. (§4)</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Config is TOML, not YAML</strong> — the real surface is <code>.vibe/config.toml</code>; there is no <code>.mistral/</code> and no <code>config.yaml</code>.</td>
+<td>(corrected)</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>MCP OAuth unsupported</strong> — the CLI does not yet support MCP servers requiring OAuth. (§8)</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Parity pipeline does NOT target <code>.vibe/</code></strong> — neither <code>gald3r sync</code> nor <code>gald3r platform install</code> has a <code>.vibe/</code> writer (and the historical <code>platform_parity_sync.ps1</code> never existed on disk, C-NO-PS1/T628). Any real install support is future work.</td>
+<td>Medium <!-- ps1-gate-allow --></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Strongest parity points</strong> (not gaps): <code>AGENTS.md</code> is consumed directly (✅), and the Agent Skills
+<code>SKILL.md</code> folder-per-skill convention is shared (✅). Agents/subagents are now native (✅) but require
+markdown→TOML conversion.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: experimental (single post-agent-turn lifecycle; file location/schema undocumented) ⚠️</li>
+<li><strong>Config file</strong>: <code>.vibe/</code> (each trusted path contributes its <code>AGENTS.md</code> and <code>.vibe/</code> config — tools,
+  skills, agents, prompts, <strong>hooks</strong> — to the session); exact hook file/location NOT published as of
+  the 2026-06-02 scan</li>
+<li><strong>Events available</strong>: <strong>post-agent-turn</strong> only (shipped v2.9.0, 2026-04-28). No before-tool /
+  session-start / pre-commit events. [STUB — payload/schema undocumented]</li>
+<li><strong>Event payload format</strong>: [STUB] — undocumented</li>
+<li><strong>Limitations</strong>: tool <em>permissions</em> (<code>[tools.bash] permission = "ask"|"always"</code>) and agent <code>safety</code>
+  levels cover some hook-like ground but are NOT an event-hook system; broader hooks unshipped
+  (issue #250 CLOSED unimplemented; issue #531 OPEN)</li>
+<li><strong>gald3r hook files</strong>: none verified — gald3r <code>g-hk-*.py</code> (pre-tool / session-start / pre-commit)
+  have no confirmed target on Vibe; the one shipped event does not cover them [STUB]</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Config tree is <code>.vibe/</code> with <code>config.toml</code> (<strong>TOML</strong>, not YAML); <strong><code>AGENTS.md</code></strong> is the instruction
+  file (NOT <code>CLAUDE.md</code>); Agent-Skills via <code>SKILL.md</code>.</li>
+<li><strong>Trusted-folders gate</strong>: project <code>.vibe/</code> config (skills/agents/prompts/hooks) loads only when the
+  working directory is trusted (<code>trusted_folders.toml</code>).</li>
+<li>Hooks are <strong>experimental</strong> — a single post-agent-turn event exists, but the file location and schema
+  are unpublished; existence without a usable contract for gald3r's hook needs.</li>
+<li>Tool permissions + agent <code>safety</code> levels are the only verified gating mechanism for guardrails.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's <strong><code>AGENTS.md</code></strong> — Vibe consumes it directly (no transformation). This is the cheapest
+  high-value install footprint today.</li>
+<li>gald3r skills (<code>g-skl-*/SKILL.md</code>) load natively (agentskills.io); frontmatter needs light adaptation
+  (<code>allowed-tools</code> / <code>user-invocable</code>).</li>
+<li>gald3r hooks have <strong>no verified wiring target</strong> — the only shipped event (post-agent-turn) does not
+  cover pre-tool / session-start / pre-commit, and the schema is undocumented. Do NOT assume
+  <code>.vibe/hooks/</code> works.</li>
+<li>Re-crawl Mistral Vibe docs on the next <code>@g-platform-scan-docs mistral</code> specifically for a hook event
+  list + file location; until then Hooks stays ⚠️ (crawl_max_age_days: 14).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚠️</td>
+<td>⚠️</td>
+<td>✅</td>
+<td>⚠️</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / format-mismatch · ❌ not supported · ❓ untested.</p>
+<ul>
+<li><strong>Hooks ⚠️</strong>: experimental post-agent-turn lifecycle only (v2.9.0); no schema, no pre-tool/
+  session-start/pre-commit — cannot wire gald3r hooks.</li>
+<li><strong>Rules ⚠️</strong>: <code>AGENTS.md</code> injection (+ optional custom system prompt); no scoped <code>.mdc</code> rule system.</li>
+<li><strong>Skills ✅</strong>: native Agent Skills spec (agentskills.io), folder-per-skill <code>SKILL.md</code> (frontmatter
+  needs light adaptation).</li>
+<li><strong>Commands ⚠️</strong>: slash commands exist but only via the skill mechanism (<code>user-invocable: true</code>); no
+  command-file directory.</li>
+<li><strong>MCP ✅</strong>: <code>.vibe/config.toml</code> <code>[[mcp_servers]]</code> (http / streamable-http / stdio); no OAuth yet.</li>
+<li><strong>Agents ✅</strong> (not in 5-col summary): native custom agents + subagents (<code>.vibe/agents/*.toml</code>).</li>
+<li><strong>Docs Fresh ✅</strong>: doc scan performed 2026-06-02 (docs.mistral.ai + GitHub README + CHANGELOG).</li>
+</ul>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-docsmistralai-githubcommistralaimistral-vibe">Verification Evidence (docs crawl 2026-06-02, docs.mistral.ai + github.com/mistralai/mistral-vibe)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-docsmistralai-githubcommistralaimistral-vibe" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.vibe/</code> + <code>config.toml</code> (not <code>.mistral/</code>/YAML)</td>
+<td>/vibe/code/cli/configuration — <code>.vibe/</code> (user <code>~/.vibe/</code>, project <code>./.vibe/</code>); project layers over user; loads only in trusted folders</td>
+</tr>
+<tr>
+<td><code>AGENTS.md</code> instruction file + resolution (NOT <code>CLAUDE.md</code>)</td>
+<td>GitHub README — <code>AGENTS.md</code> files; closer-to-cwd overrides; <code>~/.vibe/AGENTS.md</code> user-global; augments/overrides system prompt</td>
+</tr>
+<tr>
+<td>Agents/subagents (TOML profiles)</td>
+<td>/vibe/code/cli/agents — built-ins default/plan/accept-edits/auto-approve/lean; custom <code>.toml</code>; <code>vibe --agent</code>; <code>agent_type="subagent"</code> via <code>task</code> tool, text-only</td>
+</tr>
+<tr>
+<td>Skills (Agent Skills, SKILL.md)</td>
+<td>/vibe/code/cli/skills — agentskills.io spec; <code>~/.vibe/skills</code>, <code>./.vibe/skills</code>, <code>./.agents/skills</code>, <code>skill_paths</code>; CHANGELOG v1.3.0 (2025-12-23)</td>
+</tr>
+<tr>
+<td>Slash commands = skill-provided</td>
+<td>/vibe/code/cli/skills — <code>user-invocable: true</code> → <code>/skill-name</code> autocompletion; no standalone command-file directory</td>
+</tr>
+<tr>
+<td>Hooks experimental (post-agent-turn)</td>
+<td>CHANGELOG v2.9.0 (2026-04-28) "experimental hooks, post-agent-turn lifecycle"; no schema; /cli/hooks 404s; issue #250 CLOSED, #531 OPEN</td>
+</tr>
+<tr>
+<td>MCP <code>[[mcp_servers]]</code> (TOML)</td>
+<td>/vibe/code/cli/mcp-servers — http/streamable-http/stdio; <code>{server}_{tool}</code> namespacing; <code>enabled_tools</code>/<code>disabled_tools</code>; no OAuth; v2.13.0 HTTP improvements</td>
+</tr>
+<tr>
+<td>Le Chat MCP connectors (separate surface)</td>
+<td>Le Chat connectors invoked via <code>/Connector_Name</code> — chat product, not Vibe CLI file config</td>
+</tr>
+<tr>
+<td>Mistral Code = closed IDE plugin</td>
+<td>JetBrains/VSCode enterprise plugin; no project config files</td>
+</tr>
+<tr>
+<td>No <code>.vibe/</code> writer in parity pipeline</td>
+<td>Verified absence — <code>gald3r sync</code> / <code>gald3r platform install</code> target <code>.cursor/</code>/<code>.claude/</code> family, not <code>.vibe/</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-mistral/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
