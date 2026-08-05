@@ -1,0 +1,1758 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/deepcode/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Deep Code CLI (lessweb/deepcode-cli) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-deep-code-cli-lesswebdeepcode-cli" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Deep Code CLI (lessweb/deepcode-cli)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ❌ NONE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-partial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ⚠️ PARTIAL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ❌ NONE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native-config-path-corrected-by-t387" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE (config path corrected by T387)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-live-re-scan-2026-07-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (live re-scan 2026-07-18)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-deep-code-cli-lesswebdeepcode-cli">PLATFORM_SPEC.md — Deep Code CLI (lessweb/deepcode-cli)<a class="headerlink" href="#platform_specmd-deep-code-cli-lesswebdeepcode-cli" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Authoring status</strong>: <code>update</code> (T387, closes the T516 all-<code>❓</code> stub — the owner directive was
+<em>"DeepCode - if it can be made to work, keep otherwise I am ok removing"</em>; this spec is the
+<strong>verdict: keep, fixed</strong>). Verified live on 2026-07-18 directly against the project's GitHub
+README, <code>docs/mcp.md</code>, and <code>docs/configuration.md</code> (raw fetch, not cached), cross-checked
+against DeepSeek's own <code>api-docs.deepseek.com</code> integration page. This independently re-confirms
+(and refreshes) an earlier 2026-06-02 verification found in the retired <code>gald3r_templates_dev</code>
+donor tree (task T1474) — the two scans agree on every capability cell.</p>
+</blockquote>
+<p><strong>Deep Code</strong> (<code>@vegamo/deepcode-cli</code> on npm, <code>lessweb/deepcode-cli</code> on GitHub) is a real,
+actively-maintained, <strong>third-party community</strong> terminal AI coding assistant optimized for the
+<code>deepseek-v4</code> model family. DeepSeek's own docs site lists it under "Agent Integrations" with an
+explicit disclaimer: <em>"This agent is provided entirely by a third party ... we assume no
+responsibility for it."</em> This matches the 2026-07-16 PLATFORM_TEMPLATE_REVIEW's framing — an
+obscure community CLI, not a major platform — but it is a <strong>real, installable, documented tool</strong>
+with a genuine gald3r-relevant config surface, not a doc-only or nonexistent project.</p>
+<p>Deep Code natively supports <strong>three</strong> of the six gald3r-relevant extension primitives — <strong>rules</strong>
+(via an <code>AGENTS.md</code> instruction file), <strong>Agent Skills</strong>, and <strong>MCP</strong> — while <strong>custom commands</strong>
+are limited to a fixed built-in slash set (partial), and <strong>subagents</strong> and a <strong>lifecycle hook
+system</strong> are <strong>absent</strong>.</p>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                        ← instruction file Deep Code reads (scaffolded via /init)
+└── .agents/
+    └── skills/  &lt;name&gt;/SKILL.md     ← Agent Skills (project scope, cross-client interop path)
+
+&lt;project-root&gt;/.deepcode/            ← Deep Code project-scope config
+├── settings.json                    ← model/env + mcpServers + notify + thinking/reasoning
+└── skills/      &lt;name&gt;/SKILL.md     ← Deep Code's own native project skills path
+
+~/                                    (user/home scope)
+├── .deepcode/settings.json          ← global config — SHARED with the Deep Code VSCode extension
+└── .agents/skills/ &lt;name&gt;/SKILL.md  ← user-global Agent Skills (interop path)
+</code></pre>
+<p>Per the live README's own documented scan priority (project native <code>.deepcode/skills/</code> first,
+project interop <code>.agents/skills/</code> second, then the user-scope equivalents), <strong>both</strong> the native
+and interop project skill paths are read — gald3r targets <strong><code>./.agents/skills/&lt;name&gt;/SKILL.md</code></strong>
+(the cross-client Agent-Skills convention shared with every other gald3r-supported Agent-Skills
+tool), which Deep Code resolves natively as its documented second-priority project skills path.</p>
+<p><strong>Settings-file scope layering</strong> (per <code>docs/configuration.md</code>): <code>&lt;project_root&gt;/.deepcode/
+settings.json</code> <strong>overrides</strong> <code>~/.deepcode/settings.json</code> <strong>field-by-field</strong> (not a whole-file
+replace) — confirmed by the doc's own per-field priority tables (e.g. <code>MODEL</code>: hardcoded default →
+user settings.json → project settings.json → env var). A project-level <code>settings.json</code> containing
+only <code>mcpServers</code> is therefore a valid, additive file that does not clobber the user's own
+model/API-key configuration.</p>
+<p><strong>gald3r writes</strong>: <code>AGENTS.md</code> (once T385's central per-platform instruction-file emission lands —
+see Rules/Memory below), <code>.agents/skills/&lt;name&gt;/SKILL.md</code>, and a minimal MCP registration inside
+<code>.deepcode/settings.json</code> (<code>mcpServers.gald3r</code>, not a standalone <code>.mcp.json</code> — see MCP Support and
+BUG note below).
+<strong>Deep Code owns</strong>: the rest of the <code>settings.json</code> schema (model, env, thinking/reasoning,
+notify, webSearchTool, telemetry, permissions), the built-in slash-command set, and the
+fine-grained shell/file/network permission framework.</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Deep Code reads <strong><code>AGENTS.md</code></strong> as its persistent, always-on instruction/context file —
+<strong>scaffolded by the <code>/init</code> command</strong> (live README slash-command table: <code>/init</code> → <em>"初始化
+AGENTS.md 文件"</em>, i.e. "initializes the AGENTS.md file"). There is <strong>no <code>CLAUDE.md</code> read</strong> and
+<strong>no separate <code>rules/</code>/<code>memory/</code> directory</strong> — <code>AGENTS.md</code> is the single instruction surface.
+gald3r's <code>AGENTS.md</code> is therefore a first-class input; <code>CLAUDE.md</code> is <strong>not</strong> consumed.</p>
+<hr />
+<h2 id="3-agents-support-none">3. Agents Support — ❌ NONE<a class="headerlink" href="#3-agents-support-none" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Deep Code operates as a <strong>single AI assistant</strong>. No sub-agents, agent roles, or distinct agent
+  modes are documented in the live README or DeepSeek's integration page.</li>
+<li><code>thinkingEnabled</code> / <code>reasoningEffort</code> are <strong>model settings</strong>, not agent roles — no <code>g-agnt-*</code>
+  parity target exists. Fold agent behavior into <code>AGENTS.md</code> instructions or per-skill <code>SKILL.md</code>
+  context instead.</li>
+<li>Source: https://github.com/lessweb/deepcode-cli (live README, 2026-07-18 fetch)</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> (open <code>SKILL.md</code> standard) discovered from, in scan-priority order: project
+  <code>./.deepcode/skills/</code> (native) → project <code>./.agents/skills/</code> (cross-client interop) → user
+  <code>~/.deepcode/skills/</code> (native) → user <code>~/.agents/skills/</code> (interop). Activate via the <strong><code>/</code></strong>
+  skill/command picker or by typing the skill name.</li>
+<li><code>settings.json</code>'s <code>enabledSkills</code> field can selectively hide a skill by resolved name across
+  both project and user scope (project overrides user, per-skill).</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> loads natively at <code>.agents/skills/</code> — confirmed live, current.</li>
+<li>Source: live README (<code>docs/mcp.md</code>/<code>docs/configuration.md</code> corroborate <code>enabledSkills</code>),
+  2026-07-18 fetch.</li>
+</ul>
+<h2 id="5-commands-workflows-partial">5. Commands / Workflows — ⚠️ PARTIAL<a class="headerlink" href="#5-commands-workflows-partial" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Built-in slash commands only</strong>: <code>/new</code>, <code>/resume</code>, <code>/continue</code>, <code>/model</code>, <code>/raw</code>, <code>/init</code>,
+  <code>/skills</code>, <code>/mcp</code>, <code>/undo</code>, <code>/exit</code>; the skill/command picker opens with <strong><code>/</code></strong>.</li>
+<li><strong>No mechanism for user-defined custom commands</strong> is documented — there is <strong>no</strong>
+  <code>.deepcode/commands/</code> (or equivalent) directory. gald3r <code>@g-*</code> / <code>/g-*</code> commands have <strong>no</strong>
+  native slash-command target; surface them as <strong>skills</strong> instead (each skill is invocable via the
+  <code>/</code> picker).</li>
+<li>Source: live README, 2026-07-18 fetch.</li>
+</ul>
+<h2 id="6-hooks-system-none">6. Hooks System — ❌ NONE<a class="headerlink" href="#6-hooks-system-none" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No lifecycle/event hook system</strong> — no session-start, pre-tool, pre-commit, or file-watch hook
+  framework.</li>
+<li>The only automation is the <strong><code>notify</code></strong> field in <code>settings.json</code>: <em>"a Shell script path executed
+  automatically after each AI turn completes"</em> — a <strong>post-turn-only</strong> callback (receives
+  <code>DURATION</code>/<code>STATUS</code>/<code>FAIL_REASON</code>/<code>BODY</code>/<code>TITLE</code> as env vars), it <strong>cannot block</strong> tool calls,
+  inject session-start context, or gate commits.</li>
+<li>gald3r <code>g-hk-*.py</code> hooks have <strong>no native wiring</strong>; the <code>notify</code> script can at most fire a
+  post-turn side-effect.</li>
+<li>Source: <code>docs/configuration.md</code> (<code>notify</code> field table), 2026-07-18 fetch.</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>AGENTS.md</code></strong> is the persistent always-on instruction/context file, scaffolded via <code>/init</code>. It
+  is the single rules surface — no <code>.deepcode/rules/</code>, no <code>.mdc</code> files, no separate memory store.
+  <code>/resume</code>/<code>/continue</code> restore prior conversation state but are not a persistent rules file.</li>
+<li>gald3r <code>g-rl-*</code> rules map into the single <code>AGENTS.md</code> instruction file (concatenated always-apply
+  content); there is no per-rule <code>always_apply</code>/<code>agent_requested</code> typing and no <code>globs:</code> scoping.</li>
+<li><strong>Generator status</strong>: <code>layout_map.yaml</code> currently declares no dedicated <code>rules:</code> entry for
+  <code>deepcode</code> (T228's bootstrap-provenance convention: an entry is added only once a REAL donor
+  placement is verified, never guessed). <code>AGENTS.md</code> emission is the <strong>general per-platform fix
+  covered by sibling task T385</strong> ("Generator must always emit a root AGENTS.md per platform") —
+  its per-platform instruction-filename mapping is the correct place to add <code>deepcode → AGENTS.md</code>,
+  not a deepcode-specific branch here. Until T385 lands, this remains a <code>CAPABILITY_GAPS.md</code>
+  entry for the <code>rules</code> component when a deepcode overlay is generated.</li>
+<li>Source: live README <code>/init</code> slash-command description, 2026-07-18 fetch.</li>
+</ul>
+<h2 id="8-mcp-support-native-config-path-corrected-by-t387">8. MCP Support — ✅ NATIVE (config path corrected by T387)<a class="headerlink" href="#8-mcp-support-native-config-path-corrected-by-t387" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MCP is configured via the <strong><code>mcpServers</code></strong> object <strong>inside <code>settings.json</code></strong> (user- or
+  project-scope) — <strong>there is no standalone <code>.mcp.json</code> file anywhere in Deep Code's documented
+  config surface</strong>. Inspect configured servers/tools with <strong><code>/mcp</code></strong>. Standard <strong>stdio</strong> transport
+  (<code>command</code>/<code>args</code>/<code>env</code> per server); when <code>command</code> is <code>npx</code>, Deep Code auto-prepends <code>-y</code>.</li>
+<li>Because <code>~/.deepcode/settings.json</code> is shared with the VSCode extension, MCP servers configured
+  once apply to both surfaces.</li>
+<li><strong>BUG FOUND AND FIXED (T387)</strong>: <code>layout_map.yaml</code>'s <code>deepcode.mcp.file</code> previously pointed at
+  <code>.deepcode/.mcp.json</code> — a path Deep Code <strong>never reads</strong>. gald3r's generated MCP registration
+  therefore silently never reached the tool ("dead <code>.mcp.json</code>" finding from the 2026-07-16
+  PLATFORM_TEMPLATE_REVIEW, confirmed correct by this live re-verification). Corrected to
+  <code>.deepcode/settings.json</code>, which matches <code>generate_overlay</code>'s existing minimal-registration-JSON
+  contract (<code>_emit_mcp</code>) verbatim — a project <code>settings.json</code> containing only <code>mcpServers</code> is valid
+  per the documented field-layered config model (see Folder Hierarchy above).</li>
+<li>Source: <code>docs/mcp.md</code> + <code>docs/configuration.md</code> (<code>mcpServers</code> field table, full worked examples),
+  2026-07-18 fetch.</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Deep Code reaches <strong>partial parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>rules</strong> (<code>AGENTS.md</code>, pending T385's central emission), <strong>skills</strong> (Agent Skills standard, native
+today), and <strong>MCP</strong> (<code>mcpServers</code> in <code>settings.json</code>, path now corrected); <strong>partial commands</strong>
+(fixed built-in slash set only); <strong>no subagents</strong> and <strong>no lifecycle hooks</strong>. The biggest gaps vs.
+the reference are custom commands, subagents, and the hook system — these are real capability
+absences in the tool itself, not gald3r integration gaps.</p>
+<p><strong>Reuse note:</strong> Deep Code reads <strong><code>AGENTS.md</code></strong> (not <code>CLAUDE.md</code>) and discovers
+<strong><code>.agents/skills/</code></strong> (not <code>.claude/skills/</code>). gald3r's <code>AGENTS.md</code> + <code>.agents/skills/</code> artifacts
+are directly reusable; the Claude-Code-specific <code>CLAUDE.md</code> / <code>.claude/</code> tree is not consumed.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: none (no lifecycle-hook framework)</li>
+<li><strong>Config file</strong>: <code>settings.json</code> (<code>notify</code> field only)</li>
+<li><strong>Events available</strong>: none — a single post-turn <code>notify</code> callback, fired after each model turn</li>
+<li><strong>Event payload format</strong>: env vars (<code>DURATION</code>, <code>STATUS</code>, <code>FAIL_REASON</code>, <code>BODY</code>, <code>TITLE</code>) passed
+  to the notify script; fire-and-forget, no structured event stream</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> do <strong>not</strong> wire natively — at most a post-turn side-effect</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Shared config surface</strong>: <code>~/.deepcode/settings.json</code> is shared with the <strong>Deep Code VSCode
+  extension</strong> — gald3r-managed settings (model, <code>mcpServers</code>, <code>notify</code>) apply to both surfaces.</li>
+<li><strong>Instruction-file convention</strong>: Deep Code reads <strong><code>AGENTS.md</code></strong> (via <code>/init</code>), not <code>CLAUDE.md</code>.</li>
+<li><strong>Skills path duality</strong>: project skills resolve from both <code>.deepcode/skills/</code> (native, higher
+  scan priority) and <code>.agents/skills/</code> (interop, lower priority but still read) — gald3r targets
+  the interop path since it is the one shared with every other Agent-Skills tool in the roster.</li>
+<li><strong>MCP config is field-layered, not file-standalone</strong>: unlike most gald3r platforms, MCP does not
+  get its own dedicated file — it is one field inside a settings file Deep Code also uses for
+  model/API-key/notify config. <code>layout_map.yaml</code>'s <code>mcp: {file: ".deepcode/settings.json"}</code> mapping
+  reuses the SAME target path a user might already have populated with their own model settings;
+  <code>generate_overlay</code>'s existing overwrite-not-merge <code>materialize_overlay</code> behavior (uniform across
+  every platform, T234) means a fresh MCP overlay write will <strong>replace</strong> an existing project-level
+  <code>.deepcode/settings.json</code> wholesale if one is already present — this is a pre-existing, generic
+  generator characteristic (not unique to deepcode) and out of this task's scope to change; flagged
+  here for visibility since deepcode is the platform most likely to have a pre-populated file at
+  that exact path (its own model/API-key config commonly lives there too).</li>
+<li><strong>Source disambiguation</strong>: web searches surface unrelated DeepSeek-adjacent tools (DeepSeek-
+  Reasonix, DeepSeek-TUI, deepseek-as-subagent) that DO have hooks/subagents — these are
+  <strong>different projects</strong> and are excluded from this assessment of <code>lessweb/deepcode-cli</code>.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's <strong><code>AGENTS.md</code></strong> (instruction/rules, pending T385) + <strong><code>.agents/skills/&lt;name&gt;/
+  SKILL.md</code></strong> tree — Deep Code discovers both natively today.</li>
+<li>Surface gald3r commands <strong>as skills</strong> (invocable via the <code>/</code> picker); there is no custom-command
+  directory to target.</li>
+<li>Do <strong>not</strong> rely on hooks — degrade SessionStart context injection, PreToolUse guards, and
+  pre-commit gates to manual/skill-driven flows; <code>notify</code> is post-turn-only and cannot block.</li>
+<li>Configure MCP via <code>mcpServers</code> in <code>.deepcode/settings.json</code> (corrected path, T387) — remember it
+  also applies to the shared VSCode surface.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs deepcode</code> (<code>crawl_max_age_days: 14</code>).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>⚠️</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<p>Overall platform <code>status: ⚠️</code> — real, verified config surface (skills + MCP fully wired by this
+task; rules/AGENTS.md pending sibling task T385's central emission); commands/agents/hooks are
+genuine tool-side gaps, not integration gaps. This is a <strong>stub-tier, non-roster platform</strong> (not one
+of the 23 fully-supported IDE targets) — kept per owner directive because it has a real, working
+config surface, not merely because it exists.</p>
+<hr />
+<h2 id="verification-evidence-live-re-scan-2026-07-18">Verification Evidence (live re-scan 2026-07-18)<a class="headerlink" href="#verification-evidence-live-re-scan-2026-07-18" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project existence/legitimacy</td>
+<td><code>curl</code> raw-fetch of <code>github.com/lessweb/deepcode-cli</code> README (npm badges, MIT license, real contributor/issue links) + DeepSeek's own <code>api-docs.deepseek.com/quick_start/agent_integrations/deepcode</code> page (title: "Integrate with Deep Code | DeepSeek API Docs")</td>
+</tr>
+<tr>
+<td>Commands</td>
+<td>Live README — fixed built-in slash set; <strong>no</strong> user-defined custom-command directory → ⚠️ partial</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>Live README — <code>/init</code> scaffolds <strong><code>AGENTS.md</code></strong>; reads <code>AGENTS.md</code> <strong>not</strong> <code>CLAUDE.md</code>; no <code>rules/</code> dir → ✅ native (gald3r wiring pending T385)</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>Live README / DeepSeek docs — single assistant, no sub-agents/roles/modes → ❌ none</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>Live README's documented scan-priority table (4 paths, project + user, native + interop) → ✅ native</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td><code>docs/configuration.md</code>'s <code>notify</code> field table — no lifecycle hooks, post-turn-only → ❌ none</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td><code>docs/mcp.md</code> + <code>docs/configuration.md</code> — <code>mcpServers</code> field <strong>inside</strong> <code>settings.json</code>; <strong>no</strong> standalone <code>.mcp.json</code> anywhere in the docs → ✅ native; <strong>generator path bug found and fixed</strong> (T387)</td>
+</tr>
+<tr>
+<td>Instruction file</td>
+<td>Live README slash-command table — <code>AGENTS.md</code> via <code>/init</code></td>
+</tr>
+<tr>
+<td>Shared config</td>
+<td>Live README FAQ + <code>docs/configuration.md</code> — <code>~/.deepcode/settings.json</code> shared with the Deep Code VSCode extension</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cross-check</strong>: this 2026-07-18 live scan independently reproduces every capability cell from an
+earlier 2026-06-02 scan (T1474, recorded in the retired <code>gald3r_templates_dev</code> donor tree) —
+agreement across two independent scans 46 days apart is strong evidence the capability profile is
+stable, not a transient doc state.</p>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-deepcode/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

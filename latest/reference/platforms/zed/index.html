@@ -1,0 +1,1856 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/zed/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Zed (agent panel + ACP host) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-zed-agent-panel-acp-host" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Zed (agent panel + ACP host)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-no-project-scoped-roster-native-agent-is-uiprofile-based-third-parties-attach-via-acp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ❌ NO PROJECT-SCOPED ROSTER (native agent is UI/profile-based; third parties attach via ACP)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-not-a-separate-surface-skills-fill-this-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ❌ NOT A SEPARATE SURFACE (Skills fill this role)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-not-supported-no-published-event-taxonomy-for-hand-authored-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ❌ NOT SUPPORTED (no published event taxonomy for hand-authored hooks)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native-agentsmd-project-personal-scope-fixed-fallback-precedence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE (AGENTS.md, project + personal scope, fixed fallback precedence)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-agent-client-protocol-acp-distributionhosting-channel-the-defining-zed-quirk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Agent Client Protocol (ACP) — distribution/hosting channel (the defining Zed quirk)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-gaps-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Gaps vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-07-03-httpszeddevdocsai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-07-03, https://zed.dev/docs/ai/*)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-zed-agent-panel-acp-host">PLATFORM_SPEC.md — Zed (agent panel + ACP host)<a class="headerlink" href="#platform_specmd-zed-agent-panel-acp-host" title="Permanent link">&para;</a></h1>
+<p><strong>Zed</strong> (<code>zed.dev</code>) is a Rust-native, GPU-accelerated code editor. Its <strong>Agent Panel</strong> hosts Zed's
+own built-in agent AND <strong>External Agents</strong> — third-party coding agents (Claude Code, Kimi Code,
+Codex, Copilot, Cursor, OpenCode, Pi Coding Agent, and others) — through the open <strong>Agent Client
+Protocol (ACP)</strong>, making Zed both an editor and a distribution/hosting surface for other vendors'
+coding agents. It is also a native adopter of the open <code>AGENTS.md</code> instructions standard
+(https://agents.md/).</p>
+<p><strong>Authoring path</strong>: NEW. <strong>Verified 2026-07-03</strong> against https://zed.dev/docs/ai/external-agents,
+https://zed.dev/docs/ai/agent-settings, https://zed.dev/docs/ai/instructions,
+https://zed.dev/docs/ai/skills, https://zed.dev/docs/ai/mcp, https://zed.dev/docs/ai/agent-panel,
+and https://agents.md/ (see Verification Evidence). No prior gald3r spec existed for this platform.</p>
+<blockquote>
+<p><strong>Instruction-file truth (read carefully):</strong> Zed reads a project-level instructions file chosen
+from a <strong>fixed fallback list</strong> — <code>.rules</code> first, then <code>.cursorrules</code>, <code>.windsurfrules</code>,
+<code>.clinerules</code>, <code>.github/copilot-instructions.md</code>, <code>AGENT.md</code>, <code>AGENTS.md</code>, <code>CLAUDE.md</code>, <code>GEMINI.md</code>
+— <strong>only the first match in that list is read</strong>. This is layered on top of an always-on
+<strong>personal, machine-global</strong> <code>AGENTS.md</code> at <code>~/.config/zed/AGENTS.md</code> (macOS/Linux) or
+<code>%APPDATA%\Zed\AGENTS.md</code> (Windows), which applies to every workspace on that machine. Project
+instructions win over the personal file on conflict. <strong><code>.rules</code> is a legacy filename kept for
+cross-tool back-compat</strong> with pre-AGENTS.md-era Cursor/Windsurf/Cline projects — new projects are
+steered toward <code>AGENTS.md</code>, which Zed natively supports per the open agents.md standard.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── .rules OR AGENTS.md              ← project instructions (.rules wins if BOTH exist — precedence list)
+└── .agents/
+    └── skills/   &lt;name&gt;/SKILL.md    ← Agent Skills (YAML frontmatter: name, description + body)
+
+~/.config/zed/ (macOS/Linux) or %APPDATA%\Zed\ (Windows)
+└── AGENTS.md                        ← personal/global instructions — always-on, every workspace
+
+~/.agents/skills/  &lt;name&gt;/SKILL.md   ← user-global Agent Skills (shared cross-client convention)
+
+(.zed/settings.json)                 ← Zed-owned workspace settings; houses &quot;agent_servers&quot;
+                                        (External ACP agents) and &quot;context_servers&quot; (MCP)
+</code></pre>
+<p><strong>gald3r writes</strong>: project-root <code>AGENTS.md</code> and <code>.agents/skills/&lt;name&gt;/SKILL.md</code>. <strong>Zed owns</strong>: the
+personal <code>~/.config/zed/AGENTS.md</code> (machine-global, not per-project), the <code>.zed/settings.json</code>
+schema (<code>agent_servers</code>, <code>context_servers</code>, and all other editor settings), and the ACP registry
+UI (<code>zed: acp registry</code>).</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Zed selects <strong>one</strong> project-level instructions file via a fixed precedence list — first match wins,
+no merging of multiple project files:</p>
+<ol>
+<li><code>.rules</code></li>
+<li><code>.cursorrules</code></li>
+<li><code>.windsurfrules</code></li>
+<li><code>.clinerules</code></li>
+<li><code>.github/copilot-instructions.md</code></li>
+<li><code>AGENT.md</code></li>
+<li><code>AGENTS.md</code></li>
+<li><code>CLAUDE.md</code></li>
+<li><code>GEMINI.md</code></li>
+</ol>
+<p>This selected project file is layered <strong>on top of</strong> the always-on personal
+<code>~/.config/zed/AGENTS.md</code> (<code>%APPDATA%\Zed\AGENTS.md</code> on Windows); project instructions take priority
+over personal instructions on conflict. Zed natively supports the open <code>AGENTS.md</code> standard
+(https://agents.md/) as its primary/recommended project instructions format — <code>.rules</code> is
+maintained purely for backward compatibility with projects that pre-date the <code>AGENTS.md</code>
+convention. <strong>gald3r ships <code>AGENTS.md</code></strong>, not <code>.rules</code> — if a target project already has a <code>.rules</code>
+file (inherited from an older Cursor/Windsurf/Cline setup), that file wins over gald3r's
+<code>AGENTS.md</code> in Zed until removed or renamed; document this as a manual step rather than having
+gald3r silently delete/rename a pre-existing <code>.rules</code> file it does not own.
+- Source: https://zed.dev/docs/ai/instructions</p>
+<hr />
+<h2 id="3-agents-support-no-project-scoped-roster-native-agent-is-uiprofile-based-third-parties-attach-via-acp">3. Agents Support — ❌ NO PROJECT-SCOPED ROSTER (native agent is UI/profile-based; third parties attach via ACP)<a class="headerlink" href="#3-agents-support-no-project-scoped-roster-native-agent-is-uiprofile-based-third-parties-attach-via-acp" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Zed's own built-in agent is configured through <strong>Agent Profiles</strong> (Settings UI /
+  <code>agent-settings.html</code>), not a committed per-project agent-definition file gald3r could populate.</li>
+<li><strong>External Agents</strong> — Claude Code, Kimi Code, Codex, Copilot, Cursor, OpenCode, Pi Coding Agent,
+  and others — attach to the Agent Panel and Threads Sidebar as independent processes speaking the
+  <strong>Agent Client Protocol (ACP)</strong>. Zed hosts the thread UI; "the External Agent usually owns its own
+  runtime, auth, model selection, tools, and native configuration" (docs, verbatim). Users install
+  ACP agents from the <strong>ACP Registry</strong> (<code>zed: acp registry</code> command) or add a custom one via
+  <code>agent: open settings</code> → Add Agent → Add Custom Agent, which writes an <code>agent_servers.&lt;name&gt;</code>
+  entry to <code>.zed/settings.json</code>:
+  <code>json
+  {
+    "agent_servers": {
+      "my-agent": {
+        "type": "custom",
+        "command": "node",
+        "args": ["~/projects/agent/index.js", "--acp"],
+        "env": {}
+      }
+    }
+  }</code></li>
+<li><strong>gald3r gap</strong>: there is no project-scoped <code>agents/&lt;name&gt;.md</code> roster file gald3r can drop into a
+  Zed workspace — the closest equivalent is an ACP registry entry (Zed-managed) or a manually added
+  <code>agent_servers</code> block in the user's own <code>.zed/settings.json</code>. Do not fabricate an <code>agents/</code> folder
+  Zed does not read.</li>
+<li>Source: https://zed.dev/docs/ai/external-agents, https://zed.dev/docs/ai/agent-panel</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong>: a folder containing <code>SKILL.md</code> with required YAML frontmatter <code>name</code> (lowercase
+  letters/numbers/hyphens only, max 64 chars, must match the folder name) and <code>description</code> (what it
+  does + when to use it, under 1024 bytes), plus Markdown instructions body. Optional
+  <code>disable-model-invocation: true</code> prevents autonomous discovery while keeping the skill available
+  via slash command / <code>@</code>-mention.</li>
+<li><strong>Locations</strong>: <code>~/.agents/skills/&lt;name&gt;/SKILL.md</code> (global scope, every project) and
+  <code>&lt;worktree&gt;/.agents/skills/&lt;name&gt;/SKILL.md</code> (project-local scope). <strong>Skills must be direct
+  children of the skills root</strong> — nested group folders (<code>.agents/skills/group/my-skill/</code>) are NOT
+  discovered.</li>
+<li><strong>Discovery/invocation</strong>: the agent autonomously discovers every installed skill (name +
+  description surfaced in its system prompt) and calls the <code>skill</code> tool when a task matches. Manual
+  invocation via <code>/</code> slash command or <code>@skill</code> mention-completion. Project-local skills load only
+  from <strong>trusted worktrees</strong>; when a global and a project-local skill share a name, the
+  project-local one wins.</li>
+<li>This is the <strong>same <code>.agents/skills/</code> convention</strong> gald3r already targets for Codex, Amp, and Deep
+  Code — gald3r's <code>g-skl-*/SKILL.md</code> files are drop-in native, no adaptation needed.</li>
+<li>Source: https://zed.dev/docs/ai/skills</li>
+</ul>
+<h2 id="5-commands-workflows-not-a-separate-surface-skills-fill-this-role">5. Commands / Workflows — ❌ NOT A SEPARATE SURFACE (Skills fill this role)<a class="headerlink" href="#5-commands-workflows-not-a-separate-surface-skills-fill-this-role" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Zed's Agent Panel documentation surfaces exactly one built-in slash command, <code>/compact</code> (manual
+  context compaction of a long thread) — there is <strong>no</strong> documented dedicated file format, directory
+  convention, or settings key for user-authored custom slash commands / prompt libraries distinct
+  from Skills.</li>
+<li>Skills are invoked the same way a "command" would be (<code>/</code> picker, <code>@</code>-mention), so gald3r's
+  <code>@g-*</code> command surface maps onto the same <code>.agents/skills/&lt;name&gt;/SKILL.md</code> tree used for Skills —
+  there is no separate <code>commands/</code> folder to populate.</li>
+<li>Source: https://zed.dev/docs/ai/agent-panel (only <code>/compact</code> documented); absence confirmed
+  against the full AI docs nav (Skills vs. Agent Panel vs. Agent Settings pages).</li>
+</ul>
+<h2 id="6-hooks-system-not-supported-no-published-event-taxonomy-for-hand-authored-hooks">6. Hooks System — ❌ NOT SUPPORTED (no published event taxonomy for hand-authored hooks)<a class="headerlink" href="#6-hooks-system-not-supported-no-published-event-taxonomy-for-hand-authored-hooks" title="Permanent link">&para;</a></h2>
+<ul>
+<li>No dedicated hooks/lifecycle-events documentation page exists in Zed's AI docs nav (Agents, Agent
+  Panel, Agent Settings, Agent Profiles, Tools [Tool Permissions, Agent Sandboxing, MCP], Skills,
+  Instructions, Parallel Agents, Inline Assistant, LLM Providers, Edit Prediction, AI Privacy — no
+  "Hooks" entry).</li>
+<li><strong>Tool Permissions</strong> / <strong>Agent Sandboxing</strong> provide confirmation-gating around tool calls
+  (allow/deny prompts, sandboxed execution), which is access-control, not an event-hook bus a
+  project can extend with its own scripts.</li>
+<li><strong>gald3r gap</strong>: there is no verified wiring target for <code>g-hk-*.py</code> files on Zed — do not fabricate
+  a <code>hooks.json</code>/settings-driven hook file.</li>
+<li>Source: absence confirmed against the full AI docs nav under https://zed.dev/docs/ai/overview.</li>
+</ul>
+<h2 id="7-rules-memory-native-agentsmd-project-personal-scope-fixed-fallback-precedence">7. Rules / Memory — ✅ NATIVE (<code>AGENTS.md</code>, project + personal scope, fixed fallback precedence)<a class="headerlink" href="#7-rules-memory-native-agentsmd-project-personal-scope-fixed-fallback-precedence" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Persistent instructions are the project instructions file described in §2 (chosen via the fixed
+  9-entry fallback list, <code>.rules</code> highest precedence) layered on top of the always-on personal
+  <code>~/.config/zed/AGENTS.md</code> (<code>%APPDATA%\Zed\AGENTS.md</code> on Windows). There is <strong>no</strong> scoped/glob rule
+  system (no <code>.mdc</code>-equivalent, no per-subdirectory <code>AGENTS.md</code> hierarchy scan documented) — Zed
+  natively supports the open <code>AGENTS.md</code> standard (https://agents.md/) directly, unlike platforms
+  that require an <code>@import</code> shim.</li>
+<li>gald3r ships <strong><code>AGENTS.md</code></strong> at the project root (not <code>.rules</code>) — this is Zed's recommended,
+  natively-supported format and matches gald3r's existing <code>AGENTS.md</code>-native platforms. If a
+  pre-existing <code>.rules</code> file is present from an older tool's setup, it silently outranks gald3r's
+  <code>AGENTS.md</code> in Zed until removed; flag this to the user.</li>
+<li>Source: https://zed.dev/docs/ai/instructions</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MCP servers are configured via <strong><code>context_servers</code></strong> in <code>.zed/settings.json</code>:
+  <code>json
+  {
+    "context_servers": {
+      "local-mcp-server": { "command": "some-command", "args": ["arg-1", "arg-2"], "env": {} },
+      "remote-mcp-server": { "url": "https://example.com/mcp", "headers": { "Authorization": "Bearer &lt;token&gt;" } }
+    }
+  }</code></li>
+<li><strong>Local</strong> servers use <code>command</code>/<code>args</code>/<code>env</code> (stdio); <strong>remote</strong> servers use <code>url</code>/optional
+  <code>headers</code>. When a remote server has no configured <code>Authorization</code> header, Zed prompts for OAuth.</li>
+<li><strong>Distinct from <code>agent_servers</code></strong>: <code>context_servers</code> configures MCP tool/prompt servers for Zed's
+  own agent; these same MCP servers are <strong>also forwarded to External Agents via ACP</strong>, so one
+  <code>context_servers</code> entry serves both Zed's native agent and any ACP-hosted external agent.</li>
+<li>Source: https://zed.dev/docs/ai/mcp</li>
+</ul>
+<h2 id="9-agent-client-protocol-acp-distributionhosting-channel-the-defining-zed-quirk">9. Agent Client Protocol (ACP) — distribution/hosting channel (the defining Zed quirk)<a class="headerlink" href="#9-agent-client-protocol-acp-distributionhosting-channel-the-defining-zed-quirk" title="Permanent link">&para;</a></h2>
+<ul>
+<li>ACP is an <strong>open standard for agent communication</strong> that lets Zed host any compliant external
+  coding agent as a first-class thread in the Agent Panel / Threads Sidebar, while the external
+  agent retains its own runtime, auth, model selection, tools, and native configuration files (e.g.
+  gald3r's own <code>CLAUDE.md</code>/<code>.claude/</code> tree for a Claude-Code-via-ACP session is untouched by Zed).
+  Common ACP-hosted agents: Claude, Codex, Copilot, Cursor, OpenCode, Pi Coding Agent, Kimi Code.</li>
+<li>Registry-installed agents are added via <code>zed: acp registry</code>; custom agents are added via
+  <code>agent: open settings</code> → Add Agent → Add Custom Agent, which writes an <code>agent_servers.&lt;name&gt;</code>
+  block (<code>type: "custom"</code>, <code>command</code>, <code>args</code>, <code>env</code>) to <code>.zed/settings.json</code>.</li>
+<li>This makes Zed simultaneously an <strong>editor platform</strong> (its own Agent Panel + Skills + MCP + rules,
+  covered in §§2-8) and a <strong>distribution/hosting surface</strong> for other vendors' agents — a gald3r
+  install targeting "Zed" should be read as targeting Zed's own native surfaces; a Claude-Code- or
+  Codex-via-ACP session inside Zed is separately covered by <code>g-skl-platform-claude</code> /
+  <code>g-skl-platform-codex</code> and needs no additional Zed-specific files beyond what those specs already
+  ship.</li>
+<li>Source: https://zed.dev/docs/ai/external-agents</li>
+</ul>
+<hr />
+<h2 id="known-gaps-vs-cursor-reference">Known Gaps vs. Cursor Reference<a class="headerlink" href="#known-gaps-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gap</th>
+<th>Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>No project-scoped agent roster</strong> — Zed's own agent is Profile/UI-configured; third-party agents attach via ACP (<code>agent_servers</code> in <code>.zed/settings.json</code>, itself Zed-owned); gald3r's <code>g-agnt-*.md</code> set has no committed-file landing zone. (§3)</td>
+<td>High</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>No hand-authored hooks</strong> — no published event taxonomy/schema; Tool Permissions/Sandboxing are access-control, not an extensible event bus. gald3r <code>g-hk-*.py</code> have no verified wiring target. (§6)</td>
+<td>High</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>No dedicated commands surface</strong> — only one built-in slash command (<code>/compact</code>) is documented; gald3r's <code>@g-*</code> commands must ride on the Skills tree instead of a separate <code>commands/</code> folder. (§5)</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong><code>.zed/settings.json</code> is a single Zed-owned file</strong> covering <code>agent_servers</code> + <code>context_servers</code> + all other editor settings — gald3r cannot safely ship a full replacement file without risking clobbering unrelated user settings; a merge-snippet/documentation-only approach is required until a safe JSON-merge installer exists. (§8, §9)</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong><code>.rules</code> outranks <code>AGENTS.md</code></strong> if both exist — a project migrating from Cursor/Windsurf/Cline may have a stale <code>.rules</code> file that silently wins over gald3r's <code>AGENTS.md</code> until removed. (§2, §7)</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Strongest parity points</strong> (not gaps): Skills (§4) are a drop-in match for gald3r's <code>SKILL.md</code>
+convention on the same <code>.agents/skills/</code> tree already used for Codex/Amp/Deep Code. Rules (§7) are
+fully native <code>AGENTS.md</code> support per the open agents.md standard, with no import-shim needed. MCP
+(§8) is fully native and dual-purposed (serves both Zed's own agent and every ACP-hosted external
+agent from one config surface).</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: not supported for hand-authored hooks ❌</li>
+<li><strong>Config file</strong>: none published for user-authored hooks</li>
+<li><strong>Events available</strong>: none documented</li>
+<li><strong>Event payload format</strong>: [STUB] — undocumented</li>
+<li><strong>gald3r hook files</strong>: none verified — <code>g-hk-*.py</code> have no confirmed wiring target on Zed</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Zed is simultaneously an editor and an ACP host</strong> — "platform support" here means Zed's own
+  native surfaces (Skills, AGENTS.md, MCP); agents hosted <em>inside</em> Zed via ACP (Claude Code, Kimi
+  Code, Codex, etc.) are separately covered by their own platform specs and need no Zed-specific
+  duplication.</li>
+<li><strong><code>.rules</code> precedence quirk</strong> — do not assume <code>AGENTS.md</code> is always read; check for a pre-existing
+  <code>.rules</code> (or <code>.cursorrules</code>/<code>.windsurfrules</code>/<code>.clinerules</code>/etc.) file first, since any of those
+  silently outrank <code>AGENTS.md</code> per the fixed fallback list.</li>
+<li><strong>Personal AGENTS.md is machine-global, not project-scoped</strong> — <code>~/.config/zed/AGENTS.md</code> applies
+  to every workspace on that machine; gald3r does not write to it (out of scope for a per-project
+  overlay), but should document it as the personal-scope equivalent.</li>
+<li><strong>No hooks surface, no dedicated commands file format</strong> — do not fabricate either.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's rule content in the project-root <strong><code>AGENTS.md</code></strong> (not <code>.rules</code>) — Zed reads this
+  natively provided no higher-precedence file (<code>.rules</code>, <code>.cursorrules</code>, etc.) already exists in the
+  target project; flag a pre-existing <code>.rules</code> file to the user rather than silently overwriting or
+  deleting it.</li>
+<li>gald3r skills (<code>g-skl-*/SKILL.md</code>) load natively under <code>.agents/skills/</code> — same tree already used
+  for Codex/Amp/Deep Code, no adaptation needed.</li>
+<li>gald3r's <code>@g-*</code> "commands" have no dedicated file surface on Zed — they are satisfied entirely by
+  the Skills tree (invoked via <code>/</code> or <code>@skill</code>).</li>
+<li>Do not ship a project-level <code>agents/</code> folder or a hooks config — neither has a project-scoped
+  landing zone on Zed today per the docs.</li>
+<li>Do not ship a full <code>.zed/settings.json</code> replacement — document the <code>agent_servers</code>/
+  <code>context_servers</code> merge snippets in <code>zed_instructions.md</code> instead, since that file is Zed-owned
+  and typically carries unrelated user settings.</li>
+<li>Re-check on the next <code>@g-platform-scan-docs zed</code> (crawl_max_age_days: 14) — Zed's AI/ACP surface
+  is actively expanding (ACP Registry contents, additional External Agents, possible future hooks).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<ul>
+<li><strong>Hooks ❌</strong> — no published event taxonomy/schema for hand-authored hooks; Tool Permissions/Agent
+  Sandboxing are access-control, not an extensible hook bus.</li>
+<li><strong>Rules ✅</strong> — native <code>AGENTS.md</code> (project + personal scope) per the open agents.md standard;
+  <code>.rules</code> legacy filename outranks it if both exist.</li>
+<li><strong>Skills ✅</strong> — native Agent Skills (<code>SKILL.md</code>, <code>name</code>/<code>description</code> frontmatter) in
+  <code>.agents/skills/</code>, direct-children-only, same convention as Codex/Amp/Deep Code.</li>
+<li><strong>Commands ❌</strong> — no dedicated user-authored slash-command file format; only one built-in
+  (<code>/compact</code>) documented. Skills fill the invocation role instead.</li>
+<li><strong>MCP ✅</strong> — native <code>context_servers</code> (local <code>command</code>/<code>args</code>/<code>env</code> or remote <code>url</code>/<code>headers</code>) in
+  <code>.zed/settings.json</code>; same servers are forwarded to ACP-hosted External Agents.</li>
+<li><strong>Docs Fresh ✅</strong> — <code>last_doc_scan: 2026-07-03</code>.</li>
+</ul>
+<p>(Agents are ❌ for a project-scoped roster — Zed's own agent is Profile/UI-configured and
+third-party agents attach via ACP <code>agent_servers</code>, neither of which is a gald3r-writable
+per-project file — and are not one of the 5 summary columns tracked in <code>PLATFORM_STATUS.md</code>,
+consistent with other specs.)</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-07-03-httpszeddevdocsai">Verification Evidence (docs crawl 2026-07-03, https://zed.dev/docs/ai/*)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-07-03-httpszeddevdocsai" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACP hosting of External Agents (Claude, Codex, Copilot, Cursor, OpenCode, Pi Coding Agent, Kimi Code)</td>
+<td>/docs/ai/external-agents — "Zed hosts the thread in the Agent Panel and Threads Sidebar, while the External Agent usually owns its own runtime, auth, model selection, tools, and native configuration"; install via <code>zed: acp registry</code>; custom agents via <code>agent: open settings</code> → Add Agent → Add Custom Agent</td>
+</tr>
+<tr>
+<td><code>agent_servers</code> custom-agent JSON shape (<code>type</code>, <code>command</code>, <code>args</code>, <code>env</code>)</td>
+<td>/docs/ai/external-agents — example <code>agent_servers.my-agent</code> block with <code>"type": "custom"</code>, <code>"command": "node"</code>, <code>"args": [...]</code>, <code>"env": {}</code></td>
+</tr>
+<tr>
+<td><code>.rules</code>-first, 9-entry project-instructions fallback list; personal <code>~/.config/zed/AGENTS.md</code> (<code>%APPDATA%\Zed\AGENTS.md</code> on Windows); project wins over personal on conflict</td>
+<td>/docs/ai/instructions — precedence list <code>.rules &gt; .cursorrules &gt; .windsurfrules &gt; .clinerules &gt; .github/copilot-instructions.md &gt; AGENT.md &gt; AGENTS.md &gt; CLAUDE.md &gt; GEMINI.md</code>; personal file always-on across every workspace</td>
+</tr>
+<tr>
+<td>Native <code>AGENTS.md</code> support as primary/recommended format; <code>.rules</code> kept for back-compat</td>
+<td>/docs/ai/instructions — Zed natively supports the agents.md standard; <code>.rules</code> documented as legacy/back-compat filename</td>
+</tr>
+<tr>
+<td>Skills: <code>SKILL.md</code> frontmatter (<code>name</code>, <code>description</code>, optional <code>disable-model-invocation</code>), <code>.agents/skills/</code> (project) + <code>~/.agents/skills/</code> (global), direct-children-only, project overrides global on name clash</td>
+<td>/docs/ai/skills — frontmatter field table, "Skills must be direct children of the skills root", "the project-local skill takes precedence"</td>
+</tr>
+<tr>
+<td><code>context_servers</code> MCP shape — local (<code>command</code>/<code>args</code>/<code>env</code>) vs remote (<code>url</code>/<code>headers</code>), OAuth prompt on missing Authorization header, forwarded to External Agents via ACP</td>
+<td>/docs/ai/mcp — example JSON for both local and remote server shapes; "forwarded to External Agents via the Agent Client Protocol"</td>
+</tr>
+<tr>
+<td>Only <code>/compact</code> documented as a slash command; no dedicated custom-command file format</td>
+<td>/docs/ai/agent-panel — "You can compact manually by typing /compact in the message editor"; no other slash-command mechanism documented</td>
+</tr>
+<tr>
+<td>No dedicated hooks/lifecycle-events docs page</td>
+<td>Full AI docs nav (Overview, AI Quick Start, AI by Company, Agents [Zed Agent, External Agents, Terminal Threads], Agent Panel, Agent Settings, Agent Profiles, Tools [Tool Permissions, Agent Sandboxing, MCP], Skills, Instructions, Parallel Agents, Inline Assistant, LLM Providers, Edit Prediction, AI Privacy) — no "Hooks" entry</td>
+</tr>
+<tr>
+<td>AGENTS.md open standard — root-of-repo convention, nearest-file-wins for monorepos, no described merge beyond directory proximity, Zed listed as an adopter</td>
+<td>https://agents.md/ — "created at the root of the repository"; "place another AGENTS.md inside each package... the closest one takes precedence"; Zed listed among 20+ supported agents</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-zed/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1877 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/hermes/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Hermes Agent (Nous Research) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-hermes-agent-nous-research" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Hermes Agent (Nous Research)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file-native-agentsmd-auto-loaded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File — ✅ NATIVE (AGENTS.md auto-loaded)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native-subagents-via-delegate_task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE (subagents via delegate_task)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native-agentskillsio-standard-gald3r-distribution-opportunity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE (agentskills.io standard) — gald3r distribution opportunity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-partial-built-in-slash-commands-skills-as-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ⚠️ PARTIAL (built-in slash commands + skills-as-commands)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native-configyaml-hooks-shell-hooks-17-events-blocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE (config.yaml hooks: shell hooks, 17+ events, blocking)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-gateways-surfaces-channel-native-multi-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Gateways / Surfaces — channel-native multi-platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-live-crawl-2026-06-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (live crawl 2026-06-20)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-hermes-agent-nous-research">PLATFORM_SPEC.md — Hermes Agent (Nous Research)<a class="headerlink" href="#platform_specmd-hermes-agent-nous-research" title="Permanent link">&para;</a></h1>
+<p><strong>Hermes Agent</strong> is Nous Research's self-improving, channel-native AI agent — a CLI plus a
+multi-platform <strong>gateway</strong> (Telegram, Discord, Slack, WhatsApp, Signal, Email). Its headline traits
+are an autonomous learning loop, <strong>agent-curated Skills</strong> created from experience, and persistent
+memory across sessions. All state lives under <strong><code>~/.hermes/</code></strong> (or <code>$HERMES_HOME</code>;
+<code>%LOCALAPPDATA%\hermes</code> on native Windows). As of <strong>June 2026</strong> Hermes natively supports <strong>five</strong> of
+the six gald3r-relevant primitives — <strong>Skills</strong> (agentskills.io-compatible <code>SKILL.md</code>), <strong>Rules /
+instruction files</strong> (it auto-loads <code>AGENTS.md</code> / <code>CLAUDE.md</code> / <code>SOUL.md</code> into the system prompt),
+<strong>MCP</strong>, <strong>Hooks</strong> (a native shell-hook block in <code>config.yaml</code> with 17+ lifecycle events, plus gateway
++ plugin hook systems), and native <strong>subagents</strong> (the <code>delegate_task</code> model). <strong>Commands</strong> are the
+only partial primitive (built-in slash commands + skills-as-<code>/skill-name</code>; no user-authored non-skill
+command file). This is <strong>near-full parity</strong> with the Cursor reference.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-20</strong> against the live GitHub repo + hosted docs (see
+Verification Evidence). This <strong>supersedes</strong> the T516 stub (<code>last_doc_scan: never</code>, <code>status: ❓</code>, all
+cells <code>❓</code>, wrong <code>docs_url: https://hermes.dev</code>), which made no capability claims. The correct docs
+host is <strong><code>hermes-agent.nousresearch.com/docs</code></strong> + the <strong><code>NousResearch/hermes-agent</code></strong> GitHub repo.</p>
+<blockquote>
+<p><strong>Correction (2026-06-20 re-verify):</strong> an earlier pass of this spec claimed Hooks were "not
+documented (the one real gap)" and told users to fold SessionStart guardrails into <code>AGENTS.md</code>
+because there was no hook. <strong>That was wrong.</strong> Hermes ships a <strong>native hooks system</strong> —
+documented at <code>…/docs/user-guide/features/hooks</code> — including a <strong>shell-hook block in
+<code>~/.hermes/config.yaml</code></strong> with <strong>17+ lifecycle events</strong> and <strong><code>pre_tool_call</code> tool-call blocking</strong>.
+The Hooks cell is now <strong>✅ NATIVE</strong> and the tier is re-derived to near-full parity (see below).</p>
+<p><strong>Distribution opportunity (headline):</strong> Hermes Skills use the <strong>agentskills.io open <code>SKILL.md</code>
+standard</strong> in a <strong>folder-per-skill</strong> layout (<code>&lt;skill&gt;/SKILL.md</code> + optional scripts/references) —
+the <strong>same standard gald3r already ships</strong> (<code>g-skl-*/SKILL.md</code>). gald3r's skills are <strong>structurally
+portable</strong> onto Hermes: drop them under <code>~/.hermes/skills/&lt;category&gt;/&lt;name&gt;/SKILL.md</code> and they
+appear in the skills index and as <code>/&lt;name&gt;</code> slash commands. Hermes adds <strong>optional</strong> <code>metadata.hermes.*</code>
+frontmatter fields (tags, requires_toolsets, config, …) on top of the <code>name</code>/<code>description</code> baseline,
+so a baseline <code>SKILL.md</code> loads unchanged; only Hermes-specific tuning needs the extra keys.</p>
+<p><strong>Platform truth — instruction file:</strong> Hermes auto-injects a set of context files into the system
+prompt at session start — <strong><code>SOUL.md</code>, <code>.hermes.md</code>, <code>AGENTS.md</code>, <code>CLAUDE.md</code>, and <code>.cursorrules</code></strong>.
+gald3r's <code>AGENTS.md</code> is therefore read <strong>natively</strong> (no migration step required), which makes Hermes
+an <code>AGENTS.md</code>-first-class platform like Codex/Cursor — not a <code>CLAUDE.md</code>-only platform like Claude
+Code. <code>SOUL.md</code> is the persona slot (#1 in the system prompt).</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>~/.hermes/                          ← all state (or $HERMES_HOME; %LOCALAPPDATA%\hermes on Windows)
+├── config.yaml                     ← main config (model, toolsets, memory, compression, MCP)
+├── .env                            ← secrets only (API keys, bot tokens, passwords)
+├── auth.json                       ← OAuth provider creds (Nous Portal, etc.)
+├── SOUL.md                         ← persona / agent identity (system-prompt slot #1, auto-loaded)
+├── memories/
+│   ├── MEMORY.md                   ← session memories (auto-loaded)
+│   └── USER.md                     ← user profile (auto-loaded)
+├── skills/                         ← Agent Skills, organized by category
+│   ├── &lt;category&gt;/&lt;name&gt;/SKILL.md  ←   e.g. devops/deploy-k8s/SKILL.md, research/arxiv/SKILL.md
+│   └── openclaw-imports/           ←   skills migrated from OpenClaw
+└── hermes-agent/                   ← git checkout (source install)
+
+&lt;project-root&gt;/                     ← project-local context files Hermes auto-injects (if present)
+├── AGENTS.md                       ← auto-loaded into system prompt (NATIVE — no migration needed)
+├── .hermes.md / CLAUDE.md / .cursorrules  ← also auto-injected context files
+</code></pre>
+<p>Hermes resolves a <strong>bundled</strong> skills set (in the repo <code>skills/</code>) plus an <strong>optional</strong> set
+(<code>optional-skills/</code>, same structure) and the user <code>~/.hermes/skills/</code> tree. <strong>External skills</strong> added
+as <em>taps</em> (<code>hermes skills tap add owner/repo</code>) appear in the index identically to local skills.</p>
+<p><strong>gald3r writes</strong>: project <code>AGENTS.md</code>; skills under <code>~/.hermes/skills/&lt;category&gt;/g-skl-*/SKILL.md</code>
+(user-global) or a project skills tree published as a tap; optionally <code>SOUL.md</code> for persona.
+<strong>Hermes owns</strong>: <code>config.yaml</code> / <code>.env</code> / <code>auth.json</code> schemas, the <code>~/.hermes/</code> memory store, the
+skill index + security scanning, and gateway state.</p>
+<hr />
+<h2 id="2-ai-instruction-file-native-agentsmd-auto-loaded">2. AI Instruction File — ✅ NATIVE (AGENTS.md auto-loaded)<a class="headerlink" href="#2-ai-instruction-file-native-agentsmd-auto-loaded" title="Permanent link">&para;</a></h2>
+<p>Hermes auto-injects <strong>automatic context files</strong> into the system prompt at session start:
+<strong><code>SOUL.md</code>, <code>.hermes.md</code>, <code>AGENTS.md</code>, <code>CLAUDE.md</code>, and <code>.cursorrules</code></strong>. gald3r's shared
+cross-platform <strong><code>AGENTS.md</code> is read natively</strong> — no <code>CLAUDE.md</code> import shim and no migration command
+required (this corrects the README's "migration flag" phrasing, which refers to <em>importing OpenClaw
+state</em>, not to whether <code>AGENTS.md</code> is read). <code>SOUL.md</code> is the dedicated <strong>persona</strong> slot (#1).
+Context files are subject to truncation limits (<code>config.yaml</code> memory settings).
+Source: https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuration.md</p>
+<hr />
+<h2 id="3-agents-support-native-subagents-via-delegate_task">3. Agents Support — ✅ NATIVE (subagents via <code>delegate_task</code>)<a class="headerlink" href="#3-agents-support-native-subagents-via-delegate_task" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Hermes spawns subagents through the documented <strong><code>delegate_task</code></strong> tool (<code>tools/delegate_tool.py</code>):
+  it creates a subagent with an <strong>isolated context + terminal session</strong>, and the parent waits
+  synchronously for the child's summary before continuing its loop. <strong>Single</strong> mode passes <code>goal</code>
+  (+ optional <code>context</code>, <code>toolsets</code>); <strong>batch/parallel</strong> mode passes <strong><code>tasks: [...]</code></strong>, each
+  task getting its own concurrent subagent.</li>
+<li>Concurrency and depth are bounded in <code>config.yaml</code>: <strong><code>delegation.max_concurrent_children</code></strong>
+  (default 3), <strong><code>delegation.max_spawn_depth</code></strong> (default 2), plus <code>delegation.child_timeout_seconds</code>,
+  <code>delegation.orchestrator_enabled</code> (default true), and <code>delegation.inherit_mcp_toolsets</code>. Subagents
+  carry a <strong>role</strong>: <code>leaf</code> (default focused worker, cannot itself call <code>delegate_task</code>) or
+  <code>orchestrator</code> (retains <code>delegate_task</code>).</li>
+<li>No documented standalone <em>agent-definition file</em> (no <code>.hermes/agents/*.md|toml</code>) — subagents are
+  <strong>spawned on demand via <code>delegate_task</code></strong>, not declared as gald3r-style <code>g-agnt-*</code> markdown files.
+  gald3r <code>g-agnt-*</code> definitions have <strong>no direct file mapping</strong>; their behavior is best delivered as
+  <strong>Skills</strong> (which a <code>delegate_task</code> subagent can invoke) rather than as declared agent files.</li>
+<li>Sources: https://github.com/NousResearch/hermes-agent/blob/main/AGENTS.md (<code>delegate_task</code> /
+  <code>delegation.*</code> config) · https://github.com/NousResearch/hermes-agent (README — subagents)</li>
+</ul>
+<h2 id="4-skills-support-native-agentskillsio-standard-gald3r-distribution-opportunity">4. Skills Support — ✅ NATIVE (agentskills.io standard) — <strong>gald3r distribution opportunity</strong><a class="headerlink" href="#4-skills-support-native-agentskillsio-standard-gald3r-distribution-opportunity" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>A skill is a directory containing a <code>SKILL.md</code></strong> with YAML frontmatter — the <strong>agentskills.io
+  open standard</strong> (folder-per-skill, optional <code>scripts/</code> <code>references/</code> <code>assets/</code>). Hermes loads skill
+  bodies <strong>on demand</strong> (progressive disclosure), keeping token use low; names+descriptions index at
+  startup.</li>
+<li><strong>Location</strong>: <code>~/.hermes/skills/&lt;category&gt;/&lt;name&gt;/SKILL.md</code> (user), bundled <code>skills/</code> (repo),
+  <code>optional-skills/</code> (same structure). External taps (<code>hermes skills tap add owner/repo</code>) merge in.</li>
+<li><strong>Frontmatter</strong>: only <strong><code>name</code> + <code>description</code> are required</strong> (matching the agentskills.io
+  baseline). <code>version</code>, <code>author</code>, <code>license</code> are <strong>optional / recommended</strong> (best-practice for
+  published/tapped skills, not mandatory to load). Also optional: <code>platforms</code>,
+  <code>metadata.hermes.{tags,related_skills,requires_toolsets,requires_tools,fallback_for_*,config,
+  blueprint}</code>, <code>required_environment_variables</code>, <code>required_credential_files</code>. A gald3r baseline
+  <code>g-skl-*/SKILL.md</code> (which already carries <code>name</code>+<code>description</code>) therefore <strong>loads as-is</strong>; adding
+  <code>version</code>/<code>author</code>/<code>license</code> is recommended polish for distribution, not a requirement.</li>
+<li><strong>Invocation</strong>: every skill is exposed as a <code>/skill-name</code> slash command and via the system-prompt
+  <code>skills_list</code> / <code>skill_view</code> index — <strong>identical for local, optional, and tapped skills</strong>.</li>
+<li><strong>Publishing</strong>: <code>hermes skills publish skills/my-skill --to github --repo owner/repo</code>; consumers add
+  with <code>hermes skills tap add owner/repo</code>. Hub-installed skills are <strong>security-scanned</strong> before use.</li>
+<li><strong>gald3r impact</strong>: <code>g-skl-*/SKILL.md</code> are <strong>directly portable</strong> (same folder-per-skill + <code>SKILL.md</code>
+  standard already used by Claude/Codex/OpenCode/Cursor). A gald3r <strong>tap</strong> (<code>hermes skills tap add
+  &lt;gald3r-skills-repo&gt;</code>) is the natural distribution channel onto Hermes.</li>
+<li>Sources: https://hermes-agent.nousresearch.com/docs/user-guide/features/skills ·
+  https://hermes-agent.nousresearch.com/docs/developer-guide/creating-skills ·
+  https://github.com/NousResearch/hermes-agent/blob/main/skills/research/arxiv/SKILL.md (live example)</li>
+</ul>
+<h2 id="5-commands-workflows-partial-built-in-slash-commands-skills-as-commands">5. Commands / Workflows — ⚠️ PARTIAL (built-in slash commands + skills-as-commands)<a class="headerlink" href="#5-commands-workflows-partial-built-in-slash-commands-skills-as-commands" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Built-in slash commands</strong> (CLI + messaging): <code>/new</code>, <code>/reset</code>, <code>/model [provider:model]</code>,
+  <code>/personality [name]</code>, <code>/retry</code>, <code>/undo</code>, <code>/compress</code>, <code>/usage</code>, <code>/insights [--days N]</code>, <code>/skills</code>,
+  <code>/stop</code>, <code>/platforms</code>, <code>/status</code>, <code>/sethome</code>.</li>
+<li><strong>User-defined invocable workflows</strong> are delivered as <strong>Skills</strong> — each skill is automatically a
+  <code>/skill-name</code> command. There is <strong>no separate user-authored command file</strong> (no <code>.hermes/commands/</code>,
+  no prompt-template directory).</li>
+<li><strong>gald3r impact</strong>: <code>@g-*</code> / <code>/g-*</code> workflows map to <strong>Skills</strong> (preferred and only) path — they
+  surface as <code>/&lt;name&gt;</code> once installed as skills. No 1:1 command-file analog → mark <strong>⚠️ partial</strong>
+  (works, but only via the skills route, not a dedicated command primitive).</li>
+<li>Source: https://github.com/NousResearch/hermes-agent (README — slash command list) + skills docs</li>
+</ul>
+<h2 id="6-hooks-system-native-configyaml-hooks-shell-hooks-17-events-blocking">6. Hooks System — ✅ NATIVE (config.yaml <code>hooks:</code> shell hooks, 17+ events, blocking)<a class="headerlink" href="#6-hooks-system-native-configyaml-hooks-shell-hooks-17-events-blocking" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Hermes ships a native hooks system</strong> — three coordinated subsystems: <strong>shell hooks</strong> (declared in
+  <code>~/.hermes/config.yaml</code> under a <code>hooks:</code> block), <strong>gateway hooks</strong> (<code>~/.hermes/hooks/&lt;name&gt;/</code> with
+  <code>HOOK.yaml</code> + <code>handler.py</code>), and <strong>plugin hooks</strong> (<code>ctx.register_hook()</code> in a plugin's <code>register()</code>).
+  For gald3r, the <strong>shell-hook block</strong> is the relevant surface.</li>
+<li><strong>Shell-hook config</strong> (<code>~/.hermes/config.yaml</code>):
+  ```yaml
+  hooks:
+    pre_tool_call:<ul>
+<li>matcher: "terminal"          # regex against tool name
+    command: "/path/to/guard.sh" # receives JSON payload on stdin
+    timeout: 10                   # seconds
+  ```</li>
+</ul>
+</li>
+<li><strong>Payload</strong>: JSON over <strong>stdin</strong>, e.g.
+  <code>{"hook_event_name":"pre_tool_call","tool_name":"terminal","tool_input":{...},"session_id":"…","cwd":"…"}</code>.</li>
+<li><strong>17+ lifecycle events</strong>: <code>pre_tool_call</code>, <code>post_tool_call</code>, <code>pre_llm_call</code>, <code>post_llm_call</code>,
+  <code>on_session_start</code>, <code>on_session_end</code>, <code>on_session_finalize</code>, <code>on_session_reset</code>, <code>subagent_stop</code>,
+  <code>pre_gateway_dispatch</code>, <code>pre_approval_request</code>, <code>post_approval_response</code>, <code>transform_tool_result</code>,
+  <code>transform_terminal_output</code>, <code>transform_llm_output</code>, plus gateway-only events <code>gateway:startup</code>,
+  <code>session:start</code>/<code>:end</code>/<code>:reset</code>, <code>agent:start</code>/<code>:step</code>/<code>:end</code>, and <code>command:*</code> (wildcard per slash
+  command).</li>
+<li><strong>Tool-call blocking</strong>: only <strong><code>pre_tool_call</code></strong> can block — return <code>{"action":"block","message":"…"}</code>
+  (equivalently <code>{"decision":"block","reason":"…"}</code>) and Hermes short-circuits the tool, returning
+  <code>message</code> to the model as the tool error. This is a <strong>real PreToolUse-equivalent gate</strong>.</li>
+<li><strong>Reliability caveat (honest):</strong> all hook subsystems are <strong>non-blocking on error</strong> — malformed JSON,
+  non-zero exit, or timeout in a shell hook is <strong>caught and logged, never aborting the agent loop</strong>.
+  So a hook that <em>fails</em> (vs. one that explicitly returns <code>block</code>) does <strong>not</strong> halt the tool; a
+  guardrail must succeed and explicitly emit the block action to enforce. (Community issues also
+  report hooks not always firing in some builds — treat hard enforcement as best-effort and verify
+  with an install test.)</li>
+<li><strong>gald3r impact</strong>: <code>g-hk-*.py</code> lifecycle hooks <strong>do map</strong> onto Hermes via the <code>config.yaml</code>
+  <code>hooks:</code> block — wire a SessionStart-style <code>.gald3r/</code> context injector onto <strong><code>on_session_start</code></strong>
+  and a PreToolUse-style guardrail onto <strong><code>pre_tool_call</code></strong> (returning the <code>block</code> action for hard
+  gating). Because Hermes shell hooks run an arbitrary command, point them directly at
+  <code>python &lt;path&gt;</code> (post-T1584 Python port; no PowerShell involved, no wrapper needed). Folding guardrails into
+  <code>AGENTS.md</code> (§2) remains a useful belt-and-suspenders layer, but is <strong>no longer the only option</strong> —
+  native <code>pre_tool_call</code> blocking is available.</li>
+<li>Sources: https://hermes-agent.nousresearch.com/docs/user-guide/features/hooks ·
+  https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/hooks.md</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Rules/instructions</strong>: carried by the auto-loaded context files (<code>AGENTS.md</code>, <code>SOUL.md</code>,
+  <code>.hermes.md</code>, <code>CLAUDE.md</code>, <code>.cursorrules</code> — §2). gald3r <code>g-rl-*</code> always-apply rules fold into
+  <code>AGENTS.md</code> and load natively each session.</li>
+<li><strong>Memory</strong>: persistent <strong><code>~/.hermes/memories/MEMORY.md</code></strong> + <strong><code>USER.md</code></strong>, auto-loaded; plus the
+  self-improving loop that <strong>writes new skills</strong> from experience. Memory limits / context truncation
+  are tuned in <code>config.yaml</code>.</li>
+<li><strong>Enforcement caveat (platform truth):</strong> like every prose-instruction surface, <code>AGENTS.md</code>/<code>SOUL.md</code>
+  are <strong>advisory context, not hard enforcement</strong> on their own. Unlike the earlier (incorrect)
+  assessment, Hermes <strong>does</strong> have a <code>pre_tool_call</code> hook (§6) that can upgrade a constraint to a
+  hard, blocking gate — but the hook must succeed and explicitly emit <code>{"action":"block",…}</code>, and
+  hook errors are swallowed (non-blocking-on-failure). So treat prose constraints as best-effort, and
+  add a <code>pre_tool_call</code> shell hook when a constraint must be hard-enforced.</li>
+<li>Source: https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuration.md</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Model Context Protocol client</strong> — <strong>"connect any MCP server for extended capabilities."</strong> Config
+  lives under the <strong><code>mcp_servers:</code></strong> key (YAML, in <code>config.yaml</code>): per-server <strong>stdio</strong> (<code>command</code>,
+  <code>args</code>, <code>env</code>) <strong>or HTTP</strong> (<code>url</code>, <code>headers</code>), plus <code>enabled</code>, <code>timeout</code>, <code>connect_timeout</code>, and
+  tool-filtering / utility-tool-policy options.</li>
+<li>MCP ships with the standard install; the optional extra is <code>uv pip install -e ".[mcp]"</code>. <strong>Node.js /
+  npx required</strong> for npm-based MCP servers.</li>
+<li>gald3r MCP servers (e.g. <code>gald3r_docker</code> stdio/HTTP tools) wire via <code>mcp_servers:</code> in
+  <code>~/.hermes/config.yaml</code>.</li>
+<li>Sources: https://github.com/NousResearch/hermes-agent/blob/main/website/docs/reference/mcp-config-reference.md ·
+  https://hermes-agent.nousresearch.com/docs/user-guide/features/mcp</li>
+</ul>
+<h2 id="9-gateways-surfaces-channel-native-multi-platform">9. Gateways / Surfaces — channel-native multi-platform<a class="headerlink" href="#9-gateways-surfaces-channel-native-multi-platform" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Gateway</strong>: <code>hermes gateway setup</code> (interactive wizard) + <code>hermes gateway start</code> / <code>run</code> /
+  <code>install</code>. Surfaces: <strong>Telegram, Discord, Slack, WhatsApp, Signal, Email</strong> ("20+ platforms" claimed),
+  with streaming tool output and cross-platform conversation continuity.</li>
+<li><strong>gald3r impact (Q5):</strong> gald3r's status outputs (<code>TASKS.md</code>, <code>/g-status</code>) are <strong>markdown</strong>, which
+  renders fine in CLI and degrades acceptably in chat surfaces (Telegram/Slack render a markdown
+  subset; long tables truncate). For chat gateways, prefer the <strong>summarized</strong> status forms over raw
+  <code>TASKS.md</code> table dumps; the <code>--json</code>/<code>--toon</code> output skills (g-skl-json-output / g-skl-toon-output)
+  are better suited to gateway/agent-to-agent handoff than wide markdown tables. <strong>No hard
+  reformatting is required for CLI</strong>; chat surfaces benefit from summarization.</li>
+<li>Source: https://github.com/NousResearch/hermes-agent (README — gateway) + gateway docs</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Hermes reaches <strong>near-full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>Skills, Rules/memory, MCP, and Hooks</strong>, plus native subagents (the <code>delegate_task</code> model) and an
+<code>AGENTS.md</code>-native instruction file. <strong>Commands are the only partial primitive</strong> (skills-as-commands
+only, no separate command-file primitive). Hermes's distinctive strengths are the
+<strong>agentskills.io-standard Skills</strong> (directly reusing gald3r's <code>SKILL.md</code> artifacts), the
+<strong>self-improving skill-creation loop</strong>, and the <strong>channel-native gateway</strong> (Telegram/Discord/Slack/…).</p>
+<p><strong>Platform-specific truths to honor:</strong>
+- Instruction file is <strong><code>AGENTS.md</code>-native</strong> (auto-injected alongside <code>SOUL.md</code>/<code>CLAUDE.md</code>/
+  <code>.cursorrules</code>) — ship <code>AGENTS.md</code>; optionally add <code>SOUL.md</code> for the gald3r persona.
+- <strong>Hooks are native</strong> — wire <code>g-hk-*</code> SessionStart/PreToolUse logic onto the <code>config.yaml</code> <code>hooks:</code>
+  block (<code>on_session_start</code>, <code>pre_tool_call</code>, …); <code>pre_tool_call</code> can hard-<strong>block</strong> a tool via
+  <code>{"action":"block",…}</code>. Hook <em>failures</em> are swallowed (non-blocking-on-error), so a guardrail must
+  succeed and explicitly emit the block action to enforce.
+- Skills need only <code>name</code>+<code>description</code>; <code>version</code>/<code>author</code>/<code>license</code> are <strong>optional/recommended</strong>
+  (a baseline gald3r <code>SKILL.md</code> loads as-is — adding the three is distribution polish).
+- Distribute gald3r skills as a <strong>tap</strong> (<code>hermes skills tap add owner/repo</code>); state lives in
+  <code>~/.hermes/</code> (<code>config.yaml</code> + <code>.env</code>, <strong>not</strong> a <code>.hermes/</code> project tree).</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: ✅ native — shell hooks (<code>config.yaml</code> <code>hooks:</code> block) + gateway hooks
+  (<code>~/.hermes/hooks/&lt;name&gt;/</code> <code>HOOK.yaml</code>+<code>handler.py</code>) + plugin hooks (<code>ctx.register_hook()</code>)</li>
+<li><strong>Config file</strong>: <code>~/.hermes/config.yaml</code> (shell hooks, under <code>hooks:</code>)</li>
+<li><strong>Events available</strong>: 17+ — incl. <code>pre_tool_call</code>, <code>post_tool_call</code>, <code>pre_llm_call</code>,
+  <code>post_llm_call</code>, <code>on_session_start</code>, <code>on_session_end</code>, <code>on_session_finalize</code>, <code>on_session_reset</code>,
+  <code>subagent_stop</code>, <code>transform_*</code>, plus gateway <code>session:*</code>/<code>agent:*</code>/<code>command:*</code></li>
+<li><strong>Event payload format</strong>: JSON over <strong>stdin</strong> (<code>hook_event_name</code>, <code>tool_name</code>, <code>tool_input</code>,
+  <code>session_id</code>, <code>cwd</code>, …)</li>
+<li><strong>Blocking</strong>: <code>pre_tool_call</code> may return <code>{"action":"block","message":"…"}</code> to short-circuit a tool</li>
+<li><strong>Reliability caveat</strong>: hooks are <strong>non-blocking on error</strong> — a failing hook is logged, not enforced;
+  only an explicit <code>block</code> action gates a tool (verify firing with an install test)</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> <strong>map natively</strong> — wire SessionStart logic onto
+  <code>on_session_start</code> and PreToolUse logic onto <code>pre_tool_call</code> by invoking <code>python &lt;path&gt;</code> directly
+  (no shell wrapper needed, post-T1584 Python port)</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No <code>.hermes/</code> project config tree</strong> — all state is <strong>user-global</strong> under <code>~/.hermes/</code>
+  (<code>config.yaml</code> + <code>.env</code> + <code>auth.json</code> + <code>skills/</code> + <code>memories/</code>). Project-local influence is via the
+  auto-injected context files (<code>AGENTS.md</code>/<code>.hermes.md</code>/<code>CLAUDE.md</code>/<code>.cursorrules</code>) only.</li>
+<li><strong>Skills ARE the command system</strong> — there is no separate command-file primitive; every skill is a
+  <code>/skill-name</code>. Distribute and update via <strong>taps</strong> + <code>hermes skills publish/tap add</code>.</li>
+<li><strong>Lean skill frontmatter</strong> — only <code>name</code>+<code>description</code> are required (agentskills.io baseline);
+  <code>version</code>/<code>author</code>/<code>license</code>/<code>platforms</code>/<code>metadata.hermes.*</code> are optional/recommended.</li>
+<li><strong>Hooks live in <code>config.yaml</code></strong> — not in a per-IDE hooks directory; the gald3r <code>g-hk-*</code> logic is
+  wired via the <code>hooks:</code> block (shell command + JSON-stdin), with <code>pre_tool_call</code> blocking.
+  Deterministic control is via <strong>hooks + <code>delegate_task</code> subagents</strong>.</li>
+<li><strong>Gateway-first</strong> — the same agent runs in Telegram/Discord/Slack/WhatsApp/Signal/Email; prefer
+  summarized status output (or <code>--json</code>/<code>--toon</code>) over wide markdown tables in chat surfaces.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Ship <code>AGENTS.md</code></strong> as the instruction surface — Hermes auto-injects it (no <code>CLAUDE.md</code> shim, no
+  migration step). Fold <code>g-rl-*</code> always-apply rules into it.</li>
+<li><strong>Wire <code>g-hk-*.py</code> hooks via <code>config.yaml</code></strong>: map SessionStart <code>.gald3r/</code> injection onto
+  <code>on_session_start</code> and PreToolUse guardrails onto <code>pre_tool_call</code> (return <code>{"action":"block",…}</code> to
+  hard-gate). Invoke <code>python &lt;path&gt;</code> directly (no shell wrapper needed, post-T1584 Python port);
+  remember hook <em>failures</em> are swallowed, so the guardrail must succeed and emit the block action to
+  enforce.</li>
+<li><strong>Distribute gald3r Skills as a Hermes tap</strong>: publish <code>g-skl-*/SKILL.md</code> to a repo, then
+  <code>hermes skills tap add &lt;repo&gt;</code>; they index + surface as <code>/&lt;name&gt;</code> natively. A baseline <code>SKILL.md</code>
+  (<code>name</code>+<code>description</code>) loads as-is; <code>version</code>/<code>author</code>/<code>license</code> are optional distribution polish.</li>
+<li><strong>MCP</strong> wires via <code>mcp_servers:</code> in <code>~/.hermes/config.yaml</code> (stdio/HTTP).</li>
+<li><strong>Subagents</strong> spawn via <code>delegate_task</code> (<code>goal</code>/<code>tasks:[...]</code>, bounded by <code>delegation.*</code>); there are
+  <strong>no declared subagent files</strong> — deliver <code>g-agnt-*</code> behaviors as Skills.</li>
+<li><strong>Do NOT expect</strong>: a <code>.hermes/</code> project tree or declared subagent/agent files.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs hermes</code> (crawl_max_age_days: 14;
+  docs <code>https://hermes-agent.nousresearch.com/docs</code> + <code>github.com/NousResearch/hermes-agent</code>).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>⚠️</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<p>Overall platform <code>status: ✅</code> — <strong>near-full parity</strong> (T614). Five of six primitives native —
+Hooks/Rules/Skills/MCP (+ <code>delegate_task</code> subagents, <code>AGENTS.md</code>-native instruction file); <strong>Commands</strong>
+is the only partial primitive (skills-as-<code>/skill-name</code>, no command-file). This corrects an earlier
+pass that wrongly marked Hooks absent. Honest, re-verified state as of the 2026-06-20 live docs crawl
+(hooks + skills-frontmatter facts re-fetched).</p>
+<hr />
+<h2 id="verification-evidence-live-crawl-2026-06-20">Verification Evidence (live crawl 2026-06-20)<a class="headerlink" href="#verification-evidence-live-crawl-2026-06-20" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Instruction file</td>
+<td>Auto-loaded context files incl. <code>AGENTS.md</code>/<code>SOUL.md</code>/<code>CLAUDE.md</code>/<code>.cursorrules</code> injected into system prompt at start; <code>SOUL.md</code> = persona slot #1</td>
+<td>github.com/NousResearch/hermes-agent .../user-guide/configuration.md</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>Folder-per-skill <code>SKILL.md</code> (agentskills.io), <code>~/.hermes/skills/&lt;cat&gt;/&lt;name&gt;/</code>; on-demand load; <code>/skill-name</code>; taps; security-scanned</td>
+<td>hermes-agent.nousresearch.com/docs/user-guide/features/skills + /developer-guide/creating-skills</td>
+</tr>
+<tr>
+<td>Skill frontmatter</td>
+<td><strong>only <code>name</code>+<code>description</code> required</strong>; <code>version</code>/<code>author</code>/<code>license</code>/<code>platforms</code>/<code>metadata.hermes.*</code> optional/recommended</td>
+<td>hermes-agent.nousresearch.com/docs/developer-guide/creating-skills + /user-guide/features/skills (re-fetched 2026-06-20)</td>
+</tr>
+<tr>
+<td>Commands</td>
+<td>built-in slash set (<code>/new</code>,<code>/model</code>,<code>/skills</code>,<code>/personality</code>,…) + every skill = <code>/skill-name</code>; no user command-file primitive</td>
+<td>github.com/NousResearch/hermes-agent (README slash-command list)</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td><code>delegate_task</code> tool (isolated context+terminal; <code>goal</code> or batch <code>tasks:[...]</code> concurrent); config <code>delegation.max_concurrent_children</code>/<code>max_spawn_depth</code>; roles leaf/orchestrator; no declared agent file</td>
+<td>github.com/NousResearch/hermes-agent/blob/main/AGENTS.md</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td><strong>Native</strong>: <code>config.yaml</code> <code>hooks:</code> shell hooks (JSON-stdin) + gateway + plugin hooks; 17+ events; <code>pre_tool_call</code> blocks via <code>{"action":"block",…}</code>; non-blocking on hook error</td>
+<td>hermes-agent.nousresearch.com/docs/user-guide/features/hooks + .../website/docs/user-guide/features/hooks.md (re-fetched 2026-06-20)</td>
+</tr>
+<tr>
+<td>Rules / Memory</td>
+<td><code>AGENTS.md</code>/<code>SOUL.md</code> rules (auto-injected) + <code>~/.hermes/memories/MEMORY.md</code>+<code>USER.md</code>; self-writes skills</td>
+<td>.../user-guide/configuration.md</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td><code>mcp_servers:</code> (YAML, in config.yaml) — stdio (<code>command</code>/<code>args</code>/<code>env</code>) or HTTP (<code>url</code>/<code>headers</code>) + <code>enabled</code>/<code>timeout</code>; <code>.[mcp]</code> extra; npx for npm servers</td>
+<td>.../reference/mcp-config-reference.md + /user-guide/features/mcp</td>
+</tr>
+<tr>
+<td>Config files</td>
+<td><code>~/.hermes/config.yaml</code> (settings) + <code>~/.hermes/.env</code> (secrets) + <code>auth.json</code>; <code>$HERMES_HOME</code>/<code>%LOCALAPPDATA%\hermes</code></td>
+<td>.../user-guide/configuration.md + README</td>
+</tr>
+<tr>
+<td>Gateways</td>
+<td><code>hermes gateway setup</code>/<code>start</code>; Telegram/Discord/Slack/WhatsApp/Signal/Email</td>
+<td>github.com/NousResearch/hermes-agent (README)</td>
+</tr>
+<tr>
+<td>Docs host</td>
+<td>Correct host is <code>hermes-agent.nousresearch.com/docs</code> + <code>github.com/NousResearch/hermes-agent</code> (stub's <code>https://hermes.dev</code> was wrong)</td>
+<td>live fetch 2026-06-20</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-hermes/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

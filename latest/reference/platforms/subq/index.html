@@ -1,0 +1,1719 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/subq/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — SubQ (Subquadratic Inc.) / "SubQ Code" - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-subq-subquadratic-inc-subq-code" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — SubQ (Subquadratic Inc.) / "SubQ Code"
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ❌ none
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ❌ none
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ❌ none
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ❌ none
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ❌ none
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ❌ none
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-plugin-caveat-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Plugin Caveat vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpssubqai-httpsdocssubqai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://subq.ai + https://docs.subq.ai)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-subq-subquadratic-inc-subq-code">PLATFORM_SPEC.md — SubQ (Subquadratic Inc.) / "SubQ Code"<a class="headerlink" href="#platform_specmd-subq-subquadratic-inc-subq-code" title="Permanent link">&para;</a></h1>
+<p><strong>SubQ</strong> is a subquadratic long-context <strong>LLM</strong> from Subquadratic Inc. (SubQ 1M-Preview; Subquadratic
+Sparse Attention / SSA, ~O(n); 1M tokens production, up to ~12M research). Its developer-facing
+surface is an <strong>OpenAI-compatible Chat Completions API</strong> (docs.subq.ai). <strong>"SubQ Code" is NOT a
+standalone CLI or coding agent</strong> — the official product page (subq.ai/code) describes it as a
+<strong>plugin / "long-context layer for coding agents"</strong> that you "Plug into <strong>Claude Code, Codex, and
+Cursor</strong>" via a "one-line install", whose job is to "auto-redirect expensive model turns" for
+cheaper/faster whole-repo exploration.</p>
+<p>Because SubQ Code runs <strong>inside a host agent</strong>, it exposes <strong>none of its own extension mechanisms</strong>:
+commands, rules, sub-agents, skills, hooks, and MCP are all properties of the <strong>host tool</strong>
+(Claude Code / Codex / Cursor), not of SubQ. As of <strong>June 2026</strong> there is still <strong>no public standalone
+SubQ CLI, no published config-folder schema (<code>.subq/</code>), and no SubQ-native instruction-file
+convention</strong>. A gald3r install therefore targets the <strong>host platform</strong>, never SubQ itself.</p>
+<blockquote>
+<p><strong>Authoring path: UPDATE</strong> — supersedes the prior heavy-❓ spec (<code>last_doc_scan: never</code>, status <code>❓</code>).
+That spec correctly refused to fabricate, but treated SubQ-native conventions as merely
+<em>undocumented</em>. The June-2026 official docs (subq.ai/code, docs.subq.ai) make clear they are
+<strong>not-applicable</strong>: SubQ Code is a plugin with <strong>no own extension surface</strong>, so the six gald3r
+mechanisms are downgraded from <code>❓</code> to <code>❌</code> (<code>none</code>). <strong>Verified 2026-06-02</strong> (see Verification
+Evidence). This is the <strong>honest</strong> state — <code>❌</code> here means "the host owns it", not "broken".</p>
+<p><strong>Access status change.</strong> <em>May 2026</em>: API/SubQ Code/SubQ Search were waitlist / private-beta with no
+public config docs (prior spec). <em>June 2026</em>: the API, <strong>console</strong> (console.subq.ai, keys),
+<strong>playground</strong> (playground.subq.ai), and <strong>docs</strong> (docs.subq.ai) are publicly reachable — but the
+coding offering remains a <strong>plugin</strong>, not an agent with its own extensibility. So the six gald3r
+mechanisms are <strong>not-applicable to SubQ as a host</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p><strong>Status: ❌ no SubQ-native config folder.</strong></p>
+<p>SubQ publishes <strong>no <code>.subq/</code> config-folder schema</strong> and ships no standalone CLI that would read one.
+SubQ Code is a plugin loaded by a host agent, so the only config tree that matters is the <strong>host's</strong>
+(<code>.claude/</code>, <code>.codex/</code>, <code>.cursor/</code>). gald3r writes <strong>nothing</strong> SubQ-native.</p>
+<pre><code>&lt;project-root&gt;/
+└── (no SubQ-native config tree)
+    # SubQ Code is a plugin inside the host agent (Claude Code / Codex / Cursor).
+    # gald3r targets the HOST's config tree (.claude/ | .codex/ | .cursor/), not .subq/.
+</code></pre>
+<p><strong>gald3r writes</strong>: nothing SubQ-native. Install gald3r into the <strong>host</strong> platform instead.
+<strong>SubQ owns</strong>: the model API (docs.subq.ai), the console (keys), and the plugin's internal
+turn-redirection — none of which is a gald3r-writable surface.
+Source: https://subq.ai/code</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p><strong>Status: ❌ none-native (inherits the host's instruction file).</strong></p>
+<p>SubQ publishes <strong>no native instruction-file convention</strong> — there is <strong>no <code>SUBQ.md</code> and no <code>.subq/</code>
+instruction schema</strong>. Because SubQ Code plugs into Claude Code / Codex / Cursor, it <strong>inherits
+whatever instruction file the host uses</strong> (e.g. <strong><code>AGENTS.md</code></strong>, or <strong><code>CLAUDE.md</code></strong> under Claude Code).
+gald3r context reaches SubQ today <strong>only indirectly</strong>, via the host tool's <code>AGENTS.md</code> / <code>CLAUDE.md</code>.
+There is no SubQ-specific instruction file to write.
+Source: https://docs.subq.ai/overview/</p>
+<hr />
+<h2 id="3-agents-support-none">3. Agents Support — ❌ none<a class="headerlink" href="#3-agents-support-none" title="Permanent link">&para;</a></h2>
+<ul>
+<li>SubQ Code is itself a <strong>layer/plugin</strong> invoked by an existing coding agent; it is <strong>not</strong> a
+  multi-agent framework and documents <strong>no</strong> sub-agent / agent-role / mode definitions. Any subagents
+  are the host's (e.g. Claude Code <code>.claude/agents/</code>).</li>
+<li>Evidence: subq.ai/code — "The long-context layer for coding agents. Plug into Claude Code, Codex,
+  and Cursor."</li>
+<li>Source: https://subq.ai/code</li>
+</ul>
+<h2 id="4-skills-support-none">4. Skills Support — ❌ none<a class="headerlink" href="#4-skills-support-none" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No <code>SKILL.md</code> / Agent-Skills / reusable-workflow-file mechanism</strong> is documented on any official
+  SubQ page. The whole-repo-context value proposition explicitly de-emphasizes chunking/skill
+  machinery, but <strong>no skills API exists</strong>. gald3r <code>g-skl-*/SKILL.md</code> are not ingested by SubQ; they
+  load only via the host (e.g. Claude Code skills discovery).</li>
+<li>Source: https://subq.ai/code</li>
+</ul>
+<h2 id="5-commands-workflows-none">5. Commands / Workflows — ❌ none<a class="headerlink" href="#5-commands-workflows-none" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The official SubQ Code page describes only a plugin that "Auto-redirects expensive model turns" via
+  "One-line install"; <strong>no slash / custom-command system is documented</strong>. docs.subq.ai covers only
+  the Chat Completions API. Any slash commands a user sees come from the <strong>host</strong> tool
+  (Claude Code / Codex / Cursor), not SubQ.</li>
+<li>Source: https://subq.ai/code</li>
+</ul>
+<h2 id="6-hooks-system-none">6. Hooks System — ❌ none<a class="headerlink" href="#6-hooks-system-none" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No lifecycle / event-hook system</strong> (session-start, pre-tool, pre-commit, file-watch, or a
+  <code>hooks.json</code> equivalent) is documented. The only "automatic" behavior is <strong>internal turn-redirection
+  inside the plugin</strong>, which is <strong>not</strong> a user-configurable script hook. gald3r's
+  <code>g-hk-*.py</code> hooks do <strong>not</strong> run on SubQ; they must run via the <strong>host</strong> (e.g. Claude Code
+  <code>.claude/settings.json</code> hooks) or via git <code>core.hooksPath</code> / manual invocation.</li>
+<li>Source: https://subq.ai/code</li>
+</ul>
+<h2 id="7-rules-memory-none">7. Rules / Memory — ❌ none<a class="headerlink" href="#7-rules-memory-none" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No persistent-rules / memory / always-on-instructions mechanism</strong> is documented anywhere on
+  subq.ai or docs.subq.ai. SubQ's pitch is that a <strong>1M–12M token window loads the whole repo
+  directly</strong>, so there is no rules/memory file convention; persistent instructions live in the
+  <strong>host</strong> tool's own files (e.g. <code>AGENTS.md</code> / <code>CLAUDE.md</code>), not SubQ's. gald3r <code>g-rl-*</code> rules have
+  <strong>no SubQ-native injection point</strong>.</li>
+<li>Source: https://docs.subq.ai/overview/</li>
+</ul>
+<h2 id="8-mcp-support-none">8. MCP Support — ❌ none<a class="headerlink" href="#8-mcp-support-none" title="Permanent link">&para;</a></h2>
+<ul>
+<li>docs.subq.ai documents an <strong>OpenAI-compatible Chat Completions API</strong> (Base URL, API key,
+  <code>/v1/chat/completions</code>) with "Streaming + tool use" and "OpenAI-compatible endpoints" — an <strong>HTTP
+  contract, NOT Model Context Protocol</strong>. <strong>No MCP client/server support</strong> is mentioned. MCP, if used,
+  is provided by the <strong>host</strong> agent SubQ plugs into.</li>
+<li>Source: https://docs.subq.ai/overview/</li>
+</ul>
+<hr />
+<h2 id="9-plugin-caveat-vs-cursor-reference">9. Plugin Caveat vs. Cursor Reference<a class="headerlink" href="#9-plugin-caveat-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Compared to the Cursor reference (<code>g-skl-platform-cursor/PLATFORM_SPEC.md</code>), SubQ has <strong>no native
+gald3r-relevant extension surface at all</strong> — not because it is undocumented, but because <strong>SubQ Code
+is a plugin</strong>, not an agent. Every gald3r mechanism (commands / rules / agents / skills / hooks / MCP)
+belongs to the <strong>host</strong> the plugin is installed into.</p>
+<ol>
+<li><strong>What SubQ actually is</strong> — a subquadratic long-context <strong>LLM</strong> (SubQ 1M-Preview; SSA ~O(n); 1M
+   production / ~12M research), sold as <strong>model API + a coding plugin</strong>, not a coding agent.</li>
+<li><strong>Developer surface</strong> — OpenAI-compatible Chat Completions API only (docs.subq.ai; console.subq.ai
+   for keys; playground.subq.ai to try). Marketed gains for the Code plugin: <strong>"~25% lower bill, 10x
+   faster exploration"</strong>.</li>
+<li><strong>Output formats / workflows</strong> — streaming responses and OpenAI-style tool calling at the <strong>API</strong>
+   level only; <strong>no agent-level workflow / output-format extensibility</strong> is exposed.</li>
+<li><strong>Commands ❌ / Rules ❌ / Agents ❌ / Skills ❌ / Hooks ❌ / MCP ❌</strong> — all <code>none</code> on SubQ itself;
+   each is a <strong>host</strong> property (Claude Code / Codex / Cursor).</li>
+<li><strong>Instruction file ❌ (none-native)</strong> — no <code>SUBQ.md</code>; inherits the host's <code>AGENTS.md</code> / <code>CLAUDE.md</code>.</li>
+<li><strong>Install targets the host, not SubQ</strong> — to bring gald3r to a SubQ-accelerated workflow, install
+   gald3r into the host (Claude Code / Codex / Cursor) and let SubQ Code accelerate it underneath.</li>
+</ol>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: none ❌</li>
+<li><strong>Config file</strong>: none — SubQ documents no hook wiring file (no <code>hooks.json</code> equivalent); the plugin
+  exposes no user-configurable script hooks</li>
+<li><strong>Events available</strong>: none — no published lifecycle-event taxonomy; the only "automatic" behavior is
+  internal turn-redirection, not a hook</li>
+<li><strong>Event payload format</strong>: n/a</li>
+<li><strong>OS limits</strong>: n/a (no hook runtime to constrain)</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> do <strong>not</strong> run on SubQ — wire them on the <strong>host</strong> (e.g.
+  Claude Code <code>.claude/settings.json</code>) or via git <code>core.hooksPath</code> / manual invocation instead</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>SubQ Code is a plugin, not an agent.</strong> It runs inside Claude Code / Codex / Cursor and contributes
+  long-context turn-redirection only — it owns no commands/rules/agents/skills/hooks/MCP surface.</li>
+<li><strong>No <code>.subq/</code> config tree and no <code>SUBQ.md</code>.</strong> gald3r targets the <strong>host</strong> platform's config tree.</li>
+<li>The public SubQ developer surface is the <strong>model API</strong> (OpenAI-compatible HTTP), not an agent SDK.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>To bring gald3r to a SubQ-accelerated session, <strong>install gald3r into the host</strong> (Claude Code /
+  Codex / Cursor) — see <code>g-skl-platform-claude</code>, <code>g-skl-platform-codex</code>, <code>g-skl-platform-cursor</code>.</li>
+<li>Do <strong>not</strong> assume any <code>.ps1</code> hook, rule, skill, command, agent, or MCP wiring works on SubQ — all of
+  it lives on the host.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs subq</code> (crawl_max_age_days: 30) <strong>only</strong> to catch a
+  future standalone SubQ CLI; today there is no SubQ-native config surface to crawl.</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported (host owns it) · ❓ untested.</p>
+<p>Overall platform <code>status: ❌</code> — <strong>instruction-only</strong>. SubQ Code is a confirmed <em>real product</em>
+(Subquadratic Inc.), but it is a <strong>plugin / long-context layer</strong>, not a standalone agent, so it
+exposes <strong>no native gald3r-writable extension surface</strong>. The six mechanisms are <code>none</code> because the
+<strong>host</strong> (Claude Code / Codex / Cursor) owns them — install gald3r into the host. <code>❌</code> here is the
+<strong>honest</strong> mapping of "not-applicable to SubQ as a host", not a fabricated negative.</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpssubqai-httpsdocssubqai">Verification Evidence (docs crawl 2026-06-02, https://subq.ai + https://docs.subq.ai)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpssubqai-httpsdocssubqai" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What SubQ is</td>
+<td>subq.ai/introducing-subq + docs.subq.ai/overview — subquadratic long-context LLM (SSA ~O(n); 1M prod / ~12M research); developer surface is an OpenAI-compatible Chat Completions API</td>
+</tr>
+<tr>
+<td>SubQ Code is a plugin</td>
+<td>subq.ai/code — "The long-context layer for coding agents. Plug into Claude Code, Codex, and Cursor"; "one-line install"; "auto-redirects expensive model turns" (~25% lower bill, 10x faster exploration)</td>
+</tr>
+<tr>
+<td>Commands ❌</td>
+<td>subq.ai/code — only a plugin + one-line install; no slash/custom-command system documented; commands come from the host</td>
+</tr>
+<tr>
+<td>Rules ❌</td>
+<td>docs.subq.ai/overview — no persistent-rules/memory/always-on convention; whole-repo context replaces it; persistent instructions live in host AGENTS.md/CLAUDE.md</td>
+</tr>
+<tr>
+<td>Agents ❌</td>
+<td>subq.ai/code — SubQ Code is a layer invoked by an existing agent; no sub-agent/role/mode definitions; not a multi-agent framework</td>
+</tr>
+<tr>
+<td>Skills ❌</td>
+<td>subq.ai/code — no SKILL.md / Agent-Skills / reusable-workflow mechanism documented</td>
+</tr>
+<tr>
+<td>Hooks ❌</td>
+<td>subq.ai/code — no lifecycle/event-hook system (no hooks.json equivalent); only internal turn-redirection, not a user hook</td>
+</tr>
+<tr>
+<td>MCP ❌</td>
+<td>docs.subq.ai/overview — OpenAI-compatible Chat Completions API (Base URL, key, /v1/chat/completions, streaming + tool use); HTTP contract, NOT MCP; no MCP client/server</td>
+</tr>
+<tr>
+<td>Instruction file ❌</td>
+<td>docs.subq.ai/overview + subq.ai/code — no native SUBQ.md / .subq/ schema; SubQ Code inherits the host's AGENTS.md/CLAUDE.md</td>
+</tr>
+<tr>
+<td>Access status</td>
+<td>June 2026: API/console (console.subq.ai)/playground (playground.subq.ai)/docs (docs.subq.ai) publicly reachable; coding offering still a plugin (was waitlist/private-beta in May 2026)</td>
+</tr>
+<tr>
+<td>Docs freshness</td>
+<td><code>last_doc_scan: 2026-06-02</code> — crawl of subq.ai, subq.ai/code, docs.subq.ai/overview, console.subq.ai, playground.subq.ai</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-subq/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1809 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/zcode/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — ZCode (Z.ai / Zhipu) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-zcode-zai-zhipu" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — ZCode (Z.ai / Zhipu)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-partial-beta-global-level-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ⚠️ PARTIAL (Beta, global-level only)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-not-supported-for-hand-authored-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ❌ NOT SUPPORTED (for hand-authored hooks)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native-flat-append-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE (flat, append-only)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-plugin-system-distribution-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Plugin System — distribution channel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-gaps-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Gaps vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-07-03-httpszcodezaiendocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-07-03, https://zcode.z.ai/en/docs/*)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-zcode-zai-zhipu">PLATFORM_SPEC.md — ZCode (Z.ai / Zhipu)<a class="headerlink" href="#platform_specmd-zcode-zai-zhipu" title="Permanent link">&para;</a></h1>
+<p><strong>ZCode</strong> (<code>zcode.z.ai</code>) is Z.ai's free, cross-platform <strong>Agentic Development Environment (ADE)</strong>
+built around the <strong>GLM-5.2</strong> model, explicitly positioned to challenge Cursor, Claude Code, and
+GitHub Copilot. It supports <strong>BYOK</strong> (bring-your-own-key) for other model providers alongside
+Z.ai/BigModel accounts. ZCode is a desktop app (not a bare CLI) with a chat-first UI, Settings
+panels for MCP/Skills/Commands/Subagents, and a Plugin marketplace.</p>
+<p><strong>Authoring path</strong>: NEW. <strong>Verified 2026-07-03</strong> against https://zcode.z.ai/en/docs/agents and the
+docs pages listed above (see Verification Evidence). No prior gald3r spec existed for this platform.</p>
+<blockquote>
+<p><strong>Instruction-file truth (read carefully):</strong> ZCode reads a <strong>global <code>~/.zcode/AGENTS.md</code></strong> plus a
+<strong>workspace-root <code>AGENTS.md</code></strong>, and <strong>appends the global instructions first, then the workspace
+instructions</strong> — it does <strong>not</strong> merge hierarchically (no per-subdirectory scan) and does <strong>not</strong>
+support <code>@import</code>/<code>@include</code> expansion. This is a flatter, simpler model than Cursor/Claude
+Code/Qwen/Gemini. ZCode does <strong>not</strong> read <code>CLAUDE.md</code>.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                        ← workspace instructions (appended AFTER global ~/.zcode/AGENTS.md)
+└── .zcode/
+    └── skills/   &lt;name&gt;/SKILL.md    ← Agent Skills (YAML frontmatter: name, description + body)
+
+~/.zcode/
+├── AGENTS.md                        ← global/user instructions — read FIRST
+├── agents/   &lt;name&gt;.md              ← subagents (Beta) — GLOBAL/USER-LEVEL ONLY
+├── commands/ &lt;name&gt;.md              ← custom slash commands (global scope)
+└── skills/   &lt;name&gt;/SKILL.md        ← user-level skills
+
+(MCP servers)                        ← configured via Settings → MCP Servers (Form or Full-config
+                                        JSON), persisted to a `.zcode` config file at User or
+                                        Workspace scope — exact on-disk filename not published.
+</code></pre>
+<p><strong>gald3r writes</strong>: workspace <code>AGENTS.md</code> and <code>.zcode/skills/&lt;name&gt;/SKILL.md</code>. <strong>ZCode owns</strong>: the
+<code>.zcode</code> namespace, the MCP config file schema/location (UI-managed, exact path undocumented), and
+the global <code>~/.zcode/</code> tree.</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>ZCode reads <strong><code>AGENTS.md</code></strong> at two fixed scopes — <strong>not</strong> a hierarchical directory walk:</p>
+<ol>
+<li><code>~/.zcode/AGENTS.md</code> (global/user-level, read first)</li>
+<li><code>&lt;workspace-root&gt;/AGENTS.md</code> (appended after the global file)</li>
+</ol>
+<p>There is <strong>no</strong> per-subdirectory <code>AGENTS.md</code> discovery, and <strong>no</strong> <code>@file.md</code>-style import/include
+expansion (confirmed against docs/agents: "does not scan child directories, expand @import /
+@include, or choose rule files automatically by task type"). Whatever gald3r wants ZCode to see must
+be written directly into the workspace-root <code>AGENTS.md</code> body — the <code>@AGENTS.md</code>-import overlay
+pattern gald3r uses for Qwen/Gemini/Antigravity (<code>QWEN.md</code> / <code>GEMINI.md</code> importing <code>@AGENTS.md</code>) does
+<strong>not</strong> apply here, because ZCode has no import mechanism to resolve the <code>@</code> reference.</p>
+<ul>
+<li>ZCode does <strong>not</strong> read <code>CLAUDE.md</code>.</li>
+<li>Docs guidance for <code>AGENTS.md</code> content: document project stack/structure/key modules, code style
+  and validation steps, high-risk files, and team collaboration preferences.</li>
+<li>Source: https://zcode.z.ai/en/docs/agents</li>
+</ul>
+<hr />
+<h2 id="3-agents-support-partial-beta-global-level-only">3. Agents Support — ⚠️ PARTIAL (Beta, global-level only)<a class="headerlink" href="#3-agents-support-partial-beta-global-level-only" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Subagents</strong> are stored as Markdown files under <code>~/.zcode/agents/&lt;name&gt;.md</code>. The current Beta
+  manages <strong>global/user-level</strong> subagents only — <strong>no project-level agent roster exists yet</strong>.</li>
+<li>Configuration fields (captured via the Settings creation form): <code>name</code>, <code>color</code> (visual only),
+  <code>model</code> (inherit default or specific), <code>description</code> (guides auto-invocation), <code>available tools</code>
+  (all by default, or a custom read-only/writable subset), <code>system prompt</code>.</li>
+<li><strong>Invocation</strong>: automatic (primary Agent decides when to delegate) or manual via <code>@name</code> in chat.</li>
+<li>Two <strong>built-in subagents</strong> ship pre-configured, cannot be edited/deleted, and their names cannot be
+  reused for custom subagents.</li>
+<li><strong>gald3r gap</strong>: gald3r's <code>g-agnt-*.md</code> set has no project-scoped landing zone on ZCode today — a
+  real install would need to write into the user's global <code>~/.zcode/agents/</code>, which is
+  machine-specific and out of scope for a per-project overlay. Document this as a manual step rather
+  than fabricating a project-level <code>agents/</code> folder that ZCode does not read.</li>
+<li>Source: https://zcode.z.ai/en/docs/subagents</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong>: a <code>SKILL.md</code> file inside a per-skill directory; the directory name is the skill
+  identifier used in chat. YAML frontmatter carries <code>name</code> and <code>description</code>; the body is Markdown
+  guidance on when/how to use the skill.</li>
+<li><strong>Locations</strong>: <code>~/.zcode/skills/&lt;name&gt;/SKILL.md</code> (global/user-level) and project-scoped skills
+  within a workspace (exact project-level path mirrors the global one: <code>.zcode/skills/&lt;name&gt;/</code>).</li>
+<li><strong>Discovery/management</strong>: Settings → Skills (search, enable/disable, create with agent guidance,
+  refresh after edits). <strong>Invocation</strong>: type <code>$</code> in chat and select, e.g. <code>$code-review-checklist
+  review my current changes</code>.</li>
+<li><strong>Import</strong>: skills can be imported from other AI tools (Claude Code, Codex CLI, etc.) via symlink
+  or copy — gald3r's <code>g-skl-*/SKILL.md</code> files are drop-in compatible (same <code>name</code>/<code>description</code>
+  frontmatter shape as agentskills.io).</li>
+<li>Source: https://zcode.z.ai/en/docs/skill</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom commands</strong> are <code>.md</code> files stored at <strong>User scope</strong> (<code>~/.zcode/commands</code>) or <strong>Workspace
+  scope</strong> (project directory). Created via the Commands settings panel with fields: <code>Scope</code>
+  (User/Workspace), <code>Name</code> (invoked as <code>/name</code>), <code>Description</code> (optional, shown in the picker),
+  <code>Argument hint</code> (optional, e.g. <code>&lt;file-path&gt;</code>), <code>Prompt</code> (the content sent to the agent).</li>
+<li><strong>Invocation</strong>: type <code>/</code> to open the command panel, filter by name, supply arguments.
+  Two <strong>built-in commands</strong> ship: <code>/goal</code> (manage session objectives) and <code>/compact</code> (condense
+  context).</li>
+<li><strong>Import</strong>: commands can be imported from other AI agents via the Commands settings page and
+  remain fully editable afterward.</li>
+<li>gald3r <code>@g-*</code> commands map to <code>.zcode/commands/&lt;name&gt;.md</code> (workspace scope) as simple prompt files
+  — there is no argument-injection templating beyond the free-text <code>Prompt</code> field and an
+  <code>Argument hint</code> label (no <code>{{args}}</code>-style substitution documented).</li>
+<li>Source: https://zcode.z.ai/en/docs/commands</li>
+</ul>
+<h2 id="6-hooks-system-not-supported-for-hand-authored-hooks">6. Hooks System — ❌ NOT SUPPORTED (for hand-authored hooks)<a class="headerlink" href="#6-hooks-system-not-supported-for-hand-authored-hooks" title="Permanent link">&para;</a></h2>
+<ul>
+<li>No dedicated hooks/lifecycle-events documentation page exists for ZCode (the docs site lists
+  Agent, Goal Mode, Remote Control, Task &amp; File Management, Bot Channel, Edit History, Subagents,
+  Skill, MCP Servers, Plugin, Command, Usage Stats — no "Hooks" entry).</li>
+<li>The <strong>Plugin</strong> system's capability list does mention "Hooks — automation triggered by specific
+  events" as something a plugin <strong>can</strong> bundle, but there is <strong>no published event taxonomy, file
+  format, or schema</strong> for a project to author its own hooks the way gald3r's <code>g-hk-*.py</code> files do.
+  This mirrors the Mistral Vibe CLI precedent (<code>g-skl-platform-mistral</code>): a hook <em>concept</em> exists at
+  the plugin-bundling level, but with no documented contract for hand-authored hooks — <strong>do not
+  fabricate a <code>hooks.json</code>/settings-driven hook file</strong>.</li>
+<li>ZCode's closest analogs to hook-like automation are <strong>Goal Mode</strong> (session-objective tracking) and
+  permission/confirmation gating (Safety Confirmation), neither of which is an event-hook bus.</li>
+<li>Source: absence confirmed against the full docs nav (https://zcode.z.ai/en/docs/welcome) and
+  https://zcode.z.ai/en/docs/plugin.</li>
+</ul>
+<h2 id="7-rules-memory-native-flat-append-only">7. Rules / Memory — ✅ NATIVE (flat, append-only)<a class="headerlink" href="#7-rules-memory-native-flat-append-only" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Persistent instructions are the two-scope <code>AGENTS.md</code> file described in §2: global
+  <code>~/.zcode/AGENTS.md</code> appended by workspace-root <code>AGENTS.md</code>. There is <strong>no</strong> scoped/glob rule
+  system (no <code>.mdc</code>-equivalent, no <code>alwaysApply</code>/<code>globs</code> frontmatter semantics) — everything is one
+  flat instruction body per scope.</li>
+<li>gald3r <code>g-rl-*</code> rules must be <strong>flattened/inlined</strong> into the workspace <code>AGENTS.md</code> body; there is
+  no import mechanism to pull in a separate rules directory the way Qwen/Gemini's <code>@AGENTS.md</code>
+  overlay does.</li>
+<li>Source: https://zcode.z.ai/en/docs/agents</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MCP servers are configured via <strong>Settings → MCP Servers</strong>, either through a <strong>Form mode</strong> (name,
+  command, args, env vars for stdio servers; URL + optional auth headers for HTTP/SSE) or a <strong>Full
+  configuration</strong> mode accepting pasted JSON. Both <code>{"server-name": {...}}</code> and <code>{"mcpServers":
+  {...}}</code> shapes are accepted.</li>
+<li><strong>Transports</strong>: stdio (local command execution), HTTP, and SSE (remote).</li>
+<li><strong>Scopes</strong>: User (global, all workspaces) and Workspace (current project only); imported/added
+  servers are persisted to a <code>.zcode</code> configuration file at the chosen scope — the exact on-disk
+  filename/path is not published in the docs.</li>
+<li><strong>One-click import</strong> from other tools' existing MCP configs: Claude Code (<code>~/.claude/settings.json</code>),
+  Codex CLI (<code>~/.codex/config.toml</code>), OpenCode, and a generic <code>~/.agents/mcp.json</code> — originals are
+  left untouched.</li>
+<li><strong>First-party recommended servers</strong>: <code>zai-mcp-server</code> (visual/image understanding),
+  <code>web-search-prime</code> (real-time web search), <code>web-reader</code> (webpage parsing) — these require a Zhipu
+  API token.</li>
+<li>Source: https://zcode.z.ai/en/docs/mcp-services</li>
+</ul>
+<h2 id="9-plugin-system-distribution-channel">9. Plugin System — distribution channel<a class="headerlink" href="#9-plugin-system-distribution-channel" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A single <strong>Plugin</strong> can bundle: Skills, Commands, Subagents, MCP servers, Hooks, and Language
+  servers. Installed via Settings → Plugins → Marketplace (built-in catalog, or a custom source —
+  GitHub repo / Git URL / local path). Newly installed plugins are enabled by default.</li>
+<li>Built-in examples: <code>document-skills</code> (enabled by default), <code>skill-creator</code>, <code>android-emulator</code>,
+  <code>ios-simulator</code>.</li>
+<li>This is the natural packaging channel for a future gald3r ZCode plugin bundle, but the docs do not
+  publish a plugin manifest schema — treat as a distribution avenue, not a file-format target today.</li>
+<li>Source: https://zcode.z.ai/en/docs/plugin</li>
+</ul>
+<hr />
+<h2 id="known-gaps-vs-cursor-reference">Known Gaps vs. Cursor Reference<a class="headerlink" href="#known-gaps-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gap</th>
+<th>Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>No project-level agents</strong> — subagents are Beta and global/user-level only (<code>~/.zcode/agents/</code>); gald3r's <code>g-agnt-*.md</code> roster has no per-project landing zone. (§3)</td>
+<td>High</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>No hand-authored hooks</strong> — no published event taxonomy/schema; only plugin-bundled hooks are mentioned, with no user-authoring contract. gald3r <code>g-hk-*.py</code> have no verified wiring target. (§6)</td>
+<td>High</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Flat AGENTS.md, no imports</strong> — no <code>@file.md</code> import/include, no per-subdirectory scan; gald3r's <code>g-rl-*</code> rule set must be flattened into one workspace <code>AGENTS.md</code> body. (§2, §7)</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>MCP config file location undocumented</strong> — servers are UI-managed (Form or Full-config JSON) and persisted to an unspecified <code>.zcode</code> config path; no confirmed direct-file-write target for a gald3r installer. (§8)</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Commands have no argument templating</strong> beyond a free-text <code>Argument hint</code> label — no <code>{{args}}</code>-style substitution documented. (§5)</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Strongest parity points</strong> (not gaps): Skills (§4) are a drop-in match for gald3r's <code>SKILL.md</code>
+convention, and Commands (§5) map cleanly to simple <code>@g-*</code> prompt files. MCP (§8) is fully native
+with a documented import path from Claude Code/Codex/OpenCode configs.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: not supported for hand-authored hooks ❌</li>
+<li><strong>Config file</strong>: none published for user-authored hooks</li>
+<li><strong>Events available</strong>: none documented (Plugin bundling can include "Hooks" but with no published
+  event taxonomy)</li>
+<li><strong>Event payload format</strong>: [STUB] — undocumented</li>
+<li><strong>gald3r hook files</strong>: none verified — <code>g-hk-*.py</code> have no confirmed wiring target on ZCode</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Append-only two-scope <code>AGENTS.md</code></strong> (global then workspace) is the defining quirk — no
+  hierarchical merge, no imports. Do not reuse the <code>@AGENTS.md</code>-overlay pattern used for
+  Qwen/Gemini/Antigravity; inline gald3r's rule content directly.</li>
+<li><strong>Agents are Beta and global-only</strong> — there is no project-level <code>agents/</code> folder to ship in a
+  per-project overlay; document the manual <code>~/.zcode/agents/</code> step instead of fabricating one.</li>
+<li><strong>MCP is UI/settings-managed</strong> — the exact on-disk config path is not published; Full-configuration
+  JSON paste is the most portable installer target once the path is confirmed by hands-on testing.</li>
+<li><strong>No hooks surface</strong> — do not fabricate a <code>hooks.json</code>/settings-driven hook file.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's rule content <strong>inlined</strong> into the workspace-root <code>AGENTS.md</code> (no <code>@import</code> support) —
+  keep it lean since there is no glob-scoped loading to defer less-relevant rules.</li>
+<li>gald3r skills (<code>g-skl-*/SKILL.md</code>) load natively under <code>.zcode/skills/</code>; no adaptation needed.</li>
+<li>gald3r commands (<code>@g-*</code>) map to <code>.zcode/commands/&lt;name&gt;.md</code> (or <code>~/.zcode/commands/</code> for global
+  scope) as simple prompt files.</li>
+<li>Do not ship a project-level <code>agents/</code> folder or a hooks config — neither has a project-scoped
+  landing zone on ZCode today per the docs.</li>
+<li>Re-check on the next <code>@g-platform-scan-docs zcode</code> (crawl_max_age_days: 14) — ZCode is a brand-new
+  2026 entrant and its docs are actively expanding (e.g. MCP config file path, project-level agents).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<ul>
+<li><strong>Hooks ❌</strong> — no published event taxonomy/schema for hand-authored hooks; only plugin-internal
+  hook bundling is mentioned.</li>
+<li><strong>Rules ✅</strong> — two-scope <code>AGENTS.md</code> (global <code>~/.zcode/AGENTS.md</code> appended by workspace
+  <code>AGENTS.md</code>); flat, no imports, no per-directory scan.</li>
+<li><strong>Skills ✅</strong> — native Agent Skills (<code>SKILL.md</code>, <code>name</code>/<code>description</code> frontmatter) in
+  <code>.zcode/skills/</code>, agentskills.io-compatible.</li>
+<li><strong>Commands ✅</strong> — native slash commands (<code>.md</code> prompt files) at User or Workspace scope, invoked
+  <code>/name</code>.</li>
+<li><strong>MCP ✅</strong> — native <code>mcpServers</code>/per-server JSON via Settings UI (Form or Full-config), stdio/
+  HTTP/SSE, one-click import from Claude Code/Codex/OpenCode.</li>
+<li><strong>Docs Fresh ✅</strong> — <code>last_doc_scan: 2026-07-03</code>.</li>
+</ul>
+<p>(Agents are ⚠️ partial — Beta, global/user-level only — and are not one of the 5 summary columns
+tracked in <code>PLATFORM_STATUS.md</code>, consistent with other specs.)</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-07-03-httpszcodezaiendocs">Verification Evidence (docs crawl 2026-07-03, https://zcode.z.ai/en/docs/*)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-07-03-httpszcodezaiendocs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AGENTS.md two-scope append (not hierarchical, no imports)</td>
+<td>/docs/agents — "reads a global ~/.zcode/AGENTS.md plus a workspace-root AGENTS.md, appending global then workspace"; "does not scan child directories, expand @import / @include, or choose rule files automatically by task type"</td>
+</tr>
+<tr>
+<td>Skills (SKILL.md, <code>$name</code> invocation)</td>
+<td>/docs/skill — <code>~/.zcode/skills/&lt;name&gt;/SKILL.md</code>, YAML <code>name</code>/<code>description</code> frontmatter, Settings → Skills, <code>$skill-name</code> chat invocation, import via symlink/copy</td>
+</tr>
+<tr>
+<td>Commands (<code>.md</code>, <code>/name</code> invocation)</td>
+<td>/docs/commands — <code>~/.zcode/commands</code> (User) or workspace dir; fields Scope/Name/Description/Argument hint/Prompt; built-ins <code>/goal</code>, <code>/compact</code>; import supported</td>
+</tr>
+<tr>
+<td>Subagents (Beta, global-only)</td>
+<td>/docs/subagents — <code>~/.zcode/agents/&lt;name&gt;.md</code>; "current Beta manages global / user-level subagents... Project or workspace-level subagents are not yet supported"; fields name/color/model/description/tools/system prompt; <code>@name</code> manual invocation</td>
+</tr>
+<tr>
+<td>MCP (Form/Full-config, stdio/HTTP/SSE)</td>
+<td>/docs/mcp-services — Settings → MCP Servers; Form mode vs Full-configuration JSON paste; <code>{"server-name":{...}}</code> or <code>{"mcpServers":{...}}</code>; stdio/HTTP/SSE; import from Claude Code/Codex/OpenCode/<code>~/.agents/mcp.json</code>; first-party <code>zai-mcp-server</code>/<code>web-search-prime</code>/<code>web-reader</code></td>
+</tr>
+<tr>
+<td>Plugin bundling (incl. Hooks mention, no schema)</td>
+<td>/docs/plugin — "A single plugin can bundle several capabilities" incl. Skills/Commands/Subagents/MCP servers/Hooks/Language servers; Settings → Plugins → Marketplace; built-ins <code>document-skills</code>, <code>skill-creator</code>, <code>android-emulator</code>, <code>ios-simulator</code></td>
+</tr>
+<tr>
+<td>No dedicated hooks/lifecycle-events docs page</td>
+<td>Full docs nav from /docs/welcome — Get Started / Core Features (Agent, Goal Mode, Remote Control, Task &amp; File Management, Bot Channel, Edit History, Subagents, Skill, MCP Servers, Plugin, Command, Usage Stats) / Integration / Support — no "Hooks" entry</td>
+</tr>
+<tr>
+<td>Product positioning / GLM-5.2 / BYOK</td>
+<td>https://venturebeat.com/technology/z-ai-launches-zcode-to-challenge-cursor-claude-code-and-github-copilot-in-ai-coding — free cross-platform ADE around GLM-5.2, BYOK support, challenges Cursor/Claude Code/Copilot</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-zcode/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

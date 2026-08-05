@@ -1,0 +1,1748 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/replit/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Replit (Replit Agent / cloud IDE) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-replit-replit-agent-cloud-ide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Replit (Replit Agent / cloud IDE)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file-native-replitmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File — ✅ NATIVE (replit.md)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-partial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ⚠️ PARTIAL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-not-supported-as-agent-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ❌ NOT SUPPORTED (as agent commands)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-not-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ❌ NOT SUPPORTED
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native-replitmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE (replit.md)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsreplitcom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://docs.replit.com)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-replit-replit-agent-cloud-ide">PLATFORM_SPEC.md — Replit (Replit Agent / cloud IDE)<a class="headerlink" href="#platform_specmd-replit-replit-agent-cloud-ide" title="Permanent link">&para;</a></h1>
+<p><strong>Replit Agent</strong> is an AI coding agent built into the <strong>Replit cloud IDE</strong>. It builds, runs, and
+deploys applications inside Replit's Nix-based, Linux containerized environment. As of the 2026
+crawl it natively supports <strong>three</strong> of the six gald3r-relevant primitives — <strong>Agent Skills</strong>
+(<code>SKILL.md</code> in <code>/.agents/skills</code>, the agentskills.io open standard), <strong>rules/memory</strong> (the
+<code>replit.md</code> instruction file), and <strong>MCP</strong> (Agent is a first-class MCP client <em>and</em> Replit ships a
+hosted MCP server). <strong>Agents</strong> are <em>partial</em> (user-selectable Plan/Build modes + effort tiers are
+native, but there is no documented user-definable custom-agent file format). <strong>Hooks</strong> and
+<strong>commands</strong> are <strong>not</strong> supported — there is no lifecycle-hook config and no user-authored
+slash-command registry (Workflows are adjacent shell-command runners, not an agent command surface).</p>
+<p><strong>Authoring path: UPDATE. Verified 2026-06-02</strong> against https://docs.replit.com (see Verification
+Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code>/<code>2026-05-20</code>), which incorrectly
+marked <strong>skills</strong> as unsupported and <strong>agents</strong> as a hard ❌ — Agent Skills shipped (~April 2026) and
+are NATIVE, and Plan/Build modes + effort tiers make agents an honest ⚠️ partial.</p>
+<blockquote>
+<p><strong>Instruction-file convention:</strong> Replit standardizes on <strong><code>replit.md</code></strong> (project root), NOT
+<code>AGENTS.md</code>/<code>CLAUDE.md</code>. Replit's own docs say "Agent automatically reads your <code>replit.md</code> file"
+and it "must be located in your project's root directory to work properly." <code>AGENTS.md</code> appears
+only in unofficial community blogs; treat <code>replit.md</code> as the canonical surface.</p>
+<p><strong>Surface split:</strong> the on-disk, versioned gald3r surface is <strong>Agent Skills</strong> (<code>/.agents/skills</code>)
++ <strong><code>replit.md</code></strong>. <strong>MCP</strong> and the OAuth <strong>Integrations</strong> connectors live in the cloud UI (not a
+committed file). Modes/effort tiers are interactive UI controls. Hooks/commands have no surface
+at all. Where a feature is UI-only or cloud-constrained it is noted inline.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p>Replit is <strong>cloud-IDE-first</strong>. The only on-disk surfaces relevant to Replit + gald3r are:</p>
+<pre><code>&lt;repl-root&gt;/
+├── replit.md                     ← Agent custom instructions + persistent memory (auto-created,
+│                                   auto-read on every request, Agent may self-update it). PRIMARY
+│                                   gald3r instruction surface — NOT AGENTS.md/CLAUDE.md.
+├── .agents/
+│   └── skills/  &lt;name&gt;/SKILL.md   ← Agent Skills (agentskills.io open standard; Project scope,
+│                                   versioned in the repo). NATIVE, lazy-loaded by name+description.
+├── .replit                       ← Repl config (TOML): run command, language, entrypoint, [nix], [deployment]
+├── replit.nix                    ← Nix environment definition (system packages / toolchain)
+└── .gald3r/                      ← gald3r project state (works on disk in the container; commit often — §8 caveats)
+</code></pre>
+<ul>
+<li><strong>gald3r writes</strong>: <code>replit.md</code> (task conventions + pointers); <code>/.agents/skills/&lt;name&gt;/SKILL.md</code>
+  (the gald3r skill tree — <strong>this is now a real native load path</strong>); the <code>.gald3r/</code> state tree.</li>
+<li><strong>Replit owns</strong>: the cloud IDE, the Nix container lifecycle, the <code>.replit</code>/<code>replit.nix</code> schemas,
+  the <strong>Integrations</strong> + <strong>MCP</strong> panes (cloud UI), and the Agent runtime (modes/effort tiers).
+  <code>.replit</code>/<code>replit.nix</code> are <strong>environment/run config</strong>, not AI-instruction files.</li>
+</ul>
+<blockquote>
+<p>Skills also have <strong>User</strong> and <strong>Enterprise</strong> scopes (account/org level), and the picker discovers
+extra skills in <code>.local/secondary_skills/</code>. Only the <strong>Project</strong> scope (<code>/.agents/skills</code>) is the
+committed, gald3r-shippable surface.</p>
+</blockquote>
+<hr />
+<h2 id="2-ai-instruction-file-native-replitmd">2. AI Instruction File — ✅ NATIVE (<code>replit.md</code>)<a class="headerlink" href="#2-ai-instruction-file-native-replitmd" title="Permanent link">&para;</a></h2>
+<p>Replit Agent reads <strong><code>replit.md</code></strong> (repl root) as its Custom Agent Instructions + project memory:</p>
+<ul>
+<li><strong>Auto-created</strong> on first Agent use; <strong>auto-read</strong> into context on every request to understand
+  project architecture, conventions, preferred package managers, and coding style.</li>
+<li><strong>Self-updating</strong>: "Agent can also update your <code>replit.md</code> file as it learns more about your
+  project" — so injected gald3r conventions can be <strong>overwritten</strong> unless re-asserted (durability
+  caveat). Replit also describes decision-time injection of guidance for reliability.</li>
+<li><strong>Root-only</strong>: must sit at the project root to work; <strong>Replit-scoped</strong> — "doesn't automatically
+  apply to other AI tools."</li>
+<li><strong><code>AGENTS.md</code> is NOT the official convention</strong> — it appears only in community blogs; Replit's docs
+  standardize on <code>replit.md</code>.</li>
+<li>Source: https://docs.replit.com/replitai/replit-dot-md</li>
+</ul>
+<p>gald3r merges task-management conventions into <code>replit.md</code>: task IDs in commits (<code>feat(T{id}): …</code>),
+"tasks live in <code>.gald3r/TASKS.md</code>", "read <code>.gald3r/CONSTRAINTS.md</code> before architecture changes",
+"read <code>.gald3r/learned-facts.md</code> for durable facts". Re-prime at session start (Agent rewrites it).</p>
+<h2 id="3-agents-support-partial">3. Agents Support — ⚠️ PARTIAL<a class="headerlink" href="#3-agents-support-partial" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Native, user-selectable</strong>: <strong>Plan mode</strong> ("brainstorm … before Agent changes any code or data")
+  vs <strong>Build mode</strong>, plus <strong>effort/cost tiers</strong> (Lite / Economy / Power / Turbo). These are
+  first-class user controls over agent behavior.</li>
+<li><strong>Internal orchestration only</strong>: specialized subagent ROLES (manager, editor, verifier) and
+  parallel subagents exist, but are described in Replit's blog/case studies as internal
+  orchestration — <strong>NOT</strong> a user-definable custom-agent/role file format. Agent 3 "Stacks" (create
+  specialized agents/automations) is emerging but <strong>not</strong> documented as a config primitive on
+  docs.replit.com.</li>
+<li><strong>gald3r mapping</strong>: <code>g-agnt-*.md</code> files have <strong>no native file load path</strong>. Express agent roles as
+  prose in <code>replit.md</code>, or (better) as <strong>Agent Skills</strong> (§4). Use Plan mode for review/verify gates.</li>
+<li>Source: https://docs.replit.com/replitai/agent</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> (agentskills.io <code>SKILL.md</code> open standard): "Skills live in your project's
+  <strong><code>/.agents/skills</code></strong> directory and conform to the Agent Skills specification — an open standard
+  that works across agents." "A skill is a Markdown file containing instructions Agent follows."</li>
+<li><strong>Lazy-loaded</strong>: "Agent sees the name and description of every installed skill, but only loads the
+  full content when relevant." Invoked via the <strong>"Use a skill"</strong> picker.</li>
+<li><strong>Scopes</strong>: <strong>Project</strong> (versioned in <code>/.agents/skills</code>), <strong>User</strong>, <strong>Enterprise</strong>. Agent can
+  <strong>self-author</strong> a skill from a successful session ("ask Agent to capture what it learned"); the
+  picker also discovers <code>.local/secondary_skills/</code>. Added <strong>~April 2026</strong>.</li>
+<li><strong>gald3r mapping</strong>: <code>g-skl-*/SKILL.md</code> load natively from <strong><code>/.agents/skills/</code></strong> — this is the
+  primary gald3r delivery surface on Replit (a real reversal from the prior ❌).</li>
+<li>Source: https://docs.replit.com/replitai/skills</li>
+</ul>
+<h2 id="5-commands-workflows-not-supported-as-agent-commands">5. Commands / Workflows — ❌ NOT SUPPORTED (as agent commands)<a class="headerlink" href="#5-commands-workflows-not-supported-as-agent-commands" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No user-authored agent slash-command registry.</strong> Official docs document no <code>/command</code> authoring
+  for the Agent — there is no <code>.cursor/commands/g-*.md</code> analogue and no <code>@g-*</code> invocation surface.</li>
+<li><strong>Workflows</strong> are the closest native feature: "an easily configurable Run button that can run any
+  command(s) you'd like." These are <strong>shell-command runners</strong> (build/test/run pipelines), <strong>not</strong>
+  reusable agent-prompt commands — adoptable as a gald3r build/test runner only.</li>
+<li><strong>gald3r mapping</strong>: gald3r <code>g-*</code> commands are <strong>not</strong> executable as commands. A user triggers a
+  gald3r workflow by invoking the matching <strong>Agent Skill</strong> (§4) or describing intent in chat.</li>
+<li>Source: https://blog.replit.com/introducing-workflows</li>
+</ul>
+<h2 id="6-hooks-system-not-supported">6. Hooks System — ❌ NOT SUPPORTED<a class="headerlink" href="#6-hooks-system-not-supported" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No user-scriptable lifecycle hooks.</strong> Replit documents an Agent <strong>task lifecycle</strong>
+  (<code>planned → running → ready → finished</code>) but exposes <strong>no</strong> user-defined event/lifecycle hooks
+  that run a script — no <code>session-start</code>, <code>pre-tool</code>, <code>pre-commit</code>, or file-watch hook authoring.
+  Git-workflow hooks are an <strong>open community feature request</strong>, not a shipped feature.</li>
+<li><strong>Compounding constraint</strong>: the container is <strong>Linux</strong> — even if hooks could be wired, gald3r's
+  <code>g-hk-*.py</code> scripts need a <code>python</code> interpreter on the container (availability in a standard
+  Replit Nix container is unverified; no PowerShell dependency post-T1584 Python port).</li>
+<li><strong>gald3r mapping</strong>: session-start context injection, agent-complete, pre-commit, and shell-guard
+  hooks must be replaced by <code>replit.md</code> prose (e.g. "before completing a task, re-read
+  CONSTRAINTS.md") or git <code>core.hooksPath</code> bash scripts — not enforced gald3r code.</li>
+<li>Source: https://docs.replit.com/references/agent/task-lifecycle</li>
+</ul>
+<h2 id="7-rules-memory-native-replitmd">7. Rules / Memory — ✅ NATIVE (<code>replit.md</code>)<a class="headerlink" href="#7-rules-memory-native-replitmd" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Mechanism</strong>: <code>replit.md</code> is the persistent, always-on instructions/memory surface — "Agent
+  automatically reads your <code>replit.md</code> file and uses its contents to understand your project's
+  architecture and conventions [and] follow your preferred coding patterns and style."</li>
+<li><strong>No granular scoping</strong>: there is <strong>no</strong> <code>.mdc</code> extension, <strong>no</strong> <code>alwaysApply:</code>/<code>globs:</code>
+  frontmatter, and <strong>no</strong> per-file rule auto-load like <code>.cursor/rules/</code>. gald3r rules (<code>g-rl-*.md</code>)
+  collapse into a single <code>replit.md</code> instruction blob (all-or-nothing context injection).</li>
+<li><strong>Durability caveat</strong>: because Agent <strong>self-updates</strong> <code>replit.md</code>, injected gald3r rules can be
+  rewritten or trimmed over a session. <code>.gald3r/learned-facts.md</code> remains the authoritative fact
+  store, but Agent won't auto-read it unless <code>replit.md</code> points there.</li>
+<li>Source: https://docs.replit.com/replitai/replit-dot-md</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Client</strong>: Replit Agent is an <strong>MCP client</strong> — "An MCP client is something like Claude, Replit
+  Agent, or a command-line interface…"; users "connect a pre-listed MCP server or add a custom one
+  in Replit." Servers are added through the cloud UI (Integrations / Connect-via-MCP), <strong>not</strong> a
+  committed <code>mcp.json</code>; tools are auto-discovered.</li>
+<li><strong>Server</strong>: Replit also ships a <strong>hosted MCP server</strong> — "Replit's MCP server lets external clients
+  create, update, and manage full-stack applications on Replit" (e.g.
+  <code>claude mcp add --transport http replit https://replit-mcp.com/server/mcp</code>), with OAuth consent on
+  first connect. This enables <strong>external orchestration</strong> of Replit projects from another gald3r host.</li>
+<li><strong>gald3r mapping</strong>: add the gald3r MCP server as a <strong>custom MCP server</strong> in the UI. The endpoint
+  must be a <strong>reachable remote URL</strong> (the container cannot reach a different machine's <code>localhost</code>),
+  stored as a Replit Secret. This is the <strong>strongest</strong> gald3r integration surface on Replit.</li>
+<li>Source: https://docs.replit.com/learn/model-context-protocol</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Replit reaches <strong>partial parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
+<strong>skills, rules, and MCP</strong>; <strong>partial agents</strong> (Plan/Build modes + effort tiers, no custom-agent
+files); and <strong>no hooks or commands</strong>. The big change from the prior assessment is <strong>Agent Skills</strong> —
+gald3r's <code>g-skl-*/SKILL.md</code> tree now has a real native load path at <strong><code>/.agents/skills/</code></strong>.</p>
+<p><strong>Reuse note:</strong> ship the gald3r skill tree into <strong><code>/.agents/skills/</code></strong> (agentskills.io standard,
+Project scope, versioned in the repo) and point <code>replit.md</code> at <code>.gald3r/</code> conventions. There is no
+hook/command surface, so degrade those gald3r layers to <code>replit.md</code> prose + Workflows (build/test)
++ Plan mode (review gate). Native bonus: OAuth <strong>Integrations</strong> connectors (Notion, Dropbox, Stripe,
+etc.) distinct from generic MCP.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: none</li>
+<li><strong>Config file</strong>: n/a (no lifecycle-hook config; no settings hook wiring for Agent)</li>
+<li><strong>Events available</strong>: none — no <code>session-start</code> / <code>pre-tool</code> / <code>pre-commit</code> / file-watch. The only
+  lifecycle surface is the Agent <strong>task lifecycle</strong> (<code>planned → running → ready → finished</code>), which is
+  observational, not a script-execution hook</li>
+<li><strong>Event payload format</strong>: none</li>
+<li><strong>Limitations</strong>: container is <strong>Linux</strong> — even if wired, <code>g-hk-*.py</code> scripts need a <code>python</code>
+  interpreter on the container (availability unverified; no PowerShell dependency post-T1584 port); container restarts reset
+  uncommitted state. Git-workflow hooks are an open community request, not shipped</li>
+<li><strong>gald3r hook files</strong>: none auto-fire — hook behaviors must run via <code>replit.md</code> prose, git
+  <code>core.hooksPath</code> bash scripts, or manual invocation</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Cloud Linux container: gald3r <code>.py</code> hooks need a <code>python</code> interpreter on the container (availability unverified; no PowerShell dependency post-T1584 port).</li>
+<li>Instruction file is <strong><code>replit.md</code></strong> (auto-created, auto-read, self-updated) — <strong>not</strong> AGENTS.md/CLAUDE.md.</li>
+<li>Skills load from <strong><code>/.agents/skills/</code></strong> (agentskills.io standard) — a real native surface.</li>
+<li>MCP/Integrations live in the cloud UI (not committed files); the gald3r MCP endpoint must be a
+  reachable remote URL (no cross-machine <code>localhost</code>), stored as a Replit Secret.</li>
+<li>Container restarts reset uncommitted state — commit <code>.gald3r/</code> files frequently.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Ship gald3r skills to <code>/.agents/skills/</code></strong> — Replit Agent discovers them natively (lazy-loaded).</li>
+<li>Put task conventions + <code>.gald3r/</code> pointers in <strong><code>replit.md</code></strong>; re-prime at session start (Agent rewrites it).</li>
+<li>gald3r hooks (<code>.py</code>, C-NO-PS1) do NOT auto-fire on Replit — no lifecycle hook system exists here;
+  treat hook automation as unavailable; express behaviors in <code>replit.md</code> or git <code>core.hooksPath</code> bash.</li>
+<li>Use <strong>Plan mode</strong> as the review/verify gate; <strong>Workflows</strong> as the build/test runner.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs replit</code> (crawl_max_age_days: 14).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsdocsreplitcom">Verification Evidence (docs crawl 2026-06-02, https://docs.replit.com)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsreplitcom" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Instruction file (<code>replit.md</code>)</td>
+<td>/replitai/replit-dot-md — "Agent automatically reads your <code>replit.md</code> file"; "must be located in your project's root directory to work properly"; Agent can self-update it. NOT AGENTS.md/CLAUDE.md (community-only)</td>
+</tr>
+<tr>
+<td>Rules / memory</td>
+<td>/replitai/replit-dot-md — <code>replit.md</code> is the always-on instructions/memory blob; no <code>.mdc</code>, no <code>alwaysApply:</code>/<code>globs:</code> scoping</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/replitai/skills — agentskills.io <code>SKILL.md</code> in <strong><code>/.agents/skills</code></strong>; lazy-loaded by name+description; Project/User/Enterprise scopes; "Use a skill" picker; ~April 2026</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/replitai/agent — native Plan/Build modes + effort tiers (Lite/Economy/Power/Turbo); subagent roles are internal orchestration, not a user-definable file format; Agent 3 "Stacks" undocumented as config</td>
+</tr>
+<tr>
+<td>Commands / Workflows</td>
+<td>blog.replit.com/introducing-workflows — Workflows = "Run button that can run any command(s)" (shell runners), not agent slash-commands; no <code>/command</code> authoring documented</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/references/agent/task-lifecycle — task lifecycle <code>planned→running→ready→finished</code> documented, but no user-defined script hooks; git hooks are an open community request; no hook surface for gald3r <code>g-hk-*.py</code> to wire into</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/learn/model-context-protocol — Agent is an MCP client (connect pre-listed/custom server, auto tool discovery); Replit ships a hosted MCP server (<code>replit-mcp.com</code>, OAuth on first connect) for external orchestration</td>
+</tr>
+<tr>
+<td>Cloud constraints</td>
+<td>Known-platform — Linux Nix container (<code>python</code> interpreter availability unverified), ephemeral state on restart, MCP/Integrations are cloud-UI surfaces, Replit Secrets replace <code>.env</code></td>
+</tr>
+<tr>
+<td>Install / live connection</td>
+<td>❓ Not install-tested in this repo; no live Replit Agent run performed</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-replit/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
