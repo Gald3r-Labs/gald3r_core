@@ -669,10 +669,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#honest-status-as-of-this-writing-2026-08-02" class="md-nav__link">
+  <a href="#honest-status-as-of-this-writing-2026-08-05" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Honest status (as of this writing, 2026-08-02)
+        Honest status (as of this writing, 2026-08-05)
       
     </span>
   </a>
@@ -1355,10 +1355,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#honest-status-as-of-this-writing-2026-08-02" class="md-nav__link">
+  <a href="#honest-status-as-of-this-writing-2026-08-05" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Honest status (as of this writing, 2026-08-02)
+        Honest status (as of this writing, 2026-08-05)
       
     </span>
   </a>
@@ -1507,19 +1507,19 @@ directory is not for you.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="honest-status-as-of-this-writing-2026-08-02">Honest status (as of this writing, 2026-08-02)<a class="headerlink" href="#honest-status-as-of-this-writing-2026-08-02" title="Permanent link">&para;</a></h2>
+<h2 id="honest-status-as-of-this-writing-2026-08-05">Honest status (as of this writing, 2026-08-05)<a class="headerlink" href="#honest-status-as-of-this-writing-2026-08-05" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>gald3r_core is pre-1.0</strong> (<code>4.0.0</code> in <code>pyproject.toml</code> — this doc set previously said
-  <code>0.2.0</code>, which had gone stale; the version climbed faster than this page was updated. Some
+<li><strong>gald3r_core is <code>4.0.0</code>, in public beta</strong> (<code>v4.0.0-beta.3</code> is the current release). Some
   verbs are fully wired, some are stubs, some depend on optional network services
   (<code>world_tree</code>). This doc set only documents what was verified working by actually running
   the commands — see each page for specifics, and treat anything not shown running here as
   unverified.</li>
-<li><strong>No packaged binary release exists yet.</strong> <code>.github/workflows/binary-build.yml</code> builds
-  signed Windows/Linux/macOS binaries on a <code>v*</code> git tag, but no such tag has been pushed
-  to this repo as of this writing (<code>git tag -l "v*"</code> is empty). The only install path that
-  actually works today is <strong>from source</strong> — see <a href="install/"><code>install.md</code></a>. Once a tagged
-  release ships, that page's binary-install section becomes the recommended path.</li>
+<li><strong>Signed binary releases exist and are the recommended install path.</strong> Every release
+  attaches signed binaries and per-OS installers for all three OSes: Authenticode-signed
+  Windows <code>.exe</code>/<code>.msi</code>, a codesigned + Apple-notarized macOS <code>.pkg</code> (container-signed with
+  Developer ID Installer and stapled), and a checksum-verified Linux tarball — see
+  <a href="install/"><code>install.md</code></a>. Building from source is a contributors-only path (the source
+  repo is private).</li>
 <li><strong>No PyPI package.</strong> <code>gald3r-core</code> is not published to PyPI; <code>pip install gald3r-core</code>
   does not work. Don't tell users to do that until it's true.</li>
 </ul>
