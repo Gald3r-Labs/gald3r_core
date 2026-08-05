@@ -676,15 +676,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-signed-binary-and-per-os-installers-recommended-once-a-release-exists" class="md-nav__link">
+  <a href="#1-signed-binary-and-per-os-installers-recommended-works-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Signed binary and per-OS installers (recommended, once a release exists)
+        1. Signed binary and per-OS installers (recommended — works today)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. Signed binary and per-OS installers (recommended, once a release exists)">
+    <nav class="md-nav" aria-label="1. Signed binary and per-OS installers (recommended — works today)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -726,15 +726,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-from-source-uv-works-today" class="md-nav__link">
+  <a href="#2-from-source-uv-for-contributors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. From source (uv) — works today
+        2. From source (uv) — for contributors
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. From source (uv) — works today">
+    <nav class="md-nav" aria-label="2. From source (uv) — for contributors">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1441,15 +1441,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-signed-binary-and-per-os-installers-recommended-once-a-release-exists" class="md-nav__link">
+  <a href="#1-signed-binary-and-per-os-installers-recommended-works-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Signed binary and per-OS installers (recommended, once a release exists)
+        1. Signed binary and per-OS installers (recommended — works today)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. Signed binary and per-OS installers (recommended, once a release exists)">
+    <nav class="md-nav" aria-label="1. Signed binary and per-OS installers (recommended — works today)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1491,15 +1491,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-from-source-uv-works-today" class="md-nav__link">
+  <a href="#2-from-source-uv-for-contributors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. From source (uv) — works today
+        2. From source (uv) — for contributors
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. From source (uv) — works today">
+    <nav class="md-nav" aria-label="2. From source (uv) — for contributors">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1646,11 +1646,11 @@ and Linux. This page covers every supported install path, in the order you shoul
 <tbody>
 <tr>
 <td>Trying gald3r for the first time, don't want to build anything</td>
-<td><a href="#1-signed-binary-and-per-os-installers-recommended-once-a-release-exists">Signed binary and per-OS installers</a></td>
+<td><a href="#1-signed-binary-and-per-os-installers-recommended-works-today">Signed binary and per-OS installers</a></td>
 </tr>
 <tr>
 <td>A contributor, or want the latest unreleased code</td>
-<td><a href="#2-from-source-uv-works-today">From source with <code>uv</code></a></td>
+<td><a href="#2-from-source-uv-for-contributors">From source with <code>uv</code></a></td>
 </tr>
 <tr>
 <td>Already have <code>gald3r</code> installed and want to upgrade</td>
@@ -1658,30 +1658,27 @@ and Linux. This page covers every supported install path, in the order you shoul
 </tr>
 <tr>
 <td>Setting up a whole new machine for team use</td>
-<td><a href="#2-from-source-uv-works-today">From source</a>, then <code>gald3r onboard</code></td>
+<td><a href="#2-from-source-uv-for-contributors">From source</a>, then <code>gald3r onboard</code></td>
 </tr>
 </tbody>
 </table>
-<h2 id="1-signed-binary-and-per-os-installers-recommended-once-a-release-exists">1. Signed binary and per-OS installers (recommended, once a release exists)<a class="headerlink" href="#1-signed-binary-and-per-os-installers-recommended-once-a-release-exists" title="Permanent link">&para;</a></h2>
+<h2 id="1-signed-binary-and-per-os-installers-recommended-works-today">1. Signed binary and per-OS installers (recommended — works today)<a class="headerlink" href="#1-signed-binary-and-per-os-installers-recommended-works-today" title="Permanent link">&para;</a></h2>
 <p><code>.github/workflows/binary-build.yml</code> builds signed Windows/Linux/macOS binaries and attaches
 them, plus per-OS installers (T611), to a GitHub Release on <code>Gald3r-Labs/gald3r_core</code> whenever
-a <code>v*</code> tag is pushed to this repo. <strong>As of this writing no such tag has been pushed</strong> (<code>git tag
--l "v*"</code> is empty in <code>gald3r_core_dev</code>) — so this path is documented for when it goes live, not
-as something you can do today.</p>
+a <code>v*</code> tag is pushed to this repo. Releases exist and ship on this cadence — <strong>v4.0.0-beta.3</strong>
+at this writing — with every asset linked directly from the release page (and always at
+<code>releases/latest/download/&lt;asset&gt;</code>).</p>
 <h3 id="macos-pkg-installer-recommended">macOS — <code>.pkg</code> installer (recommended)<a class="headerlink" href="#macos-pkg-installer-recommended" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Download <code>gald3r-macos-arm64.pkg</code> from the release page.</li>
 <li>Double-click it, follow the installer prompts. Installs to <code>/usr/local/bin/gald3r</code>.</li>
 <li>Open a new terminal and run <code>gald3r --version</code>.</li>
 </ol>
-<p>The binary inside the <code>.pkg</code> is codesigned as <strong>Gald3r Labs LLC</strong> and notarized by Apple
-(verified in CI via <code>codesign --verify</code> + <code>spctl --assess</code>, see <code>binary-build.yml</code>) — as of the
-first <code>v4</code> release tag, this replaces the earlier "macOS binary is currently unsigned" state.
-The <code>.pkg</code> itself is submitted for notarization + stapling too; the one remaining rough edge is
-that the <code>.pkg</code> <strong>container</strong> is not yet codesigned at the installer level (a <em>different</em>
-Apple certificate — "Developer ID Installer" — from the one used to sign the binary inside it
-has not been issued yet), so macOS may show a one-time "unidentified developer" confirmation
-when you first open the <code>.pkg</code> — confirm it once and the install proceeds normally.</p>
+<p>The <code>.pkg</code> and the binary inside it are both signed as <strong>Gald3r Labs LLC</strong> and notarized by
+Apple (the container with a Developer ID <strong>Installer</strong> certificate, the binary with Developer
+ID <strong>Application</strong>; both verified in CI via <code>codesign --verify</code> + <code>spctl --assess</code>, see
+<code>binary-build.yml</code>) — and the <code>.pkg</code>'s notarization ticket is stapled on, so it installs clean
+with no security prompts, online or offline.</p>
 <p>Prefer the bare binary instead? Download <code>gald3r-macos-arm64</code> (no <code>.pkg</code> suffix) + its
 <code>.sha256</code> sidecar, verify the checksum, <code>chmod +x</code>, and place it on your <code>PATH</code> yourself.</p>
 <h3 id="linux-install-tarball">Linux — install tarball<a class="headerlink" href="#linux-install-tarball" title="Permanent link">&para;</a></h3>
@@ -1703,7 +1700,8 @@ not yet wired into this release's CI matrix).</p>
 <code>Gald3r-Labs/gald3r_core</code>, verifies its SHA-256 checksum, and replaces whatever <code>gald3r</code>
 currently resolves to on <code>PATH</code>. The Windows binary is Authenticode-signed as <strong>Gald3r Labs
 LLC</strong> via Azure Trusted Signing (verified in CI with <code>Get-AuthenticodeSignature</code>, see
-<code>binary-build.yml</code>). A Windows <code>.msi</code> installer (WiX-built, unsigned) is also published for
+<code>binary-build.yml</code>). A Windows <code>.msi</code> installer (WiX-built, <strong>also Authenticode-signed</strong> as
+Gald3r Labs LLC, so SmartScreen shows the publisher instead of "Unknown") is also published for
 environments that require the Windows Installer service instead of an ad hoc <code>.exe</code> — the
 <code>.msi</code> installs <strong>both</strong> <code>gald3r.exe</code> and <code>gald3rw.exe</code> (T607) onto the same <code>PATH</code> entry in
 one step.</p>
@@ -1717,10 +1715,14 @@ directly; this is tracked as follow-up work on the CLI self-update path.</p>
 <p>Bootstrapping the very first <code>gald3r</code> (before you have one on <code>PATH</code> to run <code>install update</code>
 with) is the <code>.pkg</code>/tarball/<code>.msi</code> install above, or — on any OS — a plain download-and-run of
 the OS-appropriate bare-binary asset from the release's GitHub page.</p>
-<h2 id="2-from-source-uv-works-today">2. From source (<code>uv</code>) — works today<a class="headerlink" href="#2-from-source-uv-works-today" title="Permanent link">&para;</a></h2>
-<p>This is the <strong>only install path verified working today</strong>.</p>
+<h2 id="2-from-source-uv-for-contributors">2. From source (<code>uv</code>) — for contributors<a class="headerlink" href="#2-from-source-uv-for-contributors" title="Permanent link">&para;</a></h2>
+<p><strong>Users should install the signed binaries above.</strong> This path exists for people contributing to
+<code>gald3r_core</code> itself — the source repository (<code>gald3r_core_dev</code>) is <strong>private</strong>, so building
+from source requires being granted access first. If you just want to <em>use</em> gald3r, you do not
+need this section at all.</p>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <ul>
+<li>Access to the private <code>Gald3r-Labs/gald3r_core_dev</code> repository (request it from the team)</li>
 <li>Python 3.11+</li>
 <li><a href="https://docs.astral.sh/uv/"><code>uv</code></a> — this project uses <code>uv</code>, not bare <code>pip</code>/<code>venv</code></li>
 <li>Git</li>
