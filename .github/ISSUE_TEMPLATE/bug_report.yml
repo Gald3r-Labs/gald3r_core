@@ -1,19 +1,19 @@
 name: 🐛 Bug report
-description: A gald3r binary or feature isn't working the way it should.
+description: Something in gald3r isn't working the way it should.
 title: "[bug]: "
 labels: ["bug", "needs-triage"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting. The two dropdowns below (which binary, which OS) are the
-        most useful thing you can give us — they route the report to the right place fast.
+        Thanks for reporting. The three dropdowns below — **which component**, **which platform you run it in**,
+        and **which OS** — are the most useful thing you can give us. They route the report to the right place fast.
 
   - type: dropdown
     id: component
     attributes:
       label: Which component?
-      description: Which binary or app is misbehaving? Pick "Not sure" if you can't tell — that's fine.
+      description: Which binary or app is misbehaving? "Not sure" is a fine answer.
       options:
         - "gald3r (the CLI)"
         - "gald3rw (Windows MCP launcher — no-console)"
@@ -24,8 +24,40 @@ body:
         - "gald3r-valkyrie (world_tree connector)"
         - "Longship (terminal UI)"
         - "Throne (desktop app)"
+        - "The installed overlay (skills / rules / commands / hooks in my IDE)"
         - "Multiple / the whole install"
         - "Not sure"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: AI platform / IDE in use
+      description: Where are you running gald3r? gald3r installs into all of these — the overlay differs per platform, so this matters.
+      options:
+        - "Claude Code"
+        - "Cursor"
+        - "GitHub Copilot"
+        - "Codex CLI (OpenAI)"
+        - "OpenCode (sst.dev)"
+        - "Windsurf"
+        - "Cline (VS Code)"
+        - "Roo Code"
+        - "Aider"
+        - "Augment Code"
+        - "Gemini CLI"
+        - "Kiro (Amazon)"
+        - "Goose (Block)"
+        - "JetBrains Junie"
+        - "Warp Terminal"
+        - "OpenHands / OpenDevin"
+        - "Replit Agent"
+        - "Mistral Vibe"
+        - "Qwen Code"
+        - "gald3r native / standalone (no IDE)"
+        - "Multiple platforms"
+        - "Other (describe below)"
     validations:
       required: true
 
@@ -65,7 +97,7 @@ body:
     id: version
     attributes:
       label: Version
-      description: "Paste the first line of `gald3r --version` (e.g. `gald3r version 5.0.0-beta.1`)."
+      description: "First line of `gald3r --version` (e.g. `gald3r version 5.0.0-beta.1`)."
       placeholder: "gald3r version 5.0.0-beta.1"
     validations:
       required: true
@@ -97,7 +129,7 @@ body:
     id: logs
     attributes:
       label: Relevant output / logs
-      description: "Paste terminal output or the error. This is auto-formatted as code — no backticks needed."
+      description: "Paste terminal output or the error. Auto-formatted as code — no backticks needed."
       render: shell
 
   - type: checkboxes

@@ -19,8 +19,30 @@ body:
         - "Throne (desktop app)"
         - "Task / bug / project management (.gald3r board)"
         - "Swarm / autopilot / g-go"
-        - "Install / packaging / platforms"
+        - "Install / packaging / platform overlays"
         - "Something new / other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: AI platform / IDE (if platform-specific)
+      description: Leave as "Not platform-specific" if it applies everywhere.
+      options:
+        - "Not platform-specific"
+        - "Claude Code"
+        - "Cursor"
+        - "GitHub Copilot"
+        - "Codex CLI (OpenAI)"
+        - "OpenCode (sst.dev)"
+        - "Windsurf"
+        - "Cline (VS Code)"
+        - "Roo Code"
+        - "Aider"
+        - "Gemini CLI"
+        - "gald3r native / standalone"
+        - "Other"
     validations:
       required: true
 

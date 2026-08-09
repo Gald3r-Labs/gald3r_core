@@ -1,14 +1,15 @@
-# .github/ISSUE_TEMPLATE/config.yml — deploy target: the public issue-home repo.
-# Turns off blank issues so every report comes through a structured form,
-# and routes questions / security reports away from the public bug tracker.
+# .github/ISSUE_TEMPLATE/config.yml — IDENTICAL across gald3r_core and gald3r
+# (owner ruling 2026-08-09: the binary and the platform-templates product are
+# one thing; both repos funnel reports to one canonical place). Blank issues
+# off so every report comes through a structured form.
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 Question, idea, or usage help
-    url: https://github.com/Gald3r-Labs/gald3r_core/discussions
-    about: Not sure it's a bug? Ask in Discussions — faster, and keeps the tracker for real defects.
   - name: 📖 Documentation
     url: https://docs.gald3r.ai
-    about: Install guide, quickstart, CLI reference, and troubleshooting before you file.
+    about: Install guide, quickstart, CLI reference, and troubleshooting — check here first.
+  - name: 💬 Discussions
+    url: https://github.com/Gald3r-Labs/gald3r_core/discussions
+    about: Ideas, show-and-tell, and general conversation that isn't a bug or a specific request.
   - name: 🔒 Report a security vulnerability (PRIVATE)
     url: https://github.com/Gald3r-Labs/gald3r_core/security/advisories/new
-    about: Never file security issues publicly. Use a private security advisory so it can be fixed before disclosure.
+    about: Never file security issues publicly. Use a private advisory so it can be fixed before disclosure.
