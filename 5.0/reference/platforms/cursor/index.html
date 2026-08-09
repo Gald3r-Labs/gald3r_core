@@ -1,0 +1,1774 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/cursor/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Cursor (reference implementation) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-cursor-reference-implementation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Cursor (reference implementation)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-sdk-cli-governance-distribution-channels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. SDK / CLI &amp; Governance — distribution channels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpscursorcomdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://cursor.com/docs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-cursor-reference-implementation">PLATFORM_SPEC.md — Cursor (reference implementation)<a class="headerlink" href="#platform_specmd-cursor-reference-implementation" title="Permanent link">&para;</a></h1>
+<p>Cursor is the <strong>reference platform</strong> for gald3r. All gald3r primitives originate in the Cursor
+(<code>.cursor/</code>) tree and propagate to every other platform via
+<code>gald3r sync</code> / <code>gald3r platform install</code> (C-NO-PS1/T628 —
+<code>custom_scripts/platform_parity_sync.ps1</code> never existed on disk). As of mid-2026 Cursor natively supports <strong>all six</strong> <!-- ps1-gate-allow -->
+gald3r-relevant extension primitives — custom slash commands, always-on rules (plus <code>AGENTS.md</code>),
+specialized subagents, Agent Skills (<code>SKILL.md</code>), a rich lifecycle hooks system, and MCP — each with
+its own <code>.cursor/</code> path. Notably, Cursor has adopted cross-tool conventions: it natively reads
+<strong><code>.claude/agents/</code></strong> and <strong><code>.codex/agents/</code></strong> for subagents and <strong><code>.agents/skills/</code></strong> for skills, so
+gald3r assets authored to those open conventions are reused without a Cursor-specific copy.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://cursor.com/docs (see Verification
+Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code>) which described the
+filesystem-counted reference layout but had not been confirmed against live docs — all six mechanisms
+are now confirmed NATIVE from the official docs crawl.</p>
+<blockquote>
+<p><strong>Surface split:</strong> the full extensibility (commands/rules/agents/skills/hooks/MCP) lives in the
+<strong>Cursor IDE</strong> (desktop app, VS Code fork). A separate <strong>Cursor CLI</strong> (<code>agent</code>) exposes its own
+slash-commands reference and Cloud Agent handoff, and a <strong>TypeScript SDK</strong> builds programmatic
+agents. Where a feature is IDE-only or has a CLI/SDK caveat it is noted inline.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p>gald3r writes everything under the repo-root <code>.cursor/</code> folder. Verified layout:</p>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                     ← instruction file Cursor reads natively (root + nested dirs)
+├── .cursorrules                  ← legacy single-file instructions (still recognized)
+└── .cursor/
+    ├── rules/        *.mdc        ← always-apply / on-demand rules (Cursor-specific .mdc)
+    ├── commands/     *.md         ← custom slash commands (Cursor 1.6)
+    ├── agents/       *.md         ← subagents (markdown + YAML frontmatter; Cursor 2.4)
+    ├── skills/       &lt;name&gt;/SKILL.md  ← Agent Skills (SKILL.md standard; Cursor 2.4)
+    ├── hooks.json                 ← TOP-LEVEL hook wiring (NOT .cursor/hooks/hooks.json)
+    └── mcp.json                   ← MCP server config (or ~/.cursor/mcp.json / Cursor settings)
+</code></pre>
+<p>Cursor <strong>also</strong> discovers <code>.claude/agents/</code> and <code>.codex/agents/</code> (subagents) and <code>.agents/skills/</code>
+(skills), workspace or <code>~/</code>. gald3r's <code>.claude/</code>-style agent/skill trees therefore work on Cursor with
+<strong>no Cursor-specific port</strong>.</p>
+<p><strong>gald3r writes</strong>: <code>rules/</code> (<code>.mdc</code>), <code>commands/</code>, <code>agents/</code>, <code>skills/</code>, <code>hooks.json</code>, <code>mcp.json</code>.
+<strong>Cursor owns</strong>: the <code>.cursor/</code> namespace, the <code>hooks.json</code> / <code>mcp.json</code> schema, Cursor settings, and
+the rule auto-load mechanism.</p>
+<p><strong>Verified note:</strong> <code>hooks.json</code> lives at <strong><code>.cursor/hooks.json</code></strong> (repo <code>.cursor/</code> root), not inside
+<code>.cursor/hooks/</code>; companion <code>_hook_md</code> fields point at <code>.md</code> files inside <code>.cursor/hooks/</code>.</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Cursor reads, in precedence order: <strong><code>AGENTS.md</code></strong> (plain markdown, no frontmatter required, at the
+project root <strong>and</strong> in nested subdirectories — more specific files take precedence) → legacy
+<code>.cursorrules</code> → <code>.cursor/rules/*.mdc</code> (§7). <strong>Cursor's primary cross-tool instruction file is
+<code>AGENTS.md</code>, not <code>CLAUDE.md</code></strong> — unlike Auggie/Claude Code, Cursor does <strong>not</strong> treat <code>CLAUDE.md</code> as a
+first-class input. gald3r's <code>AGENTS.md</code> (root) is the canonical instruction file; <code>CLAUDE.md</code> /
+<code>GEMINI.md</code> are platform-personalized variants for their respective tools.</p>
+<p>gald3r <strong>generates/merges</strong> these via the setup + parity pipeline; they are personalized per user and
+gitignored (see <code>g-rl-02</code> protected files).</p>
+<hr />
+<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Subagents</strong>: specialized AI assistants, each in its own context window, delegated to by the parent
+  agent and runnable <strong>in parallel</strong>. Defined as markdown + YAML frontmatter (<code>name</code>, <code>description</code>,
+  <code>model</code> [<code>inherit</code> | a specific id e.g. <code>composer-2</code>], <code>readonly</code>, <code>is_background</code>) in
+  <code>.cursor/agents/*.md</code> (project) or <code>~/.cursor/agents/*.md</code> (global). Cursor <strong>also natively reads
+  <code>.claude/agents/</code> and <code>.codex/agents/</code></strong>. Shipped in <strong>Cursor 2.4</strong>.</li>
+<li>gald3r <code>g-agnt-*</code> definitions map directly to Cursor subagent files — including straight from
+  <code>.claude/agents/</code>.</li>
+<li>Source: https://cursor.com/docs/subagents.md</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> (<code>SKILL.md</code> with optional YAML frontmatter; <code>paths:</code> field for glob scoping) teach
+  the Agent multi-step workflows. Auto-loaded from <code>.cursor/skills/&lt;name&gt;/SKILL.md</code>,
+  <strong><code>.agents/skills/</code></strong>, and user-level <code>~/.cursor/skills/</code> and <code>~/.agents/skills/</code>; supports
+  nested/monorepo dirs. Invoked on-demand via <code>/skill-name</code> or <code>@skill-name</code>. Existing commands convert
+  via <code>/migrate-to-skills</code>. Shipped in <strong>Cursor 2.4</strong>.</li>
+<li><strong>Folder-per-skill</strong>: a loose <code>.md</code> directly in <code>skills/</code> root is NOT picked up.</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively — including from <code>.agents/skills/</code>.</li>
+<li>Source: https://cursor.com/help/customization/skills</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom slash commands</strong>: reusable AI prompts saved as markdown in <code>.cursor/commands/&lt;name&gt;.md</code>
+  (project) or <code>~/.cursor/commands/&lt;name&gt;.md</code> (global); the filename becomes the slash command, run by
+  typing <code>/</code> in the Agent input. Introduced in <strong>Cursor 1.6</strong>.</li>
+<li>gald3r <code>@g-*</code> / <code>/g-*</code> commands map directly.</li>
+<li>Source: https://cursor.com/changelog/1-6</li>
+</ul>
+<h2 id="6-hooks-system-native">6. Hooks System — ✅ NATIVE<a class="headerlink" href="#6-hooks-system-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent lifecycle hooks</strong>: spawned processes that communicate over <strong>stdio using JSON in both
+  directions</strong>; they run before/after stages of the agent loop and can <strong>observe, block, or modify</strong>
+  behavior. Configured in <code>hooks.json</code> at <code>.cursor/hooks.json</code> (project), <code>~/.cursor/hooks.json</code>
+  (user), or enterprise/team locations (Windows system path <code>C:\ProgramData\Cursor\hooks.json</code>).
+  Added in <strong>Cursor 1.7</strong>.</li>
+<li><strong>Events</strong> (large surface): <code>sessionStart</code> / <code>sessionEnd</code>, <code>preToolUse</code> / <code>postToolUse</code> /
+  <code>postToolUseFailure</code>, <code>subagentStart</code> / <code>subagentStop</code>, <code>beforeShellExecution</code> /
+  <code>afterShellExecution</code>, <code>beforeMCPExecution</code> / <code>afterMCPExecution</code>, <code>beforeReadFile</code> /
+  <code>afterFileEdit</code>, <code>beforeSubmitPrompt</code>, <code>preCompact</code>, <code>stop</code>, <code>afterAgentResponse</code> /
+  <code>afterAgentThought</code>, plus Tab hooks (<code>beforeTabFileRead</code> / <code>afterTabFileEdit</code>) and app lifecycle
+  (<code>workspaceOpen</code>).</li>
+<li>gald3r <code>g-hk-*.py</code> hooks wire natively via these events (e.g. <code>g-hk-session-start.py</code> →
+  <code>sessionStart</code>; <code>g-hk-validate-shell.py</code> → <code>beforeShellExecution</code>; <code>g-hk-pre-tool-call-*.py</code> →
+  <code>preToolUse</code>; session-end hooks → <code>stop</code>). Each entry: <code>command</code> (Python invocation, <code>python
+  &lt;path&gt;</code> -- post-T1584 Python port; no PowerShell involved), optional <code>matcher</code> (regex over tool
+  names), optional <code>_hook_md</code> (companion doc, T1171).</li>
+<li>Source: https://cursor.com/docs/hooks</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Project rules</strong> in <code>.cursor/rules/*.mdc</code> with frontmatter (<code>alwaysApply</code>, <code>globs</code>, <code>description</code>)
+  and four application types: <strong>Always Apply</strong>, <strong>Apply Intelligently</strong> (<code>description</code>-scoped),
+  <strong>Apply to Specific Files</strong> (<code>globs</code>), <strong>Apply Manually</strong>. <strong><code>AGENTS.md</code></strong> (plain markdown at root /
+  nested dirs) is supported as an alternative. <strong>User rules</strong> set global preferences via Settings;
+  <strong>Team rules</strong> (Team/Enterprise) take top precedence.</li>
+<li><strong><code>.mdc</code> is Cursor-specific</strong> — all other platforms use plain <code>.md</code>; the parity sync maps the
+  extension automatically.</li>
+<li><strong>Memories caveat</strong>: per-project auto-generated <strong>Memories</strong> shipped in v1.0 (June 2025) but were
+  reported removed / folded into <strong>Rules</strong> starting v2.1.x; the dedicated memories doc page now
+  resolves to Rules content. <strong>Rules</strong> remains the durable always-on mechanism (gald3r also uses
+  <code>.gald3r/learned-facts.md</code> for durable project facts, surfaced at session start by <code>g-rl-25</code>).</li>
+<li>gald3r <code>g-rl-*</code> map to <strong>Always Apply</strong> (for <code>alwaysApply: true</code>) or <strong>Apply Intelligently</strong> (for
+  <code>description:</code>-scoped).</li>
+<li>Source: https://cursor.com/docs/context/rules</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MCP servers via JSON config at <code>.cursor/mcp.json</code> (project) or <code>~/.cursor/mcp.json</code> (global), or via
+  Cursor Settings → MCP. Supports <strong>stdio</strong> (Cursor-managed local), <strong>SSE</strong>, and <strong>Streamable HTTP</strong>
+  transports; remote servers support <strong>OAuth and multi-user access</strong>. Cursor auto-connects to
+  configured servers on startup.</li>
+<li><strong>Timeout</strong>: default MCP timeout is 60s; for long-running tools set <code>mcp.server.timeout: 600000</code> in
+  Cursor settings.json.</li>
+<li>Source: https://cursor.com/docs/context/mcp</li>
+</ul>
+<h2 id="9-sdk-cli-governance-distribution-channels">9. SDK / CLI &amp; Governance — distribution channels<a class="headerlink" href="#9-sdk-cli-governance-distribution-channels" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Cursor CLI</strong> (<code>agent</code>): provides its own slash-commands reference
+  (<code>cursor.com/docs/cli/reference/slash-commands</code>) plus <strong>Cloud Agent</strong> handoff.</li>
+<li><strong>Cursor SDK</strong> (TypeScript): build programmatic agents against Cursor.</li>
+<li><strong>Enterprise/team governance</strong>: hooks, <strong>Team rules</strong>, and MCP can be centrally managed via the web
+  dashboard and system-level config paths (Enterprise) — e.g. <code>C:\ProgramData\Cursor\hooks.json</code> on
+  Windows.</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Cursor <strong>is</strong> the reference, so there are no "gaps vs. another platform." All six gald3r-relevant
+primitives are native: <strong>commands, rules, agents, skills, hooks, and MCP</strong>. The honest baseline items
+within the Cursor implementation itself: <code>.mdc</code> rules and <code>hooks.json</code> wiring are correctly classified
+as <strong>platform-specific</strong> (live in the Cursor tree, not common <code>.gald3r_sys/</code>); per-machine MCP server
+sets are not committed; and the <strong>Memories</strong> primitive was folded into Rules in v2.1.x (no action
+needed — Rules is the durable surface).</p>
+<p><strong>Reuse note (important):</strong> because Cursor discovers <code>.claude/agents/</code> + <code>.codex/agents/</code> (subagents)
+and <code>.agents/skills/</code> (skills), gald3r's <strong>Claude-Code-format agent/skill artifacts are reusable on
+Cursor without a separate port</strong>. (Unlike Auggie, Cursor's primary instruction file is <code>AGENTS.md</code>,
+<strong>not</strong> <code>CLAUDE.md</code> — keep gald3r's <code>AGENTS.md</code> authoritative.)</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (json_config — stdio JSON, bidirectional)</li>
+<li><strong>Config file</strong>: <code>.cursor/hooks.json</code> (repo-root <code>.cursor/</code>, version 1 — NOT inside <code>.cursor/hooks/</code>)</li>
+<li><strong>Events available</strong>: <code>sessionStart</code>/<code>sessionEnd</code>, <code>preToolUse</code>/<code>postToolUse</code>/<code>postToolUseFailure</code>,
+  <code>subagentStart</code>/<code>subagentStop</code>, <code>beforeShellExecution</code>/<code>afterShellExecution</code>,
+  <code>beforeMCPExecution</code>/<code>afterMCPExecution</code>, <code>beforeReadFile</code>/<code>afterFileEdit</code>, <code>beforeSubmitPrompt</code>,
+  <code>preCompact</code>, <code>stop</code>, <code>afterAgentResponse</code>/<code>afterAgentThought</code>, Tab hooks
+  (<code>beforeTabFileRead</code>/<code>afterTabFileEdit</code>), <code>workspaceOpen</code></li>
+<li><strong>Event payload format</strong>: JSON over stdio in <strong>both directions</strong> (hooks observe/block/modify; return
+  the standard <code>{ continue = true }</code> envelope or block via exit code / verdict)</li>
+<li><strong>Command extensions</strong>: Python invocation (<code>python &lt;path&gt;</code> -- post-T1584 Python port; no
+  PowerShell involved), optional <code>matcher</code> regex over tool names; <code>_hook_md</code> companion-doc path
+  (T1171)</li>
+<li><strong>gald3r hook files</strong> (BUG-364/BUG-365 refresh, cross-checked against <code>neutral_source/hooks/g_hk_core.py</code>'s
+  <code>CONCERN_CHAIN</code> and this repo's own real <code>.claude/settings.json</code> / <code>.cursor/hooks.json</code>): <code>g-hk-session-start.py</code>,
+  <code>g-hk-pre-session-trace.py</code>, <code>g-hk-vault-resolve.py</code>, <code>g-hk-vault-migrate.py</code> (<code>--if-diverged</code>),
+  <code>g-hk-agent-worktree-janitor.py</code> (<code>-EventName SessionStart</code>) (sessionStart); <code>g-hk-agent-complete.py</code>,
+  <code>g-hk-nightly-learn.py</code>, <code>g-hk-session-end.py</code>, <code>g-hk-encoding-normalize.py</code> (<code>-Quiet</code>),
+  <code>g-hk-ggo-stop-detect.py</code>, <code>g-hk-post-session-trace.py</code>, <code>g-hk-crash-record.py</code>,
+  <code>g-hk-graph-update.py</code>, <code>g-hk-vault-verify.py</code>, <code>raw-inbox-watcher.py</code> (<code>--hook-mode</code>),
+  <code>g-hk-vault-reindex.py</code>, <code>g-hk-agent-worktree-janitor.py</code> (<code>-EventName Stop</code>) (stop);
+  <code>g-hk-validate-shell.py</code> (beforeShellExecution); <code>g-hk-pre-tool-call.py</code>,
+  <code>g-hk-pre-tool-call-gald3r-guard.py</code>, <code>g-hk-pre-tool-call-prd-freeze.py</code>,
+  <code>g-hk-pre-tool-call-member-gald3r-guard.py</code> (preToolUse -- BUG-365 corrected
+  <code>g-hk-pre-tool-call.py</code> from a mis-documented <code>beforeShellExecution</code> entry: its own
+  docstring/payload contract reads an already-executed tool's output and returns
+  <code>additional_context</code>, which only <code>preToolUse</code> supports); <code>g-hk-on-tool-end.py</code> (postToolUse);
+  <code>g-hk-on-user-prompt-submit.py</code> (beforeSubmitPrompt). Two further <code>CONCERN_CHAIN</code> members are
+  <strong>not</strong> direct <code>hooks.json</code> entries today, honestly noted rather than overclaimed: <code>g-hk-policy-check.py</code>
+  (tool-start concern) is unwired pending a future canonical-core fan-out; <code>g-hk-tel-tap.py</code>
+  (tool-end/stop concern) fires indirectly via <code>g-hk-on-tool-end.py</code>'s canonical dispatch rather
+  than its own registration.</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Rules use the Cursor-only <code>.mdc</code> extension (all other platforms use <code>.md</code>); parity sync maps the
+  extension automatically.</li>
+<li><code>hooks.json</code> lives at <code>.cursor/hooks.json</code> (repo <code>.cursor/</code> root), not inside <code>.cursor/hooks/</code>;
+  <code>_hook_md</code> fields point at companion <code>.md</code> files inside <code>.cursor/hooks/</code>.</li>
+<li>Primary instruction file is <strong><code>AGENTS.md</code></strong> (root + nested), NOT <code>CLAUDE.md</code>. Always-apply behavior
+  comes from <code>.cursor/rules/*.mdc</code> (<code>alwaysApply: true</code>).</li>
+<li>Cross-tool discovery: <code>.claude/agents/</code> + <code>.codex/agents/</code> (subagents) and <code>.agents/skills/</code>
+  (skills) are read directly — prefer reusing them.</li>
+<li>Hook execution: Python (<code>python &lt;path&gt;</code>, post-T1584 port) -- cross-platform by construction, no
+  PowerShell involved. Enterprise hook path on Windows is <code>C:\ProgramData\Cursor\hooks.json</code>.</li>
+<li>MCP may be configured via <code>.cursor/mcp.json</code>, <code>~/.cursor/mcp.json</code>, or Cursor settings; concrete
+  server set is per-machine.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Cursor is the <strong>reference platform</strong>: this is the canonical hook/rule/skill/command/agent layout
+  other platforms mirror. There are no "gaps vs another platform."</li>
+<li>Ship gald3r's <code>AGENTS.md</code> + <code>.cursor/</code> tree; Cursor also discovers <code>.claude/agents/</code> +
+  <code>.codex/agents/</code> + <code>.agents/skills/</code> so Claude-format agent/skill artifacts are reused as-is.</li>
+<li>Hooks fire natively (<code>.py</code> scripts via <code>python &lt;path&gt;</code>, post-T1584 port); session-start / pre-commit /
+  pre-tool guards wire without degrading to manual.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs cursor</code> (crawl_max_age_days: 7) against
+  https://cursor.com/docs — watch for new hook events and Rules/Memories changes.</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpscursorcomdocs">Verification Evidence (docs crawl 2026-06-02, https://cursor.com/docs)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpscursorcomdocs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>/changelog/1-6 — reusable prompts in <code>.cursor/commands/&lt;name&gt;.md</code> (or <code>~/.cursor/commands/</code>); filename = slash command; Cursor 1.6</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/docs/context/rules — <code>.cursor/rules/*.mdc</code> (alwaysApply/globs/description; 4 application types) + <code>AGENTS.md</code> + User/Team rules; Memories folded into Rules v2.1.x</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/docs/subagents.md — <code>.cursor/agents/*.md</code> md+YAML, parallel subagents; also reads <code>.claude/agents/</code> + <code>.codex/agents/</code>; Cursor 2.4</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/help/customization/skills — <code>SKILL.md</code> in <code>.cursor/skills/&lt;name&gt;/</code> + <code>.agents/skills/</code> (+ <code>~/</code>); <code>/skill-name</code> or <code>@skill-name</code>; Cursor 2.4</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/docs/hooks — <code>.cursor/hooks.json</code>; stdio JSON bidirectional; large event surface (sessionStart…afterAgentThought + Tab/workspaceOpen); Cursor 1.7</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/docs/context/mcp — <code>.cursor/mcp.json</code> / <code>~/.cursor/mcp.json</code> / Settings; stdio + SSE + Streamable HTTP; OAuth + multi-user</td>
+</tr>
+<tr>
+<td>Instruction file</td>
+<td>/docs/context/rules — <code>AGENTS.md</code> native (root + nested, no frontmatter); legacy <code>.cursorrules</code>; native rules format <code>.cursor/rules/*.mdc</code></td>
+</tr>
+<tr>
+<td>Cross-compat</td>
+<td>Cursor discovers <code>.claude/agents/</code> + <code>.codex/agents/</code> (subagents) and <code>.agents/skills/</code> (skills) → gald3r Claude/codex artifacts reusable</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-cursor/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

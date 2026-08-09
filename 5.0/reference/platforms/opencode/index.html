@@ -1,0 +1,1844 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/opencode/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — OpenCode (sst/opencode) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-opencode-sstopencode" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — OpenCode (sst/opencode)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native-jsts-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE (JS/TS plugins)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-other-extensibility-known-gaps-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Other Extensibility + Known Gaps vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsopencodeaidocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://opencode.ai/docs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-opencode-sstopencode">PLATFORM_SPEC.md — OpenCode (sst/opencode)<a class="headerlink" href="#platform_specmd-opencode-sstopencode" title="Permanent link">&para;</a></h1>
+<p>OpenCode is an open-source, terminal-first AI coding agent from the <strong>SST</strong> team (<code>opencode</code> binary,
+repo <code>sst/opencode</code>, docs https://opencode.ai/docs). It runs as a TUI with multi-provider model
+support and a JSON/JSONC config (<code>opencode.json</code>). As of mid-2026 OpenCode natively supports <strong>all
+six</strong> gald3r-relevant extension primitives — custom commands, rules/instructions, agents
+(primary + subagents), Agent Skills, lifecycle hooks (via plugins), and MCP. Critically for gald3r,
+OpenCode reads <strong><code>AGENTS.md</code></strong> (with <strong><code>CLAUDE.md</code></strong> fallback) and natively discovers skills from
+<strong><code>.claude/skills/</code></strong> and <strong><code>.agents/skills/</code></strong> in addition to <code>.opencode/skills/</code>, so gald3r's
+Claude-Code SKILL.md packages, <code>AGENTS.md</code>, and command/agent assets are <strong>largely drop-in reusable</strong>
+on OpenCode.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://opencode.ai/docs (see
+Verification Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: 2026-05-26</code>,
+<code>status: ⚠️</code>) which conservatively marked every mechanism partial because it was doc-scan-only and
+not install-tested — the crawl assessment confirms all six primitives are NATIVE in OpenCode.</p>
+<blockquote>
+<p><strong>Instruction-file convention:</strong> OpenCode reads <strong><code>AGENTS.md</code></strong> as its primary instruction file
+(the open agents standard), falling back to <strong><code>CLAUDE.md</code></strong>. <strong>If both <code>AGENTS.md</code> and <code>CLAUDE.md</code>
+exist locally, only <code>AGENTS.md</code> is used.</strong> It also reads the global <code>~/.config/opencode/AGENTS.md</code>
+and the Claude Code file <code>~/.claude/CLAUDE.md</code> (unless disabled). This differs from Claude Code
+(which reads <code>CLAUDE.md</code>, not <code>AGENTS.md</code>).</p>
+<p><strong>Hooks caveat:</strong> OpenCode's lifecycle hooks are <strong>in-process JS/TS plugins</strong> (event handlers),
+not drop-in shell scripts and not a JSON wiring file. Lifecycle coverage is broad, but there is
+<strong>no first-class git pre-commit / pre-push event</strong> and gald3r's Python <code>g-hk-*.py</code> hooks (T1584
+port; NOT PowerShell) must be shelled out from a JS/TS wrapper rather than registered directly.
+This is the single largest friction point (see §6 + §9).</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p>OpenCode reads a project-root <code>.opencode/</code> directory plus a root-level <code>opencode.json</code> config.
+Subdirectory names use <strong>plural</strong> forms (singular still accepted for backwards compatibility):</p>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md / CLAUDE.md            ← instruction files OpenCode reads (AGENTS.md wins if both exist)
+├── opencode.json (or .jsonc)        ← ROOT config — NOT inside .opencode/ (mcp + instructions + plugin)
+└── .opencode/
+    ├── commands/    *.md            ← custom commands (markdown + YAML frontmatter)
+    ├── agents/      *.md            ← primary agents + subagents (markdown, or opencode.json inline)
+    ├── skills/      &lt;name&gt;/SKILL.md ← Agent Skills (loaded on-demand via native `skill` tool)
+    ├── plugins/     *.{js,ts}       ← JS/TS plugins == OpenCode's hook mechanism
+    ├── modes/                       ← agent modes (opencode concept; no gald3r analog)
+    ├── tools/                       ← custom tool definitions (opencode concept)
+    └── themes/                      ← TUI themes
+</code></pre>
+<p>OpenCode <strong>also</strong> discovers <code>.claude/skills/&lt;name&gt;/SKILL.md</code> and <code>.agents/skills/&lt;name&gt;/SKILL.md</code>
+(workspace or <code>~/</code>), reads <code>~/.claude/CLAUDE.md</code>, and walks project-local paths up to the git worktree
+root. gald3r's <code>.claude/</code>-style skill trees and <code>AGENTS.md</code>/<code>CLAUDE.md</code> therefore work on OpenCode
+with <strong>no OpenCode-specific port</strong> for skills + rules.</p>
+<p>Global equivalents live under <code>~/.config/opencode/</code> (<code>opencode.json</code>, <code>AGENTS.md</code>, <code>commands/</code>,
+<code>agents/</code>, <code>skills/</code>, <code>plugins/</code>). The 2026 config update loads <code>opencode.json</code> from the opened
+location upward.</p>
+<p><strong>gald3r writes</strong>: <code>.opencode/commands/</code>, <code>.opencode/agents/</code>, <code>opencode.json</code>, and (optionally)
+<code>.opencode/plugins/</code> for a hook shim; for maximum reuse, gald3r's <code>.claude/skills/</code> tree +
+<code>AGENTS.md</code>/<code>CLAUDE.md</code> are read as-is.
+<strong>OpenCode owns</strong>: the <code>.opencode/</code> namespace, the <code>opencode.json</code> schema, plugin loading, skill
+discovery, and the TUI.</p>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>OpenCode's primary instruction file is <strong><code>AGENTS.md</code></strong> (project root), the open agents standard —
+the equivalent of Cursor's rules-as-context. Load order (verified):</p>
+<ol>
+<li><strong>Local</strong> files traversing up from the current directory — <code>AGENTS.md</code>, then <code>CLAUDE.md</code>.
+   <strong>If both exist locally, only <code>AGENTS.md</code> is used.</strong></li>
+<li><strong>Global</strong> file at <code>~/.config/opencode/AGENTS.md</code> (applies across all sessions).</li>
+<li>
+<p><strong>Claude Code</strong> file at <code>~/.claude/CLAUDE.md</code> (unless disabled).</p>
+</li>
+<li>
+<p><strong>Generated via</strong>: the OpenCode <code>/init</code> command scans the repo and writes <code>AGENTS.md</code>.</p>
+</li>
+<li><strong>Additional files</strong>: the <code>instructions</code> array in <code>opencode.json</code> registers extra instruction
+  files (paths, glob patterns, and remote URLs):
+  <code>"instructions": ["CONTRIBUTING.md", "docs/guidelines.md"]</code>.</li>
+</ol>
+<p>gald3r <strong>generates/merges</strong> <code>AGENTS.md</code> / <code>CLAUDE.md</code> via the setup + parity pipeline; these files
+are personalized per user and gitignored (<code>g-rl-02</code>). Because OpenCode reads <code>CLAUDE.md</code>, gald3r's
+existing <code>CLAUDE.md</code> already delivers rules content to OpenCode with no extra work.
+Source: https://opencode.ai/docs/rules/</p>
+<hr />
+<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Primary agents + subagents</strong>: markdown agent files (named after the agent, e.g. <code>review.md</code> →
+  the <code>review</code> agent) in <code>.opencode/agents/</code> (or <code>~/.config/opencode/agents/</code>), or inline in
+  <code>opencode.json</code>. <code>opencode agent create</code> scaffolds one interactively.</li>
+<li><strong>Invocation</strong>: subagents manually invoked via <code>@mention</code> (e.g. <code>@general</code>); auto-invoked via the
+  <strong>Task</strong> tool. Built-in primaries: <strong>Build</strong>, <strong>Plan</strong>. Built-in subagents: <strong>General</strong>,
+  <strong>Explore</strong>, <strong>Scout</strong>.</li>
+<li>gald3r <code>g-agnt-*</code> definitions map directly to OpenCode agent files.</li>
+<li>Source: https://opencode.ai/docs/agents/</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> (<code>SKILL.md</code> + YAML frontmatter) loaded <strong>on-demand via the native <code>skill</code> tool</strong> —
+  agents see available skills and load the full content only when needed. Required frontmatter:
+  <code>name</code> + <code>description</code> (optional <code>license</code>, <code>compatibility</code>, <code>metadata</code>).</li>
+<li><strong>Discovery (multi-path)</strong>: <code>.opencode/skills/&lt;name&gt;/SKILL.md</code>, <strong><code>.claude/skills/&lt;name&gt;/SKILL.md</code></strong>,
+  <strong><code>.agents/skills/&lt;name&gt;/SKILL.md</code></strong> (project), plus <code>~/.config/opencode/skills/</code>,
+  <code>~/.claude/skills/</code>, <code>~/.agents/skills/</code> (global). Project-local paths are walked up to the git
+  worktree root.</li>
+<li>gald3r <code>g-skl-*/SKILL.md</code> load natively — including straight from <code>.claude/skills/</code>. gald3r's
+  extra frontmatter (<code>subsystem_memberships</code>, <code>token_budget</code>) lands under the tolerated/<code>metadata</code>
+  space. No conversion required.</li>
+<li>Source: https://opencode.ai/docs/skills/</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom commands</strong>: markdown files in <code>.opencode/commands/</code> (also <code>~/.config/opencode/commands/</code>),
+  with YAML frontmatter. Prompts support the <code>$ARGUMENTS</code> placeholder, positional <code>$1</code>/<code>$2</code>/<code>$3</code>, and
+  <code>!command</code> bash injection. Frontmatter fields: <code>description</code>, <code>agent</code>, <code>model</code>, <code>subtask</code>.</li>
+<li>gald3r <code>@g-*</code> / <code>/g-*</code> commands map directly to <code>.opencode/commands/</code>.</li>
+<li>Source: https://opencode.ai/docs/commands/</li>
+</ul>
+<h2 id="6-hooks-system-native-jsts-plugins">6. Hooks System — ✅ NATIVE (JS/TS plugins)<a class="headerlink" href="#6-hooks-system-native-jsts-plugins" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Lifecycle hooks</strong> are implemented as <strong>plugins</strong>: JS/TS modules that export a function returning
+  a hooks object and subscribe to lifecycle events. Auto-loaded at startup from the plugin directory
+  or from npm. A plugin's context exposes project info, cwd, git worktree path, an SDK client, and
+  Bun's shell API.</li>
+<li><strong>Location</strong>: <code>.opencode/plugins/</code> (project), <code>~/.config/opencode/plugins/</code> (global), or npm
+  packages registered via the <code>plugin</code> option in <code>opencode.json</code>.</li>
+<li><strong>Available events</strong> (20): <code>tool.execute.before</code>, <code>tool.execute.after</code>, <code>command.executed</code>,
+  <code>file.edited</code>, <code>file.watcher.updated</code>, <code>session.created</code>, <code>session.idle</code>, <code>session.compacted</code>,
+  <code>session.deleted</code>, <code>session.updated</code>, <code>permission.asked</code>, <code>permission.replied</code>, <code>shell.env</code>,
+  <code>lsp.client.diagnostics</code>, <code>todo.updated</code>, <code>tui.prompt.append</code>, <code>tui.command.execute</code>,
+  <code>tui.toast.show</code>, <code>server.connected</code>, <code>installation.updated</code>.</li>
+<li><strong>Mapping</strong>: <code>tool.execute.before</code>/<code>after</code> gives pre-tool gating (PreToolUse-equivalent);
+  <code>file.edited</code> / <code>file.watcher.updated</code> covers file-watch; <code>session.created</code> covers session-start.</li>
+<li><strong>Two dispatch surfaces, not one uniform key set (BUG-367 correction).</strong> Live-verified against
+  OpenCode's real, on-disk TypeScript source (<code>packages/plugin/src/index.ts</code>'s
+  <code>export interface Hooks {...}</code>, https://github.com/sst/opencode/blob/dev/packages/plugin/src/index.ts):
+  only <code>tool.execute.before</code> / <code>tool.execute.after</code> (and a handful of chat/permission/experimental
+  events not relevant to gald3r) are real top-level <code>Hooks</code> object keys, each called with TWO
+  positional arguments <code>(input, output)</code>. The remaining events in the 20-event list above —
+  including <code>session.created</code> / <code>session.deleted</code> / <code>session.idle</code> — are NOT <code>Hooks</code> keys at all;
+  they are variants of the generic bus <code>Event</code> union (<code>packages/sdk/js/src/gen/types.gen.ts</code>)
+  delivered exclusively through a single <code>event?: (input: {event: Event}) =&gt; Promise&lt;void&gt;</code> hook,
+  discriminated by <code>event.type</code>. A plugin object key literally named <code>"session.created"</code> is never
+  invoked by OpenCode's real plugin loader.</li>
+<li><strong>gald3r friction (largest gap)</strong>: hooks are <strong>event-driven JS/TS plugins</strong>, not drop-in shell
+  scripts and not a JSON wiring file. gald3r ships hooks as <strong>Python <code>g-hk-*.py</code></strong> scripts (T1584
+  port), which do <strong>not</strong> run natively as OpenCode plugins. A thin JS/TS plugin (T418 / BUG-360,
+  corrected BUG-367: <code>gald3r-hooks-plugin.ts</code>, <code>spawnSync("python", …)</code>) shells out to the six
+  canonical <code>g-hk-on-&lt;event&gt;.py</code> entrypoints — <code>tool.execute.before</code> / <code>tool.execute.after</code>
+  registered directly (real <code>Hooks</code> keys), <code>session.created</code> / <code>session.deleted</code> / <code>session.idle</code>
+  routed through the single generic <code>event</code> hook's <code>switch (event.type)</code> (they are not <code>Hooks</code>
+  keys). Additionally there is <strong>no first-class git pre-commit /
+  pre-push event</strong> — commit-gate enforcement must be wired via <code>command.executed</code> or external git
+  hooks. ✅ for native lifecycle coverage; gald3r's hook payload is not portable as-is (see §9).</li>
+<li>Source: https://opencode.ai/docs/plugins/, https://github.com/sst/opencode/blob/dev/packages/plugin/src/index.ts</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Rules/memory == the <code>AGENTS.md</code> instruction file (§2) plus the <code>instructions</code> config array. The
+  whole of <code>AGENTS.md</code> (and referenced <code>instructions</code> files) is injected into the LLM context at
+  startup — effectively one always-apply document. There is <strong>no separate <code>memory</code> file distinct
+  from rules</strong>: persistent instructions are the single <code>AGENTS.md</code>/<code>CLAUDE.md</code> convention (good
+  parity, but no auto-updating memory store).</li>
+<li>There is <strong>no <code>.mdc</code> per-file glob-scoped rule engine</strong> like Cursor's <code>.cursor/rules/*.mdc</code>.
+  gald3r's many <code>g-rl-*</code> rules consolidate into <code>AGENTS.md</code> (or are referenced via <code>instructions</code>);
+  rule <em>content</em> transfers, Cursor's per-rule glob <em>scoping</em> does not.</li>
+<li><strong>CLAUDE.md fallback</strong>: because OpenCode reads <code>CLAUDE.md</code>, gald3r's existing <code>CLAUDE.md</code> already
+  delivers rules to OpenCode with no extra work.</li>
+<li>Source: https://opencode.ai/docs/rules/</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MCP servers defined under the <strong><code>mcp</code></strong> field in <code>opencode.json</code> (root) or global
+  <code>~/.config/opencode/opencode.json</code>. Supports type <strong><code>local</code></strong> (spawned command, stdio) and type
+  <strong><code>remote</code></strong> (URL). 2026 updates added MCP OAuth callback-port config and scoped client metadata.</li>
+<li>Config supports <code>{env:VAR}</code> and <code>{file:path}</code> substitution — inject API keys/secrets without
+  inlining them.</li>
+<li>gald3r's MCP server block drops into <code>opencode.json -&gt; mcp</code>.</li>
+<li>Source: https://opencode.ai/docs/mcp-servers/</li>
+</ul>
+<h2 id="9-other-extensibility-known-gaps-vs-cursor-reference">9. Other Extensibility + Known Gaps vs. Cursor Reference<a class="headerlink" href="#9-other-extensibility-known-gaps-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p><strong>Other extensibility (OpenCode bonuses, no Cursor analog):</strong>
+- <strong>Custom Tools</strong> — functions the LLM can call during conversations, alongside built-in
+  read/write/bash tools (https://opencode.ai/docs/custom-tools/).
+- <strong>Modes</strong> — built-in <strong>Plan</strong> mode (read-only / suggest) vs <strong>Build</strong> mode (full access) as
+  primary-agent permission profiles.
+- <strong>SDK</strong> — official <code>@opencode-ai/sdk</code> + in-process HTTP server; sessions can store custom metadata
+  via API/SDK (2026 update).</p>
+<p><strong>Gaps / friction vs. Cursor reference:</strong>
+1. <strong>Hooks are JS/TS plugins, not Python-native</strong> (✅ native, but not portable). gald3r <code>g-hk-*.py</code>
+   (T1584 port) require a JS/TS plugin shim (T418 / BUG-360: <code>gald3r-hooks-plugin.ts</code>) that shells
+   out via Node's <code>child_process.spawnSync("python", …)</code>. <strong>No first-class git pre-commit / pre-push
+   event</strong> — wire via <code>command.executed</code> or external git hooks.
+2. <strong>No <code>.mdc</code> glob-scoped rule engine</strong> (rule content transfers via <code>AGENTS.md</code>/<code>CLAUDE.md</code>; per-rule
+   <code>alwaysApply</code>/<code>globs</code> scoping does not).
+3. <strong>No separately named memory store</strong> distinct from the <code>AGENTS.md</code>/<code>CLAUDE.md</code> instruction file
+   (good parity, but no auto-updating memory).
+4. <strong>Decision-tree placement</strong>: OpenCode's plugin (JS/TS) hook format and <code>opencode.json</code> schema are
+   correctly classified <strong>platform-specific</strong> — they live in the OpenCode tree
+   (<code>.gald3r_sys/platforms/.opencode/</code>), not common <code>.gald3r_sys/</code>. The shared <code>.claude/skills/</code> +
+   <code>.agents/skills/</code> discovery paths and <code>AGENTS.md</code>/<code>CLAUDE.md</code> reads are where OpenCode reuses
+   common gald3r output directly.</p>
+<p><strong>Reuse note (important):</strong> because OpenCode reads <code>AGENTS.md</code>/<code>CLAUDE.md</code> and discovers <code>.claude/</code>
++ <code>.agents/</code> skill trees, gald3r's <strong>Claude-Code SKILL.md packages, instruction files, and
+command/agent assets are largely drop-in reusable</strong> — the cheapest high-parity path is to ship the
+gald3r <code>.claude/skills/</code> tree + <code>AGENTS.md</code>, then add a thin JS/TS plugin shim only for the hooks.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (JS/TS <strong>plugins</strong>, not a JSON wiring file, not <code>.ps1</code>)</li>
+<li><strong>Config file / location</strong>: <code>.opencode/plugins/</code> (project) + <code>~/.config/opencode/plugins/</code> (global),
+  auto-loaded at startup; or npm packages via <code>opencode.json</code> <code>plugin</code> option</li>
+<li><strong>Events available</strong> (20): <code>tool.execute.before</code>, <code>tool.execute.after</code>, <code>command.executed</code>,
+  <code>file.edited</code>, <code>file.watcher.updated</code>, <code>session.created</code>, <code>session.idle</code>, <code>session.compacted</code>,
+  <code>session.deleted</code>, <code>session.updated</code>, <code>permission.asked</code>, <code>permission.replied</code>, <code>shell.env</code>,
+  <code>lsp.client.diagnostics</code>, <code>todo.updated</code>, <code>tui.prompt.append</code>, <code>tui.command.execute</code>,
+  <code>tui.toast.show</code>, <code>server.connected</code>, <code>installation.updated</code></li>
+<li><strong>Event payload format</strong>: JS/TS context object (project info, cwd, git worktree path, SDK client,
+  Bun shell API); a plugin exports a function returning a hooks object</li>
+<li><strong>Limitations</strong>: plugin language is JavaScript/TypeScript (npm supported) — gald3r's Python
+  <code>g-hk-*.py</code> hooks (T1584 port; NOT PowerShell) must be shelled out from a JS/TS wrapper; <strong>no
+  first-class git pre-commit / pre-push event</strong> (wire via <code>command.executed</code> or external git hooks)</li>
+<li><strong>gald3r hook files</strong> (T418 / BUG-360, corrected BUG-367): <code>gald3r-hooks-plugin.ts</code> wires
+  gald3r's five relevant native events to six canonical <code>g-hk-on-&lt;event&gt;.py</code> entrypoints via
+  <code>spawnSync("python", …)</code>, per <code>neutral_source/hooks/g_hk_core.py</code>'s
+  <code>PLATFORM_EVENT_MAP["opencode"]</code> — but across TWO real dispatch mechanisms, not one uniform key
+  set: <code>tool.execute.before</code> / <code>tool.execute.after</code> are registered directly as real top-level
+  <code>Hooks</code> keys, each marshaling its actual <code>(input, output)</code> argument pair into a <code>{tool_name,
+  tool_input}</code> dict; <code>session.created</code> / <code>session.deleted</code> / <code>session.idle</code> are NOT <code>Hooks</code> keys
+  (live-verified against <code>packages/plugin/src/index.ts</code>) and are instead routed through the
+  single generic <code>event</code> hook's <code>switch (event.type)</code>, each case marshaling that <code>Event</code> variant's
+  real fields (<code>properties.info.id</code> for created/deleted, <code>properties.sessionID</code> for idle,
+  per <code>packages/sdk/js/src/gen/types.gen.ts</code>) into a <code>{session_id}</code> dict. Each entrypoint fans out
+  to the full per-event concern chain (<code>g_hk_core.dispatch(...)</code>); no OpenCode event maps to
+  canonical <code>user-prompt-submit</code> today.</li>
+<li><strong>Tool-id/path-key normalization (BUG-368, fixed T423).</strong> OpenCode's real builtin tool ids are
+  lowercase (<code>edit</code>, <code>write</code>, <code>apply_patch</code>, <code>read</code>, live-verified against
+  <code>packages/opencode/src/tool/*.ts</code>'s <code>Tool.define(...)</code> calls) and its tool-argument path field
+  is camelCase (<code>filePath</code>), neither of which matched gald3r's Claude/Cursor-centric <code>WRITE_TOOLS</code>
+  (<code>Edit</code>, <code>Write</code>, ...) / <code>PATH_KEYS</code> (<code>file_path</code>, ...) conventions used by
+  <code>g-hk-pre-tool-call-gald3r-guard.py</code> and its sibling <code>tool-start</code> concern hooks
+  (<code>g-hk-pre-tool-call-prd-freeze.py</code>, <code>g-hk-pre-tool-call-member-gald3r-guard.py</code>) — so even with
+  the corrected dict payload shape (BUG-367), those guard hooks did not fire on a real OpenCode
+  install. Fixed by a <code>normalizeToolPayload</code> marshaling step inside <code>gald3r-hooks-plugin.ts</code>
+  itself (<code>_OPENCODE_WRITE_TOOL_ID_MAP</code> in <code>generate.py</code>): <code>edit</code>/<code>write</code>/<code>apply_patch</code> are
+  renamed to <code>Edit</code>/<code>Write</code>/<code>ApplyPatch</code> and gain an additional <code>file_path</code> key (alongside the
+  original <code>filePath</code>, never removed) when their args carry one — keeping the shared,
+  platform-agnostic Python concern hooks free of OpenCode-specific vocabulary. Live/executable
+  end-to-end regression: <code>tests/platform/test_opencode_plugin_hooks_shape.py</code>'s
+  <code>test_opencode_gald3r_guard_blocks_real_generated_plugin_write_end_to_end</code> /
+  <code>test_opencode_prd_freeze_blocks_real_generated_plugin_write_end_to_end</code>. <strong><code>apply_patch</code> gap
+  closed (BUG-369, fixed T424).</strong> <code>apply_patch</code>'s sole real argument is <code>patchText</code> (a unified-diff
+  body with per-hunk target paths embedded in <code>*** {Add,Delete,Update} File:</code> / <code>*** Move to:</code>
+  header lines, live-verified against <code>packages/opencode/src/patch/index.ts</code>'s real
+  <code>parsePatchHeader()</code>) — it has no top-level path field of its own to copy the way <code>edit</code>/<code>write</code>'s
+  <code>filePath</code> is copied. <code>normalizeToolPayload</code> now also extracts every recognized header path out of
+  <code>patchText</code>; when a patch touches multiple files, whichever extracted path resolves under
+  <code>.gald3r/</code> is surfaced as <code>file_path</code> (never just the first one), and a malformed/unrecognized
+  <code>patchText</code> still catches a literal <code>.gald3r/</code>-containing path token elsewhere in the body via a
+  narrower fallback scan, so an unparseable patch can never silently allow a real <code>.gald3r/</code> target.
+  Live/executable end-to-end regression:
+  <code>test_opencode_gald3r_guard_blocks_real_generated_apply_patch_write_end_to_end</code> (blocks a
+  <code>.gald3r/</code>-targeting <code>apply_patch</code> call, including one where the <code>.gald3r/</code> header is not the
+  first in a multi-file patch, and the fail-safe malformed-patchText case; allows an ordinary-path
+  call and a patchText with no <code>.gald3r/</code> mention at all).</li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Instruction file is <strong><code>AGENTS.md</code></strong> (CLAUDE.md fallback); <strong>if both exist locally, only AGENTS.md
+  is used</strong> — unlike Claude Code, which reads <code>CLAUDE.md</code>.</li>
+<li>Skills are discovered from <code>.opencode/skills/</code>, <strong><code>.claude/skills/</code></strong>, and <strong><code>.agents/skills/</code></strong>
+  (shared Agent-Skills locations), loaded on-demand via the native <code>skill</code> tool.</li>
+<li>Hooks are JS/TS plugins exporting a function, not a JSON wiring file and not bare <code>.py</code> scripts —
+  a format mismatch with gald3r's Python hooks, bridged by a generated <code>gald3r-hooks-plugin.ts</code>
+  shim (T418 / BUG-360, corrected BUG-367); no first-class git pre-commit event.</li>
+<li>Config is <code>opencode.json</code> (root, NOT inside <code>.opencode/</code>); MCP lives under its <code>mcp</code> field.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Cheapest high-parity install: ship gald3r's <code>.claude/skills/</code> tree + <code>AGENTS.md</code>/<code>CLAUDE.md</code> —
+  OpenCode loads them natively. Put commands in <code>.opencode/commands/</code>, agents in <code>.opencode/agents/</code>.</li>
+<li>gald3r <code>g-hk-*.py</code> hooks do NOT run natively — <code>gald3r platform install opencode</code> (T418 / BUG-360,
+  corrected BUG-367) authors a thin <code>gald3r-hooks-plugin.ts</code> in <code>.opencode/plugins/</code> that shells
+  out to <code>spawnSync("python", …)</code>: <code>tool.execute.before</code> / <code>tool.execute.after</code> registered
+  directly (real <code>Hooks</code> keys), <code>session.created</code> / <code>session.deleted</code> / <code>session.idle</code> routed
+  through the generic <code>event</code> hook (they are bus <code>Event</code> variants, not <code>Hooks</code> keys). Re-verify
+  the plugin context fields + <code>Hooks</code> interface + <code>Event</code> union before changing the shim.</li>
+<li>Re-verify on the next <code>@g-platform-scan-docs opencode</code> (crawl_max_age_days: 7).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<ul>
+<li><strong>Hooks ✅</strong>: native lifecycle hooks via JS/TS plugins (20 events); gald3r's Python <code>g-hk-*.py</code>
+  hooks need a JS/TS shim (T418 / BUG-360: <code>gald3r-hooks-plugin.ts</code>) and there is no first-class
+  git pre-commit event.</li>
+<li><strong>Rules ✅</strong>: <code>AGENTS.md</code> (CLAUDE.md fallback) + <code>instructions</code> array; no <code>.mdc</code> glob scoping.</li>
+<li><strong>Skills ✅</strong>: native <code>skill</code> tool; discovered in <code>.opencode/skills/</code> + <code>.claude/skills/</code> +
+  <code>.agents/skills/</code> → gald3r SKILL.md drop-in.</li>
+<li><strong>Commands ✅</strong>: <code>.opencode/commands/*.md</code> with <code>$ARGUMENTS</code>/<code>$1</code> + <code>!bash</code>; frontmatter
+  <code>description</code>/<code>agent</code>/<code>model</code>/<code>subtask</code>.</li>
+<li><strong>MCP ✅</strong>: <code>opencode.json -&gt; mcp</code> (local + remote), <code>{env:}</code>/<code>{file:}</code> substitution.</li>
+<li><strong>Docs Fresh ✅</strong>: crawl assessment of https://opencode.ai/docs completed 2026-06-02.</li>
+</ul>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsopencodeaidocs">Verification Evidence (docs crawl 2026-06-02, https://opencode.ai/docs)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsopencodeaidocs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>/docs/commands/ — <code>.opencode/commands/*.md</code> with YAML frontmatter; <code>$ARGUMENTS</code> + <code>$1/$2/$3</code> + <code>!command</code> bash; fields description/agent/model/subtask</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/docs/rules/ — <code>AGENTS.md</code> primary (CLAUDE.md fallback; AGENTS.md wins if both local) + global <code>~/.config/opencode/AGENTS.md</code> + <code>~/.claude/CLAUDE.md</code>; <code>instructions</code> array; <code>/init</code></td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/docs/agents/ — primary (Build/Plan) + subagents (General/Explore/Scout); markdown agent files or opencode.json; <code>@mention</code> + Task tool; <code>opencode agent create</code></td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>/docs/skills/ — <code>SKILL.md</code> loaded on-demand via native <code>skill</code> tool; discovered in <code>.opencode/skills/</code>, <code>.claude/skills/</code>, <code>.agents/skills/</code> (+ home); name+description frontmatter</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/docs/plugins/ — JS/TS plugins in <code>.opencode/plugins/</code> (+ npm via opencode.json <code>plugin</code>); 20 lifecycle events; no first-class git pre-commit; gald3r's Python <code>g-hk-*.py</code> hooks need a JS/TS shim (T418 / BUG-360)</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/docs/mcp-servers/ — <code>mcp</code> field in opencode.json; type local (command) + remote (URL); 2026 OAuth callback-port + scoped client metadata; <code>{env:}</code>/<code>{file:}</code> substitution</td>
+</tr>
+<tr>
+<td>Other</td>
+<td>/docs/custom-tools/ — Custom Tools; built-in Plan/Build modes; <code>@opencode-ai/sdk</code> + in-process HTTP server with session metadata</td>
+</tr>
+<tr>
+<td>Cross-compat</td>
+<td>OpenCode reads <code>AGENTS.md</code>/<code>CLAUDE.md</code> + discovers <code>.claude/</code> + <code>.agents/</code> skills → gald3r Claude-Code SKILL.md/instruction artifacts reusable; hooks need a JS/TS shim (<code>gald3r-hooks-plugin.ts</code>) over Python <code>g-hk-*.py</code>, not <code>.ps1</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-opencode/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

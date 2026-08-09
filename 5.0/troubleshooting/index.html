@@ -1,0 +1,1923 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/troubleshooting/">
+      
+      
+        <link rel="prev" href="../reference/crash/hooks/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Troubleshooting - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#troubleshooting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Troubleshooting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../reference/platforms/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/platforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-gald3r-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: gald3r doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-gald3r-selftest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: gald3r selftest
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-gald3r-errors-gald3r-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: gald3r errors / gald3r trace
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-gald3r-medic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: gald3r medic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-gald3r-returns-instantly-with-no-output-at-all-blank-exit-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows: gald3r returns instantly with no output at all (blank exit code)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-command-not-found-binary-not-on-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "gald3r: command not found" / binary not on PATH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installed-platform-overlay-claude-cursor-looks-stale-or-hooks-arent-firing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installed platform overlay (.claude/, .cursor/) looks stale or hooks aren't firing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-status-says-no-gald3rgald3rdb-found-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r status says "No .gald3r/gald3r.db found yet"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-taskbug-file-wont-pass-gald3r-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A task/bug file won't pass gald3r validate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-autopilotswarm-run-looks-stuck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An autopilot/swarm run looks stuck
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-login-says-the-server-does-not-yet-expose-device-code-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r login says the server "does not yet expose device-code auth"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-project-coordination-looks-out-of-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-project coordination looks out of sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-gald3r-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: gald3r doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-gald3r-selftest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: gald3r selftest
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-gald3r-errors-gald3r-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: gald3r errors / gald3r trace
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-gald3r-medic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: gald3r medic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-gald3r-returns-instantly-with-no-output-at-all-blank-exit-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows: gald3r returns instantly with no output at all (blank exit code)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-command-not-found-binary-not-on-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "gald3r: command not found" / binary not on PATH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installed-platform-overlay-claude-cursor-looks-stale-or-hooks-arent-firing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installed platform overlay (.claude/, .cursor/) looks stale or hooks aren't firing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-status-says-no-gald3rgald3rdb-found-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r status says "No .gald3r/gald3r.db found yet"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-taskbug-file-wont-pass-gald3r-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A task/bug file won't pass gald3r validate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-autopilotswarm-run-looks-stuck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An autopilot/swarm run looks stuck
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-login-says-the-server-does-not-yet-expose-device-code-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r login says the server "does not yet expose device-code auth"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-project-coordination-looks-out-of-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-project coordination looks out of sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
+<p>Start here whenever <code>gald3r</code> isn't behaving the way you expect. Every output on this page is
+real, captured while writing it against this repo's own checkout — including the warnings, not
+just the happy path.</p>
+<h2 id="step-1-gald3r-doctor">Step 1: <code>gald3r doctor</code><a class="headerlink" href="#step-1-gald3r-doctor" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r doctor
+</code></pre>
+<pre><code>gald3r doctor -- &lt;your project dir&gt;
+  [OK  ] python       Python 3.13.7 (...\.venv\Scripts\python.exe)
+  [OK  ] gald3r_core  gald3r_core 4.0.0
+  [WARN] build_fingerprint BUG-433: running binary was built from commit ...,
+         but this repo's checked-out source tree ... is currently at commit ....
+         This is a REAL commit mismatch (BUG-455 commit-based check) -- ... Fix
+         (Task 517): maintainers can run `uv run python
+         packaging/maintainer/install_self.py` from this checkout to rebuild
+         from source and refresh the PATH binary (BUG-600 -- no longer a
+         `gald3r` subcommand).
+  [WARN] torch        torch not installed (optional -- only needed for local inference)
+  [OK  ] gald3r_home  C:\Users\you\.gald3r_template_core
+  [OK  ] providers    ...\providers.yaml: 2 provider(s) configured
+  [OK  ] env          set: GALD3R_WORLD_TREE_URL
+  [OK  ] identity     project_id=... (your-project-name)
+  [OK  ] daemon       no connector lock (Valkyrie not running)
+  [OK  ] tel          no .gald3r/tel/ configured yet (optional, T83 epic)
+  [OK  ] overlay_freshness no installed overlay found to check (not installed: claude, cursor)
+  [OK  ] world_tree   ok
+  [WARN] auth         no stored session token (https://api.gald3r.ai)
+  [OK  ] channels     no channels.yaml found (channels are optional)
+
+All checks passed (warnings/skips are informational, not blocking).
+</code></pre>
+<p><code>doctor</code> never fails your session for a <code>WARN</code> — those are informational. Read the specific
+lines that matter to you:</p>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th><code>WARN</code> means</th>
+<th>Fix (if you care)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>build_fingerprint</code></td>
+<td>Your installed binary's build commit doesn't match this checkout's current commit (you edited source after the last build)</td>
+<td><code>uv run python packaging/maintainer/install_self.py</code> to rebuild from the current checkout (maintainer-only, BUG-600)</td>
+</tr>
+<tr>
+<td><code>torch</code></td>
+<td>Local-inference support isn't installed</td>
+<td>Only needed if you're running models locally through gald3r directly (rare) — most local-model use goes through Ollama/LM Studio instead</td>
+</tr>
+<tr>
+<td><code>overlay_freshness</code></td>
+<td>An installed platform overlay (<code>.claude/</code>, <code>.cursor/</code>) has drifted from what the CLI would generate today</td>
+<td><code>gald3r platform install &lt;platform&gt; --force</code> to resync (see below). <code>gald3r sync --apply</code> is the equivalent for gald3r_core's own contributor checkout specifically — not something most consumer projects use.</td>
+</tr>
+<tr>
+<td><code>auth</code></td>
+<td>No stored <code>world_tree</code> session token</td>
+<td>Only needed for team/cross-project features — <code>gald3r login</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="step-2-gald3r-selftest">Step 2: <code>gald3r selftest</code><a class="headerlink" href="#step-2-gald3r-selftest" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r selftest
+</code></pre>
+<pre><code>gald3r system test harness -- &lt;project&gt; (gald3r 3.0.0)
+Overall: 69% functional (4/7 passing)
+  [PARTIAL] Task Management          80%
+  [PASS   ] Bug Tracking             100%
+  [PASS   ] Git Hooks                100%
+  [SKIP   ] Schema Validation        -
+  ...
+  [FAIL   ] PLATFORM_SPEC            0%
+  [FAIL   ] Platform Parity          0%
+  ...
+Report: &lt;project&gt;\.gald3r\reports\system_test_20260802_000721.md
+</code></pre>
+<p><code>selftest</code> is a percentage-of-installed-capability check, not a pass/fail gate — a lower
+number usually means an optional subsystem (platform parity tooling, schema validation) isn't
+wired up in this particular checkout, not that the CLI is broken. Read the written report file
+for exactly which sub-checks failed and why.</p>
+<p><strong>Known discrepancy (harmless, worth knowing about):</strong> <code>selftest</code>'s header shows the
+project's declared <code>gald3r_rel_version</code> from <code>.gald3r/.identity</code> (the framework revision this
+project's <code>.gald3r/</code> scaffold was set up against), which can lag behind the actual installed
+CLI's <code>--version</code>/<code>doctor</code> line — those two numbers answering different questions ("what rel
+was this project's scaffold built for" vs. "what CLI build is running") is expected, not a
+sign anything is broken. Run <code>gald3r schema-migrate</code> if you want the project's declared rel
+brought current.</p>
+<h2 id="step-3-gald3r-errors-gald3r-trace">Step 3: <code>gald3r errors</code> / <code>gald3r trace</code><a class="headerlink" href="#step-3-gald3r-errors-gald3r-trace" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r errors
+</code></pre>
+<pre><code>No matching error/failure trace records.
+</code></pre>
+<p>(Real output — a clean checkout has none.) When something DID fail during an agent run,
+<code>errors</code> summarizes it from the trace logs; <code>gald3r trace</code> inspects the full trace log
+directly for a specific run.</p>
+<h2 id="step-4-gald3r-medic">Step 4: <code>gald3r medic</code><a class="headerlink" href="#step-4-gald3r-medic" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r medic --help
+</code></pre>
+<pre><code>usage: gald3r medic [-h] {curate,heal} ...
+    curate       Analyze feature/subsystem fragmentation (dry-run) or apply approved moves
+    heal         Structural backfill for repos predating a framework feature (dry-run default)
+</code></pre>
+<p><code>medic</code> diagnoses and repairs problems in your project's <code>.gald3r/</code> structure itself — broken
+links, stale indexes, drifted files — fixing what's safe to fix automatically and reporting
+the rest. Both subcommands default to dry-run; nothing changes on disk until you pass the
+apply flag they document.</p>
+<h2 id="common-issues">Common issues<a class="headerlink" href="#common-issues" title="Permanent link">&para;</a></h2>
+<h3 id="windows-gald3r-returns-instantly-with-no-output-at-all-blank-exit-code">Windows: <code>gald3r</code> returns instantly with no output at all (blank exit code)<a class="headerlink" href="#windows-gald3r-returns-instantly-with-no-output-at-all-blank-exit-code" title="Permanent link">&para;</a></h3>
+<p>This was possible before T607 (BUG-650) and is now resolved by the dual-exe split — see
+below. If you are still hitting it, you're almost certainly invoking <strong><code>gald3rw.exe</code></strong>
+directly (the GUI-attach binary) from a console-less host, or you have an old, pre-T607
+single-binary install still on <code>PATH</code>. Update to the current release (<code>gald3r install
+update</code>, or re-run <code>gald3r platform install</code>/<code>gald3r sync</code> if you're on an installed
+overlay) and invoke <code>gald3r</code>, not <code>gald3rw</code>, from a shell.</p>
+<p><strong>The two-exe contract (T607):</strong> the Windows release ships TWO executables on <code>PATH</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Binary</th>
+<th>PE subsystem</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gald3r.exe</code></td>
+<td>Console (3)</td>
+<td>Terminals, scripts, scheduled tasks, AI-agent shells — anywhere you type <code>gald3r</code> yourself or a script invokes it directly. Always waits, always prints, always returns a real exit code — including from a console-less PowerShell host.</td>
+</tr>
+<tr>
+<td><code>gald3rw.exe</code></td>
+<td>GUI (2), attach</td>
+<td>Throne, IDE hooks, the valk daemon, and any other spawn from a process that must never flash a console window (the BUG-556 fix). Interactive terminal usage still prints normally; a console-less parent gets zero console flash and no output — by design, since nothing is watching for it there.</td>
+</tr>
+</tbody>
+</table>
+<p>Before T607, only one binary existed and it was built GUI-subsystem (<code>gald3rw.exe</code>'s
+shape today) — every direct terminal/agent/automation invocation on Windows had this
+exact "returns instantly with no output" failure mode. That binary is retired; <code>gald3r</code>
+on a current install is console-subsystem and does not have this problem.</p>
+<p>If you are deliberately invoking <code>gald3rw.exe</code> yourself (uncommon — it exists for
+programmatic/GUI-parented spawns, not interactive use) and want its output anyway, any
+of these forms works:</p>
+<pre><code class="language-powershell">cmd /c &quot;gald3rw --version&quot;          # cmd allocates a console; output flows normally
+</code></pre>
+<pre><code class="language-powershell">Start-Process gald3rw -ArgumentList &quot;--version&quot; -NoNewWindow -Wait `
+  -RedirectStandardOutput out.txt   # explicit handles bypass console attachment
+</code></pre>
+<p>Normal interactive terminals (Windows Terminal, VS Code/Cursor terminal panels,
+<code>cmd.exe</code>, Git Bash), Python <code>subprocess</code> captures, and CI runners are unaffected either
+way. If you hit this from source (<code>uv</code> install), <code>uv run gald3r ...</code> is also unaffected
+— it runs the console-subsystem Python entry point directly, never a compiled binary.</p>
+<h3 id="gald3r-command-not-found-binary-not-on-path">"gald3r: command not found" / binary not on PATH<a class="headerlink" href="#gald3r-command-not-found-binary-not-on-path" title="Permanent link">&para;</a></h3>
+<p>You installed via <code>uv sync</code> but didn't add <code>.venv\Scripts</code> (Windows) / <code>.venv/bin</code>
+(macOS/Linux) to <code>PATH</code>, or you edited <code>PATH</code> in a terminal that was already open. See
+<a href="../install/#make-gald3r-reachable-from-any-project"><code>install.md</code></a> — and fully restart your
+terminal/IDE after any <code>PATH</code> edit.</p>
+<h3 id="installed-platform-overlay-claude-cursor-looks-stale-or-hooks-arent-firing">Installed platform overlay (<code>.claude/</code>, <code>.cursor/</code>) looks stale or hooks aren't firing<a class="headerlink" href="#installed-platform-overlay-claude-cursor-looks-stale-or-hooks-arent-firing" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r doctor
+</code></pre>
+<pre><code>[WARN] overlay_freshness DRIFT -- claude: 1 file(s) changed (.claude/settings.json) |
+       Run `uv run gald3r sync --apply` (or `uv run gald3r platform install &lt;platform&gt;
+       --force`) to resync the installed overlay from the live neutral_source/ tree. ...
+</code></pre>
+<p>(Real output, trimmed.) This is the platform-overlay analog of the <code>build_fingerprint</code>
+check above — the files actually on disk in <code>.claude/</code>/<code>.cursor/</code> no longer match what
+<code>gald3r platform install</code> would generate today (you hand-edited an installed file, or the
+generator changed since you last installed). Fix:</p>
+<pre><code>gald3r platform install claude --into . --force
+</code></pre>
+<p><code>--force</code> overwrites the drifted files with a fresh render — including a fresh,
+non-destructive <code>.claude/settings.json</code> merge (see
+<a href="../install/#hook-wiring-claudesettingsjson-vs-cursorhooksjson"><code>install.md</code></a>), so your own
+<code>mcpServers</code>/<code>permissions</code>/other top-level keys survive even across a forced resync.</p>
+<h3 id="gald3r-status-says-no-gald3rgald3rdb-found-yet"><code>gald3r status</code> says "No .gald3r/gald3r.db found yet"<a class="headerlink" href="#gald3r-status-says-no-gald3rgald3rdb-found-yet" title="Permanent link">&para;</a></h3>
+<p>Expected on a fresh checkout, or after cloning a repo where the DB (gitignored by design —
+it's a regeneratable cache, not source of truth for the files) wasn't carried over:</p>
+<pre><code>gald3r db backfill
+</code></pre>
+<p>rebuilds it from the <code>.gald3r/tasks/</code> and <code>.gald3r/bugs/</code> files. See
+<a href="../task-bug-workflow/#the-state-model-sqlite-first-markdown-second"><code>task-bug-workflow.md</code></a>.</p>
+<h3 id="a-taskbug-file-wont-pass-gald3r-validate">A task/bug file won't pass <code>gald3r validate</code><a class="headerlink" href="#a-taskbug-file-wont-pass-gald3r-validate" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r validate --fix
+</code></pre>
+<p>normalizes whatever's safely auto-fixable (missing-but-inferable frontmatter fields, wrong
+<code>tasks/&lt;status&gt;/</code> folder placement for the declared status). Anything it can't safely fix on
+its own, it reports instead of guessing.</p>
+<h3 id="an-autopilotswarm-run-looks-stuck">An autopilot/swarm run looks stuck<a class="headerlink" href="#an-autopilotswarm-run-looks-stuck" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r go-status
+</code></pre>
+<p>Read-only check on whether a running autopilot loop is <code>ALIVE</code>, <code>IDLE-WAIT</code>, <code>STALLED</code>, or
+<code>STOPPED</code> — without interrupting it. See <a href="../autopilot/"><code>autopilot.md</code></a> for the rest of the
+run-management verbs (<code>autopilot stop</code>, <code>worktree steer</code>/<code>queue</code>).</p>
+<h3 id="gald3r-login-says-the-server-does-not-yet-expose-device-code-auth"><code>gald3r login</code> says the server "does not yet expose device-code auth"<a class="headerlink" href="#gald3r-login-says-the-server-does-not-yet-expose-device-code-auth" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r login
+</code></pre>
+<pre><code>gald3r login: world_tree does not yet expose device-code auth (404 on POST /api/v1/auth/device/code). Use `gald3r login --token &lt;token&gt;` instead.
+</code></pre>
+<p>(Real output.) <code>gald3r login</code> with no arguments starts an interactive <strong>device-code
+sign-in</strong>: it requests a code from <code>world_tree</code>, prints a verification URL plus a short
+code for you to enter in any browser, polls until you approve, and stores the resulting
+session token — no raw JWT handling needed. The message above is the honest fail-closed
+path while the deployed <code>world_tree</code> server predates those auth routes: until the server
+ships them, use a pre-issued Bearer token instead:</p>
+<pre><code>gald3r login --token &lt;TOKEN&gt;                              # one-off
+gald3r login --token &lt;TOKEN&gt; --base-url https://api.gald3r.ai   # explicit API base (default shown)
+</code></pre>
+<p><code>$GALD3R_WORLD_TREE_TOKEN</code> is the equivalent env-var form, useful in CI or so you don't have
+to pass <code>--token</code> by hand every time. <code>gald3r logout</code> clears whatever session is currently
+stored (<code>gald3r logout: no stored session to clear</code> if there wasn't one — also not an error).
+None of this is required for local, single-project use — see the <code>auth</code> line in
+<a href="#step-1-gald3r-doctor">Step 1</a> above: a missing token is a <code>WARN</code>, never a blocking failure,
+and only matters once you're using <code>world_tree</code>-backed features (<code>valk</code>, cross-project
+<code>workspace</code> sync, <code>version-check</code>'s online path). See <a href="../coordination/"><code>coordination.md</code></a>
+for what those features actually unlock.</p>
+<h3 id="cross-project-coordination-looks-out-of-sync">Cross-project coordination looks out of sync<a class="headerlink" href="#cross-project-coordination-looks-out-of-sync" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r workspace status
+gald3r workspace pull
+</code></pre>
+<p>See <a href="../coordination/"><code>coordination.md</code></a> for the full WPAC/Valkyrie model — most drift is
+resolved by a <code>pull</code> reconciling the local mirror against the online registry.</p>
+<h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
+<p><code>gald3r &lt;verb&gt; --help</code> (and <code>gald3r &lt;verb&gt; &lt;subverb&gt; --help</code>) is always more authoritative
+than this page for any single verb's current flags — if this page and <code>--help</code> ever disagree,
+trust <code>--help</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

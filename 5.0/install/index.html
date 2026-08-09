@@ -1,0 +1,2053 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/install/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../quickstart/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Install - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#install" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Install
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../reference/platforms/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#which-path-should-i-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which path should I use?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-signed-binary-and-per-os-installers-recommended-works-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Signed binary and per-OS installers (recommended — works today)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Signed binary and per-OS installers (recommended — works today)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos-pkg-installer-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS — .pkg installer (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linux-install-tarball" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux — install tarball
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-from-source-uv-for-contributors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. From source (uv) — for contributors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. From source (uv) — for contributors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows (PowerShell)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux-bashzsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux (bash/zsh)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-gald3r-reachable-from-any-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make gald3r reachable from any project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-extras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional extras
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-per-platform-ide-integration-crash-overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Per-platform IDE integration (CRASH overlay)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Per-platform IDE integration (CRASH overlay)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hook-wiring-claudesettingsjson-vs-cursorhooksjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook wiring: .claude/settings.json vs. .cursor/hooks.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-an-existing-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading an existing install
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Upgrading an existing install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stop-the-local-fleet-before-replacing-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stop the local fleet before replacing files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#confirm-the-install-is-healthy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confirm the install is healthy
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/platforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#which-path-should-i-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which path should I use?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-signed-binary-and-per-os-installers-recommended-works-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Signed binary and per-OS installers (recommended — works today)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Signed binary and per-OS installers (recommended — works today)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos-pkg-installer-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS — .pkg installer (recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linux-install-tarball" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux — install tarball
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-from-source-uv-for-contributors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. From source (uv) — for contributors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. From source (uv) — for contributors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows (PowerShell)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux-bashzsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux (bash/zsh)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-gald3r-reachable-from-any-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make gald3r reachable from any project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-extras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional extras
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-per-platform-ide-integration-crash-overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Per-platform IDE integration (CRASH overlay)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Per-platform IDE integration (CRASH overlay)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hook-wiring-claudesettingsjson-vs-cursorhooksjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook wiring: .claude/settings.json vs. .cursor/hooks.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-an-existing-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading an existing install
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Upgrading an existing install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stop-the-local-fleet-before-replacing-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stop the local fleet before replacing files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#confirm-the-install-is-healthy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confirm the install is healthy
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h1>
+<p><code>gald3r</code> is a single Python codebase (<code>gald3r_core</code>) that runs the same way on Windows, macOS,
+and Linux. This page covers every supported install path, in the order you should try them.</p>
+<h2 id="which-path-should-i-use">Which path should I use?<a class="headerlink" href="#which-path-should-i-use" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>You are...</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trying gald3r for the first time, don't want to build anything</td>
+<td><a href="#1-signed-binary-and-per-os-installers-recommended-works-today">Signed binary and per-OS installers</a></td>
+</tr>
+<tr>
+<td>A contributor, or want the latest unreleased code</td>
+<td><a href="#2-from-source-uv-for-contributors">From source with <code>uv</code></a></td>
+</tr>
+<tr>
+<td>Already have <code>gald3r</code> installed and want to upgrade</td>
+<td><code>gald3r install update</code> (see <a href="#upgrading-an-existing-install">Upgrading</a>)</td>
+</tr>
+<tr>
+<td>Setting up a whole new machine for team use</td>
+<td><a href="#2-from-source-uv-for-contributors">From source</a>, then <code>gald3r onboard</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-signed-binary-and-per-os-installers-recommended-works-today">1. Signed binary and per-OS installers (recommended — works today)<a class="headerlink" href="#1-signed-binary-and-per-os-installers-recommended-works-today" title="Permanent link">&para;</a></h2>
+<p><code>.github/workflows/binary-build.yml</code> builds signed Windows/Linux/macOS binaries and attaches
+them, plus per-OS installers (T611), to a GitHub Release on <code>Gald3r-Labs/gald3r_core</code> whenever
+a <code>v*</code> tag is pushed to this repo. Releases exist and ship on this cadence — <strong>v4.0.0-beta.3</strong>
+at this writing — with every asset linked directly from the release page (and always at
+<code>releases/latest/download/&lt;asset&gt;</code>).</p>
+<h3 id="macos-pkg-installer-recommended">macOS — <code>.pkg</code> installer (recommended)<a class="headerlink" href="#macos-pkg-installer-recommended" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Download <code>gald3r-macos-arm64.pkg</code> from the release page.</li>
+<li>Double-click it, follow the installer prompts. Installs to <code>/usr/local/bin/gald3r</code>.</li>
+<li>Open a new terminal and run <code>gald3r --version</code>.</li>
+</ol>
+<p>The <code>.pkg</code> and the binary inside it are both signed as <strong>Gald3r Labs LLC</strong> and notarized by
+Apple (the container with a Developer ID <strong>Installer</strong> certificate, the binary with Developer
+ID <strong>Application</strong>; both verified in CI via <code>codesign --verify</code> + <code>spctl --assess</code>, see
+<code>binary-build.yml</code>) — and the <code>.pkg</code>'s notarization ticket is stapled on, so it installs clean
+with no security prompts, online or offline.</p>
+<p>Prefer the bare binary instead? Download <code>gald3r-macos-arm64</code> (no <code>.pkg</code> suffix) + its
+<code>.sha256</code> sidecar, verify the checksum, <code>chmod +x</code>, and place it on your <code>PATH</code> yourself.</p>
+<h3 id="linux-install-tarball">Linux — install tarball<a class="headerlink" href="#linux-install-tarball" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">curl -LO https://github.com/Gald3r-Labs/gald3r_core/releases/latest/download/gald3r-linux-x86_64.tar.gz
+tar xzf gald3r-linux-x86_64.tar.gz
+cd gald3r-*-linux-x86_64
+./install.sh          # ~/.local/bin, or /usr/local/bin if run with sudo
+gald3r --version
+</code></pre>
+<p><code>install.sh</code> verifies the bundled <code>gald3r.sha256</code> before installing and refuses (loudly) if it
+doesn't match. Run <code>./uninstall.sh</code> from the same extracted directory to remove it later.</p>
+<p>Prefer the bare binary, <code>.deb</code>, or an Arch Linux <code>PKGBUILD</code> instead? See
+<code>packaging/deb/README.md</code> / <code>packaging/aur/README.md</code> for those (config-complete as of Task 17,
+not yet wired into this release's CI matrix).</p>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<pre><code class="language-powershell">gald3r install update
+</code></pre>
+<p><code>install update</code> downloads the latest signed release for your OS from
+<code>Gald3r-Labs/gald3r_core</code>, verifies its SHA-256 checksum, and replaces whatever <code>gald3r</code>
+currently resolves to on <code>PATH</code>. The Windows binary is Authenticode-signed as <strong>Gald3r Labs
+LLC</strong> via Azure Trusted Signing (verified in CI with <code>Get-AuthenticodeSignature</code>, see
+<code>binary-build.yml</code>). A Windows <code>.msi</code> installer (WiX-built, <strong>also Authenticode-signed</strong> as
+Gald3r Labs LLC, so SmartScreen shows the publisher instead of "Unknown") is also published for
+environments that require the Windows Installer service instead of an ad hoc <code>.exe</code> — the
+<code>.msi</code> installs <strong>both</strong> <code>gald3r.exe</code> and <code>gald3rw.exe</code> (T607) onto the same <code>PATH</code> entry in
+one step.</p>
+<p>On Windows, <code>gald3r install update</code> likewise refreshes <strong>both</strong> release assets
+(<code>gald3r-windows-x86_64.exe</code> → <code>gald3r.exe</code>, and <code>gald3rw-windows-x86_64.exe</code> →
+<code>gald3rw.exe</code>) in one fail-closed transaction (BUG-677). If either binary is locked by a
+running process (commonly <code>gald3rw.exe</code> held open by a Windows MCP server), the update
+aborts with a clear message naming the locked file and rolls back any partial replace. If
+Windows prevents that rollback too, gald3r fails loudly, retains the <code>.bak-*</code> backup, and gives
+the exact manual-recovery command instead of falsely reporting a consistent pair. POSIX stays
+single-binary.</p>
+<p>Bootstrapping the very first <code>gald3r</code> (before you have one on <code>PATH</code> to run <code>install update</code>
+with) is the <code>.pkg</code>/tarball/<code>.msi</code> install above, or — on any OS — a plain download-and-run of
+the OS-appropriate bare-binary asset from the release's GitHub page.</p>
+<h2 id="2-from-source-uv-for-contributors">2. From source (<code>uv</code>) — for contributors<a class="headerlink" href="#2-from-source-uv-for-contributors" title="Permanent link">&para;</a></h2>
+<p><strong>Users should install the signed binaries above.</strong> This path exists for people contributing to
+<code>gald3r_core</code> itself — the source repository (<code>gald3r_core_dev</code>) is <strong>private</strong>, so building
+from source requires being granted access first. If you just want to <em>use</em> gald3r, you do not
+need this section at all.</p>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Access to the private <code>Gald3r-Labs/gald3r_core_dev</code> repository (request it from the team)</li>
+<li>Python 3.11+</li>
+<li><a href="https://docs.astral.sh/uv/"><code>uv</code></a> — this project uses <code>uv</code>, not bare <code>pip</code>/<code>venv</code></li>
+<li>Git</li>
+</ul>
+<h3 id="windows-powershell">Windows (PowerShell)<a class="headerlink" href="#windows-powershell" title="Permanent link">&para;</a></h3>
+<pre><code class="language-powershell">git clone https://github.com/Gald3r-Labs/gald3r_core_dev.git
+cd gald3r_core_dev
+uv sync
+.venv\Scripts\gald3r.exe --version
+</code></pre>
+<h3 id="macos-linux-bashzsh">macOS / Linux (bash/zsh)<a class="headerlink" href="#macos-linux-bashzsh" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">git clone https://github.com/Gald3r-Labs/gald3r_core_dev.git
+cd gald3r_core_dev
+uv sync
+.venv/bin/gald3r --version
+</code></pre>
+<p>Real output from a fresh <code>uv sync</code> in this repo (Windows, this writing):</p>
+<pre><code>&gt; .venv\Scripts\gald3r.exe --version
+gald3r 4.0.0 (build 987ab4b55432)
+</code></pre>
+<h3 id="make-gald3r-reachable-from-any-project">Make <code>gald3r</code> reachable from any project<a class="headerlink" href="#make-gald3r-reachable-from-any-project" title="Permanent link">&para;</a></h3>
+<p><code>uv sync</code> only puts the binary inside <code>&lt;repo&gt;\.venv</code>. To run <code>gald3r</code> from a project of your
+own (not the <code>gald3r_core_dev</code> checkout itself), pick one:</p>
+<ul>
+<li>Add <code>&lt;repo&gt;\.venv\Scripts</code> (Windows) / <code>&lt;repo&gt;/.venv/bin</code> (macOS/Linux) to your <code>PATH</code>, then
+  restart your terminal/IDE fully — a process already running when you edit <code>PATH</code> won't see
+  the change.</li>
+<li>Invoke the binary by its full path from inside your own project directory.</li>
+<li>Run everything through <code>uv run gald3r ...</code> from inside the <code>gald3r_core_dev</code> checkout and
+  pass <code>--root &lt;path&gt;</code> to verbs that accept it (<code>setup</code> does).</li>
+</ul>
+<h3 id="optional-extras">Optional extras<a class="headerlink" href="#optional-extras" title="Permanent link">&para;</a></h3>
+<p><code>uv sync</code> alone installs the CLI plus the default <code>dev</code> dependency group. Some capabilities
+are opt-in extras (kept out of the default sync so a routine <code>uv sync</code> stays fast):</p>
+<table>
+<thead>
+<tr>
+<th>Extra</th>
+<th>Adds</th>
+<th>Install with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docs</code></td>
+<td>MkDocs + Material — build/serve this documentation site</td>
+<td><code>uv sync --extra docs</code></td>
+</tr>
+<tr>
+<td><code>api</code></td>
+<td>FastAPI app-builder support</td>
+<td><code>uv sync --extra api</code></td>
+</tr>
+<tr>
+<td><code>acp</code></td>
+<td>Agent Client Protocol router (Zed and other ACP-compatible editors)</td>
+<td><code>uv sync --extra acp</code></td>
+</tr>
+<tr>
+<td><code>packaging</code></td>
+<td>Nuitka — only needed to compile your own binary</td>
+<td><code>uv sync --extra packaging</code></td>
+</tr>
+<tr>
+<td><code>tel-pty</code></td>
+<td>Windows-only PTY support for <code>gald3r tel</code></td>
+<td><code>uv sync --extra tel-pty</code> (win32 only)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-per-platform-ide-integration-crash-overlay">3. Per-platform IDE integration (CRASH overlay)<a class="headerlink" href="#3-per-platform-ide-integration-crash-overlay" title="Permanent link">&para;</a></h2>
+<p>Once <code>gald3r</code> itself is installed, <code>gald3r setup</code> (or <code>gald3r onboard</code>) scaffolds <code>.gald3r/</code>
+in your project. Separately, <code>gald3r platform install</code> writes ONE platform's IDE overlay
+(commands/skills/agents/rules — the CRASH files an IDE like Claude Code, Cursor, or Copilot
+actually reads) into your project:</p>
+<pre><code>gald3r platform list                 # see the full supported platform roster
+gald3r platform install claude       # writes .claude/ into the current directory
+gald3r platform install cursor       # writes .cursor/ into the current directory
+</code></pre>
+<p>Real output, run against a scratch project (Windows, this writing):</p>
+<pre><code>&gt; gald3r platform install claude --into .
+platform install claude: wrote 638 file(s) into &lt;path&gt; (embedded generator, T177)
+  root doc CLAUDE.md: created
+  root doc GALD3R.md: created
+  .claude/settings.json (hooks key merge, BUG-635): created
+</code></pre>
+<p><code>gald3r platform verify</code> checks an installed platform tree is complete; <code>gald3r platform
+parity</code> diffs your installed overlay against the canonical generator output (used internally
+by this repo's own CI, not something most users need to run).</p>
+<p>Once installed, see <a href="../platform-usage/"><code>platform-usage.md</code></a> for what to actually do with
+that overlay — the <code>/g-</code>/<code>@g-</code> command layer, skills, rules, hooks, and agents you now have
+available inside your IDE, plus a per-platform quick-start matrix.</p>
+<p><strong><code>gald3r setup</code>/<code>gald3r onboard</code> do NOT install a platform overlay by default (BUG-635).</strong>
+Those two verbs only ever scaffold <code>.gald3r/</code> — no <code>.claude/</code>/<code>.cursor/</code>/etc., no wired
+<code>settings.json</code> — unless you ask. Pass the same opt-in, repeatable <code>--platform NAME</code> flag to
+either verb to also run the exact install path above in the same command:</p>
+<pre><code>gald3r setup --platform claude              # scaffold .gald3r/ AND write .claude/
+gald3r onboard --platform claude --platform cursor   # both, in one command
+</code></pre>
+<p>Omit <code>--platform</code> and both verbs print a hint (<code>no IDE overlay installed -- run: gald3r
+platform install &lt;platform&gt; --into .</code>) instead of leaving you with an unwired project and no
+indication anything is missing. Full auto-detection (installing a platform automatically
+without <code>--platform</code>, based on which IDE's own conventions are already present) is a possible
+future addition, not implemented today — this flag is the honest, conservative middle ground
+until that gets an owner ruling.</p>
+<h3 id="hook-wiring-claudesettingsjson-vs-cursorhooksjson">Hook wiring: <code>.claude/settings.json</code> vs. <code>.cursor/hooks.json</code><a class="headerlink" href="#hook-wiring-claudesettingsjson-vs-cursorhooksjson" title="Permanent link">&para;</a></h3>
+<p>Installing an overlay copies every hook <em>script</em> (<code>.claude/hooks/*.py</code>) in either case, but
+each IDE has its own separate file that actually <strong>registers</strong> those scripts against
+lifecycle events — copying the scripts alone does nothing until that registration file
+points at them. <code>platform install</code> writes both in one step, per platform:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Hook scripts land in</th>
+<th>Registered via</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude Code</td>
+<td><code>.claude/hooks/*.py</code></td>
+<td><code>.claude/settings.json</code>'s top-level <code>"hooks"</code> key (T420 retired the older <code>hooks.json</code> convention for Claude Code specifically)</td>
+</tr>
+<tr>
+<td>Cursor</td>
+<td><code>.cursor/hooks/*.py</code></td>
+<td><code>.cursor/hooks.json</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The <code>.claude/settings.json</code> merge is non-destructive (BUG-635).</strong> If a <code>settings.json</code>
+already exists at the target (your own <code>mcpServers</code>, <code>permissions</code>, <code>env</code>, or other
+top-level keys), <code>platform install claude</code> writes/updates <strong>only</strong> the <code>"hooks"</code> key and
+leaves everything else byte-for-byte untouched — confirmed by seeding a <code>settings.json</code> with
+a custom <code>mcpServers</code> entry and a <code>permissions.allow</code> list, then re-running the install: both
+survived unchanged, and only <code>"hooks"</code> was added. A fresh install (no pre-existing file)
+creates <code>settings.json</code> containing only the <code>"hooks"</code> key — it never invents <code>mcpServers</code> or
+<code>permissions</code> you didn't already have.</p>
+<p>If you ever see hook scripts sitting in <code>.claude/hooks/</code> that don't seem to be firing, check
+that <code>.claude/settings.json</code> actually has a populated <code>"hooks"</code> key — a manually-created or
+very old <code>settings.json</code> predating BUG-635's fix may be missing it; re-running <code>gald3r
+platform install claude --into .</code> repairs it without touching your other settings.</p>
+<h2 id="upgrading-an-existing-install">Upgrading an existing install<a class="headerlink" href="#upgrading-an-existing-install" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r install update    # replace the PATH binary with the latest signed release
+gald3r version-check     # find out if a newer gald3r is available -- works offline
+</code></pre>
+<h3 id="stop-the-local-fleet-before-replacing-files">Stop the local fleet before replacing files<a class="headerlink" href="#stop-the-local-fleet-before-replacing-files" title="Permanent link">&para;</a></h3>
+<p>Before an update, especially on Windows where a running MCP server can lock
+<code>gald3r.exe</code>/<code>gald3rw.exe</code>, inspect the persistent gald3r fleet and then request
+its cooperative shutdown:</p>
+<pre><code class="language-powershell">gald3r shutdown --dry-run
+gald3r shutdown --wait 30
+gald3r install update
+</code></pre>
+<p><code>shutdown</code> identifies executable shims and Python-hosted MCP, Valkyrie, and
+autopilot processes from their executable path and command line. It never
+targets the command's own shell-parent chain. The command waits only for the
+bounded <code>--wait</code> period and exits nonzero if a process remains; use
+<code>gald3r shutdown --force</code> only after reviewing that report, because force
+termination can discard in-flight work.</p>
+<p>Contributors rebuilding from a local <code>gald3r_core_dev</code> source checkout instead of a signed
+release use the maintainer-only <code>packaging/maintainer/install_self.py</code> script (<code>uv run python
+packaging/maintainer/install_self.py</code>) -- not a <code>gald3r</code> subcommand; see <code>docs/BINARY_REFRESH.md</code>.</p>
+<p><code>version-check</code> reports honestly either way — it does not require network access to run, and
+tells you if it couldn't reach anything rather than silently assuming you're current.</p>
+<h2 id="confirm-the-install-is-healthy">Confirm the install is healthy<a class="headerlink" href="#confirm-the-install-is-healthy" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r doctor
+</code></pre>
+<p>See the <a href="../quickstart/">quickstart</a> for full real output of this command and what each line
+means, and <a href="../troubleshooting/">Troubleshooting</a> if anything comes back <code>FAIL</code> instead of
+<code>OK</code>/<code>WARN</code>.</p>
+<blockquote>
+<p><strong>Windows note (T607 — two executables ship on <code>PATH</code>):</strong> the release installs BOTH
+<code>gald3r.exe</code> (console subsystem — terminals, scripts, agent shells; always prints and
+returns a real exit code, even from a console-less PowerShell host) and <code>gald3rw.exe</code>
+(GUI-subsystem attach — Windows MCP launch configs stamped at install time, and any
+other console-less-parented spawn that must never flash a console window, per BUG-556).
+Type <code>gald3r</code>, not <code>gald3rw</code>, in a terminal or script. <code>gald3r doctor</code> reports a
+<code>windows_dual_exe</code> row when the two binaries report different <code>--version</code> strings
+(BUG-677). If a <code>gald3r</code> command ever returns <em>instantly with no output at all</em>, see
+<a href="../troubleshooting/#windows-gald3r-returns-instantly-with-no-output-at-all-blank-exit-code">Troubleshooting → "Windows: <code>gald3r</code> returns instantly with no
+output"</a>.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

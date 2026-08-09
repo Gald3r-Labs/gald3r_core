@@ -1,0 +1,1806 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/antigravity/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — Google Antigravity (agent-first IDE + CLI + SDK) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-google-antigravity-agent-first-ide-cli-sdk" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — Google Antigravity (agent-first IDE + CLI + SDK)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-native-platform-gald3r-g-agnt-md-convention-does-not-auto-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ✅ NATIVE (platform) / ⚠️ gald3r g-agnt-*.md convention does NOT auto-map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ✅ NATIVE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-scheduled-tasks-native-antigravity-native-bonus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Scheduled Tasks — ✅ NATIVE (Antigravity-native bonus)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parity-vs-cursor-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity vs. Cursor Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary-copy-into-platform_statusmd-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary (copy into PLATFORM_STATUS.md row)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsantigravitygoogledocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (docs crawl 2026-06-02, https://antigravity.google/docs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-google-antigravity-agent-first-ide-cli-sdk">PLATFORM_SPEC.md — Google Antigravity (agent-first IDE + CLI + SDK)<a class="headerlink" href="#platform_specmd-google-antigravity-agent-first-ide-cli-sdk" title="Permanent link">&para;</a></h1>
+<p>Google Antigravity (DeepMind) is an <strong>agent-first</strong> development platform — a desktop IDE, a CLI,
+and an SDK that share <strong>one agent harness</strong>. As of the <strong>Antigravity 2.0 relaunch</strong> (agent-first;
+Subagents / Hooks / Scheduled Tasks / Agent Management announced at <strong>Google I/O 2026, May 2026</strong>),
+the IDE/CLI harness natively supports <strong>all six</strong> gald3r-relevant extension primitives — Workflows
+(slash commands), Rules, dynamic Subagents, Agent Skills (<code>SKILL.md</code>), lifecycle Hooks, and MCP.
+Critically for gald3r, Antigravity reads <strong><code>AGENTS.md</code></strong> (cross-tool) and <strong><code>GEMINI.md</code></strong>
+(Antigravity-specific, higher precedence), and discovers <strong>Anthropic-format <code>SKILL.md</code></strong> packages,
+so gald3r's existing <code>AGENTS.md</code> + <code>g-skl-*/SKILL.md</code> artifacts are <strong>largely drop-in reusable</strong>.</p>
+<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://antigravity.google/docs (see
+Verification Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: 2026-05-28</code>) which
+conservatively marked hooks/skills/rules as <code>❓</code>/<code>⚠️</code> — they are now confirmed <strong>NATIVE</strong> in the
+post-2.0 IDE/CLI harness.</p>
+<blockquote>
+<p><strong>Surface split (READ THIS):</strong> the capability ratings below reflect the <strong>Antigravity IDE / CLI
+product</strong> (one shared harness; docs at <code>antigravity.google/docs</code>). The hosted <strong>Gemini API
+"Managed Agents"</strong> surface (<code>ai.google.dev/gemini-api/docs/antigravity-agent</code>) is a <strong>separate
+product</strong> that currently states <em>custom tools / function-calling</em> and <em>subagent delegation</em> are
+<strong>"not yet supported."</strong> Do <strong>not</strong> conflate the two — gald3r targets the IDE/CLI harness, which
+<strong>does</strong> support hooks + subagents.</p>
+<p><strong>Instruction-file convention:</strong> Antigravity reads <strong><code>AGENTS.md</code></strong> (cross-tool, shared with Cursor
+/ Claude Code) and <strong><code>GEMINI.md</code></strong> (Antigravity-specific). It does <strong>not</strong> rely on <code>CLAUDE.md</code>.
+Precedence: <strong>System Rules</strong> (immutable, DeepMind) &gt; <strong><code>GEMINI.md</code></strong> &gt; <strong><code>AGENTS.md</code></strong>.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p>Antigravity 2.0 splits config between <strong>project-local</strong> dirs and <strong>user-global</strong> state under
+<code>~/.gemini/</code> (shared with the Gemini CLI state tree).</p>
+<pre><code>&lt;project-root&gt;/
+├── AGENTS.md                        ← instruction file Antigravity reads (cross-tool)
+├── GEMINI.md                        ← Antigravity-specific instructions (higher precedence)
+└── .agents/                         ← workspace customization root
+    ├── rules/        *.md           ← Manual / Always On / Model Decision / Glob (≤12,000 chars each)
+    ├── skills/       &lt;name&gt;/SKILL.md ← Agent Skills (Anthropic SKILL.md standard)  [path varies — see §4]
+    ├── workflows/    *.md           ← project-relative Workflows (slash commands)  [confirmed T384 — see §5]
+    └── hooks.json                   ← lifecycle hooks (workspace scope)
+.antigravity/
+    └── mcp.json                     ← project-local MCP config { &quot;mcpServers&quot;: { ... } }
+
+~/.gemini/                           ← user-global state (Gemini-namespaced)
+├── GEMINI.md                        ← global Antigravity-specific rules
+├── AGENTS.md                        ← global cross-tool rules (v1.20.3+)
+├── config/                          ← global customizations (hooks.json customization dir)
+└── antigravity/
+    ├── skills/                      ← global Agent Skills (all workspaces)
+    ├── mcp_config.json              ← global MCP config (same mcpServers shape)
+    └── global_workflows/            ← saved-prompt Workflows (slash commands, /)
+</code></pre>
+<blockquote>
+<p><strong>Path caveat (skills):</strong> the workspace skill dir is cited across official + community sources as
+<strong><code>.agents/skills/</code></strong> AND <strong><code>.antigravity/skills/</code></strong> AND <strong><code>.agent/skills/</code></strong> (singular). Native
+skill discovery is unambiguous; the <strong>exact canonical path should be pinned by a live install test</strong>
+before being hard-coded into gald3r installers. Global-scope is <code>~/.gemini/antigravity/skills/</code>.</p>
+</blockquote>
+<ul>
+<li><strong>gald3r writes</strong>: <code>AGENTS.md</code>, <code>GEMINI.md</code> (Antigravity-only directives), <code>.agents/skills/&lt;name&gt;/SKILL.md</code>, <code>.agents/rules/*.md</code>, <code>.agents/workflows/*.md</code> (T384), <code>.agents/hooks.json</code>, <code>.antigravity/mcp.json</code></li>
+<li><strong>Platform owns</strong>: <code>~/.gemini/</code> global state, IDE settings, the Orchestrator/subagent runtime, System Rules (immutable)</li>
+</ul>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p>Antigravity reads, in precedence order: <strong>System Rules</strong> (immutable, DeepMind) → <strong><code>GEMINI.md</code></strong>
+(Antigravity-specific) → <strong><code>AGENTS.md</code></strong> (cross-tool, also read by Cursor / Claude Code). Global
+variants live at <code>~/.gemini/GEMINI.md</code> and <code>~/.gemini/AGENTS.md</code> (cross-tool global, v1.20.3+). No
+dedicated <code>ANTIGRAVITY.md</code> is required — gald3r's <code>AGENTS.md</code> is a first-class input. For
+<strong>Antigravity-only must-win directives</strong>, put them in <code>GEMINI.md</code> (it wins over <code>AGENTS.md</code>).
+Antigravity also has a durable <strong>"memories"</strong> concept (agent state) distinct from rule files.</p>
+<hr />
+<h2 id="3-agents-support-native-platform-gald3r-g-agnt-md-convention-does-not-auto-map">3. Agents Support — ✅ NATIVE (platform) / ⚠️ gald3r <code>g-agnt-*.md</code> convention does NOT auto-map<a class="headerlink" href="#3-agents-support-native-platform-gald3r-g-agnt-md-convention-does-not-auto-map" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Dynamic Subagents</strong>: an <strong>Orchestrator</strong> (dispatch-only manager) decomposes the goal and spawns
+  subagents <strong>on the fly</strong> (<code>start_subagent</code> tool) with isolated context; they run <strong>asynchronously
+  in the background</strong> and communicate via unique agent IDs. <strong>Agent Management</strong> groups conversations
+  by "project" with its own settings/permissions.</li>
+<li><strong>IMPORTANT gald3r nuance:</strong> subagents are <strong>dynamic</strong> — there is <strong>no documented file-based
+  static-role discovery</strong> (no honored <code>.agents/agents/</code> dir for <code>g-agnt-*.md</code>). gald3r's markdown
+  agent-role files <strong>do NOT auto-map</strong>; fold critical agent guidance into <strong>rules/skills</strong> instead.</li>
+<li><strong>Orchestrator self-handoff</strong>: tracks cumulative subagent spawn count; on hitting a limit it dumps
+  state to handoff files, kills background tasks, and spawns a successor that resumes — relevant to
+  gald3r long-running autonomous loops.</li>
+<li><strong>Managed Agents caveat</strong>: the separate hosted Gemini API "Managed Agents" SDK currently states
+  <em>subagent delegation is not yet supported</em> — that is the <strong>hosted-SDK</strong> limitation, distinct from
+  the IDE/CLI harness which <strong>does</strong> spawn subagents.</li>
+<li>Source: https://antigravity.google/docs/subagents</li>
+</ul>
+<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Agent Skills</strong> (Anthropic <strong><code>SKILL.md</code></strong> open format, progressive disclosure): a directory-based
+  package containing a definition file (<code>SKILL.md</code>) + optional supporting assets. Frontmatter: <code>name</code>
+  (optional / unique / lowercase-hyphen), <code>description</code> (<strong>mandatory</strong> — the semantic trigger);
+  markdown body. Loaded <strong>on-demand</strong> when the agent deems it relevant.</li>
+<li><strong>"The <code>SKILL.md</code> format is the same standard used by Claude Code, Cursor, and every other
+  compatible agent."</strong> gald3r <code>g-skl-*/SKILL.md</code> files are <strong>directly compatible</strong>.</li>
+<li>Directory path varies across official + community sources: workspace-scope cited as
+  <code>.agents/skills/</code> <strong>and</strong> <code>.antigravity/skills/</code> <strong>and</strong> <code>.agent/skills/</code>; global-scope
+  <code>~/.gemini/antigravity/skills/</code>. Native discovery is unambiguous; <strong>pin the exact path via install
+  test</strong>. Same harness shared by the Antigravity CLI and IDE.</li>
+<li>Source: https://codelabs.developers.google.com/getting-started-with-antigravity-skills</li>
+</ul>
+<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Workflows</strong> (saved-prompt slash commands): markdown files invoked in Agent via a slash command
+  <code>/&lt;workflow-name&gt;</code>. A workflow file contains a <strong>title, description, and a series of steps</strong>; files
+  are limited to <strong>12,000 chars</strong>. Created via <strong>+ Global</strong> (all workspaces) or <strong>+ Workspace</strong>;
+  global workflows are stored at <code>~/.gemini/antigravity/global_workflows/</code>. A dedicated <code>/docs/command</code>
+  page also exists.</li>
+<li><strong>Project-relative directory CONFIRMED (T384, reversing the BUG-295 downgrade, re-scanned
+  2026-07-18):</strong> "+ Workspace" Workflows resolve to a real, <strong>project-relative</strong> directory —
+  <code>&lt;project-root&gt;/.agents/workflows/*.md</code> — distinct from the global
+  <code>~/.gemini/antigravity/global_workflows/</code> path. Confirmed via the official first-party Google
+  Codelab (literal shell instruction <code>mkdir -p .agents/workflows .agents/skills</code> and file-creation
+  step <code>Create .agents/workflows/startcycle.md:</code>), cross-checked against a Google AI Developer Forum
+  thread describing workflows as resolving "in the current workspace" (project-scoped, not
+  global-only). <strong>Path caveat (same ambiguity as §4 Skills):</strong> third-party sources (a Google
+  Antigravity blog write-up and a community rules aggregator) spell the directory <strong>singular</strong>
+  (<code>.agent/workflows/</code>) rather than plural (<code>.agents/workflows/</code>); the first-party Google Codelab
+  uses plural, and gald3r's own <code>.agents/rules</code>, <code>.agents/hooks</code>, <code>.agents/skills</code> entries for this
+  platform are all plural, so <code>.agents/workflows</code> is adopted here for internal consistency — <strong>pin
+  the exact spelling via a live install test</strong> before treating it as immutable, same caveat already
+  carried for the skills path.
+  <code>layout_map.yaml</code> now carries a real <code>commands: {dir: ".agents/workflows", ext: ".md", prefix:
+  "g-"}</code> entry for <code>antigravity</code> (previously absent — BUG-295 found only the undocumented global
+  path and downgraded the matrix <code>Commands</code> cell to <code>⚠</code>). Flipping the live
+  <code>.gald3r/PLATFORM_CAPABILITY_MATRIX.md</code> <code>antigravity</code> <code>Commands</code> cell from <code>⚠</code> back to <code>✅</code> is a
+  <strong>coordinator-owned</strong> <code>.gald3r/</code> write (g-rl-33 Swarm Reconciliation Gate — bucket agents don't
+  write shared <code>.gald3r/</code> ledgers directly; same deferral pattern as T383's goose <code>Commands</code> cell),
+  not included in this authoring pass.</li>
+<li>gald3r <code>@g-*</code> / <code>/g-*</code> commands map directly to Workflows (the closest analogue).</li>
+<li>Source: https://antigravity.google/docs/rules-workflows ·
+  https://codelabs.developers.google.com/autonomous-ai-developer-pipelines-antigravity
+  (first-party Google Codelab — <code>mkdir -p .agents/workflows .agents/skills</code>;
+  <code>Create .agents/workflows/startcycle.md:</code>) ·
+  https://discuss.ai.google.dev/t/agents-not-reading-workflow-when-directed-with-slash-commands/115448
+  (community forum — workflows exist "in the current workspace")</li>
+</ul>
+<h2 id="6-hooks-system-native">6. Hooks System — ✅ NATIVE<a class="headerlink" href="#6-hooks-system-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Lifecycle Hooks</strong> (added in <strong>Antigravity 2.0 / Google I/O 2026, May 2026</strong>): execute custom
+  <strong>local shell scripts</strong> at critical stages of the agent's execution cycle. Configured in
+  <strong><code>hooks.json</code></strong> in the customization dir (<code>.agents/</code> workspace, or <code>~/.gemini/config/</code> global;
+  <strong>workspace precedence</strong>). Hooks receive input via <strong>stdin as JSON</strong> and return output via <strong>stdout
+  as JSON</strong>.</li>
+<li><strong>Hook points</strong>: <code>before_tool_call</code>, <code>after_tool_call</code> (logging), <code>before_model_call</code> (inject
+  system instructions), <code>after_model_call</code> (override exit rules), <code>on_loop_stop</code>, <code>on_error</code>.</li>
+<li>gald3r <code>g-hk-*.py</code> hooks (<code>python &lt;path&gt;</code>, post-T1584 Python port; no PowerShell involved) can be wired as the executed shell scripts:
+  <code>before_tool_call</code> ~ preToolUse, <code>on_loop_stop</code> ~ stop, <code>before_model_call</code> enables
+  session-start-style instruction injection.</li>
+<li>Source: https://antigravity.google/docs/hooks</li>
+</ul>
+<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Rules</strong> are plain <strong>Markdown</strong> files of constraints. <strong>Activation types</strong>: <strong>Manual</strong>
+  (at-mention), <strong>Always On</strong>, <strong>Model Decision</strong> (NL description), <strong>Glob</strong> (file pattern). Each rule
+  file is limited to <strong>12,000 chars</strong>. Global rules: <code>~/.gemini/GEMINI.md</code>; workspace rules:
+  <code>.agents/rules/</code> of the workspace/git root.</li>
+<li><strong>A full always-on guarantee exists</strong> (<code>Always On</code> activation) — stronger than the partial picture
+  in the prior gald3r spec. Precedence: <strong>System Rules</strong> (immutable, DeepMind) &gt; <strong><code>GEMINI.md</code></strong> &gt;
+  <strong><code>AGENTS.md</code></strong>. A durable <strong>"memories"</strong> concept also exists.</li>
+<li>gald3r <code>g-rl-*</code> map to <strong>Always On</strong> (for <code>alwaysApply: true</code>) or <strong>Model Decision</strong> (for
+  <code>description:</code>-scoped) rules.</li>
+<li>Source: https://antigravity.google/docs/rules-workflows</li>
+</ul>
+<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Model Context Protocol</strong>: connect local tools, databases, and external services. Config shape
+  <code>{ "mcpServers": { ... } }</code> at <strong><code>.antigravity/mcp.json</code></strong> (project) or
+  <strong><code>~/.gemini/antigravity/mcp_config.json</code></strong> (global; Settings → Customizations → Open MCP Config).
+  Both a <strong>JSON-file config</strong> and a <strong>GUI MCP Store</strong> ("..." dropdown → Browse &amp; Install &amp;
+  Authenticate). Trusted/owned-workspace security gating for write-capable servers.</li>
+<li>gald3r MCP servers (e.g. <code>example_app</code>) integrate via the <code>mcpServers</code> JSON.</li>
+<li>Source: https://antigravity.google/docs/mcp</li>
+</ul>
+<h2 id="9-scheduled-tasks-native-antigravity-native-bonus">9. Scheduled Tasks — ✅ NATIVE (Antigravity-native bonus)<a class="headerlink" href="#9-scheduled-tasks-native-antigravity-native-bonus" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Scheduled Tasks</strong> (Antigravity 2.0): define <strong>crons</strong> to trigger agent invocations on a schedule.
+  Adoptable for gald3r heartbeat / scheduled jobs.</li>
+<li>Source: https://antigravity.google/docs/hooks + I/O 2026 deep-dive
+  https://antigravity.google/blog/google-io-2026-feature-deep-dive</li>
+</ul>
+<hr />
+<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
+<p>Antigravity now reaches <strong>near-full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>):
+native <strong>commands (Workflows), rules, agents (dynamic subagents), skills, hooks, and MCP</strong>, plus an
+Antigravity-native <strong>Scheduled Tasks</strong> bonus with no Cursor analog. The one structural caveat is that
+<strong>subagents are dynamic (Orchestrator-spawned)</strong> — there is no file-based <code>g-agnt-*.md</code> role
+discovery, so gald3r agent-role files must be folded into rules/skills rather than dropped into an
+agents dir.</p>
+<p><strong>Reuse note (important):</strong> because Antigravity reads <code>AGENTS.md</code> + <code>GEMINI.md</code> and discovers
+Anthropic-format <code>SKILL.md</code> packages, gald3r's <strong><code>AGENTS.md</code> + <code>g-skl-*/SKILL.md</code> artifacts are
+largely reusable on Antigravity without a separate port</strong>. The exact skill directory path
+(<code>.agents/skills</code> vs <code>.antigravity/skills</code> vs <code>.agent/skills</code>) and the hook payload schemas should be
+<strong>pinned by a live install test</strong> before being hard-coded into installers.</p>
+<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Type</strong>: native (<code>hooks.json</code>, shell scripts, stdin/stdout JSON)</li>
+<li><strong>Config file</strong>: <code>hooks.json</code> in the customization dir — <code>.agents/</code> (workspace) or <code>~/.gemini/config/</code> (global); <strong>workspace precedence</strong></li>
+<li><strong>Events available</strong>: <code>before_tool_call</code>, <code>after_tool_call</code>, <code>before_model_call</code>, <code>after_model_call</code>, <code>on_loop_stop</code>, <code>on_error</code></li>
+<li><strong>Event payload format</strong>: JSON via <strong>stdin</strong>; result returned as JSON via <strong>stdout</strong></li>
+<li><strong>Command extensions</strong>: local <strong>shell scripts</strong> (official examples are <code>.sh</code>); gald3r <code>g-hk-*.py</code> wired via <code>{ "type":"command", "command":"python &lt;path&gt; …" }</code> (post-T1584 Python port; no PowerShell involved)</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> map to <code>before_tool_call</code> (pre-tool guards), <code>on_loop_stop</code> (stop), <code>before_model_call</code> (session-start-style instruction injection)</li>
+<li><strong>OS note</strong>: hooks invoke the local shell directly; <code>python &lt;path&gt;</code> runs cross-platform with no PowerShell dependency — <strong>pin payload schema via install test</strong></li>
+</ul>
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Two products, one name</strong>: the <strong>IDE/CLI harness</strong> (full extensibility — this spec) vs the hosted
+  <strong>Gemini API "Managed Agents"</strong> (separate; <em>no subagents / custom tools yet</em>). Do not conflate.</li>
+<li><strong>Instruction file</strong>: <code>AGENTS.md</code> + <code>GEMINI.md</code> (NOT <code>CLAUDE.md</code>); <code>GEMINI.md</code> outranks <code>AGENTS.md</code>;
+  immutable <strong>System Rules</strong> sit above both.</li>
+<li><strong>Dynamic subagents</strong>: Orchestrator spawns subagents on the fly — no static <code>g-agnt-*.md</code> dir.</li>
+<li><strong>Global state</strong> is Gemini-namespaced under <code>~/.gemini/</code> (shared with the Gemini CLI tree).</li>
+<li><strong>Skill dir path</strong> is not yet canonical across sources — pin via install test.</li>
+<li><strong>Workflows dir path</strong> (T384): confirmed project-relative (<code>.agents/workflows/</code> per the first-party
+  Google Codelab); same singular/plural spelling ambiguity as the skill dir across third-party
+  sources — pin via install test.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ship gald3r's <strong><code>AGENTS.md</code> + <code>g-skl-*/SKILL.md</code></strong> — Antigravity reads/discovers them natively.</li>
+<li>Ship gald3r's <strong><code>@g-*</code> / <code>/g-*</code> commands as Workflows at <code>.agents/workflows/*.md</code></strong> (T384 —
+  project-relative, <code>layout_map.yaml</code> <code>commands</code> entry now authored).</li>
+<li>Put <strong>Antigravity-only must-win directives in <code>GEMINI.md</code></strong> (outranks <code>AGENTS.md</code>).</li>
+<li>Hooks fire natively (shell commands; <code>g-hk-*.py</code> via <code>python &lt;path&gt;</code>, post-T1584 Python port; no PowerShell involved) — <code>before_model_call</code> covers
+  session-start injection, <code>on_loop_stop</code> covers stop, <code>before_tool_call</code> covers <code>.gald3r/</code> guards.</li>
+<li>Fold <code>g-agnt-*</code> guidance into <strong>rules/skills</strong> (no file-based subagent discovery).</li>
+<li>Adopt <strong>Scheduled Tasks</strong> (crons) for gald3r heartbeat jobs.</li>
+<li><strong>Evidence caveat</strong>: <code>antigravity.google/docs/*</code> is a JS SPA (WebFetch returned title only);
+  capability evidence comes from search-engine extractions quoting the official pages verbatim,
+  cross-checked against multiple 2026 sources + Google codelabs. <strong>Pin skill path + hook payload
+  schema via a live install test</strong> before hard-coding.</li>
+<li>New, high-churn platform (relaunched ~2026-05-19) — re-verify on the next
+  <code>@g-platform-scan-docs antigravity</code> (<code>crawl_max_age_days: 7</code>).</li>
+</ul>
+<hr />
+<h2 id="capability-summary-copy-into-platform_statusmd-row">Capability Summary (copy into PLATFORM_STATUS.md row)<a class="headerlink" href="#capability-summary-copy-into-platform_statusmd-row" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
+<blockquote>
+<p><strong>Agents (6th primitive):</strong> ✅ <strong>native</strong> dynamic subagents at the <strong>platform</strong> level; ⚠️ the gald3r
+<strong><code>g-agnt-*.md</code> file convention does not auto-map</strong> (no static-role discovery) — fold into rules/skills.</p>
+</blockquote>
+<hr />
+<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsantigravitygoogledocs">Verification Evidence (docs crawl 2026-06-02, https://antigravity.google/docs)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsantigravitygoogledocs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands / Workflows</td>
+<td>/docs/rules-workflows — Workflows = markdown saved-prompts, <code>/workflow-name</code>, title/description/steps, ≤12,000 chars, Global vs Workspace; also /docs/command. <strong>T384 (2026-07-18):</strong> Workspace scope is project-relative <code>.agents/workflows/*.md</code> — confirmed via codelabs.developers.google.com/autonomous-ai-developer-pipelines-antigravity (first-party Google Codelab, literal <code>mkdir -p .agents/workflows</code>) + discuss.ai.google.dev forum thread 115448 (workflows resolve "in the current workspace"); singular/plural spelling ambiguity noted, same as the skills path below</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>/docs/rules-workflows — Markdown rules; activation Manual / Always On / Model Decision / Glob; ≤12,000 chars; <code>~/.gemini/GEMINI.md</code> (global) + <code>.agents/rules/</code> (workspace); precedence System Rules &gt; GEMINI.md &gt; AGENTS.md</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>/docs/subagents — dynamic Orchestrator-spawned subagents (<code>start_subagent</code>), async/background, agent IDs, Agent Management; <strong>no</strong> file-based <code>g-agnt-*.md</code> discovery</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>codelabs (getting-started-with-antigravity-skills) — Anthropic <code>SKILL.md</code> standard ("same as Claude Code, Cursor"); YAML frontmatter (<code>name</code> optional, <code>description</code> mandatory); on-demand load; path <code>.agents</code>/<code>.antigravity</code>/<code>.agent</code> skills (pin via install test)</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>/docs/hooks — <code>hooks.json</code> shell scripts, stdin/stdout JSON; events <code>before_tool_call</code> / <code>after_tool_call</code> / <code>before_model_call</code> / <code>after_model_call</code> / <code>on_loop_stop</code> / <code>on_error</code>; global + workspace (workspace precedence); added Antigravity 2.0 / I/O 2026</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>/docs/mcp — <code>{ "mcpServers": {...} }</code> at <code>.antigravity/mcp.json</code> (project) / <code>~/.gemini/antigravity/mcp_config.json</code> (global); MCP Store GUI; owned-workspace gating</td>
+</tr>
+<tr>
+<td>Instruction file</td>
+<td>/docs/rules-workflows — <code>AGENTS.md</code> (cross-tool, also Cursor/Claude Code) applied after <code>GEMINI.md</code>; global <code>~/.gemini/GEMINI.md</code> + <code>~/.gemini/AGENTS.md</code> (v1.20.3+)</td>
+</tr>
+<tr>
+<td>Scheduled Tasks</td>
+<td>/docs/hooks + blog/google-io-2026-feature-deep-dive — cron-style agent invocations</td>
+</tr>
+<tr>
+<td>Surface separation</td>
+<td>ai.google.dev/gemini-api/docs/antigravity-agent — hosted "Managed Agents": custom tools + subagent delegation "not yet supported" → distinct from IDE/CLI harness rated here</td>
+</tr>
+<tr>
+<td>Evidence method</td>
+<td>antigravity.google/docs/* is a JS SPA (WebFetch → title only); ratings from search-engine extractions quoting official pages verbatim, cross-checked vs multiple 2026 sources + Google codelabs; confirmed pages: /docs/rules-workflows, /docs/mcp, /docs/subagents, /docs/hooks, /docs/agent, /docs/command, /docs/task-list</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-antigravity/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

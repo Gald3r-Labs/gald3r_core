@@ -1,0 +1,3229 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/crash/hooks/">
+      
+      
+        <link rel="prev" href="../skills/">
+      
+      
+        <link rel="next" href="../../../troubleshooting/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Hooks - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#crash-reference-hooks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hooks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../platforms/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../platforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#browse-by-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Browse by category
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Browse by category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tasks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipelines-autopilot-the-g-go-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipelines &amp; Autopilot (the g-go family)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-project-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup &amp; Project Identity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wpac-workspace-coordination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WPAC &amp; Workspace Coordination
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release &amp; Versioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vault-research" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vault &amp; Research
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platforms-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platforms &amp; Providers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security &amp; Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-knowledge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory &amp; Knowledge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging &amp; Diagnostics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Full reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-agent-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-agent-complete
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-agent-worktree-janitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-agent-worktree-janitor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-claude-chat-logger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-claude-chat-logger
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-component-tag-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-component-tag-check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-crash-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-crash-record
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-encoding-normalize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-encoding-normalize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-ggo-stop-detect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-ggo-stop-detect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-goal-stop-detect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-goal-stop-detect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-graph-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-graph-update
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-nightly-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-nightly-learn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-session-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-session-end
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-session-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-session-start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-tool-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-tool-end
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-tool-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-tool-start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-user-prompt-submit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-user-prompt-submit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-policy-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-policy-check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-post-session-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-post-session-trace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-post-skill-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-post-skill-timing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-push
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-session-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-session-trace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-skill-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-skill-timing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-tool-call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-tool-call
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-tool-call-gald3r-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-tool-call-gald3r-guard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-tool-call-member-gald3r-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-tool-call-member-gald3r-guard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-tool-call-prd-freeze" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-tool-call-prd-freeze
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-session-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-session-end
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-session-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-session-start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-setup-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-setup-user
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-tel-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-tel-tap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-validate-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-validate-shell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-vault-migrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-vault-migrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-vault-reindex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-vault-reindex
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-vault-resolve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-vault-resolve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-vault-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-vault-verify
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-wpac-inbox-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-wpac-inbox-check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-inbox-watcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        raw-inbox-watcher
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#browse-by-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Browse by category
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Browse by category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tasks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipelines-autopilot-the-g-go-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipelines &amp; Autopilot (the g-go family)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-project-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup &amp; Project Identity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wpac-workspace-coordination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WPAC &amp; Workspace Coordination
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release &amp; Versioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vault-research" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vault &amp; Research
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platforms-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platforms &amp; Providers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security &amp; Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-knowledge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory &amp; Knowledge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging &amp; Diagnostics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Full reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-agent-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-agent-complete
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-agent-worktree-janitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-agent-worktree-janitor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-claude-chat-logger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-claude-chat-logger
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-component-tag-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-component-tag-check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-crash-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-crash-record
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-encoding-normalize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-encoding-normalize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-ggo-stop-detect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-ggo-stop-detect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-goal-stop-detect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-goal-stop-detect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-graph-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-graph-update
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-nightly-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-nightly-learn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-session-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-session-end
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-session-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-session-start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-tool-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-tool-end
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-tool-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-tool-start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-user-prompt-submit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-user-prompt-submit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-policy-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-policy-check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-post-session-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-post-session-trace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-post-skill-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-post-skill-timing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-push
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-session-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-session-trace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-skill-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-skill-timing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-tool-call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-tool-call
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-tool-call-gald3r-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-tool-call-gald3r-guard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-tool-call-member-gald3r-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-tool-call-member-gald3r-guard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-pre-tool-call-prd-freeze" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-pre-tool-call-prd-freeze
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-session-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-session-end
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-session-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-session-start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-setup-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-setup-user
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-tel-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-tel-tap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-validate-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-validate-shell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-vault-migrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-vault-migrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-vault-reindex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-vault-reindex
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-vault-resolve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-vault-resolve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-vault-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-vault-verify
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-wpac-inbox-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-wpac-inbox-check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-inbox-watcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        raw-inbox-watcher
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="crash-reference-hooks">CRASH Reference: Hooks<a class="headerlink" href="#crash-reference-hooks" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>uv run gald3r platform crash-reference --apply</code>.</p>
+</blockquote>
+<p>Hooks are the one CRASH type that is real, executing code -- plain scripts (mostly <code>.py</code>) wired into your IDE's lifecycle events (session start, pre-tool-call, stop, ...) by a platform-specific registration file. You do not invoke a hook by name; it fires automatically when its registered event happens. This page documents what each hook does and when it fires -- never its internal implementation.</p>
+<p><strong>38 hooks total.</strong></p>
+<h2 id="browse-by-category">Browse by category<a class="headerlink" href="#browse-by-category" title="Permanent link">&para;</a></h2>
+<h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
+<p><em>Creating, updating, and tracking work in .gald3r/tasks/.</em></p>
+<ul>
+<li><a href="#g-hk-ggo-stop-detect"><code>g-hk-ggo-stop-detect</code></a> -- Python port of g-hk-ggo-stop-detect (T1584).</li>
+</ul>
+<h3 id="pipelines-autopilot-the-g-go-family">Pipelines &amp; Autopilot (the g-go family)<a class="headerlink" href="#pipelines-autopilot-the-g-go-family" title="Permanent link">&para;</a></h3>
+<p><em>Implement/review pipelines, swarms, autopilot loops, and agent hiring.</em></p>
+<ul>
+<li><a href="#g-hk-agent-worktree-janitor"><code>g-hk-agent-worktree-janitor</code></a> -- Agent-worktree janitor hook (T1592).</li>
+</ul>
+<h3 id="setup-project-identity">Setup &amp; Project Identity<a class="headerlink" href="#setup-project-identity" title="Permanent link">&para;</a></h3>
+<p><em>First-time setup, PROJECT.md/CONSTRAINTS.md, ideas, and personality.</em></p>
+<ul>
+<li><a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a> -- Thin resolver+verb dispatcher for the g-rl-38 subsystem-tagging guard (T318).</li>
+<li><a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a> -- Goal quit-condition stop hook (BUG-645).</li>
+<li><a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a> -- Python port of g-hk-graph-update (T1584).</li>
+<li><a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a> -- Python port of g-hk-pre-tool-call (T1584).</li>
+<li><a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a> -- Python port of g-hk-pre-tool-call-gald3r-guard (T1584).</li>
+<li><a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a> -- Python port of g-hk-setup-user (T1584); reconciled onto the unified home (T627).</li>
+</ul>
+<h3 id="wpac-workspace-coordination">WPAC &amp; Workspace Coordination<a class="headerlink" href="#wpac-workspace-coordination" title="Permanent link">&para;</a></h3>
+<p><em>Cross-project topology, inbox triage, broadcasts, and Workspace-Control.</em></p>
+<ul>
+<li><a href="#g-hk-pre-tool-call-member-gald3r-guard"><code>g-hk-pre-tool-call-member-gald3r-guard</code></a> -- Thin resolver+verb dispatcher for the member-repo <code>.gald3r/</code> guard (T179/T191).</li>
+<li><a href="#g-hk-wpac-inbox-check"><code>g-hk-wpac-inbox-check</code></a> -- Python port of g-hk-wpac-inbox-check (T1584).</li>
+<li><a href="#raw-inbox-watcher"><code>raw-inbox-watcher</code></a> -- Python port of raw-inbox-watcher (T1584).</li>
+</ul>
+<h3 id="release-versioning">Release &amp; Versioning<a class="headerlink" href="#release-versioning" title="Permanent link">&para;</a></h3>
+<p><em>CHANGELOG promotion, release records, ROADMAP, ship/ hotfix flow.</em></p>
+<ul>
+<li><a href="#g-hk-pre-tool-call-prd-freeze"><code>g-hk-pre-tool-call-prd-freeze</code></a> -- Python port of g-hk-pre-tool-call-prd-freeze (T1584).</li>
+</ul>
+<h3 id="vault-research">Vault &amp; Research<a class="headerlink" href="#vault-research" title="Permanent link">&para;</a></h3>
+<p><em>The file-first knowledge vault, recon/ingest, and clean-room rewrites.</em></p>
+<ul>
+<li><a href="#g-hk-vault-migrate"><code>g-hk-vault-migrate</code></a> -- Python port of g-hk-vault-migrate (T1584).</li>
+<li><a href="#g-hk-vault-reindex"><code>g-hk-vault-reindex</code></a> -- Python port of g-hk-vault-reindex (T1584); dual-index regen (T1627).</li>
+<li><a href="#g-hk-vault-resolve"><code>g-hk-vault-resolve</code></a> -- Python port of g-hk-vault-resolve (T1584).</li>
+<li><a href="#g-hk-vault-verify"><code>g-hk-vault-verify</code></a> -- Python port of g-hk-vault-verify (T1584).</li>
+</ul>
+<h3 id="platforms-providers">Platforms &amp; Providers<a class="headerlink" href="#platforms-providers" title="Permanent link">&para;</a></h3>
+<p><em>Cross-IDE install/parity, per-platform specs, PowerShell/CLI reference.</em></p>
+<ul>
+<li><a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a> -- Python port of g-hk-encoding-normalize (T1584).</li>
+<li><a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a> -- Canonical <code>session-end</code> event entrypoint (T424).</li>
+<li><a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a> -- Canonical <code>session-start</code> event entrypoint (T424).</li>
+<li><a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a> -- Canonical <code>stop</code> event entrypoint (T424).</li>
+<li><a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a> -- Canonical <code>tool-end</code> event entrypoint (T424).</li>
+<li><a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a> -- Canonical <code>tool-start</code> event entrypoint (T424).</li>
+<li><a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a> -- Canonical <code>user-prompt-submit</code> event entrypoint (T424).</li>
+<li><a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a> -- TEL host-CLI hook tap (T90; Claude Code first).</li>
+<li><a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a> -- Thin resolver+verb dispatcher for the dangerous-shell-command guard (T319).</li>
+</ul>
+<h3 id="security-compliance">Security &amp; Compliance<a class="headerlink" href="#security-compliance" title="Permanent link">&para;</a></h3>
+<p><em>Secret scanning, license/dependency compliance, git-sanity gates.</em></p>
+<ul>
+<li><a href="#g-hk-policy-check"><code>g-hk-policy-check</code></a> -- gald3r policy-as-code guardrail hook (T1611, D12).</li>
+<li><a href="#g-hk-pre-commit"><code>g-hk-pre-commit</code></a> -- Python port of g-hk-pre-commit (T1584).</li>
+<li><a href="#g-hk-pre-push"><code>g-hk-pre-push</code></a> -- gald3r optional pre-push gate hook (opt-in).</li>
+</ul>
+<h3 id="memory-knowledge">Memory &amp; Knowledge<a class="headerlink" href="#memory-knowledge" title="Permanent link">&para;</a></h3>
+<p><em>Session learning, memory recall, and knowledge-graph tooling.</em></p>
+<ul>
+<li><a href="#g-hk-nightly-learn"><code>g-hk-nightly-learn</code></a> -- Python port of g-hk-nightly-learn (T1584); engine-verb dispatch (T1665).</li>
+</ul>
+<h3 id="logging-diagnostics">Logging &amp; Diagnostics<a class="headerlink" href="#logging-diagnostics" title="Permanent link">&para;</a></h3>
+<p><em>Activation stats, chat logs, and session diagnostics.</em></p>
+<ul>
+<li><a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a> -- Python port of g-hk-agent-complete (T1584).</li>
+<li><a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a> -- Python port of g-hk-crash-record (T511, originally T433).</li>
+<li><a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a> -- Session-trace closer</li>
+<li><a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a> -- Python port of g-hk-post-skill-timing (T1584).</li>
+<li><a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a> -- Session-trace opener</li>
+<li><a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a> -- Python port of g-hk-pre-skill-timing (T1584).</li>
+<li><a href="#g-hk-session-end"><code>g-hk-session-end</code></a> -- Python port of g-hk-session-end (T1584).</li>
+<li><a href="#g-hk-session-start"><code>g-hk-session-start</code></a> -- Python port of g-hk-session-start (T1584).</li>
+</ul>
+<h3 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h3>
+<p><em>No subsystem group declared, or a declared group outside the canonical PRODUCT_SYSTEMS.md registry -- see each item's own card for which case applies.</em></p>
+<ul>
+<li><a href="#g-hk-claude-chat-logger"><code>g-hk-claude-chat-logger</code></a> -- Persist Claude Code chat history to .gald3r/logs/</li>
+</ul>
+<h2 id="full-reference">Full reference<a class="headerlink" href="#full-reference" title="Permanent link">&para;</a></h2>
+<h3 id="g-hk-agent-complete"><code>g-hk-agent-complete</code><a class="headerlink" href="#g-hk-agent-complete" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-agent-complete</code><br />
+<strong>Group:</strong> Logging &amp; Diagnostics</p>
+<p><strong>Purpose:</strong> Python port of g-hk-agent-complete (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-agent-complete (T1584). Fires on: Stop.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> Stop<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-complete.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-complete.py</code></p>
+<hr />
+<h3 id="g-hk-agent-worktree-janitor"><code>g-hk-agent-worktree-janitor</code><a class="headerlink" href="#g-hk-agent-worktree-janitor" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-agent-worktree-janitor</code><br />
+<strong>Group:</strong> Pipelines &amp; Autopilot (the g-go family)</p>
+<p><strong>Purpose:</strong> Agent-worktree janitor hook (T1592).</p>
+<p><strong>When to use:</strong> Agent-worktree janitor hook (T1592). Fires on: SessionEnd.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> SessionEnd<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-worktree-janitor.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-worktree-janitor.md  </p>
+<p><strong>Related:</strong> none in the same group</p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-worktree-janitor.py</code></p>
+<hr />
+<h3 id="g-hk-claude-chat-logger"><code>g-hk-claude-chat-logger</code><a class="headerlink" href="#g-hk-claude-chat-logger" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-claude-chat-logger</code><br />
+<strong>Group:</strong> Other (no subsystem group declared)</p>
+<p><strong>Purpose:</strong> Persist Claude Code chat history to .gald3r/logs/</p>
+<p><strong>When to use:</strong> Persist Claude Code chat history to .gald3r/logs/ — the Claude-side mirror of g-hk-cursor-chat-logger.py (BUG-091). Fires on: Stop, Scheduled/nightly.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> Stop, Scheduled/nightly<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-claude-chat-logger.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-claude-chat-logger.md  </p>
+<p><strong>Related:</strong> none in the same group</p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-claude-chat-logger.py</code></p>
+<blockquote>
+<p><strong>Metadata note:</strong> hooks/g-hk-claude-chat-logger: missing @subsystems: tag (and no subsystem_memberships: in companion .md)</p>
+</blockquote>
+<hr />
+<h3 id="g-hk-component-tag-check"><code>g-hk-component-tag-check</code><a class="headerlink" href="#g-hk-component-tag-check" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-component-tag-check</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Thin resolver+verb dispatcher for the g-rl-38 subsystem-tagging guard (T318).</p>
+<p><strong>When to use:</strong> Thin resolver+verb dispatcher for the g-rl-38 subsystem-tagging guard (T318). Fires on: PreToolUse, pre-commit (git hook), pre-push (git hook).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PreToolUse, pre-commit (git hook), pre-push (git hook)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-component-tag-check.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-component-tag-check.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-component-tag-check.py</code></p>
+<hr />
+<h3 id="g-hk-crash-record"><code>g-hk-crash-record</code><a class="headerlink" href="#g-hk-crash-record" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-crash-record</code><br />
+<strong>Group:</strong> Logging &amp; Diagnostics</p>
+<p><strong>Purpose:</strong> Python port of g-hk-crash-record (T511, originally T433).</p>
+<p><strong>When to use:</strong> Python port of g-hk-crash-record (T511, originally T433). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-crash-record.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-crash-record.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-crash-record.py</code></p>
+<hr />
+<h3 id="g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code><a class="headerlink" href="#g-hk-encoding-normalize" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-encoding-normalize</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Python port of g-hk-encoding-normalize (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-encoding-normalize (T1584). Fires on: pre-commit (git hook).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> pre-commit (git hook)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-encoding-normalize.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-encoding-normalize.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-encoding-normalize.py</code></p>
+<hr />
+<h3 id="g-hk-ggo-stop-detect"><code>g-hk-ggo-stop-detect</code><a class="headerlink" href="#g-hk-ggo-stop-detect" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-ggo-stop-detect</code><br />
+<strong>Group:</strong> Tasks</p>
+<p><strong>Purpose:</strong> Python port of g-hk-ggo-stop-detect (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-ggo-stop-detect (T1584). Fires on: Stop, Scheduled/nightly.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> Stop, Scheduled/nightly<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-ggo-stop-detect.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-ggo-stop-detect.md  </p>
+<p><strong>Related:</strong> none in the same group</p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-ggo-stop-detect.py</code></p>
+<hr />
+<h3 id="g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code><a class="headerlink" href="#g-hk-goal-stop-detect" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-goal-stop-detect</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Goal quit-condition stop hook (BUG-645).</p>
+<p><strong>When to use:</strong> Goal quit-condition stop hook (BUG-645). Fires on: Stop.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> Stop<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-goal-stop-detect.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-goal-stop-detect.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-goal-stop-detect.py</code></p>
+<hr />
+<h3 id="g-hk-graph-update"><code>g-hk-graph-update</code><a class="headerlink" href="#g-hk-graph-update" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-graph-update</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Python port of g-hk-graph-update (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-graph-update (T1584). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-graph-update.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-graph-update.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-graph-update.py</code></p>
+<hr />
+<h3 id="g-hk-nightly-learn"><code>g-hk-nightly-learn</code><a class="headerlink" href="#g-hk-nightly-learn" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-nightly-learn</code><br />
+<strong>Group:</strong> Memory &amp; Knowledge</p>
+<p><strong>Purpose:</strong> Python port of g-hk-nightly-learn (T1584); engine-verb dispatch (T1665).</p>
+<p><strong>When to use:</strong> Python port of g-hk-nightly-learn (T1584); engine-verb dispatch (T1665). Fires on: Scheduled/nightly.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> Scheduled/nightly<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-nightly-learn.py  </p>
+<p><strong>Related:</strong> none in the same group</p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-nightly-learn.py</code></p>
+<hr />
+<h3 id="g-hk-on-session-end"><code>g-hk-on-session-end</code><a class="headerlink" href="#g-hk-on-session-end" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-on-session-end</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Canonical <code>session-end</code> event entrypoint (T424).</p>
+<p><strong>When to use:</strong> Canonical <code>session-end</code> event entrypoint (T424). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-session-end.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-session-end.py</code></p>
+<hr />
+<h3 id="g-hk-on-session-start"><code>g-hk-on-session-start</code><a class="headerlink" href="#g-hk-on-session-start" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-on-session-start</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Canonical <code>session-start</code> event entrypoint (T424).</p>
+<p><strong>When to use:</strong> Canonical <code>session-start</code> event entrypoint (T424). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-session-start.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-session-start.py</code></p>
+<hr />
+<h3 id="g-hk-on-stop"><code>g-hk-on-stop</code><a class="headerlink" href="#g-hk-on-stop" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-on-stop</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Canonical <code>stop</code> event entrypoint (T424).</p>
+<p><strong>When to use:</strong> Canonical <code>stop</code> event entrypoint (T424). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-stop.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-stop.py</code></p>
+<hr />
+<h3 id="g-hk-on-tool-end"><code>g-hk-on-tool-end</code><a class="headerlink" href="#g-hk-on-tool-end" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-on-tool-end</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Canonical <code>tool-end</code> event entrypoint (T424).</p>
+<p><strong>When to use:</strong> Canonical <code>tool-end</code> event entrypoint (T424). Fires on: PostToolUse.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PostToolUse<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-end.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-end.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-end.py</code></p>
+<hr />
+<h3 id="g-hk-on-tool-start"><code>g-hk-on-tool-start</code><a class="headerlink" href="#g-hk-on-tool-start" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-on-tool-start</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Canonical <code>tool-start</code> event entrypoint (T424).</p>
+<p><strong>When to use:</strong> Canonical <code>tool-start</code> event entrypoint (T424). Fires on: PreToolUse.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PreToolUse<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-start.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-start.py</code></p>
+<hr />
+<h3 id="g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code><a class="headerlink" href="#g-hk-on-user-prompt-submit" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-on-user-prompt-submit</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Canonical <code>user-prompt-submit</code> event entrypoint (T424).</p>
+<p><strong>When to use:</strong> Canonical <code>user-prompt-submit</code> event entrypoint (T424). Fires on: UserPromptSubmit.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> UserPromptSubmit<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-user-prompt-submit.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-user-prompt-submit.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-user-prompt-submit.py</code></p>
+<hr />
+<h3 id="g-hk-policy-check"><code>g-hk-policy-check</code><a class="headerlink" href="#g-hk-policy-check" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-policy-check</code><br />
+<strong>Group:</strong> Security &amp; Compliance</p>
+<p><strong>Purpose:</strong> gald3r policy-as-code guardrail hook (T1611, D12).</p>
+<p><strong>When to use:</strong> gald3r policy-as-code guardrail hook (T1611, D12). Fires on: PreToolUse, pre-commit (git hook).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PreToolUse, pre-commit (git hook)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-policy-check.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-pre-commit"><code>g-hk-pre-commit</code></a>, <a href="#g-hk-pre-push"><code>g-hk-pre-push</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-policy-check.py</code></p>
+<hr />
+<h3 id="g-hk-post-session-trace"><code>g-hk-post-session-trace</code><a class="headerlink" href="#g-hk-post-session-trace" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-post-session-trace</code><br />
+<strong>Group:</strong> Logging &amp; Diagnostics</p>
+<p><strong>Purpose:</strong> Session-trace closer</p>
+<p><strong>When to use:</strong> Session-trace closer — fires on the canonical <code>stop</code> and <code>session-end</code> events. Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-session-trace.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-session-trace.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-session-trace.py</code></p>
+<hr />
+<h3 id="g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code><a class="headerlink" href="#g-hk-post-skill-timing" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-post-skill-timing</code><br />
+<strong>Group:</strong> Logging &amp; Diagnostics</p>
+<p><strong>Purpose:</strong> Python port of g-hk-post-skill-timing (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-post-skill-timing (T1584). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-skill-timing.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-skill-timing.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-skill-timing.py</code></p>
+<hr />
+<h3 id="g-hk-pre-commit"><code>g-hk-pre-commit</code><a class="headerlink" href="#g-hk-pre-commit" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-pre-commit</code><br />
+<strong>Group:</strong> Security &amp; Compliance</p>
+<p><strong>Purpose:</strong> Python port of g-hk-pre-commit (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-pre-commit (T1584). Fires on: pre-commit (git hook).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> pre-commit (git hook)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-commit.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-policy-check"><code>g-hk-policy-check</code></a>, <a href="#g-hk-pre-push"><code>g-hk-pre-push</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-commit.py</code></p>
+<hr />
+<h3 id="g-hk-pre-push"><code>g-hk-pre-push</code><a class="headerlink" href="#g-hk-pre-push" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-pre-push</code><br />
+<strong>Group:</strong> Security &amp; Compliance</p>
+<p><strong>Purpose:</strong> gald3r optional pre-push gate hook (opt-in).</p>
+<p><strong>When to use:</strong> gald3r optional pre-push gate hook (opt-in). Fires on: pre-push (git hook).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> pre-push (git hook)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-push.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-policy-check"><code>g-hk-policy-check</code></a>, <a href="#g-hk-pre-commit"><code>g-hk-pre-commit</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-push.py</code></p>
+<hr />
+<h3 id="g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code><a class="headerlink" href="#g-hk-pre-session-trace" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-pre-session-trace</code><br />
+<strong>Group:</strong> Logging &amp; Diagnostics</p>
+<p><strong>Purpose:</strong> Session-trace opener</p>
+<p><strong>When to use:</strong> Session-trace opener — fires on the canonical <code>session-start</code> event. Fires on: SessionStart.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> SessionStart<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-session-trace.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-session-trace.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-session-trace.py</code></p>
+<hr />
+<h3 id="g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code><a class="headerlink" href="#g-hk-pre-skill-timing" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-pre-skill-timing</code><br />
+<strong>Group:</strong> Logging &amp; Diagnostics</p>
+<p><strong>Purpose:</strong> Python port of g-hk-pre-skill-timing (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-pre-skill-timing (T1584). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-skill-timing.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-skill-timing.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-skill-timing.py</code></p>
+<hr />
+<h3 id="g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code><a class="headerlink" href="#g-hk-pre-tool-call" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-pre-tool-call</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Python port of g-hk-pre-tool-call (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-pre-tool-call (T1584). Fires on: PreToolUse.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PreToolUse<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call.py</code></p>
+<hr />
+<h3 id="g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code><a class="headerlink" href="#g-hk-pre-tool-call-gald3r-guard" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-pre-tool-call-gald3r-guard</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Python port of g-hk-pre-tool-call-gald3r-guard (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-pre-tool-call-gald3r-guard (T1584). Fires on: PreToolUse.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PreToolUse<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-gald3r-guard.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-gald3r-guard.py</code></p>
+<hr />
+<h3 id="g-hk-pre-tool-call-member-gald3r-guard"><code>g-hk-pre-tool-call-member-gald3r-guard</code><a class="headerlink" href="#g-hk-pre-tool-call-member-gald3r-guard" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-pre-tool-call-member-gald3r-guard</code><br />
+<strong>Group:</strong> WPAC &amp; Workspace Coordination</p>
+<p><strong>Purpose:</strong> Thin resolver+verb dispatcher for the member-repo <code>.gald3r/</code> guard (T179/T191).</p>
+<p><strong>When to use:</strong> Thin resolver+verb dispatcher for the member-repo <code>.gald3r/</code> guard (T179/T191). Fires on: PreToolUse.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PreToolUse<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-member-gald3r-guard.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-wpac-inbox-check"><code>g-hk-wpac-inbox-check</code></a>, <a href="#raw-inbox-watcher"><code>raw-inbox-watcher</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-member-gald3r-guard.py</code></p>
+<hr />
+<h3 id="g-hk-pre-tool-call-prd-freeze"><code>g-hk-pre-tool-call-prd-freeze</code><a class="headerlink" href="#g-hk-pre-tool-call-prd-freeze" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-pre-tool-call-prd-freeze</code><br />
+<strong>Group:</strong> Release &amp; Versioning</p>
+<p><strong>Purpose:</strong> Python port of g-hk-pre-tool-call-prd-freeze (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-pre-tool-call-prd-freeze (T1584). Fires on: PreToolUse.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PreToolUse<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-prd-freeze.py  </p>
+<p><strong>Related:</strong> none in the same group</p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-prd-freeze.py</code></p>
+<hr />
+<h3 id="g-hk-session-end"><code>g-hk-session-end</code><a class="headerlink" href="#g-hk-session-end" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-session-end</code><br />
+<strong>Group:</strong> Logging &amp; Diagnostics</p>
+<p><strong>Purpose:</strong> Python port of g-hk-session-end (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-session-end (T1584). Fires on: Stop, Scheduled/nightly.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> Stop, Scheduled/nightly<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-session-end.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-session-end.py</code></p>
+<hr />
+<h3 id="g-hk-session-start"><code>g-hk-session-start</code><a class="headerlink" href="#g-hk-session-start" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-session-start</code><br />
+<strong>Group:</strong> Logging &amp; Diagnostics</p>
+<p><strong>Purpose:</strong> Python port of g-hk-session-start (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-session-start (T1584). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-session-start.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-session-start.py</code></p>
+<hr />
+<h3 id="g-hk-setup-user"><code>g-hk-setup-user</code><a class="headerlink" href="#g-hk-setup-user" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-setup-user</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Python port of g-hk-setup-user (T1584); reconciled onto the unified home (T627).</p>
+<p><strong>When to use:</strong> Python port of g-hk-setup-user (T1584); reconciled onto the unified home (T627). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-setup-user.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-setup-user.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-setup-user.py</code></p>
+<hr />
+<h3 id="g-hk-tel-tap"><code>g-hk-tel-tap</code><a class="headerlink" href="#g-hk-tel-tap" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-tel-tap</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> TEL host-CLI hook tap (T90; Claude Code first).</p>
+<p><strong>When to use:</strong> TEL host-CLI hook tap (T90; Claude Code first). Fires on: PostToolUse.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PostToolUse<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-tel-tap.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-tel-tap.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-tel-tap.py</code></p>
+<hr />
+<h3 id="g-hk-validate-shell"><code>g-hk-validate-shell</code><a class="headerlink" href="#g-hk-validate-shell" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-validate-shell</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Thin resolver+verb dispatcher for the dangerous-shell-command guard (T319).</p>
+<p><strong>When to use:</strong> Thin resolver+verb dispatcher for the dangerous-shell-command guard (T319). Fires on: PreToolUse, pre-push (git hook).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> PreToolUse, pre-push (git hook)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-validate-shell.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-validate-shell.py</code></p>
+<hr />
+<h3 id="g-hk-vault-migrate"><code>g-hk-vault-migrate</code><a class="headerlink" href="#g-hk-vault-migrate" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-vault-migrate</code><br />
+<strong>Group:</strong> Vault &amp; Research</p>
+<p><strong>Purpose:</strong> Python port of g-hk-vault-migrate (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-vault-migrate (T1584). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-migrate.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-migrate.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-vault-reindex"><code>g-hk-vault-reindex</code></a>, <a href="#g-hk-vault-resolve"><code>g-hk-vault-resolve</code></a>, <a href="#g-hk-vault-verify"><code>g-hk-vault-verify</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-migrate.py</code></p>
+<hr />
+<h3 id="g-hk-vault-reindex"><code>g-hk-vault-reindex</code><a class="headerlink" href="#g-hk-vault-reindex" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-vault-reindex</code><br />
+<strong>Group:</strong> Vault &amp; Research</p>
+<p><strong>Purpose:</strong> Python port of g-hk-vault-reindex (T1584); dual-index regen (T1627).</p>
+<p><strong>When to use:</strong> Python port of g-hk-vault-reindex (T1584); dual-index regen (T1627). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-reindex.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-reindex.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-vault-migrate"><code>g-hk-vault-migrate</code></a>, <a href="#g-hk-vault-resolve"><code>g-hk-vault-resolve</code></a>, <a href="#g-hk-vault-verify"><code>g-hk-vault-verify</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-reindex.py</code></p>
+<hr />
+<h3 id="g-hk-vault-resolve"><code>g-hk-vault-resolve</code><a class="headerlink" href="#g-hk-vault-resolve" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-vault-resolve</code><br />
+<strong>Group:</strong> Vault &amp; Research</p>
+<p><strong>Purpose:</strong> Python port of g-hk-vault-resolve (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-vault-resolve (T1584). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-resolve.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-resolve.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-vault-migrate"><code>g-hk-vault-migrate</code></a>, <a href="#g-hk-vault-reindex"><code>g-hk-vault-reindex</code></a>, <a href="#g-hk-vault-verify"><code>g-hk-vault-verify</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-resolve.py</code></p>
+<hr />
+<h3 id="g-hk-vault-verify"><code>g-hk-vault-verify</code><a class="headerlink" href="#g-hk-vault-verify" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-vault-verify</code><br />
+<strong>Group:</strong> Vault &amp; Research</p>
+<p><strong>Purpose:</strong> Python port of g-hk-vault-verify (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-vault-verify (T1584). Fires on: SessionStart.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> SessionStart<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-verify.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-verify.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-vault-migrate"><code>g-hk-vault-migrate</code></a>, <a href="#g-hk-vault-reindex"><code>g-hk-vault-reindex</code></a>, <a href="#g-hk-vault-resolve"><code>g-hk-vault-resolve</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-verify.py</code></p>
+<hr />
+<h3 id="g-hk-wpac-inbox-check"><code>g-hk-wpac-inbox-check</code><a class="headerlink" href="#g-hk-wpac-inbox-check" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-wpac-inbox-check</code><br />
+<strong>Group:</strong> WPAC &amp; Workspace Coordination</p>
+<p><strong>Purpose:</strong> Python port of g-hk-wpac-inbox-check (T1584).</p>
+<p><strong>When to use:</strong> Python port of g-hk-wpac-inbox-check (T1584). Fires on: SessionStart.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> SessionStart<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-wpac-inbox-check.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-pre-tool-call-member-gald3r-guard"><code>g-hk-pre-tool-call-member-gald3r-guard</code></a>, <a href="#raw-inbox-watcher"><code>raw-inbox-watcher</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-wpac-inbox-check.py</code></p>
+<hr />
+<h3 id="raw-inbox-watcher"><code>raw-inbox-watcher</code><a class="headerlink" href="#raw-inbox-watcher" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>raw-inbox-watcher</code><br />
+<strong>Group:</strong> WPAC &amp; Workspace Coordination</p>
+<p><strong>Purpose:</strong> Python port of raw-inbox-watcher (T1584).</p>
+<p><strong>When to use:</strong> Python port of raw-inbox-watcher (T1584). Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> pre-g-hk- naming exception, registered directly in platform hook tables<br />
+<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/raw-inbox-watcher.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/raw-inbox-watcher.md  </p>
+<p><strong>Related:</strong> <a href="#g-hk-pre-tool-call-member-gald3r-guard"><code>g-hk-pre-tool-call-member-gald3r-guard</code></a>, <a href="#g-hk-wpac-inbox-check"><code>g-hk-wpac-inbox-check</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/raw-inbox-watcher.py</code></p>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

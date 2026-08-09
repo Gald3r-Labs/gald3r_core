@@ -1,0 +1,2973 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/providers/">
+      
+      
+        <link rel="prev" href="../memory/">
+      
+      
+        <link rel="next" href="../plugins/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Models & Providers - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#models-providers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Models & Providers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../platform-usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Claude, Cursor, Platforms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../crash/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRASH Explained
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../cli-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../reference/platforms/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Platform Support Matrix
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/crash/commands/" class="md-tabs__link">
+          
+  
+  
+  CRASH Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core_dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core_dev
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude, Cursor, Platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        At a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#providersyaml-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        providers.yaml anatomy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="providers.yaml anatomy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-init-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r init-providers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-full-starter-file-real-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full starter file (real capture)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolving-a-providermodel-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolving a provider:model spec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-set-key-keys-keyring-vs-plaintext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers set-key — keys: keyring vs. plaintext
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local backends
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local backends">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ollama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ollama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lm-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LM Studio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vllm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vLLM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llamacpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        llama.cpp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloud providers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud providers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openrouter-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenRouter (worked example)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-openai-compatible-cloud-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generic OpenAI-compatible cloud pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-and-the-two-local-model-verbs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        connect, and the two local-model verbs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="connect, and the two local-model verbs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r connect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-local-model-assess" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r local-model assess
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-local-model-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r local-model serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#missing-key-a-configured-provider-with-no-usable-credential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing key (a configured provider with no usable credential)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-down-wrong-base_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend down / wrong base_url
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#provider-id-not-in-providersyaml-at-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provider id not in providers.yaml at all
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-name-mismatch-illustrative" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model-name mismatch (illustrative)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#managing-providersyaml-from-the-cli-t610" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing providers.yaml from the CLI (T610)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing providers.yaml from the CLI (T610)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-model-add-gald3r-providers-model-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers model add / gald3r providers model remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-role-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers role set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers validate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys-still-never-leave-the-keyring-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys still never leave the keyring path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#can-i-edit-providersyaml-while-gald3r-is-already-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can I edit providers.yaml while gald3r is already running?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/platforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        At a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#providersyaml-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        providers.yaml anatomy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="providers.yaml anatomy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-init-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r init-providers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-full-starter-file-real-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full starter file (real capture)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolving-a-providermodel-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolving a provider:model spec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-set-key-keys-keyring-vs-plaintext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers set-key — keys: keyring vs. plaintext
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local backends
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local backends">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ollama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ollama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lm-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LM Studio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vllm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vLLM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llamacpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        llama.cpp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloud providers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud providers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openrouter-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenRouter (worked example)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-openai-compatible-cloud-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generic OpenAI-compatible cloud pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-and-the-two-local-model-verbs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        connect, and the two local-model verbs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="connect, and the two local-model verbs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r connect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-local-model-assess" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r local-model assess
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-local-model-serve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r local-model serve
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#missing-key-a-configured-provider-with-no-usable-credential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing key (a configured provider with no usable credential)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-down-wrong-base_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend down / wrong base_url
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#provider-id-not-in-providersyaml-at-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Provider id not in providers.yaml at all
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-name-mismatch-illustrative" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model-name mismatch (illustrative)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#managing-providersyaml-from-the-cli-t610" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing providers.yaml from the CLI (T610)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing providers.yaml from the CLI (T610)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-model-add-gald3r-providers-model-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers model add / gald3r providers model remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-role-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers role set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-providers-validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r providers validate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys-still-never-leave-the-keyring-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys still never leave the keyring path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#can-i-edit-providersyaml-while-gald3r-is-already-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can I edit providers.yaml while gald3r is already running?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="models-providers">Models &amp; Providers<a class="headerlink" href="#models-providers" title="Permanent link">&para;</a></h1>
+<p>Everything about how <code>gald3r</code> talks to LLMs — local (Ollama, LM Studio, vLLM, llama.cpp) or
+cloud (OpenRouter, Anthropic, OpenAI, and any OpenAI-compatible endpoint). Every command output
+on this page was captured running against this repo's own checkout (<code>gald3r 4.0.0 build
+44ed813373a3</code>, 2026-08-03) unless a block is explicitly marked <strong>illustrative</strong> — see
+<a href="../troubleshooting/"><code>troubleshooting.md</code></a> for that same real-output discipline applied to
+<code>doctor</code>/<code>selftest</code>/<code>errors</code>.</p>
+<p><strong>Companion task in flight:</strong> a separate feature task is adding richer <code>providers.yaml</code>
+list/add/edit verbs (and hot-reload); this page documents only today's shipped surface —
+hand-editing the YAML file — and doesn't guess at what that unshipped surface will look like.</p>
+<h2 id="at-a-glance">At a glance<a class="headerlink" href="#at-a-glance" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Verb</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gald3r init-providers</code></td>
+<td>Write (or preview) a starter <code>providers.yaml</code>, auto-detecting installed local backends</td>
+</tr>
+<tr>
+<td><code>gald3r providers set-key</code></td>
+<td>Store a provider's API key in your OS keyring instead of the plaintext file</td>
+</tr>
+<tr>
+<td><code>gald3r connect &lt;provider&gt;</code></td>
+<td>Device-code sign-in for a provider account — see below for a real capture</td>
+</tr>
+<tr>
+<td><code>gald3r local-model assess</code></td>
+<td>Recommend a local model size/quant for your hardware</td>
+</tr>
+<tr>
+<td><code>gald3r local-model serve</code></td>
+<td>Print the exact copy-pasteable command to serve that recommendation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="providersyaml-anatomy"><code>providers.yaml</code> anatomy<a class="headerlink" href="#providersyaml-anatomy" title="Permanent link">&para;</a></h2>
+<h3 id="gald3r-init-providers"><code>gald3r init-providers</code><a class="headerlink" href="#gald3r-init-providers" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r init-providers --help
+</code></pre>
+<pre><code>usage: gald3r init-providers [-h] [--target PATH] [--overwrite] [--dry-run]
+
+options:
+  -h, --help     show this help message and exit
+  --target PATH  Destination path (default: &lt;gald3r_core home&gt;/providers.yaml)
+  --overwrite    Replace an existing providers.yaml instead of leaving it
+                 untouched
+  --dry-run      Print the rendered starter YAML without writing it
+</code></pre>
+<p>The default location is <code>&lt;gald3r_core home&gt;/providers.yaml</code> — that home directory resolves to
+<code>$GALD3R_CORE_HOME</code> when set, else <code>~/.gald3r_template_core</code> (the same directory <code>gald3r doctor</code>
+reports on its <code>gald3r_home</code> line). It is <strong>one file shared across every project on the
+machine</strong> — provider credentials are a per-install concern, not a per-project one — pass
+<code>--target</code> to point at a different path if you need one.</p>
+<h3 id="the-full-starter-file-real-capture">The full starter file (real capture)<a class="headerlink" href="#the-full-starter-file-real-capture" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r init-providers --dry-run
+</code></pre>
+<pre><code class="language-yaml"># providers.yaml
+# Ported from gald3r_agent_dev/docs/providers_template.yaml per Task 8 Phase B
+# (referenced by gald3r_core.core.providers.registry.TEMPLATE_PATH).
+# Edit to add/remove providers. API keys with $ prefix are env var references.
+
+default_provider: ollama
+default_model: qwen3:4b
+
+providers:
+  ollama:
+    type: openai_compat
+    base_url: http://localhost:11434/v1
+    api_key: ollama
+    models:
+      - id: qwen2.5-coder:14b
+        role: coding
+        context_window: 32768
+      - id: qwen3:4b
+        role: general
+        context_window: 32768
+      - id: qwen3-vl:4b
+        role: vision
+        context_window: 32768
+      - id: deepseek-r1:32b
+        role: reasoning
+        context_window: 65536
+      - id: llava:7b
+        role: vision
+        context_window: 4096
+      - id: gpt-oss:20b
+        role: coding
+        context_window: 65536
+      - id: gpt-oss:120b
+        role: coding_heavy
+        context_window: 131072
+
+  lmstudio:
+    type: openai_compat
+    base_url: http://localhost:1234/v1
+    api_key: lm-studio
+    models:
+      - id: Qwen2.5-Coder-14B-Instruct-GGUF/Qwen2.5-Coder-14B-Instruct-Q4_K_M.gguf
+        alias: qwen2.5-coder-14b
+        role: coding
+        context_window: 32768
+      # ... (more LM Studio entries, trimmed here — see the full block this
+      # page's Ollama/LM Studio recipes below reproduce in full)
+
+  openrouter:
+    type: openai_compat
+    base_url: https://openrouter.ai/api/v1
+    api_key: $OPENROUTER_API_KEY
+    models:
+      - id: anthropic/claude-sonnet-4-5
+        role: planning
+      - id: google/gemini-2.5-flash
+        role: general_cheap
+      - id: qwen/qwen2.5-coder-32b-instruct
+        role: coding_cloud
+
+  anthropic:
+    type: anthropic
+    api_key: $ANTHROPIC_API_KEY
+    models:
+      - id: claude-opus-4-5-20260514
+        role: planning_heavy
+      - id: claude-sonnet-4-5
+        role: planning
+      - id: claude-haiku-3-5
+        role: general_cheap
+
+  openai:
+    type: openai_compat
+    base_url: https://api.openai.com/v1
+    api_key: $OPENAI_API_KEY
+    models:
+      - id: gpt-4o
+        role: general
+      - id: gpt-4o-mini
+        role: general_cheap
+</code></pre>
+<p>(Trimmed the LM Studio block's remaining entries and one bundled Sakana Fugu provider block for
+length — every provider shown above and elided is transcribed unedited from a real <code>--dry-run</code>
+run; nothing here is invented.)</p>
+<h3 id="reading-the-shape">Reading the shape<a class="headerlink" href="#reading-the-shape" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>default_provider</code> / <code>default_model</code> (top-level)</td>
+<td>Used when you run <code>gald3r run "..."</code> with no <code>--model</code> flag at all</td>
+</tr>
+<tr>
+<td><code>providers.&lt;id&gt;.type</code></td>
+<td><code>openai_compat</code> (anything speaking the OpenAI Chat Completions wire format — local backends, OpenRouter, OpenAI itself) or <code>anthropic</code> (the native Anthropic Messages API)</td>
+</tr>
+<tr>
+<td><code>providers.&lt;id&gt;.base_url</code></td>
+<td>Required for every <code>openai_compat</code> provider (irrelevant for <code>anthropic</code>, which has a fixed endpoint)</td>
+</tr>
+<tr>
+<td><code>providers.&lt;id&gt;.api_key</code></td>
+<td>A literal string, a <code>$ENV_VAR</code> reference (expanded at read time), or — once you run <code>set-key</code> — overridden transparently by an OS-keyring secret (see <a href="#gald3r-providers-set-key-keys-keyring-vs-plaintext">Keys: keyring vs. plaintext</a> below)</td>
+</tr>
+<tr>
+<td><code>providers.&lt;id&gt;.models[]</code></td>
+<td>One entry per model: <code>id</code> (the real model identifier sent to the endpoint), optional <code>alias</code> (a short name you can use instead of the full <code>id</code> — handy for LM Studio's long GGUF filenames), optional <code>context_window</code>, and <code>role</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>role</code> is organizational metadata today, not a live routing switch.</strong> Verified against
+source (<code>gald3r_core.core.providers.registry</code>): <code>resolve_model</code>/<code>resolve_default</code>/
+<code>build_provider</code> never read a model's <code>role</code> field to <em>pick</em> a model — the only things that
+select a model are an explicit <code>provider:model_or_alias</code> spec, the YAML's own
+<code>default_provider</code>/<code>default_model</code>, or (with neither set) that provider's first <code>models[]</code>
+entry. <code>role</code> exists so a human (or an agent reading the file) can tell at a glance which
+model in a provider's list is meant for which job — and it's also what <code>init-providers</code>'
+auto-discovery heuristic assigns to a newly-detected Ollama model by name pattern (<code>coder</code>/
+<code>code</code> → <code>coding</code>, <code>vl</code>/<code>vision</code>/<code>llava</code> → <code>vision</code>, <code>deepseek...r1</code> → <code>reasoning</code>, a <code>120b</code>
+tag → <code>coding_heavy</code>, everything else → <code>general</code>) when it writes the starter file — see
+<code>_model_entry_for</code> in <code>registry.py</code>. There is no code path today that reads <code>role</code> back out to
+auto-select a model for a task; if you want a specific model, name it explicitly.</p>
+<h3 id="resolving-a-providermodel-spec">Resolving a <code>provider:model</code> spec<a class="headerlink" href="#resolving-a-providermodel-spec" title="Permanent link">&para;</a></h3>
+<p><code>--model</code> (on <code>gald3r run</code>) and <code>default_provider</code>/<code>default_model</code> (in the YAML) both accept
+either bare <code>provider</code> or <code>provider:model_or_alias</code>:</p>
+<ul>
+<li><code>ollama</code> alone → that provider's <strong>first</strong> <code>models[]</code> entry (<code>qwen2.5-coder:14b</code> in the
+  starter file above).</li>
+<li><code>lmstudio:qwen2.5-coder-14b</code> → matched against <code>alias</code> first (this is exactly why LM Studio's
+  block gives its long GGUF filenames short aliases), then against the literal <code>id</code>.</li>
+<li><code>ollama:qwen3:4b</code> → model ids may themselves contain colons, so only the <strong>first</strong> colon
+  splits provider from model.</li>
+<li>A model you name that doesn't appear in <code>models[]</code> at all is still passed through as-is
+  (model lists aren't exhaustive — you may have pulled something brand new); the real backend
+  returns its own error if the name truly doesn't exist. See
+  <a href="#troubleshooting">Troubleshooting</a> below for exactly what that looks like.</li>
+<li>An unconfigured provider id raises immediately with a clear message — also covered below.</li>
+</ul>
+<h3 id="gald3r-providers-set-key-keys-keyring-vs-plaintext"><code>gald3r providers set-key</code> — keys: keyring vs. plaintext<a class="headerlink" href="#gald3r-providers-set-key-keys-keyring-vs-plaintext" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r providers set-key --help
+</code></pre>
+<pre><code>usage: gald3r providers set-key [-h] [--value VALUE] [--delete] provider
+
+positional arguments:
+  provider       Provider id from providers.yaml (e.g. openrouter, anthropic)
+
+options:
+  -h, --help     show this help message and exit
+  --value VALUE  Secret value (omit to be prompted securely via getpass --
+                 passing this flag exposes the secret in shell history/process
+                 list, so prefer the interactive prompt unless scripting).
+  --delete       Remove the stored keyring entry instead of setting one
+</code></pre>
+<p><code>gald3r providers set-key openrouter</code> prompts (via <code>getpass</code> — nothing echoed, nothing in shell
+history) and stores the secret in your OS's native keyring (Credential Manager on Windows,
+Keychain on macOS, Secret Service on Linux) under service <code>gald3r-providers</code>, account
+<code>&lt;provider id&gt;</code>. <strong>Once stored, the keyring value takes precedence over anything in
+<code>providers.yaml</code></strong> for that provider — a literal <code>api_key:</code> string or a <code>$ENV_VAR</code> reference
+both get overridden. That precedence is deliberate: the whole point of <code>set-key</code> is letting you
+migrate a real secret <em>out of</em> the plaintext file, and if the file stayed authoritative after
+that migration you'd have to separately go blank it out for the migration to mean anything.</p>
+<p>If no keyring backend is available on the system, <code>set-key</code> says so plainly and does <strong>not</strong>
+fall back to writing the secret to a file:</p>
+<pre><code>gald3r providers set-key --delete gald3r_docs_probe_nonexistent
+</code></pre>
+<pre><code>No keyring entry found for 'gald3r_docs_probe_nonexistent' (or no keyring backend is available on this system).
+</code></pre>
+<p>(Real output — a safe, non-destructive probe against a provider id that was never stored, run
+while writing this page.)</p>
+<p><code>init_providers_file</code> (the code behind <code>init-providers</code>) never writes a real secret itself —
+only template placeholders (<code>ollama</code>, <code>lm-studio</code>) and <code>$ENV_VAR</code> references. A hand-typed
+literal key in the file is still supported, but every <code>providers.yaml</code> load logs a warning if
+it finds one (or loose file permissions, on POSIX) — prefer <code>set-key</code> or a <code>$ENV_VAR</code> reference.</p>
+<h2 id="local-backends">Local backends<a class="headerlink" href="#local-backends" title="Permanent link">&para;</a></h2>
+<p>Each recipe below: install the runtime, pull/load a model, the <code>providers.yaml</code> block, and how
+to confirm gald3r actually reaches it. <code>gald3r init-providers</code> auto-detects three of these four
+runtimes by <strong>probing their default port for a live OpenAI-compatible <code>/models</code> endpoint</strong>
+(<code>discover_local_runtimes</code> in <code>registry.py</code>) — Ollama is discovered differently, via its own
+<code>ollama list</code> CLI — so re-running <code>init-providers</code> <em>after</em> a backend is up is itself the
+verification step for that backend.</p>
+<h3 id="ollama">Ollama<a class="headerlink" href="#ollama" title="Permanent link">&para;</a></h3>
+<p>Install from <a href="https://ollama.com/download">ollama.com</a>, then:</p>
+<pre><code>ollama pull qwen2.5-coder:14b
+</code></pre>
+<p><code>gald3r init-providers</code> shells out to <code>ollama list</code> and writes a <code>models:</code> entry per installed
+model automatically — the <code>ollama:</code> block in the full starter capture above (base URL
+<code>http://localhost:11434/v1</code>, <code>api_key: ollama</code> — a dummy value Ollama ignores, not a real
+credential) is exactly what that discovery produced against models actually pulled on the
+machine this page's example was drafted from.</p>
+<p><strong>Verify:</strong> <code>gald3r doctor</code>'s <code>providers</code> line reports how many providers are configured
+(<code>...\providers.yaml: N provider(s) configured</code> — see <a href="../troubleshooting/#step-1-gald3r-doctor"><code>troubleshooting.md</code></a>),
+or re-run <code>gald3r init-providers --dry-run</code> and confirm your pulled models show up under
+<code>ollama:</code>.</p>
+<h3 id="lm-studio">LM Studio<a class="headerlink" href="#lm-studio" title="Permanent link">&para;</a></h3>
+<p>Install from <a href="https://lmstudio.ai/">lmstudio.ai</a>, load a model in its UI, and start LM Studio's
+local server (Developer tab → Start Server — default port <code>1234</code>). The <code>lmstudio:</code> block in the
+starter capture above was written by the same <code>discover_local_runtimes</code> probe hitting
+<code>http://localhost:1234/v1/models</code> while the server this page was drafted against had those GGUF
+models loaded:</p>
+<pre><code class="language-yaml">lmstudio:
+  type: openai_compat
+  base_url: http://localhost:1234/v1
+  api_key: lm-studio
+  models:
+    - id: Qwen2.5-Coder-14B-Instruct-GGUF/Qwen2.5-Coder-14B-Instruct-Q4_K_M.gguf
+      alias: qwen2.5-coder-14b
+      role: coding
+      context_window: 32768
+</code></pre>
+<p>The long <code>id</code> is LM Studio's own model-file path — that's why <code>init-providers</code>' auto-discovery
+gives it a short <code>alias</code> (<code>qwen2.5-coder-14b</code>) you can use instead: <code>--model
+lmstudio:qwen2.5-coder-14b</code>.</p>
+<p><strong>Verify:</strong> same as Ollama — <code>gald3r doctor</code> or a fresh <code>init-providers --dry-run</code> with the LM
+Studio server running.</p>
+<h3 id="vllm">vLLM<a class="headerlink" href="#vllm" title="Permanent link">&para;</a></h3>
+<p><strong>Illustrative — no vLLM instance was available to probe while writing this page</strong>, but the
+shape below is code-grounded, not guessed: <code>discover_local_runtimes</code>'s fixed default-port table
+(<code>registry.py</code>) probes vLLM at <code>http://localhost:8000/v1</code> by default, and
+<code>render_starter_yaml</code>'s block-writer sets <code>type: openai_compat</code>, that <code>base_url</code>, a placeholder
+<code>api_key: local</code> (vLLM's OpenAI-compat server doesn't check it locally), and one <code>models:</code> entry
+per id the <code>/models</code> probe returns — the exact same code path the real Ollama/LM Studio blocks
+above went through.</p>
+<pre><code class="language-bash">pip install vllm
+vllm serve Qwen/Qwen2.5-Coder-14B-Instruct --port 8000
+</code></pre>
+<pre><code class="language-yaml">vllm:
+  type: openai_compat
+  base_url: http://localhost:8000/v1
+  api_key: local
+  models:
+    - id: Qwen/Qwen2.5-Coder-14B-Instruct
+      role: coding
+</code></pre>
+<p><strong>Verify:</strong> start <code>vllm serve</code>, then run <code>gald3r init-providers --dry-run</code> — a reachable vLLM
+server on port 8000 gets auto-discovered and written into the block exactly like LM Studio's,
+the same way you'd confirm any of these.</p>
+<h3 id="llamacpp">llama.cpp<a class="headerlink" href="#llamacpp" title="Permanent link">&para;</a></h3>
+<p><strong>Illustrative — same honesty note as vLLM above.</strong> <code>llama.cpp</code>'s <code>server</code> binary (or
+<code>llama-server</code>) defaults to port <code>8080</code> in <code>discover_local_runtimes</code>'s table:</p>
+<pre><code class="language-bash"># build llama.cpp per its own README, then:
+llama-server -m ./models/qwen2.5-coder-14b-q4_k_m.gguf --port 8080
+</code></pre>
+<pre><code class="language-yaml">llama-cpp:
+  type: openai_compat
+  base_url: http://localhost:8080/v1
+  api_key: local
+  models:
+    - id: qwen2.5-coder-14b-q4_k_m
+      role: coding
+</code></pre>
+<p><strong>Verify:</strong> identical pattern — <code>gald3r init-providers --dry-run</code> with the server running
+auto-discovers it via the same <code>/models</code> probe.</p>
+<h2 id="cloud-providers">Cloud providers<a class="headerlink" href="#cloud-providers" title="Permanent link">&para;</a></h2>
+<h3 id="openrouter-worked-example">OpenRouter (worked example)<a class="headerlink" href="#openrouter-worked-example" title="Permanent link">&para;</a></h3>
+<p>The starter file's <code>openrouter:</code> block (real capture, above) is the template:</p>
+<pre><code class="language-yaml">openrouter:
+  type: openai_compat
+  base_url: https://openrouter.ai/api/v1
+  api_key: $OPENROUTER_API_KEY
+  models:
+    - id: anthropic/claude-sonnet-4-5
+      role: planning
+    - id: google/gemini-2.5-flash
+      role: general_cheap
+    - id: qwen/qwen2.5-coder-32b-instruct
+      role: coding_cloud
+</code></pre>
+<p>Get a key from <a href="https://openrouter.ai/">openrouter.ai</a>, then store it — <strong>prefer the keyring
+over the <code>$ENV_VAR</code> the template ships with</strong>:</p>
+<pre><code>gald3r providers set-key openrouter
+</code></pre>
+<p>(prompts via <code>getpass</code>; see <a href="#gald3r-providers-set-key-keys-keyring-vs-plaintext">Keys: keyring vs. plaintext</a> above for
+the exact success/failure message shapes). <code>--model openrouter:anthropic/claude-sonnet-4-5</code> (or
+any other listed <code>id</code>) selects a specific model; bare <code>openrouter</code> uses the first one.</p>
+<h3 id="generic-openai-compatible-cloud-pattern">Generic OpenAI-compatible cloud pattern<a class="headerlink" href="#generic-openai-compatible-cloud-pattern" title="Permanent link">&para;</a></h3>
+<p>Any hosted endpoint that speaks the OpenAI Chat Completions wire format — a proxy, a
+self-hosted gateway, a provider not shown above — uses the exact same <code>openai_compat</code> shape:</p>
+<pre><code class="language-yaml">my-custom-endpoint:
+  type: openai_compat
+  base_url: https://my-endpoint.example.com/v1
+  api_key: $MY_ENDPOINT_API_KEY
+  models:
+    - id: whatever-the-endpoint-calls-it
+      role: general
+</code></pre>
+<p><code>build_provider</code> requires <code>base_url</code> for every <code>openai_compat</code> entry (source-verified,
+<code>registry.py</code>) — omit it and you get a clear <code>ProvidersYAMLError</code> at load/build time rather than
+a silent failure.</p>
+<h2 id="connect-and-the-two-local-model-verbs"><code>connect</code>, and the two local-model verbs<a class="headerlink" href="#connect-and-the-two-local-model-verbs" title="Permanent link">&para;</a></h2>
+<h3 id="gald3r-connect"><code>gald3r connect</code><a class="headerlink" href="#gald3r-connect" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r connect --help
+</code></pre>
+<pre><code>usage: gald3r connect [-h] [provider]
+
+positional arguments:
+  provider    Provider id to connect (e.g. openai)
+
+options:
+  -h, --help  show this help message and exit
+</code></pre>
+<p><code>connect</code> drives a real device-code OAuth round-trip (request → poll → store token) against
+<code>world_tree</code>, gald3r's optional hosted coordination service. <strong>This page's own writing pass
+found the device-code endpoint IS live</strong> on the deployed server (2026-08-03) — contradicting
+older documentation elsewhere in this doc set that describes it as returning a 404
+("not live yet"). Real capture:</p>
+<pre><code>gald3r connect openai
+</code></pre>
+<pre><code>gald3r connect openai: visit http://api.gald3r.ai/api/v1/auth/device/verify?user_code=CHMC-3D77 and enter code CHMC-3D77 (waiting up to 600s)...
+gald3r connect openai: device code expired before authorization completed -- run `gald3r connect` again.
+</code></pre>
+<p>(Real — the run printed a genuine verification URL and one-time code, then polled for up to 600
+seconds. Nothing visited that URL during this capture, so it expired unused — this page did not
+go on to test what happens after a completed authorization.) If you get this far, follow the
+printed URL and enter the code in any browser to finish linking the account; <code>gald3r login
+--token &lt;token&gt;</code> remains the direct power-user/CI path if you'd rather skip the device-code flow
+entirely (see <a href="../troubleshooting/"><code>troubleshooting.md</code></a> for that page's own <code>login</code> capture —
+worth a grain of salt given this page's fresher finding above). None of this is required for
+local-only <code>providers.yaml</code> use — <code>connect</code>/<code>login</code> only matter once you're using
+<code>world_tree</code>-backed, cross-machine features.</p>
+<h3 id="gald3r-local-model-assess"><code>gald3r local-model assess</code><a class="headerlink" href="#gald3r-local-model-assess" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r local-model assess --help
+</code></pre>
+<pre><code>usage: gald3r local-model assess [-h] [--os-name OS_NAME]
+                                 [--cpu-cores CPU_CORES] [--ram-gib RAM_GIB]
+                                 [--gpu-vram-gib GPU_VRAM_GIB]
+                                 [--gpu-count GPU_COUNT] [--gpu-name GPU_NAME]
+                                 [--gpu-vendor GPU_VENDOR] [--apple-silicon]
+                                 [--apple-chip APPLE_CHIP]
+                                 [--unified-memory-gib UNIFIED_MEMORY_GIB]
+                                 [--perf-cores PERF_CORES]
+                                 [--efficiency-cores EFFICIENCY_CORES]
+</code></pre>
+<p><code>assess</code> is a pure decision table over hardware facts <strong>you supply as flags</strong> — it does not
+probe your actual hardware itself (that half is deliberately excluded from the CLI-reachable
+layer; see the module's own layer-reachability audit in
+<code>src/gald3r_core/cli/commands/providers.py</code>). Three real runs against different hardware
+profiles:</p>
+<pre><code>gald3r local-model assess --ram-gib 32 --gpu-vram-gib 24 --gpu-name &quot;NVIDIA GeForce RTX 4090&quot; --gpu-vendor nvidia
+</code></pre>
+<pre><code>tier: 24gb
+recommended variant: ornith-35b-moe (Q4_K_M)
+
+[24gb tier] Recommend serving Ornith-1.0 35B MoE (~3B active/token) at Q4_K_M (~21.2 GiB) on NVIDIA GeForce RTX 4090 (24.0 GiB VRAM). 24GB baseline (RTX 4090 / 3090) — the validated default: 35B MoE Q4_K_M (~21 GiB) fits with room for context. Routine/bulk agent calls run locally at $0/token; reserve cloud models for hard tasks. Run 'gald3r local-model --serve-cmd' for the exact serve command.
+</code></pre>
+<pre><code>gald3r local-model assess --ram-gib 16
+</code></pre>
+<pre><code>tier: floor
+recommended variant: ornith-floor (Q4_K_M)
+
+No discrete GPU detected (CPU-only / integrated graphics) — FLOOR tier. Recommend the tiny SmolLM2 1.7B (tiny floor — routing/classification only) for cheap LOCAL routing / classification / autocomplete ONLY; it is NOT a coding model. Ornith 9B Q4 will run on CPU but slowly. Steer real coding to the CLOUD (reserve cloud for anything non-trivial). Run 'gald3r local-model --serve-cmd' for the floor + cloud guidance.
+</code></pre>
+<pre><code>gald3r local-model assess --apple-silicon --apple-chip &quot;Apple M4 Max&quot; --unified-memory-gib 64
+</code></pre>
+<pre><code>tier: apple_unified
+recommended variant: ornith-35b-moe (Q8_0)
+
+Apple M4 Max with 64 GiB UNIFIED memory — Apple-Silicon path (GPU shares system RAM, so the budget is far larger than a discrete card of the same price). Recommend serving Ornith-1.0 35B MoE (~3B active/token) at Q8_0 — runtime: PRIMARY is Ollama 0.19+ (MLX, ~2x faster) — its engine is MLX-backed automatically on Apple Silicon (no flag) on this 32 GiB+ Mac; mlx_lm.server is the fallback (Ollama-MLX-unsupported models). 64GB+ unified (M Max) — 35B MoE at higher precision with headroom for long context. Run 'gald3r local-model --serve-cmd' for the exact Mac serve command.
+</code></pre>
+<p>(All three real — the Apple-Silicon run works on any host since the hardware facts are supplied
+as flags, not detected; nothing above requires actually owning that hardware.) The
+recommendation is about <strong>Ornith</strong>, gald3r's own model family, sized to what your hardware can
+actually run — the "floor" tier explicitly steers real coding work to the cloud rather than
+pretending a 1.7B model can do it.</p>
+<h3 id="gald3r-local-model-serve"><code>gald3r local-model serve</code><a class="headerlink" href="#gald3r-local-model-serve" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r local-model serve --help
+</code></pre>
+<pre><code>usage: gald3r local-model serve [-h]
+                                --variant {cloud_only,ornith-31b,ornith-35b-moe,ornith-397b-moe,ornith-9b,ornith-floor}
+                                [--tensor-parallel-size TENSOR_PARALLEL_SIZE]
+                                [--apple-silicon]
+                                [--unified-memory-gib UNIFIED_MEMORY_GIB]
+</code></pre>
+<p>Feed it the <code>recommended variant</code> from <code>assess</code>'s output:</p>
+<pre><code>gald3r local-model serve --variant ornith-35b-moe
+</code></pre>
+<pre><code>variant: ornith-35b-moe
+served_model_id: ornith-1.0-35b-moe
+vLLM (primary):   vllm serve ornith/Ornith-1.0-35B-MoE --served-model-name ornith-1.0-35b-moe --quantization gguf --max-model-len 16384 --gpu-memory-utilization 0.92 --port 8000 --enable-auto-tool-choice --tool-call-parser hermes
+Ollama pull:      ollama pull ornith-1.0:35b-moe-q4_K_M
+Ollama run:       ollama run ornith-1.0:35b-moe-q4_K_M
+notes: Q4_K_M. 35B MoE Q4_K_M is ~21.2 GiB — fits a 24GB card 'barely' at 8-16K context. If you hit OOM, lower --max-model-len or --gpu-memory-utilization, or use Q5_K_M with ~1-2 layers offloaded to RAM. On multi-GPU (e.g. 2×24GB) tensor-parallel removes the fit pressure and allows higher precision.
+</code></pre>
+<p>Same variant, Apple-Silicon flags added:</p>
+<pre><code>gald3r local-model serve --variant ornith-35b-moe --apple-silicon --unified-memory-gib 64
+</code></pre>
+<pre><code>variant: ornith-35b-moe
+served_model_id: ornith-1.0-35b-moe
+vLLM (primary):   vllm serve ornith/Ornith-1.0-35B-MoE --served-model-name ornith-1.0-35b-moe --quantization gguf --max-model-len 16384 --gpu-memory-utilization 0.92 --port 8000 --enable-auto-tool-choice --tool-call-parser hermes
+Ollama pull:      ollama pull ornith-1.0:35b-moe-q4_K_M
+Ollama run:       ollama run ornith-1.0:35b-moe-q4_K_M
+MLX (Apple):      mlx_lm.server --model mlx-community/Ornith-1.0-35B-MoE-4bit --port 8080 --host 127.0.0.1
+notes: Q4_K_M. 35B MoE Q4_K_M is ~21.2 GiB — fits a 24GB card 'barely' at 8-16K context. ... Apple Silicon (&gt;= 32 GiB unified): PRIMARY is Ollama 0.19+ ('ollama run ornith-1.0:35b-moe-q4_K_M') — its engine is MLX-backed AUTOMATICALLY on Apple Silicon (no flag), ~2x faster than the old llama.cpp/Metal path. ... FALLBACK (&lt; 32 GiB unified, or models Ollama-MLX can't serve yet): 'mlx_lm.server --model mlx-community/Ornith-1.0-35B-MoE-4bit --port 8080'.
+</code></pre>
+<p>It only ever <strong>prints</strong> commands — it never auto-installs a runtime or auto-pulls a model for
+you; you still run the printed command yourself. Neither <code>local-model</code> verb reads or writes
+<code>providers.yaml</code>; pair a locally-served Ornith model with a <code>providers.yaml</code> block the same way
+the Ollama/LM Studio/vLLM/llama.cpp recipes above show, once it's actually running.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<p>Every message below is a real <code>[error]</code> a real <code>gald3r run</code> prints, captured against a scratch
+<code>providers.yaml</code> built specifically to trigger each failure — except the last, marked
+illustrative.</p>
+<h3 id="missing-key-a-configured-provider-with-no-usable-credential">Missing key (a configured provider with no usable credential)<a class="headerlink" href="#missing-key-a-configured-provider-with-no-usable-credential" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r run &quot;hi&quot; --model anthropic
+</code></pre>
+<pre><code>[error] Could not resolve provider: No configuration found for provider 'anthropic'. Set API key in &lt;home&gt;\providers.yaml or as an environment variable (ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY).
+</code></pre>
+<p>(Real — captured with an <code>anthropic:</code> block present in <code>providers.yaml</code> but with no <code>api_key</code>
+field, no <code>$ANTHROPIC_API_KEY</code> set, and no keyring entry stored.) Fix: <code>gald3r providers set-key
+anthropic</code>, a <code>$ANTHROPIC_API_KEY</code> environment variable, or a literal <code>api_key:</code> in the file.</p>
+<h3 id="backend-down-wrong-base_url">Backend down / wrong <code>base_url</code><a class="headerlink" href="#backend-down-wrong-base_url" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r run &quot;hi&quot; --model deadlocal
+</code></pre>
+<pre><code>[error] Connection error.
+</code></pre>
+<p>(Real — captured with a <code>deadlocal:</code> provider whose <code>base_url</code> pointed at
+<code>http://localhost:19999/v1</code>, a port nothing was listening on.) This is the same message shape
+for both "the backend process isn't running" and "the <code>base_url</code> is simply wrong" — from
+gald3r's side they look identical (a failed TCP connection), so the fix is the same either way:
+confirm the backend is actually running (<code>curl &lt;base_url&gt;/models</code>, or just start it) and that
+<code>base_url</code> matches the port it's actually listening on.</p>
+<h3 id="provider-id-not-in-providersyaml-at-all">Provider id not in <code>providers.yaml</code> at all<a class="headerlink" href="#provider-id-not-in-providersyaml-at-all" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r run &quot;hi&quot; --model totallyfake
+</code></pre>
+<pre><code>[error] Could not resolve provider: No configuration found for provider 'totallyfake'. Set API key in &lt;home&gt;\providers.yaml or as an environment variable (ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY).
+</code></pre>
+<p>(Real — captured with no <code>totallyfake:</code> block anywhere in the file.) Note this is the <strong>same
+message text</strong> as the missing-key case above — today, gald3r's error path doesn't distinguish
+"this provider id doesn't exist in the file" from "this provider exists but has a config
+problem." If you see this and you're sure the provider IS in your <code>providers.yaml</code>, double-check
+its <code>type</code>/<code>api_key</code>/<code>base_url</code> fields rather than assuming the id itself is wrong — this is a
+known rough edge in the error message, not a sign your setup is broken.</p>
+<h3 id="model-name-mismatch-illustrative">Model-name mismatch (illustrative)<a class="headerlink" href="#model-name-mismatch-illustrative" title="Permanent link">&para;</a></h3>
+<p><strong>Not independently reproducible offline</strong> — a genuine model-name-mismatch response comes from
+the real backend's own API (e.g. Ollama/LM Studio returning an HTTP 404 for an unrecognized
+model id), and no local backend was available to capture this against while writing this page.
+Source-verified behavior instead: <code>resolve_model</code> (<code>registry.py</code>) does <strong>not</strong> reject an unknown
+model id up front — a name that isn't in a provider's <code>models:</code> list is passed through as-is
+"as the user may have a brand-new local model," and the <em>actual</em> endpoint is left to return
+whatever error it returns for an unrecognized model (typically an HTTP 404 from an
+OpenAI-compatible server). If a run fails this way, the fix is to check the model id/alias
+against what the backend itself reports as loaded (<code>ollama list</code>, LM Studio's UI, or the
+endpoint's own <code>/models</code> route) rather than trust <code>providers.yaml</code>'s list, since that list is
+not authoritative over what the backend actually has loaded.</p>
+<h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../concepts/#providers"><code>concepts.md</code></a> — the one-paragraph version of all this, if you just
+  need the summary</li>
+<li><a href="../cli-reference/#providers-configuration"><code>cli-reference.md</code></a> — every provider-related
+  verb in the full command map</li>
+<li><a href="../install/"><code>install.md</code></a> — get <code>gald3r</code> itself installed before any of this matters</li>
+<li><a href="../troubleshooting/"><code>troubleshooting.md</code></a> — <code>doctor</code>'s <code>providers</code> line, and the general
+  real-output-driven troubleshooting flow this page's Troubleshooting section follows</li>
+</ul>
+<h2 id="managing-providersyaml-from-the-cli-t610">Managing providers.yaml from the CLI (T610)<a class="headerlink" href="#managing-providersyaml-from-the-cli-t610" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Note to the reader</strong>: this page is a standalone addendum written for T610.
+It documents the <code>gald3r providers</code> edit/list/validate verb family in the
+same style as the rest of <code>docs/product/</code>. A companion task (T609) is
+expected to land a full "Models &amp; Providers" page later; when it does, the
+coordinator will fold this content into that page rather than leave two
+separate provider docs around. Until then, this page is the authoritative
+user-facing documentation for these verbs.</p>
+</blockquote>
+<p>Every command below was actually run against this repo's own source (against a
+temporary copy of <code>docs/providers_template.yaml</code>) while writing this page.
+Output is trimmed for length but not altered in substance.</p>
+<h3 id="why-this-exists">Why this exists<a class="headerlink" href="#why-this-exists" title="Permanent link">&para;</a></h3>
+<p>Hand-editing <code>providers.yaml</code> directly works, but has no validation and no
+feedback until something breaks at call time. <code>gald3r providers</code> adds a small
+verb family that makes hand-editing optional: list what's configured, add/
+remove/edit providers and their models, assign role routing, and validate the
+whole file (schema, key presence, reachability) before you find out the hard
+way.</p>
+<p>Every edit verb is <strong>round-trip safe</strong>: it preserves comments and the
+ordering of every block it doesn't touch. Under the hood this uses
+<a href="https://pypi.org/project/ruamel.yaml/"><code>ruamel.yaml</code></a>'s round-trip mode
+rather than a plain load-then-dump (which would silently drop every comment
+in the file) — see <code>src/gald3r_core/core/providers/yaml_edit.py</code>'s module
+docstring if you want the full writeup.</p>
+<h3 id="gald3r-providers-list"><code>gald3r providers list</code><a class="headerlink" href="#gald3r-providers-list" title="Permanent link">&para;</a></h3>
+<p>At-a-glance table: provider, type, base URL, key status, model count, and
+which roles are covered.</p>
+<pre><code>gald3r providers list
+</code></pre>
+<pre><code>providers.yaml: C:\Users\you\.gald3r_template_core\providers.yaml
+
+provider    type           base_url                      key        models  roles
+----------  -------------  ----------------------------  ---------  ------  ------------------------------------------------
+anthropic   anthropic      -                             env:unset  3       general_cheap, planning, planning_heavy
+lmstudio    openai_compat  http://localhost:1234/v1      local      7       coding, coding_heavy, reasoning
+ollama      openai_compat  http://localhost:11434/v1     local      7       coding, coding_heavy, general, reasoning, vision
+openai      openai_compat  https://api.openai.com/v1     env:unset  2       general, general_cheap
+openrouter  openai_compat  https://openrouter.ai/api/v1  env:unset  3       coding_cloud, general_cheap, planning
+sakana      openai_compat  https://api.sakana.ai/v1      env:unset  2       general, planning_heavy
+</code></pre>
+<p>The <code>key</code> column is a <strong>classification</strong>, never the actual secret:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keyring</code></td>
+<td>Resolved from the OS keyring (<code>gald3r providers set-key</code>) — takes precedence over anything in the file</td>
+</tr>
+<tr>
+<td><code>env:set</code></td>
+<td><code>api_key</code> is a <code>$ENV_VAR</code> reference and that variable is currently set</td>
+</tr>
+<tr>
+<td><code>env:unset</code></td>
+<td><code>api_key</code> is a <code>$ENV_VAR</code> reference, but that variable is not set right now</td>
+</tr>
+<tr>
+<td><code>local</code></td>
+<td>A known keyless placeholder (<code>ollama</code>/<code>lm-studio</code>/<code>local</code>) — expected for local runtimes, not a real secret</td>
+</tr>
+<tr>
+<td><code>plaintext</code></td>
+<td>A literal secret sitting in the file — works, but consider <code>gald3r providers set-key</code> instead</td>
+</tr>
+<tr>
+<td><code>missing</code></td>
+<td>No key resolvable anywhere</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gald3r-providers-add"><code>gald3r providers add</code><a class="headerlink" href="#gald3r-providers-add" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r providers add together --base-url https://api.together.xyz/v1 --model meta-llama/Llama-3.3-70B
+</code></pre>
+<pre><code>Added provider 'together' to C:\Users\you\.gald3r_template_core\providers.yaml.
+</code></pre>
+<p>If no <code>providers.yaml</code> exists yet, <code>add</code> creates one from scratch (you don't
+have to run <code>gald3r init-providers</code> first).</p>
+<p>Flags: <code>--base-url URL</code>, <code>--type {openai_compat,anthropic}</code> (default
+<code>openai_compat</code>), <code>--model MODEL_ID</code> (repeatable — adds bare model entries;
+use <code>providers model add</code> afterward to attach a role/alias/context window),
+<code>--api-key $ENV_VAR_OR_PLACEHOLDER</code> — a real-looking secret literal is <strong>refused</strong> (keys never go in the file in plaintext; use <code>gald3r providers set-key</code> for the OS keyring, a <code>$ENV_VAR</code> reference, or the local placeholders <code>ollama</code>/<code>lm-studio</code>/<code>local</code>) (prefer <code>gald3r providers set-key</code> to keep real
+secrets out of the file), <code>--force</code> (replace if the provider already exists).</p>
+<h3 id="gald3r-providers-remove"><code>gald3r providers remove</code><a class="headerlink" href="#gald3r-providers-remove" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r providers remove together --yes
+</code></pre>
+<pre><code>Removed provider 'together' from C:\Users\you\.gald3r_template_core\providers.yaml.
+</code></pre>
+<p><code>--yes</code> is required — this CLI never blocks on an interactive confirmation
+prompt (same convention as <code>gald3r profile reset</code>). Omitting it refuses with a
+clear message and makes no change.</p>
+<p>If the provider you're removing sits immediately before a comment that
+documents a <em>different</em> provider, you'll see an extra warning first — this is
+a real <code>ruamel.yaml</code> quirk (it attaches a "between blocks" comment to the end
+of the <em>preceding</em> block, not the "before" position of the one it visually
+describes), so removing the preceding provider can take an unrelated
+provider's documentation with it. The warning tells you before it happens so
+you can check the file afterward if that comment mattered.</p>
+<h3 id="gald3r-providers-set"><code>gald3r providers set</code><a class="headerlink" href="#gald3r-providers-set" title="Permanent link">&para;</a></h3>
+<p>Targeted field edits — no need to touch anything else in the block.</p>
+<pre><code>gald3r providers set ollama base_url=http://localhost:22222/v1
+</code></pre>
+<pre><code>Updated 1 field(s) on provider 'ollama' in C:\Users\you\.gald3r_template_core\providers.yaml.
+</code></pre>
+<p>Multiple <code>KEY=VALUE</code> pairs in one call are fine. Values are type-coerced the
+way you'd expect: <code>true</code>/<code>false</code> become real YAML booleans, integers and
+floats parse as numbers, everything else stays a string.</p>
+<h3 id="gald3r-providers-model-add-gald3r-providers-model-remove"><code>gald3r providers model add</code> / <code>gald3r providers model remove</code><a class="headerlink" href="#gald3r-providers-model-add-gald3r-providers-model-remove" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r providers model add ollama gemma3:27b --role vision --context-window 32768
+</code></pre>
+<pre><code>Added model 'gemma3:27b' to provider 'ollama' in C:\Users\you\.gald3r_template_core\providers.yaml.
+</code></pre>
+<pre><code>gald3r providers model remove ollama gemma3:27b
+</code></pre>
+<pre><code>Removed model 'gemma3:27b' from provider 'ollama' in C:\Users\you\.gald3r_template_core\providers.yaml.
+</code></pre>
+<p><code>model remove</code> matches by either <code>id</code> or <code>alias</code>. <code>--role</code> is a single value
+(not a list) — the on-disk schema carries exactly one <code>role:</code> per model
+entry; a model that serves more than one purpose is expected to appear as
+more than one entry, or you just re-run <code>providers role set</code> to reassign it.</p>
+<h3 id="gald3r-providers-role-set"><code>gald3r providers role set</code><a class="headerlink" href="#gald3r-providers-role-set" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r providers role set vision ollama/qwen3:4b
+</code></pre>
+<pre><code>Set role 'vision' for ollama/qwen3:4b in C:\Users\you\.gald3r_template_core\providers.yaml.
+</code></pre>
+<p>The spec is <code>PROVIDER/MODEL</code>, split on the <strong>first</strong> <code>/</code> only — this matters
+because LM Studio model ids are themselves filesystem-style paths containing
+<code>/</code> (e.g. <code>lmstudio/Qwen2.5-Coder-14B-Instruct-GGUF/Qwen2.5-Coder-14B-Instruct-Q4_K_M.gguf</code>),
+so a naive last-<code>/</code> split would cut the model id in half.</p>
+<h3 id="gald3r-providers-validate"><code>gald3r providers validate</code><a class="headerlink" href="#gald3r-providers-validate" title="Permanent link">&para;</a></h3>
+<p>Schema check, key-presence check, and (unless <code>--no-network</code>) a
+reachability probe against <code>{base_url}/models</code> for every OpenAI-compatible
+provider.</p>
+<pre><code>gald3r providers validate --no-network
+</code></pre>
+<pre><code>[OK  ] lmstudio
+         ok: API key resolved via local
+         skip: reachability probe disabled (--no-network)
+[OK  ] ollama
+         ok: API key resolved via local
+         skip: reachability probe disabled (--no-network)
+[WARN] openrouter
+         warn: api_key references an unset environment variable
+         skip: reachability probe disabled (--no-network)
+6 provider(s): 2 ok, 4 warn, 0 fail.
+</code></pre>
+<p>Exit code is <code>1</code> only if any provider has a <strong>fail</strong>-level finding (a real
+schema defect, or no usable key at all for a provider type that requires
+one). An unreachable local runtime, an unset env var, or a plaintext key are
+all <strong>warnings</strong> — informational, not blocking (the runtime may simply not be
+started right now).</p>
+<p>Every network probe is hard-capped at 3 seconds regardless of what
+<code>--timeout</code> you pass, and <code>--no-network</code> skips reachability checks entirely —
+<code>validate</code> never hangs waiting on a dead endpoint.</p>
+<h3 id="keys-still-never-leave-the-keyring-path">Keys still never leave the keyring path<a class="headerlink" href="#keys-still-never-leave-the-keyring-path" title="Permanent link">&para;</a></h3>
+<p>None of these verbs change how secrets are stored: <code>gald3r providers set-key</code>
+remains the only way to put a real key in the OS keyring, and nothing here
+ever prints, logs, or writes a literal secret value — only classification
+labels like the <code>key</code> column above.</p>
+<h3 id="can-i-edit-providersyaml-while-gald3r-is-already-running">Can I edit providers.yaml while gald3r is already running?<a class="headerlink" href="#can-i-edit-providersyaml-while-gald3r-is-already-running" title="Permanent link">&para;</a></h3>
+<p>Short answer: <strong>usually yes, already, with no extra step.</strong> The full
+investigation lives in <code>src/gald3r_core/core/providers/registry.py</code>'s module
+docstring ("Hot-reload finding" section); the summary:</p>
+<ul>
+<li><code>providers.yaml</code> is re-read from disk on <strong>every single call</strong> that
+  resolves a provider — there is no cache anywhere in the loader
+  (<code>registry.load_providers</code> / <code>ProviderRegistry.get</code>). A background
+  autopilot loop or the ACP server's default provider factory both build a
+  fresh registry per call, so an edit (via these verbs or by hand) is visible
+  on the very next call, no restart needed.</li>
+<li>The one exception is an already-open <code>gald3r chat</code> REPL: it resolves its
+  provider once per session and reuses that client for every turn until you
+  run <code>/model &lt;spec&gt;</code> or start a new session. If you edit <code>providers.yaml</code>
+  while a chat session is open, run <code>/model</code> (or restart) to pick up the
+  change in that session.</li>
+</ul>
+<h3 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="../quickstart/"><code>quickstart.md</code></a> — <code>gald3r init-providers</code> and the
+  starter <code>providers.yaml</code> this addendum assumes you already have</li>
+<li><a href="../cli-reference/"><code>cli-reference.md</code></a> — the full verb catalog</li>
+<li><code>gald3r providers --help</code> / <code>gald3r providers &lt;subcommand&gt; --help</code> —
+  always the authoritative source for exact flags</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
