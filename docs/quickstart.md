@@ -2,27 +2,33 @@
 
 ## 1. Install
 
-Download `gald3r` (`gald3r.exe` on Windows) plus its `.sha256` sidecar from the **v5.0.0-beta.1**
-release, verify it, and put it on your PATH.
+Download the platform bundle (or installer) for your OS from the **v5.0.0-beta.2** release, verify it
+against `SHA256SUMS.txt`, and install it.
 
-**Windows**
+**Windows** -- easiest: run `gald3r-windows-x86_64.msi`. Manual install: extract
+`gald3r-windows-x86_64.zip`, put it on your PATH.
 
 ```powershell
-(Get-FileHash .\gald3r.exe -Algorithm SHA256).Hash.ToLower()
-Get-Content .\gald3r.exe.sha256          # must match
-# move gald3r.exe onto a PATH directory, then open a NEW terminal
-gald3r --version                          # -> gald3r 5.0.0-beta.1 ...
+Expand-Archive gald3r-windows-x86_64.zip
+Get-FileHash .\gald3r-windows-x86_64\gald3r.exe -Algorithm SHA256
+Get-Content .\gald3r-windows-x86_64\SHA256SUMS      # must match
+gald3r --version                          # -> gald3r 5.0.0-beta.2 ...
 ```
 
-**macOS / Linux**
+**macOS** -- easiest: run `gald3r-macos-arm64.pkg` (Apple Silicon) or `gald3r-macos-x86_64.pkg`
+(Intel). Manual install: extract the matching `.tar.gz` and run its bundled `install.sh`.
+
+**Linux**
 
 ```bash
-sha256sum -c gald3r.sha256
-chmod +x gald3r && mv gald3r ~/.local/bin/gald3r
+tar xzf gald3r-linux-x86_64.tar.gz
+cd gald3r-*-linux-x86_64
+sha256sum -c SHA256SUMS                   # must match
+./install.sh
 gald3r --version
 ```
 
-No Python, no `uv`, no source checkout required -- this is the compiled binary.
+No Python, no `uv`, no source checkout required -- these are the compiled binaries.
 
 ## 2. First run -- confirm the install is healthy
 
