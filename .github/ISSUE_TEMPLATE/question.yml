@@ -1,0 +1,45 @@
+name: ❓ Question / help
+description: Ask a question or get help using gald3r.
+title: "[question]: "
+labels: ["question", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: "Not sure how something works? Ask here. For faster answers, check [the docs](https://docs.gald3r.ai) first."
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: AI platform / IDE in use
+      options:
+        - "Claude Code"
+        - "Cursor"
+        - "GitHub Copilot"
+        - "Codex CLI (OpenAI)"
+        - "OpenCode (sst.dev)"
+        - "Windsurf"
+        - "Cline (VS Code)"
+        - "Roo Code"
+        - "Aider"
+        - "Augment Code"
+        - "Gemini CLI"
+        - "Kiro (Amazon)"
+        - "Goose (Block)"
+        - "JetBrains Junie"
+        - "Warp Terminal"
+        - "OpenHands / OpenDevin"
+        - "Replit Agent"
+        - "Mistral Vibe"
+        - "Qwen Code"
+        - "gald3r native / standalone (no IDE)"
+        - "Multiple platforms"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
