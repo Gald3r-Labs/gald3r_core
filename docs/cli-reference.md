@@ -12,6 +12,16 @@ the command/skill/rule/hook/agent tour and the per-platform quick-start matrix, 
 to the generated [Commands reference](./reference/crash/commands.md) for a usage card per
 `/g-`/`@g-` command (purpose, arguments, example invocation, related commands).
 
+<!-- Go-era update (verified against gald3r_cli/internal/commands/root.go,
+     2026-08-08): the Go rewrite added `--dir` as a new persistent/global
+     flag, documented below. -->
+
+## Global flags
+
+| Flag | What it does |
+|---|---|
+| `--dir PATH` | Explicit project root directory — skips the `.gald3r/` walk-up entirely (the directory must already contain a `.gald3r/` directory). Highest-precedence root override; accepted by every verb. A verb's own `--root`/`--project-root` flag, where one is already defined locally on that verb, still wins over `--dir` on that same command. |
+
 ## Getting started & health
 
 | Verb | What it does |
@@ -23,7 +33,7 @@ to the generated [Commands reference](./reference/crash/commands.md) for a usage
 | `gald3r selftest` | Run the install self-diagnostic ("gald3r is N% functional") |
 | `gald3r sessions` | Read-only listing of local chat sessions for the current directory |
 | `gald3r status` | See where your project actually stands at a glance — task/bug counts, completion %, what's blocked and why, and what's waiting on you (`--min-severity N`, `--json`) |
-| `gald3r --version` | Print version + build fingerprint |
+| `gald3r --version` | Print the CLI version, the schema/rel version this binary writes, and a VCS build fingerprint (short commit + commit time, `+dirty` when applicable) when the binary was built with VCS stamping. <!-- Corrected during Phase H1 verification, 2026-08-08: an earlier draft of this row, written from gald3r_cli/internal/commands/root.go's doc comment alone, claimed --version was "currently a plain version-string stub" with no build fingerprint. That comment describes only root.go's OWN contribution (cobra's bare Version field) -- it misses that gald3r_cli/internal/commands/doctor.go's RegisterDoctor() calls root.SetVersionTemplate(versionIdentityBlock()), which overrides that plain output with the schema/rel + build-fingerprint block described here (verified directly against the compiled binary's real `--version` output, not just source comments: `gald3r version 0.0.1-dev` / `  schema/rel version: 3.0.0` / `  build: <sha> (<time>) [+dirty]`). What is still genuinely absent versus the Python era: a `--json` machine-readable payload and the BUG-510 build-drift-check comparison against an expected fingerprint -- neither is implemented, so do not claim those two specifically. --> |
 
 ## Tasks, bugs, and project state
 

@@ -2,7 +2,7 @@
 
 ## 1. Install
 
-Download `gald3r` (`gald3r.exe` on Windows) plus its `.sha256` sidecar from the **v4.0.0-beta.3**
+Download `gald3r` (`gald3r.exe` on Windows) plus its `.sha256` sidecar from the **v5.0.0-beta.1**
 release, verify it, and put it on your PATH.
 
 **Windows**
@@ -11,7 +11,7 @@ release, verify it, and put it on your PATH.
 (Get-FileHash .\gald3r.exe -Algorithm SHA256).Hash.ToLower()
 Get-Content .\gald3r.exe.sha256          # must match
 # move gald3r.exe onto a PATH directory, then open a NEW terminal
-gald3r --version                          # -> gald3r 4.0.0-beta.3 ...
+gald3r --version                          # -> gald3r 5.0.0-beta.1 ...
 ```
 
 **macOS / Linux**
