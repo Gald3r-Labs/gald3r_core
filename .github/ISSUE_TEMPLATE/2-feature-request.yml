@@ -1,0 +1,51 @@
+name: ✨ Feature request / enhancement
+description: Suggest a new capability or an improvement to an existing one.
+title: "[feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: "Ideas and rough sketches are welcome — you don't need a full proposal."
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which area?
+      options:
+        - "gald3r (the CLI)"
+        - "MCP / editor integration"
+        - "gald3r-api / world_tree (cloud, sync, subscriptions)"
+        - "Longship (terminal UI)"
+        - "Throne (desktop app)"
+        - "Task / bug / project management (.gald3r board)"
+        - "Swarm / autopilot / g-go"
+        - "Install / packaging / platforms"
+        - "Something new / other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: What are you trying to do that's hard or impossible today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to see?
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or workarounds you've tried
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and discussions for this idea.
+          required: true
