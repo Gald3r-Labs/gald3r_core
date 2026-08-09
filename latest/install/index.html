@@ -853,6 +853,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Upgrading an existing install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stop-the-local-fleet-before-replacing-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stop the local fleet before replacing files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1645,6 +1662,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Upgrading an existing install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stop-the-local-fleet-before-replacing-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stop the local fleet before replacing files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1751,13 +1785,14 @@ Gald3r Labs LLC, so SmartScreen shows the publisher instead of "Unknown") is als
 environments that require the Windows Installer service instead of an ad hoc <code>.exe</code> — the
 <code>.msi</code> installs <strong>both</strong> <code>gald3r.exe</code> and <code>gald3rw.exe</code> (T607) onto the same <code>PATH</code> entry in
 one step.</p>
-<blockquote>
-<p><strong>Known gap (T607 follow-up):</strong> <code>gald3r install update</code>'s raw-<code>.exe</code> self-update path
-(as opposed to the <code>.msi</code> installer above) currently downloads and replaces only
-<code>gald3r.exe</code> — it does not yet also fetch/refresh <code>gald3rw.exe</code> alongside it. Use the
-<code>.msi</code> installer if you need both binaries kept in sync via <code>gald3r install update</code>
-directly; this is tracked as follow-up work on the CLI self-update path.</p>
-</blockquote>
+<p>On Windows, <code>gald3r install update</code> likewise refreshes <strong>both</strong> release assets
+(<code>gald3r-windows-x86_64.exe</code> → <code>gald3r.exe</code>, and <code>gald3rw-windows-x86_64.exe</code> →
+<code>gald3rw.exe</code>) in one fail-closed transaction (BUG-677). If either binary is locked by a
+running process (commonly <code>gald3rw.exe</code> held open by a Windows MCP server), the update
+aborts with a clear message naming the locked file and rolls back any partial replace. If
+Windows prevents that rollback too, gald3r fails loudly, retains the <code>.bak-*</code> backup, and gives
+the exact manual-recovery command instead of falsely reporting a consistent pair. POSIX stays
+single-binary.</p>
 <p>Bootstrapping the very first <code>gald3r</code> (before you have one on <code>PATH</code> to run <code>install update</code>
 with) is the <code>.pkg</code>/tarball/<code>.msi</code> install above, or — on any OS — a plain download-and-run of
 the OS-appropriate bare-binary asset from the release's GitHub page.</p>
@@ -1916,6 +1951,20 @@ platform install claude --into .</code> repairs it without touching your other s
 <pre><code>gald3r install update    # replace the PATH binary with the latest signed release
 gald3r version-check     # find out if a newer gald3r is available -- works offline
 </code></pre>
+<h3 id="stop-the-local-fleet-before-replacing-files">Stop the local fleet before replacing files<a class="headerlink" href="#stop-the-local-fleet-before-replacing-files" title="Permanent link">&para;</a></h3>
+<p>Before an update, especially on Windows where a running MCP server can lock
+<code>gald3r.exe</code>/<code>gald3rw.exe</code>, inspect the persistent gald3r fleet and then request
+its cooperative shutdown:</p>
+<pre><code class="language-powershell">gald3r shutdown --dry-run
+gald3r shutdown --wait 30
+gald3r install update
+</code></pre>
+<p><code>shutdown</code> identifies executable shims and Python-hosted MCP, Valkyrie, and
+autopilot processes from their executable path and command line. It never
+targets the command's own shell-parent chain. The command waits only for the
+bounded <code>--wait</code> period and exits nonzero if a process remains; use
+<code>gald3r shutdown --force</code> only after reviewing that report, because force
+termination can discard in-flight work.</p>
 <p>Contributors rebuilding from a local <code>gald3r_core_dev</code> source checkout instead of a signed
 release use the maintainer-only <code>packaging/maintainer/install_self.py</code> script (<code>uv run python
 packaging/maintainer/install_self.py</code>) -- not a <code>gald3r</code> subcommand; see <code>docs/BINARY_REFRESH.md</code>.</p>
@@ -1931,10 +1980,12 @@ means, and <a href="../troubleshooting/">Troubleshooting</a> if anything comes b
 <p><strong>Windows note (T607 — two executables ship on <code>PATH</code>):</strong> the release installs BOTH
 <code>gald3r.exe</code> (console subsystem — terminals, scripts, agent shells; always prints and
 returns a real exit code, even from a console-less PowerShell host) and <code>gald3rw.exe</code>
-(GUI-subsystem attach — Throne, IDE hooks, the valk daemon; never flashes a console
-window when spawned from a console-less parent, per BUG-556). Type <code>gald3r</code>, not
-<code>gald3rw</code>, in a terminal or script. If a <code>gald3r</code> command ever returns <em>instantly with
-no output at all</em>, see <a href="../troubleshooting/#windows-gald3r-returns-instantly-with-no-output-at-all-blank-exit-code">Troubleshooting → "Windows: <code>gald3r</code> returns instantly with no
+(GUI-subsystem attach — Windows MCP launch configs stamped at install time, and any
+other console-less-parented spawn that must never flash a console window, per BUG-556).
+Type <code>gald3r</code>, not <code>gald3rw</code>, in a terminal or script. <code>gald3r doctor</code> reports a
+<code>windows_dual_exe</code> row when the two binaries report different <code>--version</code> strings
+(BUG-677). If a <code>gald3r</code> command ever returns <em>instantly with no output at all</em>, see
+<a href="../troubleshooting/#windows-gald3r-returns-instantly-with-no-output-at-all-blank-exit-code">Troubleshooting → "Windows: <code>gald3r</code> returns instantly with no
 output"</a>.</p>
 </blockquote>
 
