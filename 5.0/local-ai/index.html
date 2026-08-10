@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/plugins/">
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/local-ai/">
       
       
-        <link rel="prev" href="../local-ai/">
+        <link rel="prev" href="../providers/">
       
       
-        <link rel="next" href="../longship/">
+        <link rel="next" href="../plugins/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Plugins & Skill Packs - gald3r_core Product Docs</title>
+        <title>Local AI (Ollama, LM Studio) - gald3r_core Product Docs</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#plugins-skill-packs" class="md-skip">
+        <a href="#local-ai-ollama-lm-studio-and-other-local-backends" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Plugins & Skill Packs
+              Local AI (Ollama, LM Studio)
             
           </span>
         </div>
@@ -451,9 +451,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../local-ai/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -470,11 +472,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../plugins/" class="md-tabs__link">
         
   
   
@@ -957,33 +957,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../local-ai/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Local AI (Ollama, LM Studio)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -1003,7 +976,7 @@
   <span class="md-ellipsis">
     
   
-    Plugins & Skill Packs
+    Local AI (Ollama, LM Studio)
   
 
     
@@ -1021,7 +994,7 @@
   <span class="md-ellipsis">
     
   
-    Plugins & Skill Packs
+    Local AI (Ollama, LM Studio)
   
 
     
@@ -1047,10 +1020,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#skill-packs-curated-bundles-of-ready-made-skills" class="md-nav__link">
+  <a href="#quick-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Skill packs — curated bundles of ready-made skills
+        Quick setup
       
     </span>
   </a>
@@ -1058,10 +1031,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#plugins-community-git-cloned-skillmd-based" class="md-nav__link">
+  <a href="#how-discovery-works" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Plugins — community, git-cloned, SKILL.md-based
+        How discovery works
       
     </span>
   </a>
@@ -1069,10 +1042,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#skill-packs-vs-plugins-which-one-am-i-looking-at" class="md-nav__link">
+  <a href="#adding-a-model-or-a-whole-new-provider" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Skill packs vs. plugins — which one am I looking at?
+        Adding a model, or a whole new provider
       
     </span>
   </a>
@@ -1080,10 +1053,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#referenceprompt-library-and-mcp-exposure" class="md-nav__link">
+  <a href="#running-against-a-local-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reference/prompt library, and MCP exposure
+        Running against a local model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lan-endpoints-and-gald3rsecrets-no-cloud-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LAN endpoints and .gald3rsecret's no-cloud tier
       
     </span>
   </a>
@@ -1105,6 +1089,33 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1527,10 +1538,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#skill-packs-curated-bundles-of-ready-made-skills" class="md-nav__link">
+  <a href="#quick-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Skill packs — curated bundles of ready-made skills
+        Quick setup
       
     </span>
   </a>
@@ -1538,10 +1549,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#plugins-community-git-cloned-skillmd-based" class="md-nav__link">
+  <a href="#how-discovery-works" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Plugins — community, git-cloned, SKILL.md-based
+        How discovery works
       
     </span>
   </a>
@@ -1549,10 +1560,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#skill-packs-vs-plugins-which-one-am-i-looking-at" class="md-nav__link">
+  <a href="#adding-a-model-or-a-whole-new-provider" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Skill packs vs. plugins — which one am I looking at?
+        Adding a model, or a whole new provider
       
     </span>
   </a>
@@ -1560,10 +1571,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#referenceprompt-library-and-mcp-exposure" class="md-nav__link">
+  <a href="#running-against-a-local-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reference/prompt library, and MCP exposure
+        Running against a local model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lan-endpoints-and-gald3rsecrets-no-cloud-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LAN endpoints and .gald3rsecret's no-cloud tier
       
     </span>
   </a>
@@ -1601,109 +1623,107 @@
   
 
 
-<h1 id="plugins-skill-packs">Plugins &amp; Skill Packs<a class="headerlink" href="#plugins-skill-packs" title="Permanent link">&para;</a></h1>
-<p>Two ways to extend gald3r beyond what ships by default: <strong>plugins</strong> (community, git-cloned)
-and <strong>skill packs</strong> (curated bundles of skills, first-party and community). Both are
-covered here.</p>
-<h2 id="skill-packs-curated-bundles-of-ready-made-skills">Skill packs — curated bundles of ready-made skills<a class="headerlink" href="#skill-packs-curated-bundles-of-ready-made-skills" title="Permanent link">&para;</a></h2>
-<pre><code>gald3r skill-pack list
+<h1 id="local-ai-ollama-lm-studio-and-other-local-backends">Local AI (Ollama, LM Studio, and other local backends)<a class="headerlink" href="#local-ai-ollama-lm-studio-and-other-local-backends" title="Permanent link">&para;</a></h1>
+<p><code>gald3r</code> can run entirely against a model on your own machine — no cloud account, no API
+key, and (once you've pulled a model) no network connection required. This page is the
+copy-pasteable setup path for that: point <code>gald3r</code> at a local OpenAI-compatible server
+(Ollama, LM Studio, vLLM, or llama.cpp) and start running real agent turns against it.</p>
+<p>For the full <code>providers.yaml</code> reference (cloud providers, keyring-backed keys, editing
+verbs, troubleshooting) see <a href="../providers/"><code>providers.md</code></a> — this page is the local-only
+fast path and the LAN-endpoint opt-in that page doesn't cover.</p>
+<h2 id="quick-setup">Quick setup<a class="headerlink" href="#quick-setup" title="Permanent link">&para;</a></h2>
+<pre><code># 1. Install and start a local backend. For Ollama:
+#    https://ollama.com/download, then pull a model:
+ollama pull qwen2.5:7b-instruct
+
+# 2. Generate a starter providers.yaml -- this auto-detects any local backend that's
+#    actually reachable right now and writes the models it finds
+gald3r init-providers
+
+# 3. Point the default at what you pulled (optional -- --model also works per-call)
+gald3r config set default_provider ollama --yes
+gald3r config set default_model qwen2.5:7b-instruct --yes
+
+# 4. Confirm gald3r can actually reach it
+gald3r providers validate
+
+# 5. Run it
+gald3r run &quot;reply with exactly: LOCAL_OK&quot; --model ollama:qwen2.5:7b-instruct
 </code></pre>
-<pre><code>3d-graphics
-ai-media
-ai-ml-dev
-ai-video-tools
-blockchain
-cloud-providers
-community
-content-creation
-context7
-continual-learning
-create-plugin
-cursor-team-kit
-firecrawl
-huggingface
-infrastructure
-phantom-connect
-startup-tools
-superpowers
-user-skills
-vercel
+<p>Every command above is a real, shipped <code>gald3r</code> verb — run it as-is. <code>gald3r run</code>/<code>gald3r
+chat</code> read <code>providers.yaml</code> from the same place <code>init-providers</code>/<code>config</code>/<code>providers</code> write
+it (<code>$GALD3R_HOME</code>, default <code>~/.gald3r</code>) — there's no separate directory to keep in sync.</p>
+<h2 id="how-discovery-works">How discovery works<a class="headerlink" href="#how-discovery-works" title="Permanent link">&para;</a></h2>
+<p><code>gald3r init-providers</code> probes the default port of every supported local runtime for a live
+OpenAI-compatible <code>/models</code> endpoint — Ollama (<code>:11434</code>), LM Studio (<code>:1234</code>), vLLM
+(<code>:8000</code>), and llama.cpp's server (<code>:8080</code>) — and writes a <code>models:</code> entry for whatever it
+actually finds running, using the real model IDs already pulled/loaded there. Nothing needs
+to be on your <code>PATH</code> for this to work; it's a plain HTTP probe against each backend's own
+API, so a service-only deployment (the daemon running with no CLI installed alongside it)
+is discovered the same way a full local install would be.</p>
+<p>Re-running <code>gald3r init-providers --dry-run</code> any time is itself the verification step —
+if a backend you just started doesn't show up, confirm it's actually listening on that
+port (<code>curl http://localhost:11434/v1/models</code> for Ollama, etc.) before checking anything
+else.</p>
+<p><code>gald3r providers validate</code> gives the same answer for backends already in your
+<code>providers.yaml</code>, without regenerating the file:</p>
+<pre><code>gald3r providers validate
 </code></pre>
-<p>(Real output from this repo — every one of these is a discoverable pack today, install/update
-status shown per-skill when a pack is already partially installed.)</p>
-<pre><code>gald3r skill-pack add &lt;pack&gt;                    # install every skill in the pack
-gald3r skill-pack add &lt;pack&gt; --skill &lt;name&gt;      # install just one skill from it
-gald3r skill-pack del &lt;pack&gt;                     # remove all (or --skill one) from active IDE folders
-gald3r skill-pack save &lt;name&gt;                    # save a customization as an _evolved variant that survives future pack updates
+<pre><code>[OK  ] ollama
+         ok: API key resolved via local
+         ok: reachable (http://localhost:11434/v1/models)
 </code></pre>
-<p><code>skill-pack add</code>'s real argument shape (<code>--help</code>):</p>
-<pre><code>usage: gald3r skill-pack add [-h] [--skill SKILL] [--project-root PROJECT_ROOT]
-                             [--canonical-root CANONICAL_ROOT] [--data-dir DATA_DIR] [--json]
-                             pack
+<p>See <a href="../providers/#local-backends"><code>providers.md</code></a> for a per-backend recipe (install,
+pull/load a model, verify) covering all four supported local runtimes.</p>
+<h2 id="adding-a-model-or-a-whole-new-provider">Adding a model, or a whole new provider<a class="headerlink" href="#adding-a-model-or-a-whole-new-provider" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r providers model add ollama gemma3:27b --role vision --context-window 32768
 </code></pre>
-<p><code>--data-dir</code> defaults to <code>$GALD3R_HOME</code> or <code>~/.gald3r</code> — packs install into a writable
-per-user data directory, then get symlinked/copied into your active IDE folders, so an update
-to the pack doesn't clobber a skill you've customized (that's what <code>skill-pack save</code>'s
-<code>_evolved</code> variant mechanism protects).</p>
-<h2 id="plugins-community-git-cloned-skillmd-based">Plugins — community, git-cloned, SKILL.md-based<a class="headerlink" href="#plugins-community-git-cloned-skillmd-based" title="Permanent link">&para;</a></h2>
-<pre><code>gald3r plugin list
+<p><code>providers model add</code>/<code>providers role set</code>/<code>providers list</code> (all documented in
+<a href="../providers/#managing-providersyaml-from-the-cli-t610"><code>providers.md</code></a>) work exactly the
+same for local providers as cloud ones — there's no local-specific subset of the edit
+surface.</p>
+<h2 id="running-against-a-local-model">Running against a local model<a class="headerlink" href="#running-against-a-local-model" title="Permanent link">&para;</a></h2>
+<p><code>--model &lt;provider&gt;[:&lt;model_or_alias&gt;]</code> selects any configured provider on a per-call
+basis, overriding <code>default_provider</code>/<code>default_model</code>:</p>
+<pre><code>gald3r run &quot;list the files in this directory&quot; --model ollama:qwen2.5:7b-instruct
+gald3r chat --model lmstudio:qwen2.5-coder-14b
 </code></pre>
-<pre><code>No plugins installed.
+<p>A local model goes through the exact same session engine, tool-calling loop, and
+<code>stream-json</code> protocol events as a cloud model — nothing about <code>gald3r run</code>/<code>gald3r chat</code>
+changes based on where the model is served from.</p>
+<h2 id="lan-endpoints-and-gald3rsecrets-no-cloud-tier">LAN endpoints and <code>.gald3rsecret</code>'s no-cloud tier<a class="headerlink" href="#lan-endpoints-and-gald3rsecrets-no-cloud-tier" title="Permanent link">&para;</a></h2>
+<p>A project can drop a <code>.gald3rsecret</code> file at its root to mark some paths <code>no-cloud:</code> —
+readable by a local model, but never allowed to reach a remote/cloud provider, a persisted
+transcript, or any other outbound log. Whenever such a file is in play, gald3r needs to know
+whether the model you're currently running against actually counts as "local":</p>
+<ul>
+<li>A backend reached over a loopback address (<code>localhost</code>, <code>127.0.0.1</code>, <code>::1</code>) is
+  <strong>automatically</strong> treated as local — no configuration needed. This covers the default
+  setup above (Ollama/LM Studio/vLLM/llama.cpp all bind to loopback by default).</li>
+<li>A backend on another machine on your network — a second box running Ollama, reached over
+  its LAN IP or hostname — is <strong>not</strong> local by default, even though it's still a model you
+  control. <code>no-cloud:</code>-tiered files stay refused until you explicitly opt that host in.</li>
+</ul>
+<p>To opt a LAN endpoint in, add a <code>local-endpoints:</code> line to your project's <code>.gald3rsecret</code>:</p>
+<pre><code>no-cloud: secret_local.txt
+local-endpoints: 192.168.1.50
 </code></pre>
-<p>(Real output — this checkout has none installed; a project with plugins lists each by name,
-source, and enabled/disabled-per-project state.)</p>
-<pre><code>gald3r plugin install &lt;name-or-git-url&gt;
-gald3r plugin update &lt;name&gt;       # git pull --ff-only
-gald3r plugin uninstall &lt;name&gt;
-gald3r plugin enable &lt;name&gt;       # turn ON for the current project (globally installed, per-project association)
-gald3r plugin disable &lt;name&gt;      # turn OFF for the current project
-</code></pre>
-<p>Plugins are git clones — <code>install</code> clones the repo, <code>update</code> fast-forward-pulls it,
-<code>uninstall</code> removes the clone. Install is global (once per machine); enable/disable is
-per-project, so you can have a plugin installed but only active in the projects that need it.</p>
-<h2 id="skill-packs-vs-plugins-which-one-am-i-looking-at">Skill packs vs. plugins — which one am I looking at?<a class="headerlink" href="#skill-packs-vs-plugins-which-one-am-i-looking-at" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Skill packs</th>
-<th>Plugins</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Source</td>
-<td>Curated first-party + community registry</td>
-<td>Any git URL, or a registry name</td>
-</tr>
-<tr>
-<td>Granularity</td>
-<td>Whole pack, or one named skill from it</td>
-<td>Whole plugin</td>
-</tr>
-<tr>
-<td>Customization survives updates?</td>
-<td>Yes (<code>_evolved</code> save mechanism)</td>
-<td>Not a built-in mechanism — it's a plain git clone</td>
-</tr>
-<tr>
-<td>Typical content</td>
-<td>Domain-specific skill collections (<code>ai-ml-dev</code>, <code>blockchain</code>, <code>cloud-providers</code>, ...)</td>
-<td>Anything a SKILL.md-based plugin author ships</td>
-</tr>
-</tbody>
-</table>
-<h2 id="referenceprompt-library-and-mcp-exposure">Reference/prompt library, and MCP exposure<a class="headerlink" href="#referenceprompt-library-and-mcp-exposure" title="Permanent link">&para;</a></h2>
-<p>Two related surfaces worth knowing about:</p>
-<pre><code>gald3r prompt --help    # judgment/prompt-asset library: role briefs, rubrics, playbooks, voice
-gald3r mcp --help       # expose gald3r's prompt/judgment library to any MCP client (Claude Desktop, Cursor, ...) over stdio
-</code></pre>
-<p><code>gald3r mcp</code> is how an external MCP-compatible client reaches into gald3r's own prompt
-library — the reverse direction from plugins/skill packs extending gald3r.</p>
+<p>A bare host (no port) matches that host on any port; <code>local-endpoints: mybox.local:11434</code>
+restricts the allowlist entry to that exact port instead. One host per line, same as
+<code>.gald3rsecret</code>'s other tier lines. Without an entry here, gald3r fails closed — a
+<code>no-cloud:</code> file stays unreadable to a non-loopback backend rather than silently trusting
+it.</p>
 <h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../crash/"><code>crash.md</code></a> — how a skill actually gets loaded and activated once installed</li>
-<li><a href="../cli-reference/"><code>cli-reference.md</code></a> — the full verb catalog</li>
+<li><a href="../providers/"><code>providers.md</code></a> — the full <code>providers.yaml</code> reference: cloud providers,
+  keyring-backed keys, every <code>gald3r providers</code> edit verb, and provider-error
+  troubleshooting</li>
+<li><a href="../concepts/#providers"><code>concepts.md</code></a> — the one-paragraph summary of how gald3r talks
+  to models at all</li>
+<li><a href="../cli-reference/"><code>cli-reference.md</code></a> — every provider-related verb in the full command
+  map</li>
+<li><a href="../troubleshooting/"><code>troubleshooting.md</code></a> — <code>gald3r doctor</code>'s <code>providers</code> line and the
+  general troubleshooting flow</li>
 </ul>
 
 

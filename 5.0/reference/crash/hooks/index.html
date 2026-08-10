@@ -453,6 +453,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../../../local-ai/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Local AI (Ollama, LM Studio)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../../../plugins/" class="md-tabs__link">
         
   
@@ -941,6 +960,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../local-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local AI (Ollama, LM Studio)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../plugins/" class="md-nav__link">
         
   
@@ -979,10 +1025,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
         
           
-          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
             
   
   
@@ -1000,8 +1046,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_14">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1151,10 +1197,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" checked>
         
           
-          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="">
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="">
             
   
   
@@ -1172,8 +1218,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_17">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_18">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2598,7 +2644,7 @@
 
 <h1 id="crash-reference-hooks">CRASH Reference: Hooks<a class="headerlink" href="#crash-reference-hooks" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>uv run gald3r platform crash-reference --apply</code>.</p>
+<p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>neutral_source/hooks/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>Hooks are the one CRASH type that is real, executing code -- plain scripts (mostly <code>.py</code>) wired into your IDE's lifecycle events (session start, pre-tool-call, stop, ...) by a platform-specific registration file. You do not invoke a hook by name; it fires automatically when its registered event happens. This page documents what each hook does and when it fires -- never its internal implementation.</p>
 <p><strong>38 hooks total.</strong></p>
@@ -2698,9 +2744,9 @@
 </ul>
 <p><strong>Fires on:</strong> Stop<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-complete.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-agent-complete.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-complete.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-agent-complete.py</code></p>
 <hr />
 <h3 id="g-hk-agent-worktree-janitor"><code>g-hk-agent-worktree-janitor</code><a class="headerlink" href="#g-hk-agent-worktree-janitor" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-agent-worktree-janitor</code><br />
@@ -2714,9 +2760,9 @@
 </ul>
 <p><strong>Fires on:</strong> SessionEnd<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-worktree-janitor.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-worktree-janitor.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-agent-worktree-janitor.py, neutral_source/hooks/g-hk-agent-worktree-janitor.md  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-agent-worktree-janitor.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-agent-worktree-janitor.py</code></p>
 <hr />
 <h3 id="g-hk-claude-chat-logger"><code>g-hk-claude-chat-logger</code><a class="headerlink" href="#g-hk-claude-chat-logger" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-claude-chat-logger</code><br />
@@ -2730,9 +2776,9 @@
 </ul>
 <p><strong>Fires on:</strong> Stop, Scheduled/nightly<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-claude-chat-logger.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-claude-chat-logger.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-claude-chat-logger.py, neutral_source/hooks/g-hk-claude-chat-logger.md  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-claude-chat-logger.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-claude-chat-logger.py</code></p>
 <blockquote>
 <p><strong>Metadata note:</strong> hooks/g-hk-claude-chat-logger: missing @subsystems: tag (and no subsystem_memberships: in companion .md)</p>
 </blockquote>
@@ -2749,9 +2795,9 @@
 </ul>
 <p><strong>Fires on:</strong> PreToolUse, pre-commit (git hook), pre-push (git hook)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-component-tag-check.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-component-tag-check.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-component-tag-check.py, neutral_source/hooks/g-hk-component-tag-check.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-component-tag-check.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-component-tag-check.py</code></p>
 <hr />
 <h3 id="g-hk-crash-record"><code>g-hk-crash-record</code><a class="headerlink" href="#g-hk-crash-record" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-crash-record</code><br />
@@ -2765,9 +2811,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-crash-record.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-crash-record.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-crash-record.py, neutral_source/hooks/g-hk-crash-record.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-crash-record.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-crash-record.py</code></p>
 <hr />
 <h3 id="g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code><a class="headerlink" href="#g-hk-encoding-normalize" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-encoding-normalize</code><br />
@@ -2781,9 +2827,9 @@
 </ul>
 <p><strong>Fires on:</strong> pre-commit (git hook)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-encoding-normalize.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-encoding-normalize.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-encoding-normalize.py, neutral_source/hooks/g-hk-encoding-normalize.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-encoding-normalize.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-encoding-normalize.py</code></p>
 <hr />
 <h3 id="g-hk-ggo-stop-detect"><code>g-hk-ggo-stop-detect</code><a class="headerlink" href="#g-hk-ggo-stop-detect" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-ggo-stop-detect</code><br />
@@ -2797,9 +2843,9 @@
 </ul>
 <p><strong>Fires on:</strong> Stop, Scheduled/nightly<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-ggo-stop-detect.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-ggo-stop-detect.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-ggo-stop-detect.py, neutral_source/hooks/g-hk-ggo-stop-detect.md  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-ggo-stop-detect.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-ggo-stop-detect.py</code></p>
 <hr />
 <h3 id="g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code><a class="headerlink" href="#g-hk-goal-stop-detect" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-goal-stop-detect</code><br />
@@ -2813,9 +2859,9 @@
 </ul>
 <p><strong>Fires on:</strong> Stop<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-goal-stop-detect.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-goal-stop-detect.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-goal-stop-detect.py, neutral_source/hooks/g-hk-goal-stop-detect.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-goal-stop-detect.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-goal-stop-detect.py</code></p>
 <hr />
 <h3 id="g-hk-graph-update"><code>g-hk-graph-update</code><a class="headerlink" href="#g-hk-graph-update" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-graph-update</code><br />
@@ -2829,9 +2875,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-graph-update.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-graph-update.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-graph-update.py, neutral_source/hooks/g-hk-graph-update.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-graph-update.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-graph-update.py</code></p>
 <hr />
 <h3 id="g-hk-nightly-learn"><code>g-hk-nightly-learn</code><a class="headerlink" href="#g-hk-nightly-learn" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-nightly-learn</code><br />
@@ -2845,9 +2891,9 @@
 </ul>
 <p><strong>Fires on:</strong> Scheduled/nightly<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-nightly-learn.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-nightly-learn.py  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-nightly-learn.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-nightly-learn.py</code></p>
 <hr />
 <h3 id="g-hk-on-session-end"><code>g-hk-on-session-end</code><a class="headerlink" href="#g-hk-on-session-end" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-on-session-end</code><br />
@@ -2861,9 +2907,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-session-end.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-on-session-end.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-session-end.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-on-session-end.py</code></p>
 <hr />
 <h3 id="g-hk-on-session-start"><code>g-hk-on-session-start</code><a class="headerlink" href="#g-hk-on-session-start" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-on-session-start</code><br />
@@ -2877,9 +2923,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-session-start.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-on-session-start.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-session-start.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-on-session-start.py</code></p>
 <hr />
 <h3 id="g-hk-on-stop"><code>g-hk-on-stop</code><a class="headerlink" href="#g-hk-on-stop" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-on-stop</code><br />
@@ -2893,9 +2939,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-stop.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-on-stop.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-stop.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-on-stop.py</code></p>
 <hr />
 <h3 id="g-hk-on-tool-end"><code>g-hk-on-tool-end</code><a class="headerlink" href="#g-hk-on-tool-end" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-on-tool-end</code><br />
@@ -2909,9 +2955,9 @@
 </ul>
 <p><strong>Fires on:</strong> PostToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-end.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-end.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-on-tool-end.py, neutral_source/hooks/g-hk-on-tool-end.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-end.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-on-tool-end.py</code></p>
 <hr />
 <h3 id="g-hk-on-tool-start"><code>g-hk-on-tool-start</code><a class="headerlink" href="#g-hk-on-tool-start" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-on-tool-start</code><br />
@@ -2925,9 +2971,9 @@
 </ul>
 <p><strong>Fires on:</strong> PreToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-start.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-on-tool-start.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-tool-start.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-on-tool-start.py</code></p>
 <hr />
 <h3 id="g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code><a class="headerlink" href="#g-hk-on-user-prompt-submit" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-on-user-prompt-submit</code><br />
@@ -2941,9 +2987,9 @@
 </ul>
 <p><strong>Fires on:</strong> UserPromptSubmit<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-user-prompt-submit.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-user-prompt-submit.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-on-user-prompt-submit.py, neutral_source/hooks/g-hk-on-user-prompt-submit.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-on-user-prompt-submit.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-on-user-prompt-submit.py</code></p>
 <hr />
 <h3 id="g-hk-policy-check"><code>g-hk-policy-check</code><a class="headerlink" href="#g-hk-policy-check" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-policy-check</code><br />
@@ -2957,9 +3003,9 @@
 </ul>
 <p><strong>Fires on:</strong> PreToolUse, pre-commit (git hook)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-policy-check.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-policy-check.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-pre-commit"><code>g-hk-pre-commit</code></a>, <a href="#g-hk-pre-push"><code>g-hk-pre-push</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-policy-check.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-policy-check.py</code></p>
 <hr />
 <h3 id="g-hk-post-session-trace"><code>g-hk-post-session-trace</code><a class="headerlink" href="#g-hk-post-session-trace" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-post-session-trace</code><br />
@@ -2973,9 +3019,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-session-trace.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-session-trace.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-post-session-trace.py, neutral_source/hooks/g-hk-post-session-trace.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-session-trace.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-post-session-trace.py</code></p>
 <hr />
 <h3 id="g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code><a class="headerlink" href="#g-hk-post-skill-timing" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-post-skill-timing</code><br />
@@ -2989,9 +3035,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-skill-timing.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-skill-timing.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-post-skill-timing.py, neutral_source/hooks/g-hk-post-skill-timing.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-post-skill-timing.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-post-skill-timing.py</code></p>
 <hr />
 <h3 id="g-hk-pre-commit"><code>g-hk-pre-commit</code><a class="headerlink" href="#g-hk-pre-commit" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-pre-commit</code><br />
@@ -3005,9 +3051,9 @@
 </ul>
 <p><strong>Fires on:</strong> pre-commit (git hook)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-commit.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-pre-commit.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-policy-check"><code>g-hk-policy-check</code></a>, <a href="#g-hk-pre-push"><code>g-hk-pre-push</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-commit.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-pre-commit.py</code></p>
 <hr />
 <h3 id="g-hk-pre-push"><code>g-hk-pre-push</code><a class="headerlink" href="#g-hk-pre-push" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-pre-push</code><br />
@@ -3021,9 +3067,9 @@
 </ul>
 <p><strong>Fires on:</strong> pre-push (git hook)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-push.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-pre-push.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-policy-check"><code>g-hk-policy-check</code></a>, <a href="#g-hk-pre-commit"><code>g-hk-pre-commit</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-push.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-pre-push.py</code></p>
 <hr />
 <h3 id="g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code><a class="headerlink" href="#g-hk-pre-session-trace" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-pre-session-trace</code><br />
@@ -3037,9 +3083,9 @@
 </ul>
 <p><strong>Fires on:</strong> SessionStart<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-session-trace.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-session-trace.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-pre-session-trace.py, neutral_source/hooks/g-hk-pre-session-trace.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-session-trace.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-pre-session-trace.py</code></p>
 <hr />
 <h3 id="g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code><a class="headerlink" href="#g-hk-pre-skill-timing" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-pre-skill-timing</code><br />
@@ -3053,9 +3099,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-skill-timing.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-skill-timing.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-pre-skill-timing.py, neutral_source/hooks/g-hk-pre-skill-timing.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-skill-timing.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-pre-skill-timing.py</code></p>
 <hr />
 <h3 id="g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code><a class="headerlink" href="#g-hk-pre-tool-call" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-pre-tool-call</code><br />
@@ -3069,9 +3115,9 @@
 </ul>
 <p><strong>Fires on:</strong> PreToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-pre-tool-call.py, neutral_source/hooks/g-hk-pre-tool-call.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-pre-tool-call.py</code></p>
 <hr />
 <h3 id="g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code><a class="headerlink" href="#g-hk-pre-tool-call-gald3r-guard" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-pre-tool-call-gald3r-guard</code><br />
@@ -3085,9 +3131,9 @@
 </ul>
 <p><strong>Fires on:</strong> PreToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-gald3r-guard.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-pre-tool-call-gald3r-guard.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-setup-user"><code>g-hk-setup-user</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-gald3r-guard.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-pre-tool-call-gald3r-guard.py</code></p>
 <hr />
 <h3 id="g-hk-pre-tool-call-member-gald3r-guard"><code>g-hk-pre-tool-call-member-gald3r-guard</code><a class="headerlink" href="#g-hk-pre-tool-call-member-gald3r-guard" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-pre-tool-call-member-gald3r-guard</code><br />
@@ -3101,9 +3147,9 @@
 </ul>
 <p><strong>Fires on:</strong> PreToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-member-gald3r-guard.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-pre-tool-call-member-gald3r-guard.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-wpac-inbox-check"><code>g-hk-wpac-inbox-check</code></a>, <a href="#raw-inbox-watcher"><code>raw-inbox-watcher</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-member-gald3r-guard.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-pre-tool-call-member-gald3r-guard.py</code></p>
 <hr />
 <h3 id="g-hk-pre-tool-call-prd-freeze"><code>g-hk-pre-tool-call-prd-freeze</code><a class="headerlink" href="#g-hk-pre-tool-call-prd-freeze" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-pre-tool-call-prd-freeze</code><br />
@@ -3117,9 +3163,9 @@
 </ul>
 <p><strong>Fires on:</strong> PreToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-prd-freeze.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-pre-tool-call-prd-freeze.py  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-pre-tool-call-prd-freeze.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-pre-tool-call-prd-freeze.py</code></p>
 <hr />
 <h3 id="g-hk-session-end"><code>g-hk-session-end</code><a class="headerlink" href="#g-hk-session-end" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-session-end</code><br />
@@ -3133,9 +3179,9 @@
 </ul>
 <p><strong>Fires on:</strong> Stop, Scheduled/nightly<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-session-end.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-session-end.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-start"><code>g-hk-session-start</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-session-end.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-session-end.py</code></p>
 <hr />
 <h3 id="g-hk-session-start"><code>g-hk-session-start</code><a class="headerlink" href="#g-hk-session-start" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-session-start</code><br />
@@ -3149,9 +3195,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-session-start.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-session-start.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-session-start.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-session-start.py</code></p>
 <hr />
 <h3 id="g-hk-setup-user"><code>g-hk-setup-user</code><a class="headerlink" href="#g-hk-setup-user" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-setup-user</code><br />
@@ -3165,9 +3211,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-setup-user.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-setup-user.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-setup-user.py, neutral_source/hooks/g-hk-setup-user.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-component-tag-check"><code>g-hk-component-tag-check</code></a>, <a href="#g-hk-goal-stop-detect"><code>g-hk-goal-stop-detect</code></a>, <a href="#g-hk-graph-update"><code>g-hk-graph-update</code></a>, <a href="#g-hk-pre-tool-call"><code>g-hk-pre-tool-call</code></a>, <a href="#g-hk-pre-tool-call-gald3r-guard"><code>g-hk-pre-tool-call-gald3r-guard</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-setup-user.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-setup-user.py</code></p>
 <hr />
 <h3 id="g-hk-tel-tap"><code>g-hk-tel-tap</code><a class="headerlink" href="#g-hk-tel-tap" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-tel-tap</code><br />
@@ -3181,9 +3227,9 @@
 </ul>
 <p><strong>Fires on:</strong> PostToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-tel-tap.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-tel-tap.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-tel-tap.py, neutral_source/hooks/g-hk-tel-tap.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-tel-tap.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-tel-tap.py</code></p>
 <hr />
 <h3 id="g-hk-validate-shell"><code>g-hk-validate-shell</code><a class="headerlink" href="#g-hk-validate-shell" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-validate-shell</code><br />
@@ -3197,9 +3243,9 @@
 </ul>
 <p><strong>Fires on:</strong> PreToolUse, pre-push (git hook)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-validate-shell.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-validate-shell.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-validate-shell.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-validate-shell.py</code></p>
 <hr />
 <h3 id="g-hk-vault-migrate"><code>g-hk-vault-migrate</code><a class="headerlink" href="#g-hk-vault-migrate" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-vault-migrate</code><br />
@@ -3213,9 +3259,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-migrate.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-migrate.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-vault-migrate.py, neutral_source/hooks/g-hk-vault-migrate.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-vault-reindex"><code>g-hk-vault-reindex</code></a>, <a href="#g-hk-vault-resolve"><code>g-hk-vault-resolve</code></a>, <a href="#g-hk-vault-verify"><code>g-hk-vault-verify</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-migrate.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-vault-migrate.py</code></p>
 <hr />
 <h3 id="g-hk-vault-reindex"><code>g-hk-vault-reindex</code><a class="headerlink" href="#g-hk-vault-reindex" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-vault-reindex</code><br />
@@ -3229,9 +3275,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-reindex.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-reindex.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-vault-reindex.py, neutral_source/hooks/g-hk-vault-reindex.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-vault-migrate"><code>g-hk-vault-migrate</code></a>, <a href="#g-hk-vault-resolve"><code>g-hk-vault-resolve</code></a>, <a href="#g-hk-vault-verify"><code>g-hk-vault-verify</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-reindex.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-vault-reindex.py</code></p>
 <hr />
 <h3 id="g-hk-vault-resolve"><code>g-hk-vault-resolve</code><a class="headerlink" href="#g-hk-vault-resolve" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-vault-resolve</code><br />
@@ -3245,9 +3291,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-resolve.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-resolve.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-vault-resolve.py, neutral_source/hooks/g-hk-vault-resolve.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-vault-migrate"><code>g-hk-vault-migrate</code></a>, <a href="#g-hk-vault-reindex"><code>g-hk-vault-reindex</code></a>, <a href="#g-hk-vault-verify"><code>g-hk-vault-verify</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-resolve.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-vault-resolve.py</code></p>
 <hr />
 <h3 id="g-hk-vault-verify"><code>g-hk-vault-verify</code><a class="headerlink" href="#g-hk-vault-verify" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-vault-verify</code><br />
@@ -3261,9 +3307,9 @@
 </ul>
 <p><strong>Fires on:</strong> SessionStart<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-verify.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-verify.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-vault-verify.py, neutral_source/hooks/g-hk-vault-verify.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-vault-migrate"><code>g-hk-vault-migrate</code></a>, <a href="#g-hk-vault-reindex"><code>g-hk-vault-reindex</code></a>, <a href="#g-hk-vault-resolve"><code>g-hk-vault-resolve</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-vault-verify.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-vault-verify.py</code></p>
 <hr />
 <h3 id="g-hk-wpac-inbox-check"><code>g-hk-wpac-inbox-check</code><a class="headerlink" href="#g-hk-wpac-inbox-check" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-wpac-inbox-check</code><br />
@@ -3277,9 +3323,9 @@
 </ul>
 <p><strong>Fires on:</strong> SessionStart<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-wpac-inbox-check.py  </p>
+<strong>Source files:</strong> neutral_source/hooks/g-hk-wpac-inbox-check.py  </p>
 <p><strong>Related:</strong> <a href="#g-hk-pre-tool-call-member-gald3r-guard"><code>g-hk-pre-tool-call-member-gald3r-guard</code></a>, <a href="#raw-inbox-watcher"><code>raw-inbox-watcher</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/g-hk-wpac-inbox-check.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/g-hk-wpac-inbox-check.py</code></p>
 <hr />
 <h3 id="raw-inbox-watcher"><code>raw-inbox-watcher</code><a class="headerlink" href="#raw-inbox-watcher" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>raw-inbox-watcher</code><br />
@@ -3293,9 +3339,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> pre-g-hk- naming exception, registered directly in platform hook tables<br />
-<strong>Source files:</strong> src/gald3r_core/platform/pipeline/neutral_source/hooks/raw-inbox-watcher.py, src/gald3r_core/platform/pipeline/neutral_source/hooks/raw-inbox-watcher.md  </p>
+<strong>Source files:</strong> neutral_source/hooks/raw-inbox-watcher.py, neutral_source/hooks/raw-inbox-watcher.md  </p>
 <p><strong>Related:</strong> <a href="#g-hk-pre-tool-call-member-gald3r-guard"><code>g-hk-pre-tool-call-member-gald3r-guard</code></a>, <a href="#g-hk-wpac-inbox-check"><code>g-hk-wpac-inbox-check</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/hooks/raw-inbox-watcher.py</code></p>
+<p><strong>Source:</strong> <code>neutral_source/hooks/raw-inbox-watcher.py</code></p>
 <hr />
 
 
