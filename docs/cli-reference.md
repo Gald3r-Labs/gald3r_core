@@ -30,10 +30,19 @@ to the generated [Commands reference](./reference/crash/commands.md) for a usage
 | `gald3r init` | Alias for `setup` — identical flags and behavior (verified: same `--help` text) |
 | `gald3r onboard` | Get a new project fully set up in one command — scaffold, pick a workflow, install a curated skill set, and link it to related projects. Safe to re-run, and works offline. |
 | `gald3r doctor` | Find out why gald3r isn't working right — one command checks your Python setup, providers, credentials, and background services, and tells you exactly what's broken. |
+| `gald3r upgrade-project` | Bring an existing project fully current after you've upgraded the `gald3r` binary (`gald3r install update`): refreshes every installed platform overlay, takes a pre-flight backup, then runs schema-migrate, `validate --fix`, a database backfill, and `doctor` — one composite verb with a baseline-vs-final regression report, replacing the old hand-run, step-by-step upgrade sequence (`--dry-run` plans the whole ladder without writing anything; `--no-overlays` skips the overlay-refresh step; `--json`) |
 | `gald3r selftest` | Run the install self-diagnostic ("gald3r is N% functional") |
 | `gald3r sessions` | Read-only listing of local chat sessions for the current directory |
 | `gald3r status` | See where your project actually stands at a glance — task/bug counts, completion %, what's blocked and why, and what's waiting on you (`--min-severity N`, `--json`) |
 | `gald3r --version` | Print the CLI version, the schema/rel version this binary writes, and a VCS build fingerprint (short commit + commit time, `+dirty` when applicable) when the binary was built with VCS stamping. <!-- Corrected during Phase H1 verification, 2026-08-08: an earlier draft of this row, written from gald3r_cli/internal/commands/root.go's doc comment alone, claimed --version was "currently a plain version-string stub" with no build fingerprint. That comment describes only root.go's OWN contribution (cobra's bare Version field) -- it misses that gald3r_cli/internal/commands/doctor.go's RegisterDoctor() calls root.SetVersionTemplate(versionIdentityBlock()), which overrides that plain output with the schema/rel + build-fingerprint block described here (verified directly against the compiled binary's real `--version` output, not just source comments: `gald3r version 0.0.1-dev` / `  schema/rel version: 3.0.0` / `  build: <sha> (<time>) [+dirty]`). What is still genuinely absent versus the Python era: a `--json` machine-readable payload and the BUG-510 build-drift-check comparison against an expected fingerprint -- neither is implemented, so do not claim those two specifically. --> |
+
+**Upgraded the `gald3r` binary and a project now looks stale?** Previously this meant re-running,
+by hand, in order: `platform install <name> --force` for every installed IDE overlay, `schema-migrate
+--apply`, `validate --fix`, `db backfill`, `db verify`, then `doctor` — with no single command tying
+the steps together and no report telling you whether anything actually regressed along the way. That
+hand-run sequence is retired: `gald3r upgrade-project` runs all of it and diffs the before/after state
+for you. `gald3r doctor`'s `overlay_currency` check, and a one-line session-start prompt when a
+project's overlay is stamped from an older binary version, both point you at `upgrade-project` by name.
 
 ## Tasks, bugs, and project state
 
