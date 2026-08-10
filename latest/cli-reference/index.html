@@ -1745,6 +1745,10 @@ to the generated <a href="../reference/crash/commands/">Commands reference</a> f
 <td>Find out why gald3r isn't working right — one command checks your Python setup, providers, credentials, and background services, and tells you exactly what's broken.</td>
 </tr>
 <tr>
+<td><code>gald3r upgrade-project</code></td>
+<td>Bring an existing project fully current after you've upgraded the <code>gald3r</code> binary (<code>gald3r install update</code>): refreshes every installed platform overlay, takes a pre-flight backup, then runs schema-migrate, <code>validate --fix</code>, a database backfill, and <code>doctor</code> — one composite verb with a baseline-vs-final regression report, replacing the old hand-run, step-by-step upgrade sequence (<code>--dry-run</code> plans the whole ladder without writing anything; <code>--no-overlays</code> skips the overlay-refresh step; <code>--json</code>)</td>
+</tr>
+<tr>
 <td><code>gald3r selftest</code></td>
 <td>Run the install self-diagnostic ("gald3r is N% functional")</td>
 </tr>
@@ -1762,6 +1766,13 @@ to the generated <a href="../reference/crash/commands/">Commands reference</a> f
 </tr>
 </tbody>
 </table>
+<p><strong>Upgraded the <code>gald3r</code> binary and a project now looks stale?</strong> Previously this meant re-running,
+by hand, in order: <code>platform install &lt;name&gt; --force</code> for every installed IDE overlay, <code>schema-migrate
+--apply</code>, <code>validate --fix</code>, <code>db backfill</code>, <code>db verify</code>, then <code>doctor</code> — with no single command tying
+the steps together and no report telling you whether anything actually regressed along the way. That
+hand-run sequence is retired: <code>gald3r upgrade-project</code> runs all of it and diffs the before/after state
+for you. <code>gald3r doctor</code>'s <code>overlay_currency</code> check, and a one-line session-start prompt when a
+project's overlay is stamped from an older binary version, both point you at <code>upgrade-project</code> by name.</p>
 <h2 id="tasks-bugs-and-project-state">Tasks, bugs, and project state<a class="headerlink" href="#tasks-bugs-and-project-state" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
