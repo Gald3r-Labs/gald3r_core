@@ -1042,6 +1042,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#publishing-events-live-to-world_tree-opt-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publishing events live to world_tree (opt-in)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#heartbeat" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1746,6 +1757,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#publishing-events-live-to-world_tree-opt-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publishing events live to world_tree (opt-in)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#heartbeat" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1936,6 +1958,20 @@ gald3r autopilot events --run-id &lt;stamp&gt;     # replay a specific past run'
 <p><code>autopilot status</code> and a live run's own startup line both compute the swarm-candidate count
 (open tasks + open bugs, floor-eligible) through the exact same function, and <code>status</code> names
 the floor it applied — so the two can never again disagree about whether there is work to do.</p>
+<h3 id="publishing-events-live-to-world_tree-opt-in">Publishing events live to world_tree (opt-in)<a class="headerlink" href="#publishing-events-live-to-world_tree-opt-in" title="Permanent link">&para;</a></h3>
+<p><code>autopilot events --follow</code> above requires shell/file access to the machine running the loop.
+<code>--publish-events</code> (or the AGENT_CONFIG.md <code>publish_run_events: true</code> key) additionally pushes
+every ledger event through the Valkyrie world_tree channel as it happens, so a different
+session or a teammate can observe the SAME run remotely:</p>
+<pre><code>gald3r autopilot loop --budget 10 --publish-events   # opt in for this invocation
+</code></pre>
+<p>Publishing is a pure consumer of the ledger (never a second writer), bound to the run's own
+start/end, and never blocks or fails the run: when the connector is offline, events queue
+durably and flush automatically on the next reconnect. Under normal operation no event is ever
+lost — the one documented exception is abnormal: if the outbox directory itself becomes
+unwritable mid-run (disk full, permissions), that single event is logged and permanently
+dropped rather than retried. See <code>gald3r_swarm/autopilot/valkpublish</code>'s own doc comment
+("Honest data-loss caveat") for the full transport/outbox contract.</p>
 <h3 id="heartbeat">Heartbeat<a class="headerlink" href="#heartbeat" title="Permanent link">&para;</a></h3>
 <p><code>--heartbeat-minutes</code> (default 15) now fires <strong>during</strong> a long-running coordinator invocation,
 not only between iterations — a run whose entire budget is spent inside one multi-hour
