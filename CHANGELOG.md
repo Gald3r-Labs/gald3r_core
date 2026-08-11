@@ -24,6 +24,11 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.9] - 2026-08-11
+
+_No public release notes have been written yet for the next tag. Replace this line with
+business-level notes before running `gald3r release stage --apply`._
+
 ## [5.0.0-beta.8] - 2026-08-10
 
 _No public release notes have been written yet for the next tag. Replace this line with
