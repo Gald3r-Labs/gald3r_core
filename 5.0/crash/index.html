@@ -1802,22 +1802,36 @@ GUARDRAILS.md. Emits a compact JSON response {&quot;continue&quot;: true,
 for the platform-dirs check, the identity self-heal, or the banner assembly to happen. This is
 the pattern the rest of CRASH is built to approximate as closely as each layer allows.</p>
 <h2 id="see-it-running-in-your-own-session">See it running in your own session<a class="headerlink" href="#see-it-running-in-your-own-session" title="Permanent link">&para;</a></h2>
+<p>Every real <code>gald3r &lt;verb&gt;</code> invocation now runs CRASH dispatch for itself, as part of the CLI's
+own command lifecycle (BUG-772): it records its own <code>command</code>-type activation, and fires every
+<code>.claude/rules/</code> (or <code>.cursor/rules/</code>) file's always-apply sections through the same dispatch
+engine <code>gald3r crash-stats</code> reads from. That means the FIRST real verb you run against a
+project already leaves a trace — you don't need a prior IDE session to see non-zero output:</p>
 <pre><code>gald3r crash-stats
 </code></pre>
 <pre><code># CRASH Activation Stats
 
-_Generated 2026-08-01 20:06:26 -- 0 activation(s) across 0 known component(s)._
+_Generated 2026-08-10 17:58:31 -- 3 activation(s) across 1 known component(s)._
 
-**By type:** Commands: 0 | Rules: 0 | Agents: 0 | Skills: 0 | Hooks: 0
+**By type:** Commands: 1 | Rules: 2 | Agents: 0 | Skills: 0 | Hooks: 0
 
 ## Most Active (top 10)
 
-_(no activations recorded yet)_
+| Component | Type | Count | Last Activated |
+|---|---|---|---|
+| crash-stats | command | 1 | 2026-08-10T21:58:31Z |
+| rule:g-rl-04-code_reusability-3-strike-rule:a81bb091 | rule | 1 | 2026-08-10T21:58:31Z |
+| rule:g-rl-04-code_reusability-folder-conventions:7fc4273b | rule | 1 | 2026-08-10T21:58:31Z |
 </code></pre>
-<p>(Real output — 0 activations because this run's own session logging had not yet recorded
-anything at the moment the command ran. In an active IDE session, this fills in with real
-per-component call counts, letting you see which components actually fire, not just which
-are installed.)</p>
+<p>(Real output — captured from a single, fresh <code>gald3r crash-stats</code> invocation against a scratch
+project carrying only this repo's own <code>g-rl-04-code_reusability.md</code> rule file. <code>crash-stats</code>
+itself is the <code>Commands: 1</code>; its two <code>##</code> sections carrying <code>MUST</code>/<code>STOP</code> enforcement
+language mechanically compile into two always-firing <code>Rules: 2</code> entries — see
+<a href="../../gald3r_engine/crash/cli_dispatch.go"><code>gald3r_engine/crash/cli_dispatch.go</code></a> for the
+wiring, and <a href="../../gald3r_engine/crash/dispatch/rule_compiler.go"><code>gald3r_engine/crash/dispatch/rule_compiler.go</code></a>
+for how a rule markdown file's sections compile into dispatch entries. In an active IDE
+session, this fills in further with real per-component call counts across Agents/Skills/Hooks
+too, letting you see which components actually fire, not just which are installed.)</p>
 <h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../task-bug-workflow/"><code>task-bug-workflow.md</code></a> — commands in practice</li>

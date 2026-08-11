@@ -1795,6 +1795,10 @@ to the generated <a href="../reference/crash/commands/">Commands reference</a> f
 <td>Bring an existing project fully current after you've upgraded the <code>gald3r</code> binary (<code>gald3r install update</code>): refreshes every installed platform overlay, takes a pre-flight backup, then runs schema-migrate, <code>validate --fix</code>, a database backfill, and <code>doctor</code> — one composite verb with a baseline-vs-final regression report, replacing the old hand-run, step-by-step upgrade sequence (<code>--dry-run</code> plans the whole ladder without writing anything; <code>--no-overlays</code> skips the overlay-refresh step; <code>--json</code>)</td>
 </tr>
 <tr>
+<td><code>gald3r identity normalize</code></td>
+<td>Backfill a missing <code>gald3r_lineage_epoch</code>/canonical <code>user_name</code> into an existing <code>.gald3r/.identity</code> file, using the same identity-resolution chain <code>gald3r setup</code> uses for brand-new projects. Dry-run by default; <code>--apply</code> writes, <code>--force</code> also overwrites an existing non-empty value that differs from the canonical one (T606)</td>
+</tr>
+<tr>
 <td><code>gald3r selftest</code></td>
 <td>Run the install self-diagnostic ("gald3r is N% functional")</td>
 </tr>
@@ -1909,6 +1913,14 @@ project's overlay is stamped from an older binary version, both point you at <co
 <td>Keep a formal, sign-off-ready spec for a feature — Product Requirements Docs (PRDs) that stay frozen once released, with a clean revision trail when they need to change</td>
 </tr>
 <tr>
+<td><code>gald3r constraint add/list/show/check</code></td>
+<td>Declare and enforce ad-hoc, per-project rules on agent writes — record a rule in <code>CONSTRAINTS.md</code>'s Constraint Index (<code>add</code>), see what's currently in force (<code>list</code>/<code>show</code>), and check whether writing to a given path would violate one before you write it (<code>check</code>)</td>
+</tr>
+<tr>
+<td><code>gald3r decision add/list/show/supersede</code></td>
+<td>Record a binding call once and stop re-litigating it — <code>DECISIONS.md</code> is append-only, so changing your mind mints a new, chain-linked decision (<code>supersede</code>) rather than editing or deleting the old ruling</td>
+</tr>
+<tr>
 <td><code>gald3r dependency-graph</code></td>
 <td>See what's blocking what — a visual map of task dependencies, the critical path, and which blocked tasks are stuck waiting</td>
 </tr>
@@ -1945,7 +1957,11 @@ project's overlay is stamped from an older binary version, both point you at <co
 </tr>
 <tr>
 <td><code>gald3r go-code T123</code></td>
-<td>Implement a specific task, then mark awaiting-verification</td>
+<td>Implement a specific task, then mark awaiting-verification. Works whether your implementer provider is an API-key registry id (<code>anthropic</code>/<code>openai</code>/...) or a CLI-subscription provider (<code>cursor-agent</code>/<code>claude</code>) — the latter shells out to that provider's own CLI (BUG-839), so a Cursor- or Claude-Code-subscription-only host with no API key still works</td>
+</tr>
+<tr>
+<td><code>gald3r go-bug BUG-42</code></td>
+<td>Claim a bug, implement a fix, self-verify it, and resolve it on success — the bug-side counterpart to <code>go-code</code>. Same CLI-subscription-or-registry provider flexibility as <code>go-code</code> above (BUG-839); a CLI-vocab turn has no captured response text to scan for a verdict line, so it requires BOTH a clean exit AND independent evidence the turn actually touched the working tree (an uncommitted change or a new commit) before treating it as a pass — a clean exit alone is never enough to resolve a bug</td>
 </tr>
 <tr>
 <td><code>gald3r go-review T123</code></td>
@@ -1982,6 +1998,10 @@ project's overlay is stamped from an older binary version, both point you at <co
 <tr>
 <td><code>gald3r go-preflight</code> / <code>gald3r go-reconcile</code> / <code>gald3r go-verdicts</code></td>
 <td>Internal plumbing the <code>go</code>/swarm coordinators call to batch pre-flight checks, merge parallel work, and record verdicts in one call each — not typically run by hand</td>
+</tr>
+<tr>
+<td><code>gald3r coordinator-preflight</code></td>
+<td>One read-only JSON snapshot for a fresh coordinator to consult before it dispatches — the controller housekeeping verdict, measured context, the focused DB queue, and hot-inbox state, combined in a single call. Never claims work or mutates project state (<code>--min-value</code>/<code>--min-severity</code> tune the focused queue floors, <code>--session-id</code> scopes the context reading)</td>
 </tr>
 </tbody>
 </table>
@@ -2090,6 +2110,10 @@ project's overlay is stamped from an older binary version, both point you at <co
 <td>Catch problems the moment they happen: syntax errors right after a file is written, missing component tags, or a dangerous-looking shell command</td>
 </tr>
 <tr>
+<td><code>gald3r secrets check/test</code></td>
+<td>See what an optional <code>.gald3rsecret</code> file protects — every declared rule, its tier, and how many files it touches (<code>check</code>), or which tier one specific path resolves to (<code>test</code>). Reports the policy only; never prints file content</td>
+</tr>
+<tr>
 <td><code>gald3r env</code></td>
 <td>Start and check the services your project needs to run (databases, local servers, test accounts) with one command</td>
 </tr>
@@ -2157,6 +2181,10 @@ across your machines and your team.</p>
 <tr>
 <td><code>gald3r template</code></td>
 <td>Get ready-made CI/release config files (GitHub Actions, release-please, ...) written into your project instead of writing them by hand</td>
+</tr>
+<tr>
+<td><code>gald3r shutdown</code></td>
+<td>Safely stop persistent gald3r MCP, Valkyrie, and autopilot processes before an in-place binary upgrade — especially on Windows, where a running MCP server can lock <code>gald3r.exe</code> (<code>--dry-run</code> previews without signalling anything; <code>--force</code> kills stragglers left after the graceful <code>--wait</code> window). See <a href="../install/#stop-the-local-fleet-before-replacing-files"><code>install.md</code></a> for the full before-an-upgrade sequence</td>
 </tr>
 <tr>
 <td><code>gald3r install update</code></td>
