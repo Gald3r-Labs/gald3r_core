@@ -24,6 +24,33 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.13] - 2026-08-12
+
+This release restores the autonomous pipeline's full operating knowledge and makes its
+safety checks real.
+
+- **The autopilot coordinator got its complete instructions back.** The condensed
+  internal briefing that made autonomous coordinators unreliable at delegating work has
+  been replaced with the full, field-proven version — restored from the era when
+  multi-hour unattended runs worked, carried inside the binary, and adapted to the
+  current engine. Coordinators now receive complete work-item detail up front (acceptance
+  criteria, descriptions, notes), so they act immediately instead of burning time and
+  tokens re-reading the project.
+- **Pipeline guidance restored across the board.** The built-in playbooks for the go
+  command family were audited line-by-line against their proven predecessors; dozens of
+  operating rules that had been lost to over-condensation are back, and every statement
+  about what the binary enforces was verified against the actual code — several stale
+  claims were corrected to say honestly what is and isn't automated yet.
+- **`gald3r go-preflight` now performs the workspace safety checks it describes**:
+  cross-project inbox conflict detection, and a clean-status check across workspace
+  member repositories, both with clear remediation output when they fire.
+- **Verified before shipping**: full test pass across the affected engine, plus a real
+  end-to-end autonomous loop run (live coordinator, live worker agents, real tasks
+  completed) on this exact build.
+
+To verify a download: checksums ship alongside every asset on the release page; Windows
+binaries are Authenticode-signed, macOS binaries notarized.
+
 ## [5.0.0-beta.12] - 2026-08-11
 
 _No public release notes have been written yet for the next tag. Replace this line with
