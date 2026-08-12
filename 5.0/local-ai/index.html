@@ -1110,6 +1110,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#unsloth-studio-keyed-local-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unsloth Studio (keyed local backend)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lan-endpoints-and-gald3rsecrets-no-cloud-tier" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1628,6 +1639,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#unsloth-studio-keyed-local-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unsloth Studio (keyed local backend)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lan-endpoints-and-gald3rsecrets-no-cloud-tier" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1673,7 +1695,8 @@
 <p><code>gald3r</code> can run entirely against a model on your own machine — no cloud account, no API
 key, and (once you've pulled a model) no network connection required. This page is the
 copy-pasteable setup path for that: point <code>gald3r</code> at a local OpenAI-compatible server
-(Ollama, LM Studio, vLLM, or llama.cpp) and start running real agent turns against it.</p>
+(Ollama, LM Studio, vLLM, llama.cpp, or Unsloth Studio) and start running real agent
+turns against it.</p>
 <p>For the full <code>providers.yaml</code> reference (cloud providers, keyring-backed keys, editing
 verbs, troubleshooting) see <a href="../providers/"><code>providers.md</code></a> — this page is the local-only
 fast path and the LAN-endpoint opt-in that page doesn't cover.</p>
@@ -1707,6 +1730,9 @@ actually finds running, using the real model IDs already pulled/loaded there. No
 to be on your <code>PATH</code> for this to work; it's a plain HTTP probe against each backend's own
 API, so a service-only deployment (the daemon running with no CLI installed alongside it)
 is discovered the same way a full local install would be.</p>
+<p><strong>Unsloth Studio is the one supported local runtime NOT probed by discovery</strong> — its
+endpoint requires a real API key, so an unauthenticated <code>/models</code> probe can't see it. It
+gets its own setup path in <a href="#unsloth-studio-keyed-local-backend">its section below</a>.</p>
 <p>Re-running <code>gald3r init-providers --dry-run</code> any time is itself the verification step —
 if a backend you just started doesn't show up, confirm it's actually listening on that
 port (<code>curl http://localhost:11434/v1/models</code> for Ollama, etc.) before checking anything
@@ -1737,6 +1763,32 @@ gald3r chat --model lmstudio:qwen2.5-coder-14b
 <p>A local model goes through the exact same session engine, tool-calling loop, and
 <code>stream-json</code> protocol events as a cloud model — nothing about <code>gald3r run</code>/<code>gald3r chat</code>
 changes based on where the model is served from.</p>
+<h2 id="unsloth-studio-keyed-local-backend">Unsloth Studio (keyed local backend)<a class="headerlink" href="#unsloth-studio-keyed-local-backend" title="Permanent link">&para;</a></h2>
+<p><a href="https://unsloth.ai/docs/desktop">Unsloth Studio</a> is supported as a fifth local runtime
+with a dedicated <code>unsloth</code> provider id — but unlike the four runtimes above, its
+OpenAI-compatible endpoint is <strong>not keyless</strong>, which is why <code>gald3r init-providers</code>
+doesn't auto-discover it. Setup is three steps:</p>
+<pre><code># 1. Start Studio's API server (every concrete example in Unsloth's own API guide
+#    uses port 8888, so that's the default gald3r ships)
+unsloth studio -p 8888
+
+# 2. Generate an API key in Studio's Settings -&gt; API (format: sk-unsloth-...), then
+#    export it under the exact variable name both Unsloth's docs and gald3r use:
+#      PowerShell:  $env:UNSLOTH_API_KEY = &quot;sk-unsloth-...&quot;
+#      bash/zsh:    export UNSLOTH_API_KEY=&quot;sk-unsloth-...&quot;
+
+# 3. The starter providers.yaml written by `gald3r init-providers` already ships an
+#    `unsloth:` block (base_url http://localhost:8888/v1, api_key $UNSLOTH_API_KEY) --
+#    verify reachability, then run against whatever model Studio has loaded:
+gald3r providers validate
+gald3r run &quot;reply with exactly: LOCAL_OK&quot; --model unsloth:&lt;model-id-from-studio&gt;
+</code></pre>
+<p>A missing key fails at call time with a real auth error — there is no keyless placeholder
+for <code>unsloth</code> the way <code>ollama</code>/<code>lmstudio</code> have one. If your Studio instance booted on a
+different port, set <code>UNSLOTH_BASE_URL</code> (or edit the block's <code>base_url</code>). The full
+reference — the <code>providers.yaml</code> block shape, the port-sourcing rationale, and how
+Unsloth's own <code>unsloth start &lt;agent&gt;</code> wrapper relates to gald3r's provider registry — is
+in <a href="../providers/#unsloth-studio-t832--first-supporter-integration"><code>providers.md</code></a>.</p>
 <h2 id="lan-endpoints-and-gald3rsecrets-no-cloud-tier">LAN endpoints and <code>.gald3rsecret</code>'s no-cloud tier<a class="headerlink" href="#lan-endpoints-and-gald3rsecrets-no-cloud-tier" title="Permanent link">&para;</a></h2>
 <p>A project can drop a <code>.gald3rsecret</code> file at its root to mark some paths <code>no-cloud:</code> —
 readable by a local model, but never allowed to reach a remote/cloud provider, a persisted
