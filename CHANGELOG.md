@@ -24,6 +24,32 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.15] - 2026-08-12
+
+This release delivers the first real autonomous throughput on every supported
+configuration — and gives users a one-command way to report anything that still goes
+wrong.
+
+- **Worker agents actually work now.** The agent CLI is invoked correctly for
+  non-interactive use (the missing print-mode and trust flags explain both the earlier
+  silent hangs and the "completed but changed nothing" runs), a turn that produces zero
+  output is honestly classified as a failure instead of a completion, and every worker's
+  own output is captured into its per-task log.
+- **Stale workspaces refresh themselves.** A previously-attempted task's working copy is
+  automatically recreated against the current code before dispatch, so finished work can
+  always merge; a new `--stale-base-action` flag keeps the choice in your hands.
+- **Interrupting a run is clean.** Stopping releases the claims of exactly the workers it
+  terminated — no leftover locks, no manual cleanup.
+- **NEW: `gald3r gfix` — one-command bug reporting.** When something fails, gald3r can
+  draft a complete report from its own logs, automatically scrub personal information
+  (usernames, hostnames, paths, secrets — and it shows you what it removed), let you edit
+  the draft, and only after your explicit confirmation open a prefilled GitHub issue.
+  Duplicate reports are detected and pointed at the existing issue. You control the offer
+  level (off / critical-only / all), asked exactly once.
+
+To verify a download: checksums ship alongside every asset on the release page; Windows
+binaries are Authenticode-signed, macOS binaries notarized.
+
 ## [5.0.0-beta.13] - 2026-08-12
 
 This release restores the autonomous pipeline's full operating knowledge and makes its
