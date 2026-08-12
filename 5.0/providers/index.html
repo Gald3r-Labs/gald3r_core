@@ -1177,6 +1177,34 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#unsloth-studio-t832-first-supporter-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unsloth Studio (T832 — first-supporter integration)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unsloth Studio (T832 — first-supporter integration)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unsloth-start-interop-agent-clis-not-providersyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        unsloth start interop (agent CLIs, not providers.yaml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2099,6 +2127,34 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#unsloth-studio-t832-first-supporter-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unsloth Studio (T832 — first-supporter integration)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unsloth Studio (T832 — first-supporter integration)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unsloth-start-interop-agent-clis-not-providersyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        unsloth start interop (agent CLIs, not providers.yaml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2665,11 +2721,14 @@ literal key in the file is still supported, but every <code>providers.yaml</code
 it finds one (or loose file permissions, on POSIX) — prefer <code>set-key</code> or a <code>$ENV_VAR</code> reference.</p>
 <h2 id="local-backends">Local backends<a class="headerlink" href="#local-backends" title="Permanent link">&para;</a></h2>
 <p>Each recipe below: install the runtime, pull/load a model, the <code>providers.yaml</code> block, and how
-to confirm gald3r actually reaches it. <code>gald3r init-providers</code> auto-detects three of these four
-runtimes by <strong>probing their default port for a live OpenAI-compatible <code>/models</code> endpoint</strong>
-(<code>discover_local_runtimes</code> in <code>registry.py</code>) — Ollama is discovered differently, via its own
-<code>ollama list</code> CLI — so re-running <code>init-providers</code> <em>after</em> a backend is up is itself the
-verification step for that backend.</p>
+to confirm gald3r actually reaches it. <code>gald3r init-providers</code> auto-detects three of the first
+four runtimes below by <strong>probing their default port for a live, unauthenticated OpenAI-compatible
+<code>/models</code> endpoint</strong> (<code>discover_local_runtimes</code> in <code>registry.py</code>) — Ollama is discovered
+differently, via its own <code>ollama list</code> CLI — so re-running <code>init-providers</code> <em>after</em> a backend is
+up is itself the verification step for that backend. <strong>Unsloth Studio (below) is NOT part of
+that auto-discovery</strong>: its <code>/models</code> endpoint requires a bearer token (see its own subsection),
+so an unauthenticated probe would just get a 401 rather than a usable model list — configure its
+<code>providers.yaml</code> block by hand instead.</p>
 <h3 id="ollama">Ollama<a class="headerlink" href="#ollama" title="Permanent link">&para;</a></h3>
 <p>Install from <a href="https://ollama.com/download">ollama.com</a>, then:</p>
 <pre><code>ollama pull qwen2.5-coder:14b
@@ -2742,6 +2801,79 @@ llama-server -m ./models/qwen2.5-coder-14b-q4_k_m.gguf --port 8080
 </code></pre>
 <p><strong>Verify:</strong> identical pattern — <code>gald3r init-providers --dry-run</code> with the server running
 auto-discovers it via the same <code>/models</code> probe.</p>
+<h3 id="unsloth-studio-t832-first-supporter-integration">Unsloth Studio (T832 — first-supporter integration)<a class="headerlink" href="#unsloth-studio-t832-first-supporter-integration" title="Permanent link">&para;</a></h3>
+<p><strong>Illustrative — no live Unsloth Studio instance was available to probe while writing this
+page</strong>; the shape below is sourced directly from Unsloth's own docs
+(<a href="https://unsloth.ai/docs/desktop">unsloth.ai/docs/desktop</a> and its linked API guide,
+<a href="https://unsloth.ai/docs/basics/api.md">unsloth.ai/docs/basics/api.md</a>), fetched 2026-08-11 —
+not guessed, and not (yet) confirmed against a running instance. Unsloth Studio is a new
+open-source local AI engine from the Unsloth team
+(<a href="https://github.com/unslothai/unsloth">github.com/unslothai/unsloth</a>); gald3r treats it as a
+fourth "known" local runtime alongside Ollama/LM Studio/OpenRouter, with a dedicated
+<code>unsloth</code> provider id (<code>MakeUnslothProvider</code> in <code>gald3r_llm/providers/local_adapters.go</code>).</p>
+<p>Unlike the three runtimes above, Unsloth Studio's OpenAI-compatible endpoint is <strong>not
+keyless</strong> — every request needs a real bearer token:</p>
+<pre><code class="language-bash">unsloth studio -p 8888
+</code></pre>
+<pre><code class="language-yaml">unsloth:
+  type: openai_compat
+  base_url: http://localhost:8888/v1
+  api_key: $UNSLOTH_API_KEY
+  models:
+    - id: gemma-4-26B-A4B-it-GGUF
+      role: general
+</code></pre>
+<ul>
+<li><strong>Port</strong>: Unsloth's API guide states it "exposes these endpoints on whichever port it booted
+  on (typically <code>http://localhost:8000</code> or <code>http://localhost:8888</code>)" — genuinely ambiguous
+  prose in the source docs — but every concrete example in that same guide (<code>unsloth studio -p
+  8888</code>, the <code>/v1/models</code> curl sample below) targets <code>8888</code>, so that's the default gald3r ships.
+  Confirm against whichever port your own instance printed on launch if it differs.</li>
+<li><strong>Auth</strong>: generate a key in Studio's Settings → API (format <code>sk-unsloth-...</code>), then export it
+  as <code>UNSLOTH_API_KEY</code> (matches both gald3r's own <code>&lt;PROVIDER&gt;_API_KEY</code> convention and the exact
+  variable name Unsloth's own docs use). There is no keyless placeholder for <code>unsloth</code> the way
+  <code>ollama</code>/<code>lm-studio</code> have one — a missing key fails at call time with a real auth error, not
+  silently.</li>
+<li><strong>Model listing</strong>: <code>GET /v1/models</code> with <code>Authorization: Bearer sk-unsloth-...</code> — per the API
+  guide's own example:
+  <code>bash
+  curl http://localhost:8888/v1/models \
+    -H "Authorization: Bearer sk-unsloth-xxxxxxxxxxxx"</code></li>
+</ul>
+<h4 id="unsloth-start-interop-agent-clis-not-providersyaml"><code>unsloth start</code> interop (agent CLIs, not providers.yaml)<a class="headerlink" href="#unsloth-start-interop-agent-clis-not-providersyaml" title="Permanent link">&para;</a></h4>
+<p>Unsloth Studio ships its own wrapper, independent of gald3r's <code>providers.yaml</code>: from a project
+folder, with a model loaded in Studio,</p>
+<pre><code class="language-bash">unsloth start claude    # or: codex, opencode, hermes
+</code></pre>
+<p>launches <strong>that agent CLI directly</strong>, pointed at the local model via a temporary,
+session-scoped provider configuration — per Unsloth's own integration guide, it does not touch
+the CLI's normal config files at all. This is a <em>separate</em> entry point from the <code>providers.yaml</code>
+block above:</p>
+<table>
+<thead>
+<tr>
+<th>You want...</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gald3r's own provider registry to reach a running Unsloth Studio endpoint (<code>--model unsloth:&lt;id&gt;</code>, <code>providers.yaml</code>'s <code>unsloth:</code> block)</td>
+<td>The <code>providers.yaml</code> block above</td>
+</tr>
+<tr>
+<td>Unsloth's own wrapper to launch an agent CLI (Claude Code, Codex, OpenCode, Hermes Agent) against a local model for you</td>
+<td><code>unsloth start &lt;agent&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>Both reach the same underlying local server — pick whichever fits how you're launching that
+session. <code>unsloth start</code> is Unsloth's tooling, not a gald3r verb; run <code>unsloth start --help</code> (or
+consult <a href="https://unsloth.ai/docs/integrations/unsloth-start">unsloth.ai/docs/integrations/unsloth-start</a>)
+for its own flags.</p>
+<p><strong>Verify:</strong> once real hardware access is available, this section should be re-captured against a
+live instance the same way the Ollama/LM Studio sections above were — flagged here rather than
+silently presented as verified.</p>
 <h2 id="cloud-providers">Cloud providers<a class="headerlink" href="#cloud-providers" title="Permanent link">&para;</a></h2>
 <h3 id="openrouter-worked-example">OpenRouter (worked example)<a class="headerlink" href="#openrouter-worked-example" title="Permanent link">&para;</a></h3>
 <p>The starter file's <code>openrouter:</code> block (real capture, above) is the template:</p>
