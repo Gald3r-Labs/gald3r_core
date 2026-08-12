@@ -24,6 +24,38 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.16] - 2026-08-12
+
+**Spawned agents now receive their complete instructions — every time, at any size.**
+This release closes the last known gap in the orchestration pipeline: agent briefs are
+now delivered whole, never truncated.
+
+- **Complete-brief delivery.** Large agent briefs (coordinator, implementer, and
+  reviewer) are written to a file inside the project's own log directory, and the
+  spawned agent receives a short pointer to read it — instead of squeezing the brief
+  through the operating system's command-line length limits. Briefs of any size now
+  arrive intact on every OS, and each delivered brief is kept on disk so you can see
+  exactly what an agent was told.
+- **Windows launcher-shim hardening.** Some agent CLIs on Windows launch through shell
+  wrapper scripts that can mangle multi-line text of any length. gald3r now detects
+  those wrappers and automatically switches to file delivery — even for small briefs.
+- **Multi-line input everywhere.** Every free-text option across the CLI (task and bug
+  descriptions, notes, memory bodies, and more) now accepts `--<flag>-file PATH` and
+  `-` for stdin, so multi-line content never has to survive shell quoting on the
+  command line.
+- **Truthful self-diagnostics.** `gald3r selftest` now checks hook wiring for every
+  installed platform overlay (not just Claude), understands the opt-in git-hooks
+  setup instead of reporting a false failure, and verifies active project constraints.
+  `gald3r doctor` gains a PATH check that flags stale or shadowed `gald3r` binaries —
+  including version mismatches between what's installed and what your shell actually
+  runs.
+- **Local AI: Unsloth Studio documented.** The local-AI guide now covers Unsloth
+  Studio setup (keyed endpoint, port 8888) alongside Ollama, LM Studio, vLLM, and
+  llama.cpp.
+
+**Verify a download:** check the published `SHA256SUMS` file against your binary, and
+run `gald3r --version` — it should print `5.0.0-beta.16`.
+
 ## [5.0.0-beta.15] - 2026-08-12
 
 This release delivers the first real autonomous throughput on every supported
