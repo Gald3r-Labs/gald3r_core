@@ -24,6 +24,13 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.20] - 2026-08-13
+
+Autopilot (`gald3r autopilot loop` / `@g-go-go`) now runs multiple implementers at once by
+default. Use `--no-code-swarm` when you need one-at-a-time (debugging, or a host that cannot
+run several coding agents together). Merge-back stays serialized so parallel worktrees do not
+wedge the git lock.
+
 ## [5.0.0-beta.19] - 2026-08-13
 
 Field fixes from the beta.17 Windows/Cursor run, for testers who already installed beta.18.
