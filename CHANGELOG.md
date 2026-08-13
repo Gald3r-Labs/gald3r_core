@@ -24,6 +24,27 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.17] - 2026-08-13
+
+This build is the field follow-up to 5.0.0-beta.16. Autopilot now treats a finished
+no-commit turn as real work instead of an idle failure, so a correct "nothing to
+commit" triage no longer trips the capacity breaker and kills a run that still has
+queued work. Claims held by buckets that die at run-end are released instead of
+occupying implementer slots forever.
+
+On a Cursor host, review without an explicit provider prefers the Cursor agent over
+a missing local model. A transport error is a run/provider problem, not a mass
+FAIL of every task under review. A complete implementation is not marked failed
+because teardown hit a brief unauthorized blip. Review verdicts still count when
+the JSON file write is blocked, as long as the reviewer stated a verdict in text.
+
+`constraint add --rule-file` works without a dummy positional argument; update and
+delete can repair a bad row. `gfix` warns at draft time if `gh` is missing or not
+logged in.
+
+Primary-checkout git applies wait on an index lock and retry instead of deleting
+the lockfile.
+
 ## [5.0.0-beta.16] - 2026-08-12
 
 **Spawned agents now receive their complete instructions — every time, at any size.**
