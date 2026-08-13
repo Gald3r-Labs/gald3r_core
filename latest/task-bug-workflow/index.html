@@ -1917,8 +1917,10 @@ gald3r db verify           # DB-vs-Markdown drift report
 </code></pre>
 <p><code>gald3r validate</code> runs as a fail-closed pre-commit hook on staged <code>.gald3r/tasks/**</code> and
 <code>.gald3r/bugs/**</code> in this repo (see <code>.githooks/pre-commit</code>) — a malformed frontmatter field or
-a task filed under the wrong <code>tasks/&lt;status&gt;/</code> folder is caught before it merges, not
-discovered later by a human reading TASKS.md.</p>
+an open-family task/bug filed under a retired per-status subfolder (<code>tasks/open/</code>,
+<code>bugs/in-progress/</code>, … instead of the flat <code>tasks/</code> / <code>bugs/</code> root) is caught before it merges,
+not discovered later by a human reading TASKS.md. Terminal records still belong in
+<code>tasks/completed|failed|cancelled/</code> and <code>bugs/done|cancelled/</code>.</p>
 <h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../autopilot/"><code>autopilot.md</code></a> — letting gald3r work the task queue itself instead of
