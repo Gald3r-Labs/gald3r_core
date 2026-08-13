@@ -24,6 +24,26 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.19] - 2026-08-13
+
+Field fixes from the beta.17 Windows/Cursor run, for testers who already installed beta.18.
+
+**Conductor vs parallel work.** `@g-go-go` / `autopilot loop` stays sequential (that honesty shipped in beta.18). This cut makes the sequential path survivable: the liveness heartbeat can see bucket output, silent buckets are killed after **30 minutes** by default (was 5), and a still-running bucket writes a live log so a kill is diagnosable.
+
+**go-bug honesty.** If the agent’s last word is `VERDICT: FAIL`, the bug stays open. A docs-only commit no longer marks it Resolved. Empty bug specs are filled from the markdown file (and the database if needed); a Critical bug with only a title is not dispatched. Briefs inside an isolated worktree say so, and tell the agent to commit on that branch.
+
+**One loop per repo.** Starting a second `autopilot loop` while one is still alive is refused. `autopilot stop --now` also tears down leftover loop processes recorded on sibling run markers. On Windows, INFO progress lines no longer show up as `NativeCommandError` crash spam.
+
+**Graceful stop during a sequential bucket.** `autopilot stop` (without `--now`) skips any bucket that has not started yet and gives the one already running three minutes, then kills it. You do not wait out a 25-minute coding turn. `--now` still stops immediately.
+
+**Stranded claims after an upgrade.** Starting a new loop releases leftover `go-bug` in-progress claims from a previous binary (the ones that blocked redispatch after upgrade). Bugs a human marked in-progress are not touched.
+
+**Database MCP in the brief.** If Oracle or another MCP is configured (for example port 6002), the implementer brief says so. Agents should use it instead of claiming they need a DBA.
+
+**Install update vs leftover processes.** If another `gald3r` process still has the old binary open, update still lands via rename-aside, then lists those PIDs and tells you to run `gald3r shutdown --force` so the next `gald3r` is the new build.
+
+**Still not this cut.** GitHub filing polish beyond the beta.18 gfix hollow/`gh` warning (reporter identity ranking). 16A review-phase items (L8–L11, L4, L7) remain unconfirmed until a review phase is actually run.
+
 ## [5.0.0-beta.18] - 2026-08-13
 
 Autopilot loop docs now match the binary: `@g-go-go` runs one implementer at a time. Parallel
