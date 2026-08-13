@@ -24,6 +24,15 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.18] - 2026-08-13
+
+Autopilot loop docs now match the binary: `@g-go-go` runs one implementer at a time. Parallel
+coding is `@g-go --swarm`, not a hidden loop flag.
+
+Field reports (`gald3r gfix`) warn in the draft itself when GitHub CLI cannot auto-file, fill
+watchdog evidence from the last captured kill when you type the class by hand, and refuse to
+auto-file an empty watchdog report unless you pass `--force`.
+
 ## [5.0.0-beta.17] - 2026-08-13
 
 This build is the field follow-up to 5.0.0-beta.16. Autopilot now treats a finished
