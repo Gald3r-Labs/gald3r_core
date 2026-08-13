@@ -2042,9 +2042,11 @@ it's a regeneratable cache, not source of truth for the files) wasn't carried ov
 <h3 id="a-taskbug-file-wont-pass-gald3r-validate">A task/bug file won't pass <code>gald3r validate</code><a class="headerlink" href="#a-taskbug-file-wont-pass-gald3r-validate" title="Permanent link">&para;</a></h3>
 <pre><code>gald3r validate --fix
 </code></pre>
-<p>normalizes whatever's safely auto-fixable (missing-but-inferable frontmatter fields, wrong
-<code>tasks/&lt;status&gt;/</code> folder placement for the declared status). Anything it can't safely fix on
-its own, it reports instead of guessing.</p>
+<p>normalizes whatever's safely auto-fixable (missing-but-inferable frontmatter fields, open-family
+files still sitting in a retired <code>tasks/&lt;old-status&gt;/</code> or <code>bugs/&lt;old-status&gt;/</code> subfolder).
+Anything it can't safely fix on its own, it reports instead of guessing. Active records belong
+at the <code>tasks/</code> / <code>bugs/</code> root; only <code>completed/</code>/<code>failed/</code>/<code>cancelled/</code> (tasks) and
+<code>done/</code>/<code>cancelled/</code> (bugs) remain as terminal folders.</p>
 <h3 id="an-autopilotswarm-run-looks-stuck">An autopilot/swarm run looks stuck<a class="headerlink" href="#an-autopilotswarm-run-looks-stuck" title="Permanent link">&para;</a></h3>
 <pre><code>gald3r go-status
 </code></pre>
