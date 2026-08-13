@@ -24,6 +24,11 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.21] - 2026-08-13
+
+_No public release notes have been written yet for the next tag. Replace this line with
+business-level notes before cutting._
+
 ## [5.0.0-beta.20] - 2026-08-13
 
 Autopilot (`gald3r autopilot loop` / `@g-go-go`) now runs multiple implementers at once by
