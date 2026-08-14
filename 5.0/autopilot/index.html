@@ -1064,10 +1064,32 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#phase1-default-is-t687-slot-refill-t884" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase1 default is T687 slot-refill (T884)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#stall-watchdog" class="md-nav__link">
     <span class="md-ellipsis">
       
         Stall watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-on-the-human-tty-t879" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color on the human TTY (T879)
       
     </span>
   </a>
@@ -1790,10 +1812,32 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#phase1-default-is-t687-slot-refill-t884" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase1 default is T687 slot-refill (T884)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#stall-watchdog" class="md-nav__link">
     <span class="md-ellipsis">
       
         Stall watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-on-the-human-tty-t879" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color on the human TTY (T879)
       
     </span>
   </a>
@@ -1985,7 +2029,7 @@ the floor it applied — so the two can never again disagree about whether there
 <code>--publish-events</code> (or the AGENT_CONFIG.md <code>publish_run_events: true</code> key) additionally pushes
 every ledger event through the Valkyrie world_tree channel as it happens, so a different
 session or a teammate can observe the SAME run remotely:</p>
-<pre><code>gald3r autopilot loop --budget 10 --publish-events   # opt in for this invocation
+<pre><code>gald3r autopilot loop --budget 20 --publish-events   # opt in; --budget is attempt cap (0 = unlimited)
 </code></pre>
 <p>Publishing is a pure consumer of the ledger (never a second writer), bound to the run's own
 start/end, and never blocks or fails the run: when the connector is offline, events queue
@@ -1998,7 +2042,23 @@ dropped rather than retried. See <code>gald3r_swarm/autopilot/valkpublish</code>
 <p><code>--heartbeat-minutes</code> (default 15) now fires <strong>during</strong> a long-running coordinator invocation,
 not only between iterations — a run whose entire budget is spent inside one multi-hour
 coordinator call still narrates liveness (elapsed time, age of the last coordinator stream
-byte, and claims-vs-buckets state) on schedule.</p>
+byte, last extracted thought, and claims-vs-buckets state) on schedule. <code>claims 0/0</code> while
+stream bytes are growing means the coordinator CLI still owns in-session swarm work — that is
+expected on the old path, not an idle hang.</p>
+<h3 id="phase1-default-is-t687-slot-refill-t884">Phase1 default is T687 slot-refill (T884)<a class="headerlink" href="#phase1-default-is-t687-slot-refill-t884" title="Permanent link">&para;</a></h3>
+<p>Ready tasks/bugs already come back from SQL in the correct status with dependencies cleared.
+The outer loop dispatches those implementers itself (<code>dispatch_path=T687-slot-refill</code>). It does
+<strong>not</strong> wait for a coordinator CLI to pick the queue. <code>--no-deterministic-dispatch</code> keeps the
+old coordinator-first path as an explicit fallback (the 38-minute silent wait).</p>
+<p>If a run still takes that fallback, the model’s “but wait…” stream is no longer invisible:</p>
+<ul>
+<li>a 15s wait line includes elapsed time, stream bytes, and the last thought</li>
+<li><code>.gald3r/logs/coordinator_thoughts/iter_N_live.log</code> is a live thought tape</li>
+<li><code>gald3r logs tail</code> / <code>reconstruct</code> sees <code>coordinator_thought</code> rows in <code>.gald3r/logs.db</code></li>
+</ul>
+<p>A startup line names <code>dispatch_path</code>. If you see <code>invoking fresh coordinator</code> on phase1 with a
+non-empty SQL-ready queue, the binary on PATH is stale or you passed the fallback flag —
+rebuild/reinstall, or drop <code>--no-deterministic-dispatch</code>.</p>
 <h3 id="stall-watchdog">Stall watchdog<a class="headerlink" href="#stall-watchdog" title="Permanent link">&para;</a></h3>
 <p>Two independent detectors, each of which kills the frozen invocation, releases any stranded
 preflight claims, retries once, and halts loudly (naming why) if the retry stalls too — never a
@@ -2010,6 +2070,8 @@ silent multi-hour freeze:</p>
   alive but has produced zero output for the whole window.</li>
 </ul>
 <p>Disable both with <code>--no-stall-watchdog</code> (the heartbeat keeps running regardless).</p>
+<h3 id="color-on-the-human-tty-t879">Color on the human TTY (T879)<a class="headerlink" href="#color-on-the-human-tty-t879" title="Permanent link">&para;</a></h3>
+<p><code>autopilot loop</code> paints the live narration (<code>[outer-loop]</code>, <code>[AUTOPILOT][EVENT]</code>, swarm verbs, PASS/FAIL, task/bug keywords) with the same TEL regex engine as <code>gald3r tel wrap</code>. Color is display-only: the per-run log file, <code>--json</code> NDJSON, and anything sent to an agent stay plain. Disable with <code>NO_COLOR=1</code> or <code>GALD3R_TEL_DISABLE=1</code>, or override the builtin <code>narration</code> class via <code>gald3r tel class narration off</code> / a rule file in <code>~/.gald3r/tel</code> or <code>.gald3r/tel</code>.</p>
 <h2 id="worktrees-isolating-parallel-agents">Worktrees: isolating parallel agents<a class="headerlink" href="#worktrees-isolating-parallel-agents" title="Permanent link">&para;</a></h2>
 <pre><code>gald3r worktree create
 gald3r worktree report
