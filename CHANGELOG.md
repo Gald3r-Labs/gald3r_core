@@ -24,6 +24,14 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.23] - 2026-08-14
+
+Autopilot now runs implementers in parallel by default. Use `--no-code-swarm` if you want the old one-at-a-time coding path. Sibling count defaults to 5 (recommended 3–8; higher values are allowed and warn). `--budget` is an attempt cap; `0` means unlimited.
+
+Vault-first research is on: agents search your local knowledgebase before the internet, and memory recall treats ingested research notes as first-class results.
+
+A local scheduler can wake HEARTBEAT rows without keeping Throne open. Doctor `--apply` upgrades a legacy WPAC inbox to the thin index plus per-message files.
+
 ## [5.0.0-beta.22] - 2026-08-14
 
 BUGS.md is now a slim table of links, the same shape as TASKS.md. Filing or
