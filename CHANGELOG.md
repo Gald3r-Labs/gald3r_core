@@ -24,6 +24,13 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.22] - 2026-08-14
+
+BUGS.md is now a slim table of links, the same shape as TASKS.md. Filing or
+rebuilding bugs no longer reprints every bug as a multi-paragraph dump in the
+index. Already-corrupted projects: run `gald3r bug regenerate-index --apply`.
+The full description still lives in each `bugs/bugNNN_*.md` file.
+
 ## [5.0.0-beta.21] - 2026-08-13
 
 _No public release notes have been written yet for the next tag. Replace this line with
