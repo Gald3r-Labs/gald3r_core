@@ -24,6 +24,32 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.26] - 2026-08-15
+
+**The throughput build.** beta.26 makes the loop spend its budget on work an agent can
+actually finish — and hand everything else to you, once, instead of retrying it forever.
+
+- **The loop stops re-attempting items a human has to unblock.** A failed review whose
+  remaining acceptance criteria are human-gated parks the item in your attention queue
+  after one attempt. Any item caps at three implement attempts per run, then parks with a
+  named reason. No more burning full model turns writing "no new changes" essays.
+- **The picker skips un-implementable work**: items whose remaining criteria are
+  human-gated are never offered to an implementer, and an item that merges with no
+  changes is not re-offered in the same run.
+- **Parallelism holds at your `--lanes` setting** — a worker that dies at spawn frees its
+  slot for the next item immediately.
+- **Windows reliability**: the worktree marker write now rides through antivirus/indexer
+  file locks instead of killing the worker, and projects that keep `.gald3r/` out of git
+  no longer see refused staging messages every cycle.
+- Per-iteration summaries report real review PASS/FAIL counts.
+
+**Recommended before your first beta.26 run:** `gald3r backlog-curate` (or the
+`@g-backlog-curate` command) to sweep stale and human-gated items off the active floor —
+then the loop's whole budget goes to real, landable work.
+
+**Verify a download:** check `SHA256SUMS` and run `gald3r --version` — expect
+`5.0.0-beta.26`.
+
 ## [5.0.0-beta.25] - 2026-08-15
 
 **The stability build.** beta.25 consolidates two weeks of rapid field-driven fixes into
