@@ -1730,7 +1730,20 @@ gald3r vault reindex                    # regenerate the catalog (_index.yaml + 
 gald3r vault lint                       # missing frontmatter, empty tags, legacy fields
 gald3r vault moc-generate                # generate/update Map-of-Content hub notes per directory
 gald3r vault export / import            # portable OKF bundle for air-gapped exchange
+gald3r vault backlog status             # T737: listed/ingested/pending counts + weekly burn-down
+gald3r vault backlog tick [--limit N]   # ingest the next N pending items per kind
+gald3r vault backlog seed --from-legacy            # G:/Github_Repos/data/repos.txt
+gald3r vault backlog seed --kind repos --file PATH
+gald3r vault backlog enable-schedule    # HEARTBEAT watchdog on gald3r scheduler (not a second cron)
 </code></pre>
+<p><code>gald3r vault backlog</code> is the first-pass successor to the retired <code>G:/Github_Repos</code>
+<code>github_sync.py</code> + <code>repo_tracker.json</code> zip-mirror. Owner-supplied lists live in
+<code>{vault}/ingest/backlog/{repos,articles,videos}.txt</code>. Videos ingest at
+<code>analysis_depth: transcript_only</code>. Progress is <code>STATUS.md</code> + <code>weekly.md</code>;
+<code>gald3r doctor</code> warns if pending items sit more than 48 hours without a
+successful tick (broken-cron-silence is what killed the last system). This is
+<strong>not</strong> <code>g-skl-monitor</code> (that watches already-ingested sources for later
+changes).</p>
 <p>Recon/ingestion pipelines that feed the vault (each with its own dedicated <code>gald3r &lt;verb&gt;</code>
 today mapped through skills, not yet a single unified CLI ingest surface): a GitHub repo
 (<code>recon-repo</code>), a docs URL with periodic staleness re-check (<code>recon-docs</code>), a one-time URL
@@ -1755,7 +1768,7 @@ transcript (<code>recon-yt</code>).</p>
 </tr>
 <tr>
 <td>Build a searchable reference library from external docs/repos</td>
-<td><code>gald3r vault ingest</code> (or the <code>recon-*</code> verbs)</td>
+<td><code>gald3r vault ingest</code> / <code>gald3r vault backlog</code> (or the <code>recon-*</code> skills)</td>
 </tr>
 <tr>
 <td>Ask a natural-language question against everything you know</td>

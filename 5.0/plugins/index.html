@@ -1745,7 +1745,10 @@ per-project, so you can have a plugin installed but only active in the projects 
 gald3r mcp --help       # expose gald3r's prompt/judgment library to any MCP client (Claude Desktop, Cursor, ...) over stdio
 </code></pre>
 <p><code>gald3r mcp</code> is how an external MCP-compatible client reaches into gald3r's own prompt
-library — the reverse direction from plugins/skill packs extending gald3r.</p>
+library — the reverse direction from plugins/skill packs extending gald3r. Direct
+<code>prompt get</code> / <code>gald3r_prompt_get</code> still refuse shipped-core IP except the narrow
+agent-retrievable allowlist (pipeline playbooks named by shipped g-go* shims); a
+plugin's own <code>prompts/</code> directory stays fully gettable so you can debug it.</p>
 <h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../crash/"><code>crash.md</code></a> — how a skill actually gets loaded and activated once installed</li>

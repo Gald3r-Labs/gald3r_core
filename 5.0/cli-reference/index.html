@@ -1745,7 +1745,10 @@ as an in-IDE slash command (<code>/g-status</code> in Claude Code, <code>@g-stat
 you've installed that platform's overlay — see <a href="../platform-usage/"><code>platform-usage.md</code></a> for
 the command/skill/rule/hook/agent tour and the per-platform quick-start matrix, or go straight
 to the generated <a href="../reference/crash/commands/">Commands reference</a> for a usage card per
-<code>/g-</code>/<code>@g-</code> command (purpose, arguments, example invocation, related commands).</p>
+<code>/g-</code>/<code>@g-</code> command (purpose, arguments, example invocation, related commands). That
+generated catalog is T809's CRASH overlay surface; <strong>this page</strong> is T718's Go binary
+verb map. They are complementary, not duplicates -- a verb can exist here with no
+slash-command twin, and a <code>/g-</code> command can exist there with no 1:1 cobra verb.</p>
 <!-- Go-era update (verified against gald3r_cli/internal/commands/root.go,
      2026-08-08): the Go rewrite added `--dir` as a new persistent/global
      flag, documented below. -->
@@ -2064,7 +2067,7 @@ project's overlay is stamped from an older binary version, both point you at <co
 </tr>
 <tr>
 <td><code>gald3r prompt</code></td>
-<td>Judgment/prompt-asset library (role briefs, rubrics, playbooks, voice)</td>
+<td>Judgment/prompt-asset library (role briefs, rubrics, playbooks, voice). <code>prompt get</code> refuses shipped-core IP except the agent-retrievable pipeline playbooks / role briefs named by shipped g-go* shims; plugin-origin assets stay gettable.</td>
 </tr>
 <tr>
 <td><code>gald3r project-type</code></td>
@@ -2227,7 +2230,7 @@ across your machines and your team.</p>
 <tbody>
 <tr>
 <td><code>gald3r vault</code></td>
-<td>Build a searchable knowledge base from the docs, repos, and web pages you feed it — plain markdown files you own, not locked away in a database.</td>
+<td>Build a searchable knowledge base from the docs, repos, and web pages you feed it — plain markdown files you own, not locked away in a database. Subcommands include <code>ingest</code>, <code>search</code>, <code>list</code>, <code>reindex</code>, <code>lint</code>, <code>location</code>, <code>moc-generate</code>, <code>export</code>/<code>import</code>, and <code>backlog</code> (T737 first-pass knowledge-ingestion queue: <code>status</code> / <code>tick</code> / <code>seed [--from-legacy]</code> / <code>enable-schedule</code>; clock is <code>gald3r scheduler</code>, not a second cron).</td>
 </tr>
 <tr>
 <td><code>gald3r memory</code></td>
