@@ -24,6 +24,38 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.25] - 2026-08-15
+
+**The stability build.** beta.25 consolidates two weeks of rapid field-driven fixes into
+one hardened release: the loop tells the truth about its own state, upgrades are safe, and
+budgets finally mean what they say.
+
+- **Budget you can explain in one sentence: it is the number of tasks and bugs the loop
+  will attempt to handle.** Reviews never consume budget — they are part of the workflow,
+  not new work. A task that implements, fails review, and retries costs two attempts, and
+  the end-of-run summary reports exactly that.
+- **Completed work gets finalized first.** When items are waiting for review, the loop
+  dispatches reviewers before starting anything new — and if the coordinator under-reports
+  the review queue, a deterministic fallback spawns the reviewers anyway.
+- **The board never lies anymore.** A failed or empty merge rolls the item back and
+  requeues it instead of leaving a false "done"; claims release themselves; killed workers
+  leave logs, ledger events, and released claims behind; end-of-run summaries report real
+  PASS/FAIL counts and a truthful final state.
+- **Safe upgrades.** `gald3r install update` detects wrapper scripts and already-damaged
+  files on PATH, updates the real install instead of overwriting a shim with binary bytes,
+  and warns when your shell would still resolve an old copy. `gald3r doctor` flags stale
+  binaries and version mismatches.
+- **MCP servers launch reliably.** Generated MCP configs now point at the exact installed
+  binary instead of whatever a PATH search happens to find.
+- **No more Python-era instructions.** Every guide, skill, and playbook now uses the plain
+  `gald3r` command — nothing asks you for a `uv` environment.
+- Agent spawns that could hang silently (a known Windows launcher edge) are refused loudly
+  before they start, and finished runs kill their entire process tree — no leaked workers
+  burning quota overnight.
+
+**Verify a download:** check the published `SHA256SUMS` file against your binary, and run
+`gald3r --version` — it should print `5.0.0-beta.25`.
+
 ## [5.0.0-beta.24] - 2026-08-15
 
 _(Nothing staged yet. Add short, business-level, user-facing notes here before the next cut.)_
