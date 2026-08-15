@@ -2013,7 +2013,7 @@ of these forms works:</p>
 </code></pre>
 <p>Normal interactive terminals (Windows Terminal, VS Code/Cursor terminal panels,
 <code>cmd.exe</code>, Git Bash), Python <code>subprocess</code> captures, and CI runners are unaffected either
-way. If you hit this from source (<code>uv</code> install), <code>uv run gald3r ...</code> is also unaffected
+way. If you hit this from source (<code>uv</code> install), <code>gald3r ...</code> is also unaffected
 — it runs the console-subsystem Python entry point directly, never a compiled binary.</p>
 <h3 id="gald3r-command-not-found-binary-not-on-path">"gald3r: command not found" / binary not on PATH<a class="headerlink" href="#gald3r-command-not-found-binary-not-on-path" title="Permanent link">&para;</a></h3>
 <p>You installed via <code>uv sync</code> but didn't add <code>.venv\Scripts</code> (Windows) / <code>.venv/bin</code>
@@ -2024,7 +2024,7 @@ terminal/IDE after any <code>PATH</code> edit.</p>
 <pre><code>gald3r doctor
 </code></pre>
 <pre><code>[WARN] overlay_freshness DRIFT -- claude: 1 file(s) changed (.claude/settings.json) |
-       Run `uv run gald3r sync --apply` (or `uv run gald3r platform install &lt;platform&gt;
+       Run `gald3r sync --apply` (or `gald3r platform install &lt;platform&gt;
        --force`) to resync the installed overlay from the live neutral_source/ tree. ...
 </code></pre>
 <p>(Real output, trimmed.) This is the platform-overlay analog of the <code>build_fingerprint</code>
