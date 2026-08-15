@@ -24,6 +24,10 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.24] - 2026-08-15
+
+_(Nothing staged yet. Add short, business-level, user-facing notes here before the next cut.)_
+
 ## [5.0.0-beta.23] - 2026-08-14
 
 Autopilot now runs implementers in parallel by default. Use `--no-code-swarm` if you want the old one-at-a-time coding path. Sibling count defaults to 5 (recommended 3–8; higher values are allowed and warn). `--budget` is an attempt cap; `0` means unlimited.

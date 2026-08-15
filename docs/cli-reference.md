@@ -10,7 +10,10 @@ as an in-IDE slash command (`/g-status` in Claude Code, `@g-status` in Cursor, a
 you've installed that platform's overlay — see [`platform-usage.md`](./platform-usage.md) for
 the command/skill/rule/hook/agent tour and the per-platform quick-start matrix, or go straight
 to the generated [Commands reference](./reference/crash/commands.md) for a usage card per
-`/g-`/`@g-` command (purpose, arguments, example invocation, related commands).
+`/g-`/`@g-` command (purpose, arguments, example invocation, related commands). That
+generated catalog is T809's CRASH overlay surface; **this page** is T718's Go binary
+verb map. They are complementary, not duplicates -- a verb can exist here with no
+slash-command twin, and a `/g-` command can exist there with no 1:1 cobra verb.
 
 <!-- Go-era update (verified against gald3r_cli/internal/commands/root.go,
      2026-08-08): the Go rewrite added `--dir` as a new persistent/global
@@ -111,7 +114,7 @@ project's overlay is stamped from an older binary version, both point you at `up
 | `gald3r skills-lock` | Verify your installed skills haven't been tampered with, using a signed checksum lockfile |
 | `gald3r plugin` | Add new capabilities to gald3r from the community — install, update, and enable third-party skills without hand-editing your own project files. |
 | `gald3r policy` | Enforce your org's own rules automatically (Team/Org tier only; a no-op on free/retail installs) |
-| `gald3r prompt` | Judgment/prompt-asset library (role briefs, rubrics, playbooks, voice) |
+| `gald3r prompt` | Judgment/prompt-asset library (role briefs, rubrics, playbooks, voice). `prompt get` refuses shipped-core IP except the agent-retrievable pipeline playbooks / role briefs named by shipped g-go* shims; plugin-origin assets stay gettable. |
 | `gald3r project-type` | Switch between preset workflows (solo dev, team, enterprise, ...) that tune how gald3r behaves in this project |
 | `gald3r pricing` | Look up what an LLM model costs per token, right from the terminal |
 
@@ -164,7 +167,7 @@ across your machines and your team.
 
 | Verb | What it does |
 |---|---|
-| `gald3r vault` | Build a searchable knowledge base from the docs, repos, and web pages you feed it — plain markdown files you own, not locked away in a database. |
+| `gald3r vault` | Build a searchable knowledge base from the docs, repos, and web pages you feed it — plain markdown files you own, not locked away in a database. Subcommands include `ingest`, `search`, `list`, `reindex`, `lint`, `location`, `moc-generate`, `export`/`import`, and `backlog` (T737 first-pass knowledge-ingestion queue: `status` / `tick` / `seed [--from-legacy]` / `enable-schedule`; clock is `gald3r scheduler`, not a second cron). |
 | `gald3r memory` | Small, scoped memory records (user/project/workspace/team/company/client) plus chat-native recall over them and your vault notes together (T557: `add`/`list`/`show`/`supersede`/`migrate-learned-facts`/`recall`) |
 | `gald3r tel` | Watch your terminal output for patterns and react automatically — alert, log, or trigger a follow-up command |
 | `gald3r telemetry` | Opt in (or out) of local-only usage telemetry — a count of crashes, your gald3r version, and OS/architecture; off by default, nothing ever leaves your machine |
