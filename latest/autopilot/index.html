@@ -1293,6 +1293,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#branch-discipline-the-isolation-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Branch discipline: the isolation tier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#housekeeping-during-unattended-runs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1942,6 +1953,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#branch-discipline-the-isolation-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Branch discipline: the isolation tier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#housekeeping-during-unattended-runs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2208,6 +2230,34 @@ worktree verbs worth knowing: <code>checkpoint</code>/<code>resume</code> (crash
 restart), <code>steer</code>/<code>queue</code> (inject a follow-up instruction into a running worktree session
 without interrupting it — see <code>gald3r steer</code> / <code>gald3r queue</code>), <code>merge</code> (fast-forward-only
 integration back to <code>main</code>), <code>janitor</code> (auto-prune stale worktrees).</p>
+<h2 id="branch-discipline-the-isolation-tier">Branch discipline: the isolation tier<a class="headerlink" href="#branch-discipline-the-isolation-tier" title="Permanent link">&para;</a></h2>
+<p>Worktrees are one of two isolation mechanisms, and the loop picks the cheaper one that still
+fits the run's shape. The tier, from lightest to heaviest:</p>
+<ol>
+<li><strong>Default — direct commits, no extra branches.</strong> Out of the box the coordinator commits
+   its checkpoint and housekeeping work straight onto whatever branch the project is checked
+   out on, and parallel agents get worktrees. This basic mode is always the default; the
+   modes below are opt-in flags that leave it byte-identical when off.</li>
+<li><strong>Serial branch-in-place</strong> (<code>--no-code-swarm --branch-in-place</code>). A single sequential
+   agent doesn't need a separate checkout directory at all — it runs on a short-lived
+   feature branch cut <em>in</em> the primary checkout: create branch, implement, checkpoint-commit,
+   merge back, return to the base branch. No worktree directory churn, no antivirus
+   file-lock friction on Windows, cheaper for solo flows. It refuses to start on a dirty
+   checkout, and if the agent crashes mid-run the loop rescue-commits anything dirty and
+   returns the checkout to the base branch cleanly, leaving the bucket branch intact for
+   recovery. Swarm (parallel) runs ignore this flag with a logged warning — N concurrent
+   agents genuinely need N isolated directories, so they escalate to worktrees.</li>
+<li><strong>Session branches</strong> (<code>--session-branch [NAME]</code>). Independent of the above: the
+   <em>coordinator's own</em> writes — housekeeping commits, integration merges, checkpoint
+   commits — land on a session branch (auto-named <code>burn/YYYYMMDD-HHMM</code>, or the name you
+   give) cut from the current branch at run start, instead of directly on it. At run end
+   the loop integrates the session branch back with a fast-forward (falling back to a merge
+   commit, never a rebase); a real conflict leaves the session branch intact and reports
+   exactly what to run to finish the merge by hand. The whole run becomes one reviewable,
+   cleanly revertible unit.</li>
+</ol>
+<p>Software-development projects default branch-first when solo and escalate to worktrees at
+swarm parallelism; both flags are advanced settings — leave them off and nothing changes.</p>
 <h2 id="housekeeping-during-unattended-runs">Housekeeping during unattended runs<a class="headerlink" href="#housekeeping-during-unattended-runs" title="Permanent link">&para;</a></h2>
 <pre><code>gald3r housekeep --orchestration-root &lt;root&gt; --mode preflight
 </code></pre>
