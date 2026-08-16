@@ -24,6 +24,39 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.27] - 2026-08-16
+
+**The supervision build.** This release is about one promise: when the autopilot
+loop is running, it is either shipping work or telling you exactly why not — never
+silently spinning.
+
+- **Reviews now finish everything.** The review phase can verify bug fixes as well
+  as tasks, so a queue of completed-but-unverified bug work drains instead of
+  accumulating. A new `gald3r go-bug-review` verb gives any bug a fresh-eyes
+  verdict turn on demand.
+- **Fresh work wins.** The work picker now remembers, across runs, which items have
+  repeatedly produced no real change, and ranks fresh actionable work above them.
+  Nothing is ever dropped — repeat offenders just stop crowding out your queue.
+- **Safety gates always arm.** When a provider exposes no cost or context
+  telemetry, the loop's burn ceiling, context stop, and time gates no longer sit
+  inert: they arm on computed proxies (wall-clock, iteration count, output volume)
+  and say so plainly in a once-per-run banner. A run that keeps iterating without
+  completing anything now trips a no-progress breaker instead of running for hours.
+- **Silent workers get reclaimed.** A worker that stops producing output is
+  detected, cleanly killed (including its child processes), and its lane is
+  immediately refilled with new work — one stalled worker no longer starves the
+  rest of the run.
+- **Briefs trust your board.** Agent briefs now state explicitly that the task's
+  own recorded notes and history outrank any repository document that contradicts
+  them — an agent can no longer refuse work because it found a stale page.
+- **Consistent health reporting.** `gald3r doctor` and the running loop now agree
+  on whether a project participates in workspace coordination, using one shared
+  detection rule.
+
+To verify a download: each release asset ships with a SHA-256 checksum file;
+compare with `certutil -hashfile <asset> SHA256` (Windows) or
+`shasum -a 256 <asset>` (macOS/Linux).
+
 ## [5.0.0-beta.26] - 2026-08-15
 
 **The throughput build.** beta.26 makes the loop spend its budget on work an agent can
