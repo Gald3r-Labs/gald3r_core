@@ -5,11 +5,15 @@
          <lastmod>2026-08-16</lastmod>
     </url>
     <url>
+         <loc>https://gald3r-labs.github.io/gald3r_core/latest/agents/</loc>
+         <lastmod>2026-08-16</lastmod>
+    </url>
+    <url>
          <loc>https://gald3r-labs.github.io/gald3r_core/latest/autopilot/</loc>
          <lastmod>2026-08-16</lastmod>
     </url>
     <url>
-         <loc>https://gald3r-labs.github.io/gald3r_core/latest/cli-reference/</loc>
+         <loc>https://gald3r-labs.github.io/gald3r_core/latest/commands/</loc>
          <lastmod>2026-08-16</lastmod>
     </url>
     <url>
@@ -61,6 +65,10 @@
          <lastmod>2026-08-16</lastmod>
     </url>
     <url>
+         <loc>https://gald3r-labs.github.io/gald3r_core/latest/skills/</loc>
+         <lastmod>2026-08-16</lastmod>
+    </url>
+    <url>
          <loc>https://gald3r-labs.github.io/gald3r_core/latest/task-bug-workflow/</loc>
          <lastmod>2026-08-16</lastmod>
     </url>
@@ -70,6 +78,10 @@
     </url>
     <url>
          <loc>https://gald3r-labs.github.io/gald3r_core/latest/troubleshooting/</loc>
+         <lastmod>2026-08-16</lastmod>
+    </url>
+    <url>
+         <loc>https://gald3r-labs.github.io/gald3r_core/latest/verbs/</loc>
          <lastmod>2026-08-16</lastmod>
     </url>
     <url>
