@@ -10,27 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/astrbot/">
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/skills/">
       
       
+        <link rel="prev" href="../commands/">
+      
+      
+        <link rel="next" href="../agents/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>PLATFORM_SPEC.md — AstrBot - gald3r_core Product Docs</title>
+        <title>Skills - gald3r_core Product Docs</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#platform_specmd-astrbot" class="md-skip">
+        <a href="#skills" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+    <a href=".." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PLATFORM_SPEC.md — AstrBot
+              Skills
             
           </span>
         </div>
@@ -221,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href=".." class="md-tabs__link">
         
   
   
@@ -240,7 +244,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../install/" class="md-tabs__link">
+      <a href="../install/" class="md-tabs__link">
         
   
   
@@ -259,7 +263,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../quickstart/" class="md-tabs__link">
+      <a href="../quickstart/" class="md-tabs__link">
         
   
   
@@ -278,7 +282,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../first-project/" class="md-tabs__link">
+      <a href="../first-project/" class="md-tabs__link">
         
   
   
@@ -297,7 +301,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../concepts/" class="md-tabs__link">
+      <a href="../concepts/" class="md-tabs__link">
         
   
   
@@ -316,7 +320,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../commands/" class="md-tabs__link">
+      <a href="../commands/" class="md-tabs__link">
         
   
   
@@ -333,9 +337,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../../../skills/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -354,7 +360,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../agents/" class="md-tabs__link">
+      <a href="../agents/" class="md-tabs__link">
         
   
   
@@ -373,7 +379,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../verbs/" class="md-tabs__link">
+      <a href="../verbs/" class="md-tabs__link">
         
   
   
@@ -394,7 +400,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../crash/" class="md-tabs__link">
+        <a href="../crash/" class="md-tabs__link">
           
   
   
@@ -412,7 +418,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+      <a href="../task-bug-workflow/" class="md-tabs__link">
         
   
   
@@ -431,7 +437,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../autopilot/" class="md-tabs__link">
+      <a href="../autopilot/" class="md-tabs__link">
         
   
   
@@ -452,7 +458,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../platform-usage/" class="md-tabs__link">
+        <a href="../platform-usage/" class="md-tabs__link">
           
   
   
@@ -470,7 +476,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../coordination/" class="md-tabs__link">
+      <a href="../coordination/" class="md-tabs__link">
         
   
   
@@ -489,7 +495,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../memory/" class="md-tabs__link">
+      <a href="../memory/" class="md-tabs__link">
         
   
   
@@ -508,7 +514,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../providers/" class="md-tabs__link">
+      <a href="../providers/" class="md-tabs__link">
         
   
   
@@ -527,7 +533,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../local-ai/" class="md-tabs__link">
+      <a href="../local-ai/" class="md-tabs__link">
         
   
   
@@ -546,7 +552,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../plugins/" class="md-tabs__link">
+      <a href="../plugins/" class="md-tabs__link">
         
   
   
@@ -567,7 +573,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../longship/" class="md-tabs__link">
+        <a href="../longship/" class="md-tabs__link">
           
   
   
@@ -585,7 +591,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../troubleshooting/" class="md-tabs__link">
+      <a href="../troubleshooting/" class="md-tabs__link">
         
   
   
@@ -620,7 +626,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+    <a href=".." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -650,7 +656,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -677,7 +683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/" class="md-nav__link">
+      <a href="../install/" class="md-nav__link">
         
   
   
@@ -704,7 +710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../quickstart/" class="md-nav__link">
+      <a href="../quickstart/" class="md-nav__link">
         
   
   
@@ -731,7 +737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../first-project/" class="md-nav__link">
+      <a href="../first-project/" class="md-nav__link">
         
   
   
@@ -758,7 +764,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../concepts/" class="md-nav__link">
+      <a href="../concepts/" class="md-nav__link">
         
   
   
@@ -785,7 +791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/" class="md-nav__link">
+      <a href="../commands/" class="md-nav__link">
         
   
   
@@ -809,10 +815,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../skills/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -828,6 +861,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-skills-exist-as-a-separate-layer-from-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why skills exist as a separate layer from commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skill-categories-worth-knowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skill categories worth knowing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-inventory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full inventory
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -839,7 +925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../agents/" class="md-nav__link">
+      <a href="../agents/" class="md-nav__link">
         
   
   
@@ -866,7 +952,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../verbs/" class="md-nav__link">
+      <a href="../verbs/" class="md-nav__link">
         
   
   
@@ -943,7 +1029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../crash/" class="md-nav__link">
+      <a href="../crash/" class="md-nav__link">
         
   
   
@@ -971,7 +1057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../crash/rules/" class="md-nav__link">
+      <a href="../reference/crash/rules/" class="md-nav__link">
         
   
   
@@ -999,7 +1085,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../crash/hooks/" class="md-nav__link">
+      <a href="../reference/crash/hooks/" class="md-nav__link">
         
   
   
@@ -1034,7 +1120,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../task-bug-workflow/" class="md-nav__link">
+      <a href="../task-bug-workflow/" class="md-nav__link">
         
   
   
@@ -1061,7 +1147,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../autopilot/" class="md-nav__link">
+      <a href="../autopilot/" class="md-nav__link">
         
   
   
@@ -1138,7 +1224,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../platform-usage/" class="md-nav__link">
+      <a href="../platform-usage/" class="md-nav__link">
         
   
   
@@ -1166,7 +1252,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../platforms/" class="md-nav__link">
+      <a href="../platforms/" class="md-nav__link">
         
   
   
@@ -1194,7 +1280,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../reference/platforms/" class="md-nav__link">
         
   
   
@@ -1229,7 +1315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../coordination/" class="md-nav__link">
+      <a href="../coordination/" class="md-nav__link">
         
   
   
@@ -1256,7 +1342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../memory/" class="md-nav__link">
+      <a href="../memory/" class="md-nav__link">
         
   
   
@@ -1283,7 +1369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../providers/" class="md-nav__link">
+      <a href="../providers/" class="md-nav__link">
         
   
   
@@ -1310,7 +1396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../local-ai/" class="md-nav__link">
+      <a href="../local-ai/" class="md-nav__link">
         
   
   
@@ -1337,7 +1423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../plugins/" class="md-nav__link">
+      <a href="../plugins/" class="md-nav__link">
         
   
   
@@ -1414,7 +1500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../longship/" class="md-nav__link">
+      <a href="../longship/" class="md-nav__link">
         
   
   
@@ -1442,7 +1528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../throne/" class="md-nav__link">
+      <a href="../throne/" class="md-nav__link">
         
   
   
@@ -1477,7 +1563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../troubleshooting/" class="md-nav__link">
+      <a href="../troubleshooting/" class="md-nav__link">
         
   
   
@@ -1524,10 +1610,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-folder-hierarchy" class="md-nav__link">
+  <a href="#why-skills-exist-as-a-separate-layer-from-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Folder Hierarchy
+        Why skills exist as a separate layer from commands
       
     </span>
   </a>
@@ -1535,10 +1621,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-ai-instruction-file" class="md-nav__link">
+  <a href="#skill-categories-worth-knowing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. AI Instruction File
+        Skill categories worth knowing
       
     </span>
   </a>
@@ -1546,131 +1632,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-agents-support-untested" class="md-nav__link">
+  <a href="#full-inventory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Agents Support — ❓ untested
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-skills-support-curated-pending-crawl-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Skills Support — ✅ curated, pending crawl verification
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-commands-workflows-curated-pending-crawl-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Commands / Workflows — ✅ curated, pending crawl verification
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-hooks-system-curated-pending-crawl-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. Hooks System — ✅ curated, pending crawl verification
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-rules-memory-curated-pending-crawl-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. Rules / Memory — ✅ curated, pending crawl verification
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-mcp-support-curated-pending-crawl-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. MCP Support — ✅ curated, pending crawl verification
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parity-vs-cursor-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Parity vs. Cursor Reference
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hook-system" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hook System
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#atypical-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Atypical Handling
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gald3r-integration-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gald3r Integration Notes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#capability-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Capability Summary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verification-evidence" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verification Evidence
+        Full inventory
       
     </span>
   </a>
@@ -1697,147 +1662,58 @@
   
 
 
-<h1 id="platform_specmd-astrbot">PLATFORM_SPEC.md — AstrBot<a class="headerlink" href="#platform_specmd-astrbot" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p><strong>New to gald3r on this platform?</strong> Start at <a href="../../../platforms/astrbot/">Use gald3r with AstrBot</a> for a short overview before the full breakdown below.</p>
-<p><strong>Authoring status</strong>: <code>create</code> (STUB — generated to end the ghost-platform
-invisibility; capability cells below were subsequently reconciled with the curated
-the platform capability matrix / <code>platform_matrix_data.json</code> values). This
-platform ships an overlay (<code>platforms/astrbot/</code>) and is registered in <code>PLATFORM_REGISTRY.yaml</code>.
-Hooks/Rules/Skills/Commands/MCP below reflect a <strong>curated, human-assessed</strong> capability set, not
-a live docs crawl. Run <code>@g-platform-scan-docs astrbot</code> (crawl <code>https://astrbot.app</code>) then
-<code>@g-platform-check astrbot</code> to upgrade this spec from curated to verified.</p>
-</blockquote>
-<p><strong>AstrBot</strong> is registered in the gald3r platform roster. Per the <strong>curated</strong> capability matrix
-(<code>platform_matrix_data.json</code>, reconciled here), the five matrix-tracked primitives —
-<strong>Hooks, Rules, Skills, Commands, and MCP</strong> — are all assessed <strong>✅ supported</strong>, with an
-<strong>MCP (L2)</strong> engine-integration tier and no established rules-file extension (<code>rules_ext: "—"</code>).
-This is a <strong>human-assessed curation</strong>, not the result of a live docs crawl or install test: the
-three primitives the matrix does not track (folder hierarchy, the AI instruction file, and native
-agent/subagent support) remain <strong>❓ unknown</strong> until a live scan runs. This stub exists so the
-platform is visible to the monitor tooling and the roster-parity gate instead of being silently
-dropped.</p>
-<hr />
-<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
-<p><strong>Status: ❓ untested — no verified info.</strong> Not a capability the curated matrix tracks either.
-The platform's config-folder layout has not been crawled/verified. Do not assume a <code>.astrbot/</code>
-tree exists until <code>@g-platform-scan-docs astrbot</code> confirms it.</p>
-<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
-<p><strong>Status: ❓ untested.</strong> Not a capability the curated matrix tracks. Whether AstrBot auto-reads
-<code>AGENTS.md</code> / <code>CLAUDE.md</code> or a native instruction file is unverified.</p>
-<h2 id="3-agents-support-untested">3. Agents Support — ❓ untested<a class="headerlink" href="#3-agents-support-untested" title="Permanent link">&para;</a></h2>
-<p>Not a matrix-tracked column. No verified info. Pending a live docs crawl.</p>
-<h2 id="4-skills-support-curated-pending-crawl-verification">4. Skills Support — ✅ curated, pending crawl verification<a class="headerlink" href="#4-skills-support-curated-pending-crawl-verification" title="Permanent link">&para;</a></h2>
-<p><code>platform_matrix_data.json</code> / the platform capability matrix assess Skills as <strong>✅ supported</strong>
-(human-assessed). No live docs crawl has confirmed the underlying mechanism (<code>SKILL.md</code>
-discovery path, frontmatter shape, etc.) — treat the ✅ as a curated capability signal, not an
-implementation-detail source.</p>
-<h2 id="5-commands-workflows-curated-pending-crawl-verification">5. Commands / Workflows — ✅ curated, pending crawl verification<a class="headerlink" href="#5-commands-workflows-curated-pending-crawl-verification" title="Permanent link">&para;</a></h2>
-<p>Curated <strong>✅ supported</strong>. Slash-command syntax and workflow file format are unverified — pending
-<code>@g-platform-scan-docs astrbot</code>.</p>
-<h2 id="6-hooks-system-curated-pending-crawl-verification">6. Hooks System — ✅ curated, pending crawl verification<a class="headerlink" href="#6-hooks-system-curated-pending-crawl-verification" title="Permanent link">&para;</a></h2>
-<p>Curated <strong>✅ supported</strong>. Native hook config file, event list, and payload format are unverified —
-pending a live docs crawl.</p>
-<h2 id="7-rules-memory-curated-pending-crawl-verification">7. Rules / Memory — ✅ curated, pending crawl verification<a class="headerlink" href="#7-rules-memory-curated-pending-crawl-verification" title="Permanent link">&para;</a></h2>
-<p>Curated <strong>✅ supported</strong>. <code>platform_matrix_data.json</code> records <code>rules_ext: "—"</code> (no established
-rules-file extension curated yet) — do not assume a specific file format until verified.</p>
-<h2 id="8-mcp-support-curated-pending-crawl-verification">8. MCP Support — ✅ curated, pending crawl verification<a class="headerlink" href="#8-mcp-support-curated-pending-crawl-verification" title="Permanent link">&para;</a></h2>
-<p>Curated <strong>✅ supported</strong>, with a curated engine-integration tier of <strong>MCP (L2)</strong>. Connection
-config and transport details are unverified — pending a live docs crawl.</p>
-<hr />
-<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
-<p>At the <strong>curated</strong> level, the five matrix-tracked primitives (Hooks/Rules/Skills/Commands/MCP)
-match the Cursor reference's ✅ row, i.e. curated <strong>full parity</strong> on those five columns. This is
-<strong>not</strong> a verified parity claim: the three primitives outside the matrix (folder hierarchy,
-instruction file, agents) are still <code>❓</code>, and none of the five curated cells has been confirmed by
-an install test. Re-derive a verified parity comparison against
-<code>g-skl-platform-cursor/PLATFORM_SPEC.md</code> after <code>@g-platform-scan-docs astrbot</code> runs.</p>
-<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
+<h1 id="skills">Skills<a class="headerlink" href="#skills" title="Permanent link">&para;</a></h1>
+<p>A <strong>skill</strong> (<code>SKILL.md</code>) is the actual instruction package behind a <a href="../commands/">command</a> —
+commands themselves are thin dispatchers onto a skill. A skill loads one of two ways: because a
+command invoked it by name, or because your agent's own judgment matched its description against
+what you asked for, without you ever typing a slash command at all. Either path runs the same
+instructions.</p>
+<p><strong>This page is the narrative layer.</strong> For the exhaustive, generated list of every skill this
+repo ships — full descriptions and category groupings — see the
+<a href="../reference/crash/skills/">Skills reference</a>. This page is about what skills <em>are</em> and how
+they get invoked; that page is the inventory.</p>
+<h2 id="why-skills-exist-as-a-separate-layer-from-commands">Why skills exist as a separate layer from commands<a class="headerlink" href="#why-skills-exist-as-a-separate-layer-from-commands" title="Permanent link">&para;</a></h2>
+<p>A command gives you a short name to type. A skill is where the actual behavior lives —
+instructions, guardrails, and (for many skills) the specific sequence of steps an agent follows
+to do the work correctly and consistently, every time, instead of improvising a slightly
+different approach each session. Splitting the two apart means:</p>
 <ul>
-<li><strong>Type</strong>: curated ✅ supported; specific mechanism ❓ untested</li>
-<li><strong>Config file</strong>: unknown</li>
-<li><strong>Events available</strong>: unknown</li>
-<li><strong>Event payload format</strong>: unknown</li>
-<li><strong>gald3r hook files</strong>: portability of <code>g-hk-*.py</code> is unverified</li>
+<li>The same skill can be reached two ways — by name (<code>/g-status</code>) or by relevance (you just
+  describe what you want and the right skill's description matches).</li>
+<li>A skill can be reused across multiple entry points without duplicating its instructions.</li>
+<li>You never hand-edit a skill's local copy in your project directly — behavior changes land
+  upstream and arrive on your next platform install or update, so a fix or improvement reaches
+  every project running that skill, not just the one you happened to be in when you noticed it.</li>
 </ul>
-<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<h2 id="skill-categories-worth-knowing">Skill categories worth knowing<a class="headerlink" href="#skill-categories-worth-knowing" title="Permanent link">&para;</a></h2>
+<p>Skills cover a wide range of ground — task/bug management, code review, security scanning,
+release management, cross-project coordination, marketing, vault/knowledge management, platform
+integration for each supported AI IDE, and more. A few groups you'll reach for early:</p>
 <ul>
-<li>None recorded — no live scan has run. Capture atypical behaviors after the first verified scan.</li>
+<li><strong>Task &amp; bug ownership</strong> — <code>g-skl-tasks</code> and <code>g-skl-bugs</code> are the single source of truth for
+  everything task- and bug-related: index files, individual records, status transitions, sync
+  validation.</li>
+<li><strong>Review &amp; quality</strong> — <code>g-skl-code-review</code>, <code>g-skl-security-scan</code>, and <code>g-skl-verify-ladder</code>
+  cover code review, static-analysis-style vulnerability scanning, and configurable multi-level
+  completion gates.</li>
+<li><strong>Coordination</strong> — the <code>g-skl-wpac-*</code> family and <code>g-skl-workspace</code> handle everything about
+  talking to, or working alongside, other gald3r projects.</li>
+<li><strong>Vault &amp; research</strong> — <code>g-skl-vault</code>, <code>g-skl-recon-*</code>, and <code>g-skl-crawl</code> build and query a
+  file-first knowledge base from docs, repos, and web pages you feed it.</li>
+<li><strong>Platform integration</strong> — one <code>g-skl-platform-*</code> skill per supported AI IDE (Cursor, Claude
+  Code, Copilot, Codex, and the rest of the roster), each documenting exactly how that platform's
+  own extension points map onto gald3r.</li>
 </ul>
-<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Capability cells (Hooks/Rules/Skills/Commands/MCP) are now <strong>curated</strong> to match
-the platform capability matrix. Do not assume any <code>.claude/</code> reuse, hook, rule,
-  skill, command, or MCP wiring <strong>mechanism</strong> works on AstrBot until a live docs crawl / install
-  test verifies it — curated only means "assessed as supported," not "implementation confirmed."</li>
-<li>Run <code>@g-platform-scan-docs astrbot</code> (crawl <code>https://astrbot.app</code>) then <code>@g-platform-check astrbot</code>.</li>
-</ul>
-<hr />
-<h2 id="capability-summary">Capability Summary<a class="headerlink" href="#capability-summary" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Hooks</th>
-<th>Rules</th>
-<th>Skills</th>
-<th>Commands</th>
-<th>MCP</th>
-<th>Docs Fresh</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-<td>❓</td>
-</tr>
-</tbody>
-</table>
-<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
-<p><strong>Provenance :</strong> the five capability cells above are <strong>curated</strong> (human-assessed, sourced
-from <code>platform_matrix_data.json</code> / the platform capability matrix) — they are <strong>not</strong>
-live-crawl-verified. Docs Fresh stays <code>❓</code> because <code>last_doc_scan: never</code>.</p>
-<p>Overall platform <code>status: ❓</code> (crawl-untested) — capability cells are <strong>curated ✅ across the
-board</strong> (reconciliation) but <strong>not yet confirmed</strong> by a live docs crawl or install test.
-This is the honest state: curated, not verified.</p>
-<hr />
-<h2 id="verification-evidence">Verification Evidence<a class="headerlink" href="#verification-evidence" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Capability</th>
-<th>How verified</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Hooks / Rules / Skills / Commands / MCP</td>
-<td><strong>Curated, not crawled.</strong> Sourced from <code>platform_matrix_data.json</code> (human-assessed) / the platform capability matrix; reconciled into this spec.</td>
-</tr>
-<tr>
-<td>Folder hierarchy / AI instruction file / Agents</td>
-<td><strong>Not yet verified</strong> — no curated or crawled data exists for these three primitives.</td>
-</tr>
-<tr>
-<td>(all)</td>
-<td>Run <code>@g-platform-scan-docs astrbot</code> to replace curated cells with live-crawl-verified ones.</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<p><em>Reference page — canonical source: <code>g-skl-platform-astrbot/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+<h2 id="full-inventory">Full inventory<a class="headerlink" href="#full-inventory" title="Permanent link">&para;</a></h2>
+<p>The <a href="../reference/crash/skills/">Skills reference</a> lists every shipped skill, grouped by
+category, with its full description. Use that page as your search target; use this one to get
+oriented first.</p>
 
 
 
 
 
 
-
-  
-  
 
 
 
@@ -1887,10 +1763,10 @@ This is the honest state: curated, not verified.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
