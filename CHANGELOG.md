@@ -24,6 +24,38 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.28] - 2026-08-16
+
+**The resilience build.** The loop now survives its own worst moments — and
+leaves a complete forensic trail when anything goes wrong.
+
+- **One stuck task can never crash a run again.** The crash class where a
+  requeued work item could take down the whole loop mid-run is fixed at three
+  layers: the root ordering bug, graceful refusal instead of failure, and a
+  recovery net around the scheduler itself.
+- **Budget exhaustion finishes what it started.** When the work budget runs
+  out, in-flight items complete, merge, and get reviewed before the run ends —
+  nothing is abandoned half-done, and never-started items report as exactly
+  that (one summary line, not a wall of false failures).
+- **Blocked work stays blocked.** The work picker now honors every dependency
+  mechanism (blocked-by, unmet dependencies, gate markers) through one shared
+  rule — a blocked item can no longer burn a full agent turn.
+- **Forensic replay.** New: `gald3r autopilot replay RUN_ID` reconstructs any
+  past run entirely from its durable records — per-lane timelines, what showed
+  life on which channel, and flags for anything the records cannot
+  substantiate. Debugging a run is now one command, not archaeology.
+- **Large playbooks can't be silently truncated.** Oversized prompt assets are
+  delivered as file references (`--out` on `prompt get`, automatic in the MCP
+  tool) so an agent always reads the whole document.
+- **Issue triage foundation.** A deterministic classifier for inbound GitHub
+  issues with injection screening built in: hostile content quarantines,
+  feature requests route to a human, issue text is always data — never
+  instructions.
+
+To verify a download: each release asset ships with a SHA-256 checksum file;
+compare with `certutil -hashfile <asset> SHA256` (Windows) or
+`shasum -a 256 <asset>` (macOS/Linux).
+
 ## [5.0.0-beta.27] - 2026-08-16
 
 **The supervision build.** This release is about one promise: when the autopilot
