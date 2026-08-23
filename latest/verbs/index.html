@@ -1964,7 +1964,11 @@ from an older binary version, both point you at it by name.</p>
 </tr>
 <tr>
 <td><code>gald3r db backfill/verify/rebuild</code></td>
-<td>Keep your local task/bug database in sync with the <code>.gald3r/</code> files — import them in, check for drift, or rebuild the files from the database.</td>
+<td>Keep your local task/bug database in sync with the <code>.gald3r/</code> files — import them in, check for drift, or rebuild the files from the database. <code>rebuild</code> covers tasks, bugs, and artifact kinds including adr/todo/idea.</td>
+</tr>
+<tr>
+<td><code>gald3r db regenerate-index</code></td>
+<td>Rebuild a slim index (<code>TASKS.md</code> / <code>BUGS.md</code> / <code>ADRS.md</code> / <code>TO-DO_LIST.md</code> / <code>IDEA_BOARD.md</code> / <code>DECISIONS.md</code> / <code>PRDS.md</code>) from <code>gald3r.db</code> (<code>--kind</code>, default all). File-walk is fallback only when that kind has zero DB rows. Also mounted as <code>gald3r adr regenerate-index</code>, <code>gald3r todo regenerate-index</code>, and <code>gald3r idea regenerate-index</code>.</td>
 </tr>
 <tr>
 <td><code>gald3r logs</code></td>
@@ -2032,7 +2036,7 @@ from an older binary version, both point you at it by name.</p>
 </tr>
 <tr>
 <td><code>gald3r medic</code></td>
-<td>Diagnose and repair problems in your project's gald3r setup — broken links, stale indexes, drifted files — fixing what's safe to fix automatically.</td>
+<td>Diagnose and repair problems in your project's gald3r setup — broken links, stale indexes, drifted files — fixing what's safe to fix automatically. <code>medic heal --heal board-ingest-drift</code> WARNs on files-without-rows and fat indexes; diagnose-only even with <code>--apply</code> (no silent layout-migrate, BUG-947).</td>
 </tr>
 </tbody>
 </table>

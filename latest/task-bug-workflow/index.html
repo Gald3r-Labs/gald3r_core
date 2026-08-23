@@ -1891,9 +1891,16 @@ hand-editing Markdown), <code>gald3r db backfill</code> imports the files into i
   Artifact records: 3 valid, 0 normalized, 0 skipped.
 </code></pre>
 <p>Other database-sync verbs:</p>
-<pre><code>gald3r db verify     # report drift between the database and the .gald3r/ files
-gald3r db rebuild     # regenerate the .gald3r/ files FROM the database (opposite direction of backfill)
+<pre><code>gald3r db verify              # report drift between the DB and the .gald3r/ files
+gald3r db rebuild             # regenerate the .gald3r/ files FROM the DB (opposite direction of backfill)
+gald3r db regenerate-index    # rebuild slim indexes (TASKS.md / BUGS.md / ADRS.md / ...) from SELECT; --kind and --apply
 </code></pre>
+<p>Work clones install the compiled <code>gald3r</code> binary and talk to <code>.gald3r/gald3r.db</code>
+directly — no <code>uv</code>, no Python venv. <code>uv run gald3r</code> exists only in this source
+checkout. world_tree Postgres mapping for each board kind is specified in
+<code>gald3r_project/board/worldtreesync</code> and remains GATED while T684 / T836 /
+world_tree T1781 are blocked (the mapping does not pretend the server already
+has the kinds).</p>
 <h2 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h2>
 <h3 id="create">Create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h3>
 <pre><code>gald3r task add &quot;Title&quot; -d &quot;Description&quot; --type feature --priority medium
