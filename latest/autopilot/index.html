@@ -2275,7 +2275,9 @@ anything it can't classify as safe stays blocked for a human, by design.</p>
 <h2 id="cost-and-auth-choosing-how-you-loop">Cost and auth: choosing how you loop<a class="headerlink" href="#cost-and-auth-choosing-how-you-loop" title="Permanent link">&para;</a></h2>
 <p>The three ways to run autonomous work have different cost profiles. Pick
 deliberately -- the wrong default can burn subscription quota or API dollars
-you did not intend to spend.</p>
+you did not intend to spend. (T740, owner ruling 2026-08-11 -- see also
+<code>gald3r autopilot loop --help</code> and <code>gald3r prompt get playbook.pipeline_route</code>,
+which carry the same ladder for an agent to load at routing time.)</p>
 <table>
 <thead>
 <tr>
@@ -2287,30 +2289,35 @@ you did not intend to spend.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>/g-go</code>, <code>/g-go-go</code>, <code>/g-go-code-swarm</code>, <code>/g-go-bugs-swarm</code>, <code>/g-go-review-swarm</code> (in-session pipelines)</td>
+<td><code>/g-go</code>, <code>/g-go-code(-swarm)</code>, <code>/g-go-bugs-swarm</code>, <code>/g-go-review(-swarm)</code> (in-session engine pipelines)</td>
 <td>Your IDE session's own login (Cursor/Claude subscription OAuth)</td>
-<td><strong>Cheapest.</strong> Runs inside the session you already pay for; subagents ride the IDE's included tooling. No spawned processes, no extra auth.</td>
-<td>You are at the keyboard with a session open and want a loop now. <strong>This is the right default for interactive "loop it" requests.</strong></td>
+<td><strong>Cheapest.</strong> Runs inside the session you already pay for; subagents ride the IDE's included subagent tool (<code>SendMessage</code>/<code>Handoff</code>). No spawned CLI-agent processes, no extra auth.</td>
+<td>You are at the keyboard with a session open and want a bounded implement/review pass now.</td>
 </tr>
 <tr>
-<td><code>gald3r autopilot loop</code> with CLI providers (<code>--provider cursor-agent</code>, <code>claude</code>)</td>
+<td><code>/g-go-go</code>, or <code>gald3r autopilot loop</code>/<code>run</code> invoked directly</td>
 <td>The same subscription logins, via spawned headless CLI sessions</td>
-<td><strong>Middle.</strong> No API keys needed, but every coordinator/implementer bucket is an additional headless session drawing on your subscription quota in parallel -- quota burns faster than a single interactive session.</td>
-<td>Detached, overnight, or scheduled runs where no interactive session exists to host the work.</td>
+<td><strong>Middle.</strong> <code>/g-go-go</code> invokes this SAME deterministic outer loop (T630) -- every coordinator/implementer/reviewer role is an additional headless <code>claude</code>/<code>cursor-agent</code> session drawing on your subscription quota in parallel, whichever surface dispatched it. <code>/g-go-go</code>, invoked from the live session you're already in, is still the right default for interactive "loop it"/"put it on autopilot" phrasing -- attended, judgment-loaded, stoppable with <code>autopilot stop</code>. Invoking the bare verb directly (bypassing <code>/g-go-go</code>) is reserved for detached/scheduled/headless contexts where no interactive session exists to host the work, or when the user names the verb explicitly.</td>
+<td>Continuous multi-iteration autopilot work, from either surface.</td>
 </tr>
 <tr>
 <td><code>gald3r autopilot loop</code> with registry providers (<code>anthropic</code>, <code>openai</code>, <code>gemini</code>) or <code>gald3r run</code></td>
 <td>Direct API keys (<code>providers.yaml</code> / env)</td>
-<td><strong>Most expensive.</strong> Real per-token API billing on every turn.</td>
+<td><strong>Most expensive.</strong> Real per-token API billing on every turn, regardless of which surface dispatched it.</td>
 <td>You have API budget and want provider control, model pinning, or providers your IDE does not offer. <code>local-compat</code> (Ollama/LM Studio) is the zero-dollar exception in this tier.</td>
 </tr>
 </tbody>
 </table>
 <p>Two facts worth knowing:</p>
 <ul>
-<li>The in-session <code>/g-go*</code> pipelines never invoke <code>gald3r autopilot</code> underneath
-  -- they are self-contained playbooks your session executes itself. Asking an
-  interactive session to "loop" should route there, not to the verb.</li>
+<li>The in-session <code>/g-go</code>, <code>/g-go-code(-swarm)</code>, <code>/g-go-bugs-swarm</code>, and
+  <code>/g-go-review(-swarm)</code> pipelines never invoke <code>gald3r autopilot</code> underneath
+  -- they are engine-backed playbooks your session executes itself via its own
+  subagent tool. <code>/g-go-go</code> is the one exception: its own command doc names
+  <code>gald3r autopilot loop</code> as exactly what it runs, so it carries the middle
+  tier's per-role CLI-session cost even when launched interactively -- it
+  remains the right interactive answer to "loop it" precisely because it's
+  attended, not because it's free.</li>
 <li>Local models (<code>local-compat</code> via Ollama or LM Studio) cost nothing per token
   in any tier and can serve implementer turns while a subscription CLI
   coordinates -- the cheapest fully-autonomous configuration on a machine with

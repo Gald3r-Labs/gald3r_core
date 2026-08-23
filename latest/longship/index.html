@@ -1812,6 +1812,10 @@ a mockup wired to fake data.</p>
 <td><code>start</code> / <code>stop</code> / <code>status</code> / <code>ask</code> / <code>inquire</code> / <code>messages</code> -- the Valkyrie world_tree connector (see <a href="../coordination/"><code>coordination.md</code></a>)</td>
 </tr>
 <tr>
+<td><code>dashboard</code></td>
+<td>Live per-lane terminal dashboard over a local <code>gald3r autopilot loop</code> run's durable events ledger -- the free-tier visualizer, no world_tree required</td>
+</tr>
+<tr>
 <td><code>schema</code></td>
 <td>Emit the configuration document's JSON Schema</td>
 </tr>
@@ -1839,6 +1843,21 @@ need one unless you pass <code>-skip-all</code>.</p>
 <p><strong><code>valk</code></strong> mirrors the <code>gald3r valk</code> surface for Longship's own process -- useful when you want
 Longship's agent runs visible to the same world_tree coordination layer your other gald3r
 tooling uses.</p>
+<p><strong><code>dashboard</code></strong> is the free-tier "swarm observability" visualizer (owner ruling 2026-08-07: "a
+swarm must never run dark for hours"): it renders a <code>gald3r autopilot loop</code> run as a per-lane
+terminal dashboard read entirely from that run's local, durable events ledger (JSONL under
+<code>.gald3r/logs/</code>) -- no world_tree connection or login needed.</p>
+<pre><code>gald3r_longship dashboard                    # active/last-known run, one static snapshot
+gald3r_longship dashboard -follow            # keep redrawing every 2s (Ctrl+C to stop)
+gald3r_longship dashboard 20260822T153000     # replay a specific run by stamp/prefix
+gald3r_longship dashboard /path/to/other.jsonl  # replay ANY ledger file, from anywhere
+gald3r_longship dashboard -json               # machine-readable snapshot instead of text
+</code></pre>
+<p>Each lane's block shows its status (running/completed/failed/killed/planned/pending), the last
+ledger event, and -- when the run has emitted <code>liveness_snapshot</code> events for it -- how long ago
+each of the four liveness channels (db/worktree/events/stdout) last showed activity, plus the
+liveness watchdog's own countdown. A run with no <code>run_end</code> line yet renders "IN PROGRESS", never
+an error -- reading a still-writing ledger mid-flight is the expected, common case.</p>
 <h2 id="how-longship-relates-to-the-gald3r-cli">How Longship relates to the gald3r CLI<a class="headerlink" href="#how-longship-relates-to-the-gald3r-cli" title="Permanent link">&para;</a></h2>
 <p><code>gald3r chat</code>, <code>gald3r run</code>, and <code>gald3r acp</code> still exist in the <code>gald3r</code> CLI, but they are
 explicitly labeled <strong>reference executors</strong>: a minimal, headless fallback for scripting or for

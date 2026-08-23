@@ -1781,9 +1781,15 @@ is required — gald3r's <code>AGENTS.md</code> / <code>CLAUDE.md</code> are fir
 <ul>
 <li><strong>Lifecycle hooks</strong> configured in <code>.augment/settings.json</code>. Events: <strong>PreToolUse</strong> (blocking),
   <strong>PostToolUse</strong>, <strong>Stop</strong>, <strong>SessionStart</strong>, <strong>SessionEnd</strong>. Event data arrives via <strong>stdin JSON</strong>;
-  results via exit codes / output streams. Commands may be <code>.sh</code> / <strong><code>.ps1</code></strong> / <code>.cmd</code> / <code>.bat</code> —
-  any executable command is accepted, so gald3r <code>g-hk-*.py</code> hooks wire <strong>natively</strong> via <code>python &lt;path&gt;</code>
-  (SessionStart context injection, PreToolUse <code>.gald3r/</code> guards, pre-commit gates, etc.).</li>
+  results via exit codes / output streams. A hook's <code>command</code> MUST reference a script <strong>file</strong>
+  ending in <code>.sh</code> / <code>.ps1</code> / <code>.cmd</code> / <code>.bat</code>, dispatched by extension (<code>.sh</code> execs directly via its
+  own shebang on Unix and requires <code>chmod +x</code>; <code>.ps1</code>/<code>.bat</code>/<code>.cmd</code> dispatch to
+  <code>powershell.exe</code>/<code>cmd.exe</code> on Windows) — <strong>not</strong> an arbitrary command string. The prior "any
+  executable command is accepted, <code>python &lt;path&gt;</code>" wording here was wrong (re-verified 2026-08-23
+  directly against the Script Requirements section below). C-NO-PS1 forbids shipping <code>.ps1</code> in
+  this framework, so gald3r <code>g-hk-*.py</code> hooks wire via a
+  generated <code>.sh</code> wrapper (POSIX default) with a <code>.cmd</code> companion for Windows — see "Hook System"
+  below.</li>
 <li>Source: https://docs.augmentcode.com/cli/hooks</li>
 </ul>
 <h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
@@ -1828,8 +1834,17 @@ tree (or a Claude-Code-format plugin bundle).</p>
 <li><strong>Config file</strong>: <code>.augment/settings.json</code></li>
 <li><strong>Events available</strong>: PreToolUse, PostToolUse, Stop, SessionStart, SessionEnd</li>
 <li><strong>Event payload format</strong>: JSON via stdin; result via exit codes / output streams</li>
-<li><strong>Command extensions</strong>: <code>.sh</code>, <code>.ps1</code>, <code>.cmd</code>, <code>.bat</code> (PowerShell supported)</li>
-<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> wire natively via <code>python &lt;path&gt;</code> across the events above</li>
+<li><strong>Command extensions</strong>: <code>.sh</code>, <code>.ps1</code>, <code>.cmd</code>, <code>.bat</code> — the "Script Requirements" section of
+  Augment's own docs is explicit that a hook's <code>command</code> must be a script <strong>file</strong> ending in one
+  of these four, dispatched by extension; there is no path that runs an arbitrary command string.
+  A bare <code>python &lt;path&gt;.py</code> command matched none of them and was plausibly ignored or rejected
+  outright.</li>
+<li><strong>gald3r hook files</strong>: C-NO-PS1 rules out <code>.ps1</code>, so <code>g-hk-*.py</code> hooks wire via a generated
+  <code>.sh</code> wrapper (POSIX default <code>command</code> target, shebang, <code>chmod +x</code> applied at install time) with
+  a <code>.cmd</code> companion Windows is retargeted to at install time (<code>cmd.exe</code> dispatch) — both wrappers
+  only ever shell out to the real, unchanged <code>g-hk-*.py</code> entrypoint. See
+  <code>gald3r_platforms/generate/hooks_thin.go</code>'s <code>renderAugmentSettingsJSON</code> and
+  <code>gald3r_platforms/setup/stamp.go</code>'s <code>stampAugmentHookScripts</code>.</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1840,7 +1855,9 @@ tree (or a Claude-Code-format plugin bundle).</p>
 <h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Ship gald3r's <code>.claude/</code>-format tree (commands/skills/agents/hooks/rules) — Auggie discovers it.</li>
-<li>Hooks fire natively (<code>.ps1</code> supported); no need to degrade session-start/pre-commit to manual.</li>
+<li>Hooks fire via the generated <code>.sh</code>/<code>.cmd</code> wrapper scripts — never a raw <code>python
+  &lt;path&gt;.py</code> command and never a shipped <code>.ps1</code> file (C-NO-PS1); no need to degrade
+  session-start/pre-commit to manual.</li>
 <li>Re-verify on the next <code>@g-platform-scan-docs augment</code> (crawl_max_age_days: 14).</li>
 </ul>
 <hr />
