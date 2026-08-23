@@ -1334,6 +1334,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#sharing-tiers-scope-share-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sharing tiers — scope, share, publish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gald3r-learn-where-the-facts-come-from" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1357,6 +1368,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="The vault: a full knowledge base">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sharing-settings-gald3r-vault-share" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sharing settings — gald3r vault share
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skip-if-unchanged-gald3r-vault-changetrack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skip-if-unchanged — gald3r vault changetrack
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1650,6 +1689,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#sharing-tiers-scope-share-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sharing tiers — scope, share, publish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gald3r-learn-where-the-facts-come-from" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1673,6 +1723,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="The vault: a full knowledge base">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sharing-settings-gald3r-vault-share" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sharing settings — gald3r vault share
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skip-if-unchanged-gald3r-vault-changetrack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skip-if-unchanged — gald3r vault changetrack
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1760,6 +1838,24 @@ gald3r memory migrate-learned-facts                     # import .gald3r/learned
 <p>Records are never edited in place once superseded — <code>supersede</code> keeps the old record and
 chains a new one, preserving the history of what changed and when, the same audit-trail
 principle tasks and bugs follow.</p>
+<h3 id="sharing-tiers-scope-share-publish">Sharing tiers — <code>scope</code>, <code>share</code>, <code>publish</code><a class="headerlink" href="#sharing-tiers-scope-share-publish" title="Permanent link">&para;</a></h3>
+<p>"The scope decides who else's sessions see it once shared infrastructure is connected" (above)
+— these three verbs are that opt-in mechanism's LOCAL half. Sharing is off by default: a record
+stays exactly where its <code>--scope</code> puts it until you explicitly authorize it to go further.</p>
+<pre><code>gald3r memory scope                # show the sharing-tier model (private-always/team/company/friend/global)
+gald3r memory scope &lt;record-id&gt;     # show one record's own scope + local opt-in status
+gald3r memory share &lt;record-id&gt; --to team --by &quot;you&quot; --reason &quot;team should know this&quot;
+gald3r memory share &lt;record-id&gt; --client-opt-in --by &quot;you&quot; --reason &quot;contract sync&quot;   # for scope=client records
+gald3r memory publish --to company  # dry-run preview: what would sync out right now, and why others are refused
+</code></pre>
+<p>None of these three verbs makes a network call — <code>share</code> persists your opt-in decision to a
+small local ledger (<code>.gald3r/memory/</code>) so it is ready the moment memory sync actually connects;
+<code>publish</code> previews what the sync gating layer (redaction, scope-promotion authorization,
+client-scope exclusion) would allow out today, without transmitting anything. Real cross-machine
+sync (team/company scopes) ships once world_tree is connected — see
+<code>docs/design/memory-subsystem/P7_sync_wire_shape.md</code>. The <strong>global</strong> bracket is a separate
+system entirely: the gald3r-users collective library (not the open internet — see
+<code>docs/design/collective-brain/</code>), not these scoped memory records.</p>
 <h3 id="gald3r-learn-where-the-facts-come-from"><code>gald3r learn</code> — where the facts come from<a class="headerlink" href="#gald3r-learn-where-the-facts-come-from" title="Permanent link">&para;</a></h3>
 <pre><code>gald3r learn
 </code></pre>
@@ -1785,6 +1881,44 @@ mapped through skills, not yet a single unified CLI ingest surface): a GitHub re
 (<code>recon-repo</code>), a docs URL with periodic staleness re-check (<code>recon-docs</code>), a one-time URL
 snapshot (<code>recon-url</code>), a local file — PDF/DOCX/XLSX/etc. (<code>recon-file</code>), and a YouTube
 transcript (<code>recon-yt</code>).</p>
+<h3 id="sharing-settings-gald3r-vault-share">Sharing settings — <code>gald3r vault share</code><a class="headerlink" href="#sharing-settings-gald3r-vault-share" title="Permanent link">&para;</a></h3>
+<p>The <strong>Collective Brain</strong> (<code>docs/design/collective-brain/</code>) turns one user's vault
+analysis (a GitHub repo, a video, an article) into an instant hit for every other user
+in the same sharing bracket. Every analysis and every vault note is <strong>private by
+default</strong> — nothing leaves this machine until you say otherwise:</p>
+<pre><code>gald3r vault share show                                        # current settings (works offline)
+gald3r vault share set --default team                          # new analyses default to `team` instead of `private`
+gald3r vault share set --add-private-path 'clients/**' --add-private-type client
+                                                                 # these never share, no matter what --default says
+gald3r vault share check clients/acme/notes.md --to team --type client
+                                                                 # dry-run: would this be refused, and why?
+</code></pre>
+<p>Brackets are <code>private | team | company | global</code> (<code>global</code> is the gald3r-users collective
+library, <strong>not</strong> the open internet). A <code>friend</code> bracket does not exist yet (T894). A path or
+note type in <code>private_always</code> is refused by the share path with a NAMED reason
+(<code>private_always_path</code> / <code>private_always_type</code>) — never silently dropped — regardless of the
+default bracket. <code>auto_publish</code> stays <code>false</code>; there is no flag to turn it on yet (a later,
+separately gated release). None of these three verbs makes a network call — settings persist
+to <code>.gald3r/config/COLLECTIVE_BRAIN_SHARING.md</code>. The actual publish step (sending an opted-in
+analysis to world_tree) is a separate, not-yet-shipped verb group that reads these settings as
+its own gate — see <code>docs/design/collective-brain/01_tiers.md</code>.</p>
+<h3 id="skip-if-unchanged-gald3r-vault-changetrack">Skip-if-unchanged — <code>gald3r vault changetrack</code><a class="headerlink" href="#skip-if-unchanged-gald3r-vault-changetrack" title="Permanent link">&para;</a></h3>
+<p>Before spending on a fresh analysis (an LLM call, a repo clone, a transcript fetch), check
+whether the source actually changed since the last one (<code>docs/design/collective-brain/
+03_change_tracked_reanalysis.md</code>):</p>
+<pre><code>gald3r vault changetrack https://github.com/acme/widget          # default-branch request: cheap-probes live HEAD
+gald3r vault changetrack https://github.com/acme/widget --sha abc123def   # pin an exact commit instead
+gald3r vault changetrack https://youtube.com/watch?v=XXXX --duration-or-hash 754  # video needs this — T1781 rejects it otherwise
+gald3r vault changetrack https://example.com/post --refresh       # force re-analysis (always free — D044)
+</code></pre>
+<p><code>decision</code> is <code>skipped_unchanged</code> (identity confirmed equal — logged to the vault run log),
+<code>analyze</code> (new/changed/unresolvable identity, or <code>--refresh</code>), or <code>use_stale_accepted</code>
+(<code>--stale-ok</code> opted into reusing a same-locator cached copy known to differ). A default-branch
+repo request whose cached SHA differs from the live HEAD is reported explicitly — "library has
+<code>&lt;old_key&gt;</code> from <code>&lt;analyzed_at&gt;</code>; HEAD is <code>&lt;new_key&gt;</code>" — never silently substituted. Once an
+analysis actually runs, persist its identity with <code>gald3r vault ingest --identity-kind repo
+--repo-url ... --commit-sha ...</code> (or the <code>video</code>/<code>article</code> equivalents) so the next
+<code>changetrack</code> call has something to compare against.</p>
 <h2 id="which-one-should-i-use">Which one should I use?<a class="headerlink" href="#which-one-should-i-use" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
