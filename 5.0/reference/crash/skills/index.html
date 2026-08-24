@@ -2004,6 +2004,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-skl-ghostwrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-skl-ghostwrite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#g-skl-git-commit" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2349,6 +2360,17 @@
     <span class="md-ellipsis">
       
         g-skl-platform-deepcode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-skl-platform-gald3r" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-skl-platform-gald3r
       
     </span>
   </a>
@@ -3130,10 +3152,10 @@
 
 <h1 id="crash-reference-skills">CRASH Reference: Skills<a class="headerlink" href="#crash-reference-skills" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>src/gald3r_core/platform/pipeline/neutral_source/skills/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>uv run gald3r platform crash-reference --apply</code>.</p>
+<p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>neutral_source/skills/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>A skill (<code>SKILL.md</code>) is the actual instruction package a command hands off to -- commands themselves are thin dispatchers. A skill loads either because a command invoked it, or because your agent's own judgment matched its frontmatter <code>description:</code> field without you typing a slash command at all. You never hand-edit a skill's local copy; behavior changes land upstream in <code>neutral_source/</code> and arrive on your next <code>platform install</code>/<code>update</code>.</p>
-<p><strong>129 skills total.</strong></p>
+<p><strong>131 skills total.</strong></p>
 <h2 id="browse-by-category">Browse by category<a class="headerlink" href="#browse-by-category" title="Permanent link">&para;</a></h2>
 <h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
 <p><em>Creating, updating, and tracking work in .gald3r/tasks/.</em></p>
@@ -3195,7 +3217,7 @@
 <p><em>Cross-project topology, inbox triage, broadcasts, and Workspace-Control.</em></p>
 <ul>
 <li><a href="#g-skl-drift"><code>g-skl-drift</code></a> -- Compute a deterministic, code-computed drift score per task-claim territory and per dev from local .gald3r state, and emit it as a local report or a g-skl-json-output-compatible JSON payload.</li>
-<li><a href="#g-skl-linking"><code>g-skl-linking</code></a> -- Unified linking file-mirror. Pulls the server-owned world_tree linking registry (parent/child/sibling edges + project_type/skills, keyed by project UUID</li>
+<li><a href="#g-skl-linking"><code>g-skl-linking</code></a> -- Unified linking file-mirror (D7 / T1610). Pulls the server-owned world_tree linking registry (parent/child/sibling edges + project_type/skills, keyed by project UUID</li>
 <li><a href="#g-skl-territory"><code>g-skl-territory</code></a> -- Lease, renew, release, and check status of subsystem/path territories with TTLs</li>
 <li><a href="#g-skl-valk"><code>g-skl-valk</code></a> -- Drive the resident Valkyrie world_tree connector (<code>gald3r valk</code>) directly</li>
 <li><a href="#g-skl-workspace"><code>g-skl-workspace</code></a> -- Workspace-Control Mode skill.</li>
@@ -3271,7 +3293,7 @@
 <li><a href="#g-skl-platform-replit"><code>g-skl-platform-replit</code></a> -- Authoritative reference for Replit Agent (cloud IDE) customization in gald3r projects.</li>
 <li><a href="#g-skl-platform-roo"><code>g-skl-platform-roo</code></a> -- Authoritative reference for Roo Code (VS Code extension; formerly Roo Cline) customization in gald3r projects. Covers .roo/rules/, custom modes (.roomodes), slash commands, Agent Skills (.roo/skills + .agents/skills), MCP, AGENTS.md, and gald3r install verification. NOTE</li>
 <li><a href="#g-skl-platform-subq"><code>g-skl-platform-subq</code></a> -- Authoritative reference for SubQ (Subquadratic Inc.) and "SubQ Code" in gald3r projects. SubQ is a long-context LLM (OpenAI-compatible Chat Completions API); SubQ Code is a PLUGIN / long-context layer that plugs into Claude Code, Codex, and Cursor</li>
-<li><a href="#g-skl-platform-void"><code>g-skl-platform-void</code></a> -- Authoritative reference for Void (VS Code fork) customization in gald3r projects. Covers curated (human-assessed, not yet live-crawled) capability signals</li>
+<li><a href="#g-skl-platform-void"><code>g-skl-platform-void</code></a> -- Authoritative reference for Void (VS Code fork) customization in gald3r projects. Covers curated (BUG-137, human-assessed, not yet live-crawled) capability signals</li>
 <li><a href="#g-skl-platform-warp"><code>g-skl-platform-warp</code></a> -- Authoritative reference for Warp (AI terminal + Oz agent platform) customization in gald3r projects.</li>
 <li><a href="#g-skl-platform-windsurf"><code>g-skl-platform-windsurf</code></a> -- Authoritative reference for Devin Desktop (formerly Windsurf</li>
 <li><a href="#g-skl-platform-zcode"><code>g-skl-platform-zcode</code></a> -- Authoritative reference for ZCode (Z.ai / Zhipu, GLM-5.2 Agentic Development Environment) customization in gald3r projects.</li>
@@ -3282,6 +3304,7 @@
 <ul>
 <li><a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a> -- ComfyUI V5 agent integration for local GPU image/video generation. Install, launch, manage workflows, and run AnimateDiff/SDXL pipelines via the ComfyUI REST API. Local GPU path</li>
 <li><a href="#g-skl-design"><code>g-skl-design</code></a> -- UI/UX design engineering</li>
+<li><a href="#g-skl-ghostwrite"><code>g-skl-ghostwrite</code></a> -- Rewrite supplied text so it reads like a person wrote it, not a model.</li>
 <li><a href="#g-skl-html-output"><code>g-skl-html-output</code></a> -- Render human-facing reports (status, review, backlog) as themed HTML using docs/templates/ + docs/themes/.</li>
 <li><a href="#g-skl-json-output"><code>g-skl-json-output</code></a> -- Emit gald3r command output (status, review, backlog) as structured JSON for scripting, CI gates, dashboards, and agent-to-agent handoff.</li>
 <li><a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a> -- Create and edit gald3r HTML themes against docs/themes/theme-schema.json.</li>
@@ -3299,17 +3322,18 @@
 <ul>
 <li><a href="#g-skl-compress-memory"><code>g-skl-compress-memory</code></a> -- Compress the NON-gald3r sections of AGENTS.md/CLAUDE.md (and <em>memory</em>.md) to cut token overhead, while strictly preserving the install-managed gald3r SECTION ranges, code blocks, and URLs.</li>
 <li><a href="#g-skl-context-builder"><code>g-skl-context-builder</code></a> -- Dynamic context assembly from live .gald3r/ state.</li>
-<li><a href="#g-skl-graphify"><code>g-skl-graphify</code></a> -- Build and query a code graph representation of the codebase for 71x fewer tokens on architecture questions.</li>
+<li><a href="#g-skl-graphify"><code>g-skl-graphify</code></a> -- NOT YET IMPLEMENTED (BUG-898, T837 Phase A)</li>
 <li><a href="#g-skl-knowledge-refresh"><code>g-skl-knowledge-refresh</code></a> -- Audit vault freshness and structure.</li>
 <li><a href="#g-skl-learn"><code>g-skl-learn</code></a> -- File-only continual learning</li>
 <li><a href="#g-skl-memory"><code>g-skl-memory</code></a> -- Capture structured insights, session summaries, and search cross-session agent memory via example_app MCP tools.</li>
-<li><a href="#g-skl-muninn"><code>g-skl-muninn</code></a> -- gald3r_muninn MCP</li>
+<li><a href="#g-skl-muninn"><code>g-skl-muninn</code></a> -- NOT YET IMPLEMENTED (BUG-898, T837 Phase A)</li>
 <li><a href="#g-skl-vault"><code>g-skl-vault</code></a> -- Own and manage the file-first vault plus repo mirror metadata.</li>
 </ul>
 <h3 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h3>
 <p><em>No subsystem group declared, or a declared group outside the canonical PRODUCT_SYSTEMS.md registry -- see each item's own card for which case applies.</em></p>
 <ul>
 <li><a href="#g-skl-auto-triage"><code>g-skl-auto-triage</code></a> -- Triage non-code defects (spec_defect, policy_incongruity, design_gap): assess risk, auto-fix bounded safe issues, and log the rest as tracked bugs.</li>
+<li><a href="#g-skl-platform-gald3r"><code>g-skl-platform-gald3r</code></a> -- Authoritative reference for gald3r ITSELF as a platform</li>
 <li><a href="#g-skl-plugins"><code>g-skl-plugins</code></a> -- Authoritative reference for the gald3r plugin system</li>
 </ul>
 <h2 id="full-reference">Full reference<a class="headerlink" href="#full-reference" title="Permanent link">&para;</a></h2>
@@ -3326,7 +3350,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-bugs"><code>g-skl-bugs</code></a>, <a href="#g-skl-code-review"><code>g-skl-code-review</code></a>, <a href="#g-skl-qa"><code>g-skl-qa</code></a>, <a href="#g-skl-review"><code>g-skl-review</code></a>, <a href="#g-skl-security-scan"><code>g-skl-security-scan</code></a>, <a href="#g-skl-swot-review"><code>g-skl-swot-review</code></a>, <a href="#g-skl-test"><code>g-skl-test</code></a>, <a href="#g-skl-verify-ladder"><code>g-skl-verify-ladder</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-api-doc-gen/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-api-doc-gen/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-auto-triage"><code>g-skl-auto-triage</code><a class="headerlink" href="#g-skl-auto-triage" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-auto-triage</code><br />
@@ -3340,8 +3364,8 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> unspecified  </p>
-<p><strong>Related:</strong> <a href="#g-skl-plugins"><code>g-skl-plugins</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-auto-triage/SKILL.md</code></p>
+<p><strong>Related:</strong> <a href="#g-skl-platform-gald3r"><code>g-skl-platform-gald3r</code></a>, <a href="#g-skl-plugins"><code>g-skl-plugins</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-auto-triage/SKILL.md</code></p>
 <blockquote>
 <p><strong>Metadata note:</strong> skills/g-skl-auto-triage/SKILL.md: missing subsystem_memberships: frontmatter</p>
 </blockquote>
@@ -3360,7 +3384,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-backlog-curate/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-backlog-curate/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-browser-use"><code>g-skl-browser-use</code><a class="headerlink" href="#g-skl-browser-use" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-browser-use</code><br />
@@ -3375,7 +3399,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a>, <a href="#g-skl-mdmp"><code>g-skl-mdmp</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-browser-use/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-browser-use/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-bugs"><code>g-skl-bugs</code><a class="headerlink" href="#g-skl-bugs" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-bugs</code><br />
@@ -3391,7 +3415,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code></a>, <a href="#g-skl-code-review"><code>g-skl-code-review</code></a>, <a href="#g-skl-qa"><code>g-skl-qa</code></a>, <a href="#g-skl-review"><code>g-skl-review</code></a>, <a href="#g-skl-security-scan"><code>g-skl-security-scan</code></a>, <a href="#g-skl-swot-review"><code>g-skl-swot-review</code></a>, <a href="#g-skl-test"><code>g-skl-test</code></a>, <a href="#g-skl-verify-ladder"><code>g-skl-verify-ladder</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-bugs/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-bugs/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-cli-claude"><code>g-skl-cli-claude</code><a class="headerlink" href="#g-skl-cli-claude" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-cli-claude</code><br />
@@ -3407,7 +3431,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a>, <a href="#g-skl-platform-astrbot"><code>g-skl-platform-astrbot</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-cli-claude/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-cli-claude/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-cli-codex"><code>g-skl-cli-codex</code><a class="headerlink" href="#g-skl-cli-codex" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-cli-codex</code><br />
@@ -3423,7 +3447,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a>, <a href="#g-skl-platform-astrbot"><code>g-skl-platform-astrbot</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-cli-codex/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-cli-codex/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-cli-copilot"><code>g-skl-cli-copilot</code><a class="headerlink" href="#g-skl-cli-copilot" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-cli-copilot</code><br />
@@ -3439,7 +3463,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a>, <a href="#g-skl-platform-astrbot"><code>g-skl-platform-astrbot</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-cli-copilot/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-cli-copilot/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-cli-cursor"><code>g-skl-cli-cursor</code><a class="headerlink" href="#g-skl-cli-cursor" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-cli-cursor</code><br />
@@ -3455,7 +3479,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a>, <a href="#g-skl-platform-astrbot"><code>g-skl-platform-astrbot</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-cli-cursor/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-cli-cursor/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-cli-jcode"><code>g-skl-cli-jcode</code><a class="headerlink" href="#g-skl-cli-jcode" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-cli-jcode</code><br />
@@ -3470,7 +3494,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a>, <a href="#g-skl-platform-astrbot"><code>g-skl-platform-astrbot</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-cli-jcode/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-cli-jcode/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-cli-opencode"><code>g-skl-cli-opencode</code><a class="headerlink" href="#g-skl-cli-opencode" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-cli-opencode</code><br />
@@ -3485,7 +3509,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a>, <a href="#g-skl-platform-astrbot"><code>g-skl-platform-astrbot</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-cli-opencode/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-cli-opencode/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-code-review"><code>g-skl-code-review</code><a class="headerlink" href="#g-skl-code-review" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-code-review</code><br />
@@ -3501,7 +3525,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code></a>, <a href="#g-skl-bugs"><code>g-skl-bugs</code></a>, <a href="#g-skl-qa"><code>g-skl-qa</code></a>, <a href="#g-skl-review"><code>g-skl-review</code></a>, <a href="#g-skl-security-scan"><code>g-skl-security-scan</code></a>, <a href="#g-skl-swot-review"><code>g-skl-swot-review</code></a>, <a href="#g-skl-test"><code>g-skl-test</code></a>, <a href="#g-skl-verify-ladder"><code>g-skl-verify-ladder</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-code-review/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-code-review/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-codename"><code>g-skl-codename</code><a class="headerlink" href="#g-skl-codename" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-codename</code><br />
@@ -3517,7 +3541,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a>, <a href="#g-skl-res-apply"><code>g-skl-res-apply</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-codename/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-codename/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-comfyui"><code>g-skl-comfyui</code><a class="headerlink" href="#g-skl-comfyui" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-comfyui</code><br />
@@ -3531,8 +3555,8 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
-<p><strong>Related:</strong> <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-comfyui/SKILL.md</code></p>
+<p><strong>Related:</strong> <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-ghostwrite"><code>g-skl-ghostwrite</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-comfyui/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-compliance"><code>g-skl-compliance</code><a class="headerlink" href="#g-skl-compliance" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-compliance</code><br />
@@ -3548,7 +3572,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-dependency-audit"><code>g-skl-dependency-audit</code></a>, <a href="#g-skl-policy"><code>g-skl-policy</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-compliance/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-compliance/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-compress-memory"><code>g-skl-compress-memory</code><a class="headerlink" href="#g-skl-compress-memory" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-compress-memory</code><br />
@@ -3564,7 +3588,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-context-builder"><code>g-skl-context-builder</code></a>, <a href="#g-skl-graphify"><code>g-skl-graphify</code></a>, <a href="#g-skl-knowledge-refresh"><code>g-skl-knowledge-refresh</code></a>, <a href="#g-skl-learn"><code>g-skl-learn</code></a>, <a href="#g-skl-memory"><code>g-skl-memory</code></a>, <a href="#g-skl-muninn"><code>g-skl-muninn</code></a>, <a href="#g-skl-vault"><code>g-skl-vault</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-compress-memory/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-compress-memory/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-computer-use"><code>g-skl-computer-use</code><a class="headerlink" href="#g-skl-computer-use" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-computer-use</code><br />
@@ -3579,7 +3603,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a>, <a href="#g-skl-mdmp"><code>g-skl-mdmp</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-computer-use/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-computer-use/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-constraints"><code>g-skl-constraints</code><a class="headerlink" href="#g-skl-constraints" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-constraints</code><br />
@@ -3595,7 +3619,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a>, <a href="#g-skl-res-apply"><code>g-skl-res-apply</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-constraints/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-constraints/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-context-builder"><code>g-skl-context-builder</code><a class="headerlink" href="#g-skl-context-builder" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-context-builder</code><br />
@@ -3610,7 +3634,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-compress-memory"><code>g-skl-compress-memory</code></a>, <a href="#g-skl-graphify"><code>g-skl-graphify</code></a>, <a href="#g-skl-knowledge-refresh"><code>g-skl-knowledge-refresh</code></a>, <a href="#g-skl-learn"><code>g-skl-learn</code></a>, <a href="#g-skl-memory"><code>g-skl-memory</code></a>, <a href="#g-skl-muninn"><code>g-skl-muninn</code></a>, <a href="#g-skl-vault"><code>g-skl-vault</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-context-builder/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-context-builder/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-crawl"><code>g-skl-crawl</code><a class="headerlink" href="#g-skl-crawl" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-crawl</code><br />
@@ -3626,7 +3650,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a>, <a href="#g-skl-res-deep"><code>g-skl-res-deep</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-crawl/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-crawl/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-cross-review"><code>g-skl-cross-review</code><a class="headerlink" href="#g-skl-cross-review" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-cross-review</code><br />
@@ -3642,7 +3666,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> unspecified  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a>, <a href="#g-skl-mdmp"><code>g-skl-mdmp</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-cross-review/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-cross-review/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-crr"><code>g-skl-crr</code><a class="headerlink" href="#g-skl-crr" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-crr</code><br />
@@ -3658,7 +3682,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a>, <a href="#g-skl-res-deep"><code>g-skl-res-deep</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-crr/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-crr/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-curator"><code>g-skl-curator</code><a class="headerlink" href="#g-skl-curator" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-curator</code><br />
@@ -3674,7 +3698,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a>, <a href="#g-skl-mdmp"><code>g-skl-mdmp</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-curator/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-curator/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-delegate"><code>g-skl-delegate</code><a class="headerlink" href="#g-skl-delegate" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-delegate</code><br />
@@ -3689,7 +3713,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a>, <a href="#g-skl-mdmp"><code>g-skl-mdmp</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-delegate/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-delegate/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-dependency-audit"><code>g-skl-dependency-audit</code><a class="headerlink" href="#g-skl-dependency-audit" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-dependency-audit</code><br />
@@ -3704,7 +3728,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-compliance"><code>g-skl-compliance</code></a>, <a href="#g-skl-policy"><code>g-skl-policy</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-dependency-audit/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-dependency-audit/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-dependency-graph"><code>g-skl-dependency-graph</code><a class="headerlink" href="#g-skl-dependency-graph" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-dependency-graph</code><br />
@@ -3720,7 +3744,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-dependency-graph/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-dependency-graph/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-design"><code>g-skl-design</code><a class="headerlink" href="#g-skl-design" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-design</code><br />
@@ -3734,14 +3758,14 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-design/SKILL.md</code></p>
+<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-ghostwrite"><code>g-skl-ghostwrite</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-design/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-drift"><code>g-skl-drift</code><a class="headerlink" href="#g-skl-drift" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-drift</code><br />
 <strong>Group:</strong> WPAC &amp; Workspace Coordination</p>
 <p><strong>Purpose:</strong> Compute a deterministic, code-computed drift score per task-claim territory and per dev from local .gald3r state, and emit it as a local report or a g-skl-json-output-compatible JSON payload.</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to compute a deterministic, code-computed drift score per task-claim territory and per dev from local .gald3r state, and emit it as a local report or a g-skl-json-output-compatible JSON payload. Serves (territory leasing + onboarding + drift skills).</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to compute a deterministic, code-computed drift score per task-claim territory and per dev from local .gald3r state, and emit it as a local report or a g-skl-json-output-compatible JSON payload. Serves D15 (territory leasing + onboarding + drift skills).</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -3750,7 +3774,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a>, <a href="#g-skl-wpac-move"><code>g-skl-wpac-move</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-drift/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-drift/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-features"><code>g-skl-features</code><a class="headerlink" href="#g-skl-features" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-features</code><br />
@@ -3766,7 +3790,23 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a>, <a href="#g-skl-res-apply"><code>g-skl-res-apply</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-features/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-features/SKILL.md</code></p>
+<hr />
+<h3 id="g-skl-ghostwrite"><code>g-skl-ghostwrite</code><a class="headerlink" href="#g-skl-ghostwrite" title="Permanent link">&para;</a></h3>
+<p><strong>Skill ID:</strong> <code>g-skl-ghostwrite</code><br />
+<strong>Group:</strong> Output Formats</p>
+<p><strong>Purpose:</strong> Rewrite supplied text so it reads like a person wrote it, not a model.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to rewrite supplied text so it reads like a person wrote it, not a model. Varies sentence length, cuts hedging and throat-clearing openers, removes anything that exists only to sound smart, bans em dashes, and swaps in the simpler word every time. Both @g-gw and @g-ghostwrite activate this skill.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Claude Code:</strong> <code>/g-ghostwrite (also: /g-gw)</code></li>
+<li><strong>Cursor:</strong> <code>@g-ghostwrite</code></li>
+</ul>
+<p><strong>Maturity:</strong> unspecified<br />
+<strong>Token budget:</strong> low  </p>
+<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-ghostwrite/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-git-commit"><code>g-skl-git-commit</code><a class="headerlink" href="#g-skl-git-commit" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-git-commit</code><br />
@@ -3782,7 +3822,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-github-pr"><code>g-skl-github-pr</code></a>, <a href="#g-skl-release"><code>g-skl-release</code></a>, <a href="#g-skl-ship"><code>g-skl-ship</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-git-commit/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-git-commit/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-github-pr"><code>g-skl-github-pr</code><a class="headerlink" href="#g-skl-github-pr" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-github-pr</code><br />
@@ -3798,13 +3838,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-git-commit"><code>g-skl-git-commit</code></a>, <a href="#g-skl-release"><code>g-skl-release</code></a>, <a href="#g-skl-ship"><code>g-skl-ship</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-github-pr/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-github-pr/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-graphify"><code>g-skl-graphify</code><a class="headerlink" href="#g-skl-graphify" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-graphify</code><br />
 <strong>Group:</strong> Memory &amp; Knowledge</p>
-<p><strong>Purpose:</strong> Build and query a code graph representation of the codebase for 71x fewer tokens on architecture questions.</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to build and query a code graph representation of the codebase for 71x fewer tokens on architecture questions. Wire into g-go-code context-prep phase: query the graph before editing files instead of grepping linearly. Use when answering "what calls X?", "what does X depend on?", "what breaks if I change Y?", or any architecture question.</p>
+<p><strong>Purpose:</strong> NOT YET IMPLEMENTED (BUG-898, T837 Phase A)</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to nOT YET IMPLEMENTED (BUG-898, T837 Phase A) — target design doc only. No graphify-cli, no gitNexus integration, and no <code>.mcp.json</code> entry exist in this codebase; the "T871 wired gitNexus into .mcp.json" claim below was false and has been struck. Documents a PLANNED code-graph capability for 71x-fewer-token architecture queries. Do not invoke; fall back to <code>gald3r search</code> or Grep until this capability actually ships.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -3813,13 +3853,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-compress-memory"><code>g-skl-compress-memory</code></a>, <a href="#g-skl-context-builder"><code>g-skl-context-builder</code></a>, <a href="#g-skl-knowledge-refresh"><code>g-skl-knowledge-refresh</code></a>, <a href="#g-skl-learn"><code>g-skl-learn</code></a>, <a href="#g-skl-memory"><code>g-skl-memory</code></a>, <a href="#g-skl-muninn"><code>g-skl-muninn</code></a>, <a href="#g-skl-vault"><code>g-skl-vault</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-graphify/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-graphify/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-html-output"><code>g-skl-html-output</code><a class="headerlink" href="#g-skl-html-output" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-html-output</code><br />
 <strong>Group:</strong> Output Formats</p>
 <p><strong>Purpose:</strong> Render human-facing reports (status, review, backlog) as themed HTML using docs/templates/ + docs/themes/.</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to render human-facing reports (status, review, backlog) as themed HTML using docs/templates/ + docs/themes/. Operations RENDER, CHOOSE_THEME, VALIDATE, EXPORT. Invoked by --html flag commands. Never used for coordination files (TASKS.md, BUGS.md, task specs) which are always markdown.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to render human-facing reports (status, review, backlog) as themed HTML using docs/templates/ + docs/themes/. Operations RENDER, CHOOSE_THEME, VALIDATE, EXPORT. Invoked by --html flag commands (T1318). Never used for coordination files (TASKS.md, BUGS.md, task specs) which are always markdown.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -3827,8 +3867,8 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-html-output/SKILL.md</code></p>
+<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-ghostwrite"><code>g-skl-ghostwrite</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-html-output/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-ideas"><code>g-skl-ideas</code><a class="headerlink" href="#g-skl-ideas" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-ideas</code><br />
@@ -3844,7 +3884,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a>, <a href="#g-skl-res-apply"><code>g-skl-res-apply</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-ideas/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-ideas/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-ipb"><code>g-skl-ipb</code><a class="headerlink" href="#g-skl-ipb" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-ipb</code><br />
@@ -3859,13 +3899,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a>, <a href="#g-skl-mdmp"><code>g-skl-mdmp</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-ipb/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-ipb/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-json-output"><code>g-skl-json-output</code><a class="headerlink" href="#g-skl-json-output" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-json-output</code><br />
 <strong>Group:</strong> Output Formats</p>
 <p><strong>Purpose:</strong> Emit gald3r command output (status, review, backlog) as structured JSON for scripting, CI gates, dashboards, and agent-to-agent handoff.</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to emit gald3r command output (status, review, backlog) as structured JSON for scripting, CI gates, dashboards, and agent-to-agent handoff. Operations SERIALIZE, SCHEMA, VALIDATE, EXPORT. Invoked by --json flag commands. Mirrors g-skl-html-output. Coordination state files stay markdown.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to emit gald3r command output (status, review, backlog) as structured JSON for scripting, CI gates, dashboards, and agent-to-agent handoff. Operations SERIALIZE, SCHEMA, VALIDATE, EXPORT. Invoked by --json flag commands (T1381). Mirrors g-skl-html-output. Coordination state files stay markdown.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -3874,8 +3914,8 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-json-output/SKILL.md</code></p>
+<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-ghostwrite"><code>g-skl-ghostwrite</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-json-output/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code><a class="headerlink" href="#g-skl-keep-it-simple" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-keep-it-simple</code><br />
@@ -3891,7 +3931,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a>, <a href="#g-skl-mdmp"><code>g-skl-mdmp</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-keep-it-simple/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-keep-it-simple/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-knowledge-refresh"><code>g-skl-knowledge-refresh</code><a class="headerlink" href="#g-skl-knowledge-refresh" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-knowledge-refresh</code><br />
@@ -3907,7 +3947,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-compress-memory"><code>g-skl-compress-memory</code></a>, <a href="#g-skl-context-builder"><code>g-skl-context-builder</code></a>, <a href="#g-skl-graphify"><code>g-skl-graphify</code></a>, <a href="#g-skl-learn"><code>g-skl-learn</code></a>, <a href="#g-skl-memory"><code>g-skl-memory</code></a>, <a href="#g-skl-muninn"><code>g-skl-muninn</code></a>, <a href="#g-skl-vault"><code>g-skl-vault</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-knowledge-refresh/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-knowledge-refresh/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-learn"><code>g-skl-learn</code><a class="headerlink" href="#g-skl-learn" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-learn</code><br />
@@ -3923,13 +3963,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-compress-memory"><code>g-skl-compress-memory</code></a>, <a href="#g-skl-context-builder"><code>g-skl-context-builder</code></a>, <a href="#g-skl-graphify"><code>g-skl-graphify</code></a>, <a href="#g-skl-knowledge-refresh"><code>g-skl-knowledge-refresh</code></a>, <a href="#g-skl-memory"><code>g-skl-memory</code></a>, <a href="#g-skl-muninn"><code>g-skl-muninn</code></a>, <a href="#g-skl-vault"><code>g-skl-vault</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-learn/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-learn/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-linking"><code>g-skl-linking</code><a class="headerlink" href="#g-skl-linking" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-linking</code><br />
 <strong>Group:</strong> WPAC &amp; Workspace Coordination</p>
-<p><strong>Purpose:</strong> Unified linking file-mirror. Pulls the server-owned world_tree linking registry (parent/child/sibling edges + project_type/skills, keyed by project UUID</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to unified linking file-mirror. Pulls the server-owned world_tree linking registry (parent/child/sibling edges + project_type/skills, keyed by project UUID) and writes the human-readable local mirror under .gald3r/linking/. Online the mirror reconciles against the registry; offline the local mirror is authoritative and reconciles on reconnect. Reconcile is non-destructive: conflicting edges open a review item, never overwrite.</p>
+<p><strong>Purpose:</strong> Unified linking file-mirror (D7 / T1610). Pulls the server-owned world_tree linking registry (parent/child/sibling edges + project_type/skills, keyed by project UUID</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to unified linking file-mirror (D7 / T1610). Pulls the server-owned world_tree linking registry (parent/child/sibling edges + project_type/skills, keyed by project UUID — T1625) and writes the human-readable local mirror under .gald3r/linking/. Online the mirror reconciles against the registry; offline the local mirror is authoritative and reconciles on reconnect. Reconcile is non-destructive: conflicting edges open a review item, never overwrite.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -3938,7 +3978,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a>, <a href="#g-skl-wpac-move"><code>g-skl-wpac-move</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-linking/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-linking/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-marketing"><code>g-skl-marketing</code><a class="headerlink" href="#g-skl-marketing" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-marketing</code><br />
@@ -3954,7 +3994,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-mdmp"><code>g-skl-mdmp</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-marketing/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-marketing/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-mdmp"><code>g-skl-mdmp</code><a class="headerlink" href="#g-skl-mdmp" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-mdmp</code><br />
@@ -3969,7 +4009,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-mdmp/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-mdmp/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-medic"><code>g-skl-medic</code><a class="headerlink" href="#g-skl-medic" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-medic</code><br />
@@ -3984,7 +4024,7 @@
 <p><strong>Maturity:</strong> beta<br />
 <strong>Token budget:</strong> high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a>, <a href="#g-skl-res-apply"><code>g-skl-res-apply</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-medic/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-medic/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-memory"><code>g-skl-memory</code><a class="headerlink" href="#g-skl-memory" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-memory</code><br />
@@ -3999,7 +4039,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> very_high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-compress-memory"><code>g-skl-compress-memory</code></a>, <a href="#g-skl-context-builder"><code>g-skl-context-builder</code></a>, <a href="#g-skl-graphify"><code>g-skl-graphify</code></a>, <a href="#g-skl-knowledge-refresh"><code>g-skl-knowledge-refresh</code></a>, <a href="#g-skl-learn"><code>g-skl-learn</code></a>, <a href="#g-skl-muninn"><code>g-skl-muninn</code></a>, <a href="#g-skl-vault"><code>g-skl-vault</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-memory/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-memory/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-monitor"><code>g-skl-monitor</code><a class="headerlink" href="#g-skl-monitor" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-monitor</code><br />
@@ -4014,13 +4054,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a>, <a href="#g-skl-res-deep"><code>g-skl-res-deep</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-monitor/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-monitor/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-muninn"><code>g-skl-muninn</code><a class="headerlink" href="#g-skl-muninn" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-muninn</code><br />
 <strong>Group:</strong> Memory &amp; Knowledge</p>
-<p><strong>Purpose:</strong> gald3r_muninn MCP</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to gald3r_muninn MCP — query the local codebase knowledge graph for impact analysis, caller chains, dependencies, and symbol search. Clean-room rewrite of the GitNexus integration; auto-loaded by the example_app MCP server from docker/gald3r/tools/plugins/muninn/. Wire into g-go-code Step b0 Impact Scan before any implementation.</p>
+<p><strong>Purpose:</strong> NOT YET IMPLEMENTED (BUG-898, T837 Phase A)</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to nOT YET IMPLEMENTED (BUG-898, T837 Phase A) — target design doc only. No <code>gald3r muninn</code> verb, no <code>.gald3r/muninn/</code> db, no muninn plugin dir, and no <code>.mcp.json</code> entry exist in the current Go binary. Documents a PLANNED codebase knowledge graph (impact analysis, caller chains, dependencies, symbol search) — clean-room rewrite (T1147 epic, T1153-T1158) of the retired GitNexus integration. Do not invoke; fall back to <code>gald3r search</code> or Grep until this capability actually ships.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -4029,7 +4069,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-compress-memory"><code>g-skl-compress-memory</code></a>, <a href="#g-skl-context-builder"><code>g-skl-context-builder</code></a>, <a href="#g-skl-graphify"><code>g-skl-graphify</code></a>, <a href="#g-skl-knowledge-refresh"><code>g-skl-knowledge-refresh</code></a>, <a href="#g-skl-learn"><code>g-skl-learn</code></a>, <a href="#g-skl-memory"><code>g-skl-memory</code></a>, <a href="#g-skl-vault"><code>g-skl-vault</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-muninn/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-muninn/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-ooda"><code>g-skl-ooda</code><a class="headerlink" href="#g-skl-ooda" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-ooda</code><br />
@@ -4044,7 +4084,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-ooda/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-ooda/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-oracle"><code>g-skl-oracle</code><a class="headerlink" href="#g-skl-oracle" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-oracle</code><br />
@@ -4059,7 +4099,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-oracle/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-oracle/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-plan"><code>g-skl-plan</code><a class="headerlink" href="#g-skl-plan" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-plan</code><br />
@@ -4074,7 +4114,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a>, <a href="#g-skl-res-apply"><code>g-skl-res-apply</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-plan/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-plan/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-aider"><code>g-skl-platform-aider</code><a class="headerlink" href="#g-skl-platform-aider" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-aider</code><br />
@@ -4089,7 +4129,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a>, <a href="#g-skl-platform-astrbot"><code>g-skl-platform-astrbot</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-aider/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-aider/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code><a class="headerlink" href="#g-skl-platform-antigravity" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-antigravity</code><br />
@@ -4104,13 +4144,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-astrbot"><code>g-skl-platform-astrbot</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-antigravity/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-antigravity/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-astrbot"><code>g-skl-platform-astrbot</code><a class="headerlink" href="#g-skl-platform-astrbot" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-astrbot</code><br />
 <strong>Group:</strong> Platforms &amp; Providers</p>
 <p><strong>Purpose:</strong> Authoritative reference for AstrBot customization in gald3r projects.</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to authoritative reference for AstrBot customization in gald3r projects. Covers curated (human-assessed, not yet live-crawled) support signals for Hooks/Rules/Skills/Commands/MCP, the still-unverified folder hierarchy and instruction file, and how to upgrade this spec from curated to verified.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to authoritative reference for AstrBot customization in gald3r projects. Covers curated (BUG-137, human-assessed, not yet live-crawled) support signals for Hooks/Rules/Skills/Commands/MCP, the still-unverified folder hierarchy and instruction file, and how to upgrade this spec from curated to verified.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -4119,7 +4159,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-astrbot/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-astrbot/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-augment"><code>g-skl-platform-augment</code><a class="headerlink" href="#g-skl-platform-augment" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-augment</code><br />
@@ -4134,7 +4174,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-augment/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-augment/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-claude"><code>g-skl-platform-claude</code><a class="headerlink" href="#g-skl-platform-claude" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-claude</code><br />
@@ -4150,7 +4190,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-claude/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-claude/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-cline"><code>g-skl-platform-cline</code><a class="headerlink" href="#g-skl-platform-cline" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-cline</code><br />
@@ -4165,7 +4205,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-cline/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-cline/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-codex"><code>g-skl-platform-codex</code><a class="headerlink" href="#g-skl-platform-codex" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-codex</code><br />
@@ -4180,7 +4220,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-codex/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-codex/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-continue"><code>g-skl-platform-continue</code><a class="headerlink" href="#g-skl-platform-continue" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-continue</code><br />
@@ -4195,7 +4235,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-continue/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-continue/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-copilot"><code>g-skl-platform-copilot</code><a class="headerlink" href="#g-skl-platform-copilot" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-copilot</code><br />
@@ -4211,7 +4251,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-copilot/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-copilot/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-crawl"><code>g-skl-platform-crawl</code><a class="headerlink" href="#g-skl-platform-crawl" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-crawl</code><br />
@@ -4226,7 +4266,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-crawl/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-crawl/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-cursor"><code>g-skl-platform-cursor</code><a class="headerlink" href="#g-skl-platform-cursor" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-cursor</code><br />
@@ -4242,7 +4282,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-cursor/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-cursor/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-deepcode"><code>g-skl-platform-deepcode</code><a class="headerlink" href="#g-skl-platform-deepcode" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-deepcode</code><br />
@@ -4257,7 +4297,25 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-deepcode/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-deepcode/SKILL.md</code></p>
+<hr />
+<h3 id="g-skl-platform-gald3r"><code>g-skl-platform-gald3r</code><a class="headerlink" href="#g-skl-platform-gald3r" title="Permanent link">&para;</a></h3>
+<p><strong>Skill ID:</strong> <code>g-skl-platform-gald3r</code><br />
+<strong>Group:</strong> Other (no subsystem group declared)</p>
+<p><strong>Purpose:</strong> Authoritative reference for gald3r ITSELF as a platform</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to authoritative reference for gald3r ITSELF as a platform — a user driving <code>gald3r run</code>/<code>gald3r chat</code> directly as their harness, with no external IDE/agent tool in front of it. Covers the 38th-roster-entry decision record (T847): platform id <code>gald3r</code>, the open overlay-location question (root dirs vs <code>.gald3r/platform/</code>, pending Friday owner ratification), which components the runtime can honor first (hooks + commands, per owner sequencing), and the relationship to task714 (self-coordinator provider) and task821 (recursive agent primitive, the agents execution layer).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> No command dispatches to this skill by name in its body -- it activates by the agent's own judgment matching this skill's <code>description:</code>, or by direct mention (e.g. "use g-skl-platform-gald3r") in your prompt.</li>
+</ul>
+<p><strong>Maturity:</strong> unspecified<br />
+<strong>Token budget:</strong> low  </p>
+<p><strong>Related:</strong> <a href="#g-skl-auto-triage"><code>g-skl-auto-triage</code></a>, <a href="#g-skl-plugins"><code>g-skl-plugins</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-gald3r/SKILL.md</code></p>
+<blockquote>
+<p><strong>Metadata note:</strong> skills/g-skl-platform-gald3r/SKILL.md: missing subsystem_memberships: frontmatter</p>
+</blockquote>
 <hr />
 <h3 id="g-skl-platform-goose"><code>g-skl-platform-goose</code><a class="headerlink" href="#g-skl-platform-goose" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-goose</code><br />
@@ -4272,7 +4330,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-goose/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-goose/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-hermes"><code>g-skl-platform-hermes</code><a class="headerlink" href="#g-skl-platform-hermes" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-hermes</code><br />
@@ -4287,7 +4345,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-hermes/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-hermes/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-junie"><code>g-skl-platform-junie</code><a class="headerlink" href="#g-skl-platform-junie" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-junie</code><br />
@@ -4302,7 +4360,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-junie/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-junie/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-kimi"><code>g-skl-platform-kimi</code><a class="headerlink" href="#g-skl-platform-kimi" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-kimi</code><br />
@@ -4317,7 +4375,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-kimi/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-kimi/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-kiro"><code>g-skl-platform-kiro</code><a class="headerlink" href="#g-skl-platform-kiro" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-kiro</code><br />
@@ -4332,7 +4390,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-kiro/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-kiro/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-kiro-cli"><code>g-skl-platform-kiro-cli</code><a class="headerlink" href="#g-skl-platform-kiro-cli" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-kiro-cli</code><br />
@@ -4347,7 +4405,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-kiro-cli/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-kiro-cli/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-mimo"><code>g-skl-platform-mimo</code><a class="headerlink" href="#g-skl-platform-mimo" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-mimo</code><br />
@@ -4362,7 +4420,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-mimo/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-mimo/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-mistral"><code>g-skl-platform-mistral</code><a class="headerlink" href="#g-skl-platform-mistral" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-mistral</code><br />
@@ -4377,13 +4435,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-mistral/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-mistral/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-monitor"><code>g-skl-platform-monitor</code><a class="headerlink" href="#g-skl-platform-monitor" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-monitor</code><br />
 <strong>Group:</strong> Platforms &amp; Providers</p>
 <p><strong>Purpose:</strong> Cross-platform health and freshness monitor for the registry-driven gald3r platform roster (PLATFORM_REGISTRY.yaml</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to cross-platform health and freshness monitor for the registry-driven gald3r platform roster (PLATFORM_REGISTRY.yaml — single source of truth). Checks per-platform capability gaps against the Cursor reference, scans official docs for breaking changes, validates platform-specific config, and generates the PLATFORM_STATUS / PLATFORM_CAPABILITY_MATRIX living indexes. Owned by g-agnt-platformer.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to cross-platform health and freshness monitor for the registry-driven gald3r platform roster (PLATFORM_REGISTRY.yaml — single source of truth, T516). Checks per-platform capability gaps against the Cursor reference, scans official docs for breaking changes, validates platform-specific config, and generates the PLATFORM_STATUS / PLATFORM_CAPABILITY_MATRIX living indexes. Owned by g-agnt-platformer.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -4393,7 +4451,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-monitor/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-monitor/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-openclaw"><code>g-skl-platform-openclaw</code><a class="headerlink" href="#g-skl-platform-openclaw" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-openclaw</code><br />
@@ -4408,7 +4466,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-openclaw/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-openclaw/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-opencode"><code>g-skl-platform-opencode</code><a class="headerlink" href="#g-skl-platform-opencode" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-opencode</code><br />
@@ -4423,7 +4481,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-opencode/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-opencode/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-openhands"><code>g-skl-platform-openhands</code><a class="headerlink" href="#g-skl-platform-openhands" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-openhands</code><br />
@@ -4438,7 +4496,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-openhands/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-openhands/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-pi"><code>g-skl-platform-pi</code><a class="headerlink" href="#g-skl-platform-pi" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-pi</code><br />
@@ -4453,7 +4511,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-pi/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-pi/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-qwen"><code>g-skl-platform-qwen</code><a class="headerlink" href="#g-skl-platform-qwen" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-qwen</code><br />
@@ -4468,7 +4526,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-qwen/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-qwen/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-replit"><code>g-skl-platform-replit</code><a class="headerlink" href="#g-skl-platform-replit" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-replit</code><br />
@@ -4483,7 +4541,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-replit/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-replit/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-roo"><code>g-skl-platform-roo</code><a class="headerlink" href="#g-skl-platform-roo" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-roo</code><br />
@@ -4498,7 +4556,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-roo/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-roo/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-subq"><code>g-skl-platform-subq</code><a class="headerlink" href="#g-skl-platform-subq" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-subq</code><br />
@@ -4513,13 +4571,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-subq/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-subq/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-void"><code>g-skl-platform-void</code><a class="headerlink" href="#g-skl-platform-void" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-void</code><br />
 <strong>Group:</strong> Platforms &amp; Providers</p>
-<p><strong>Purpose:</strong> Authoritative reference for Void (VS Code fork) customization in gald3r projects. Covers curated (human-assessed, not yet live-crawled) capability signals</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to authoritative reference for Void (VS Code fork) customization in gald3r projects. Covers curated (human-assessed, not yet live-crawled) capability signals — Hooks/Skills/Commands curated not-supported, Rules via the legacy .cursorrules file, and MCP curated supported — plus the still-unverified folder hierarchy and instruction file.</p>
+<p><strong>Purpose:</strong> Authoritative reference for Void (VS Code fork) customization in gald3r projects. Covers curated (BUG-137, human-assessed, not yet live-crawled) capability signals</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to authoritative reference for Void (VS Code fork) customization in gald3r projects. Covers curated (BUG-137, human-assessed, not yet live-crawled) capability signals — Hooks/Skills/Commands curated not-supported, Rules via the legacy .cursorrules file, and MCP curated supported — plus the still-unverified folder hierarchy and instruction file.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -4528,7 +4586,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-void/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-void/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-warp"><code>g-skl-platform-warp</code><a class="headerlink" href="#g-skl-platform-warp" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-warp</code><br />
@@ -4543,7 +4601,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-warp/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-warp/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-windsurf"><code>g-skl-platform-windsurf</code><a class="headerlink" href="#g-skl-platform-windsurf" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-windsurf</code><br />
@@ -4558,7 +4616,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-windsurf/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-windsurf/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-zcode"><code>g-skl-platform-zcode</code><a class="headerlink" href="#g-skl-platform-zcode" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-zcode</code><br />
@@ -4573,7 +4631,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-zcode/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-zcode/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-platform-zed"><code>g-skl-platform-zed</code><a class="headerlink" href="#g-skl-platform-zed" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-platform-zed</code><br />
@@ -4588,13 +4646,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-cli-claude"><code>g-skl-cli-claude</code></a>, <a href="#g-skl-cli-codex"><code>g-skl-cli-codex</code></a>, <a href="#g-skl-cli-copilot"><code>g-skl-cli-copilot</code></a>, <a href="#g-skl-cli-cursor"><code>g-skl-cli-cursor</code></a>, <a href="#g-skl-cli-jcode"><code>g-skl-cli-jcode</code></a>, <a href="#g-skl-cli-opencode"><code>g-skl-cli-opencode</code></a>, <a href="#g-skl-platform-aider"><code>g-skl-platform-aider</code></a>, <a href="#g-skl-platform-antigravity"><code>g-skl-platform-antigravity</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-platform-zed/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-platform-zed/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-plugins"><code>g-skl-plugins</code><a class="headerlink" href="#g-skl-plugins" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-plugins</code><br />
 <strong>Group:</strong> Other (declared group <code>PLUGIN_SYSTEM</code> is not in the canonical .gald3r/PRODUCT_SYSTEMS.md registry)</p>
 <p><strong>Purpose:</strong> Authoritative reference for the gald3r plugin system</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to authoritative reference for the gald3r plugin system — install, remove (uninstall), update, list, and per-project enable/disable git-cloned, SKILL.md-based third-party plugins via <code>gald3r plugin &lt;verb&gt;</code>. Documents the live <code>PluginManager</code> mechanism (git clone/pull/rmtree, GLOBAL install, no manifest, no ledger) plus the per-project ON/OFF association overlay, and honestly flags the two operations (scaffold/NEW and CHECK_COMPAT) that are not implemented. Single source of truth for everything plugin-related.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to authoritative reference for the gald3r plugin system — install, remove (uninstall), update, list, and per-project enable/disable git-cloned, SKILL.md-based third-party plugins via <code>gald3r plugin &lt;verb&gt;</code>. Documents the live <code>PluginManager</code> mechanism (git clone/pull/rmtree, GLOBAL install, no manifest, no ledger) plus the per-project ON/OFF association overlay (T287), and honestly flags the two operations (scaffold/NEW and CHECK_COMPAT) that are not implemented. Single source of truth for everything plugin-related.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -4603,8 +4661,8 @@
 </ul>
 <p><strong>Maturity:</strong> beta<br />
 <strong>Token budget:</strong> medium  </p>
-<p><strong>Related:</strong> <a href="#g-skl-auto-triage"><code>g-skl-auto-triage</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-plugins/SKILL.md</code></p>
+<p><strong>Related:</strong> <a href="#g-skl-auto-triage"><code>g-skl-auto-triage</code></a>, <a href="#g-skl-platform-gald3r"><code>g-skl-platform-gald3r</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-plugins/SKILL.md</code></p>
 <blockquote>
 <p><strong>Metadata note:</strong> skills/g-skl-plugins/SKILL.md: subsystem_memberships declares unrecognized group 'PLUGIN_SYSTEM' (not in .gald3r/PRODUCT_SYSTEMS.md defined_groups)</p>
 </blockquote>
@@ -4622,7 +4680,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-compliance"><code>g-skl-compliance</code></a>, <a href="#g-skl-dependency-audit"><code>g-skl-dependency-audit</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-policy/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-policy/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-prds"><code>g-skl-prds</code><a class="headerlink" href="#g-skl-prds" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-prds</code><br />
@@ -4638,7 +4696,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a>, <a href="#g-skl-res-apply"><code>g-skl-res-apply</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-prds/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-prds/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-project"><code>g-skl-project</code><a class="headerlink" href="#g-skl-project" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-project</code><br />
@@ -4653,7 +4711,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-res-apply"><code>g-skl-res-apply</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-project/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-project/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-qa"><code>g-skl-qa</code><a class="headerlink" href="#g-skl-qa" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-qa</code><br />
@@ -4668,7 +4726,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code></a>, <a href="#g-skl-bugs"><code>g-skl-bugs</code></a>, <a href="#g-skl-code-review"><code>g-skl-code-review</code></a>, <a href="#g-skl-review"><code>g-skl-review</code></a>, <a href="#g-skl-security-scan"><code>g-skl-security-scan</code></a>, <a href="#g-skl-swot-review"><code>g-skl-swot-review</code></a>, <a href="#g-skl-test"><code>g-skl-test</code></a>, <a href="#g-skl-verify-ladder"><code>g-skl-verify-ladder</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-qa/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-qa/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-recon-docs"><code>g-skl-recon-docs</code><a class="headerlink" href="#g-skl-recon-docs" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-recon-docs</code><br />
@@ -4684,7 +4742,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a>, <a href="#g-skl-res-deep"><code>g-skl-res-deep</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-recon-docs/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-recon-docs/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-recon-file"><code>g-skl-recon-file</code><a class="headerlink" href="#g-skl-recon-file" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-recon-file</code><br />
@@ -4700,7 +4758,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a>, <a href="#g-skl-res-deep"><code>g-skl-res-deep</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-recon-file/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-recon-file/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-recon-repo"><code>g-skl-recon-repo</code><a class="headerlink" href="#g-skl-recon-repo" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-recon-repo</code><br />
@@ -4716,7 +4774,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a>, <a href="#g-skl-res-deep"><code>g-skl-res-deep</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-recon-repo/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-recon-repo/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-recon-url"><code>g-skl-recon-url</code><a class="headerlink" href="#g-skl-recon-url" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-recon-url</code><br />
@@ -4732,7 +4790,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a>, <a href="#g-skl-res-deep"><code>g-skl-res-deep</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-recon-url/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-recon-url/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-recon-yt"><code>g-skl-recon-yt</code><a class="headerlink" href="#g-skl-recon-yt" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-recon-yt</code><br />
@@ -4748,7 +4806,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-res-deep"><code>g-skl-res-deep</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-recon-yt/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-recon-yt/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-release"><code>g-skl-release</code><a class="headerlink" href="#g-skl-release" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-release</code><br />
@@ -4764,7 +4822,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-git-commit"><code>g-skl-git-commit</code></a>, <a href="#g-skl-github-pr"><code>g-skl-github-pr</code></a>, <a href="#g-skl-ship"><code>g-skl-ship</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-release/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-release/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-res-apply"><code>g-skl-res-apply</code><a class="headerlink" href="#g-skl-res-apply" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-res-apply</code><br />
@@ -4780,7 +4838,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> very_high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-res-apply/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-res-apply/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-res-deep"><code>g-skl-res-deep</code><a class="headerlink" href="#g-skl-res-deep" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-res-deep</code><br />
@@ -4796,7 +4854,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> very_high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-res-deep/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-res-deep/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-res-review"><code>g-skl-res-review</code><a class="headerlink" href="#g-skl-res-review" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-res-review</code><br />
@@ -4812,7 +4870,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> very_high  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-res-review/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-res-review/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-review"><code>g-skl-review</code><a class="headerlink" href="#g-skl-review" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-review</code><br />
@@ -4827,13 +4885,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code></a>, <a href="#g-skl-bugs"><code>g-skl-bugs</code></a>, <a href="#g-skl-code-review"><code>g-skl-code-review</code></a>, <a href="#g-skl-qa"><code>g-skl-qa</code></a>, <a href="#g-skl-security-scan"><code>g-skl-security-scan</code></a>, <a href="#g-skl-swot-review"><code>g-skl-swot-review</code></a>, <a href="#g-skl-test"><code>g-skl-test</code></a>, <a href="#g-skl-verify-ladder"><code>g-skl-verify-ladder</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-review/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-review/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-security-scan"><code>g-skl-security-scan</code><a class="headerlink" href="#g-skl-security-scan" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-security-scan</code><br />
 <strong>Group:</strong> Bugs &amp; Quality</p>
 <p><strong>Purpose:</strong> SAST-style static analysis for hardcoded secrets, injection patterns, insecure deserialization, path traversal, and other critical vulnerabilities.</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to sAST-style static analysis for hardcoded secrets, injection patterns, insecure deserialization, path traversal, and other critical vulnerabilities. Severity-ranked findings with line references and remediation guidance. Includes two-phase threat-model + diff-revalidation mode for use as the post-implementation gate in g-go-review.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to sAST-style static analysis for hardcoded secrets, injection patterns, insecure deserialization, path traversal, and other critical vulnerabilities. Severity-ranked findings with line references and remediation guidance. Includes two-phase threat-model + diff-revalidation mode (T1167) for use as the post-implementation gate in g-go-review.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -4842,7 +4900,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code></a>, <a href="#g-skl-bugs"><code>g-skl-bugs</code></a>, <a href="#g-skl-code-review"><code>g-skl-code-review</code></a>, <a href="#g-skl-qa"><code>g-skl-qa</code></a>, <a href="#g-skl-review"><code>g-skl-review</code></a>, <a href="#g-skl-swot-review"><code>g-skl-swot-review</code></a>, <a href="#g-skl-test"><code>g-skl-test</code></a>, <a href="#g-skl-verify-ladder"><code>g-skl-verify-ladder</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-security-scan/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-security-scan/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-sesh"><code>g-skl-sesh</code><a class="headerlink" href="#g-skl-sesh" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-sesh</code><br />
@@ -4858,7 +4916,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-sesh/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-sesh/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-setup"><code>g-skl-setup</code><a class="headerlink" href="#g-skl-setup" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-setup</code><br />
@@ -4874,7 +4932,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-setup/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-setup/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-ship"><code>g-skl-ship</code><a class="headerlink" href="#g-skl-ship" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-ship</code><br />
@@ -4890,7 +4948,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-git-commit"><code>g-skl-git-commit</code></a>, <a href="#g-skl-github-pr"><code>g-skl-github-pr</code></a>, <a href="#g-skl-release"><code>g-skl-release</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-ship/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-ship/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-status"><code>g-skl-status</code><a class="headerlink" href="#g-skl-status" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-status</code><br />
@@ -4905,7 +4963,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-status/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-status/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-stz"><code>g-skl-stz</code><a class="headerlink" href="#g-skl-stz" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-stz</code><br />
@@ -4920,7 +4978,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-stz/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-stz/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-subsystem-graph"><code>g-skl-subsystem-graph</code><a class="headerlink" href="#g-skl-subsystem-graph" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-subsystem-graph</code><br />
@@ -4936,7 +4994,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-subsystem-graph/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-subsystem-graph/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-subsystems"><code>g-skl-subsystems</code><a class="headerlink" href="#g-skl-subsystems" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-subsystems</code><br />
@@ -4952,7 +5010,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-subsystems/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-subsystems/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-swot-review"><code>g-skl-swot-review</code><a class="headerlink" href="#g-skl-swot-review" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-swot-review</code><br />
@@ -4967,7 +5025,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code></a>, <a href="#g-skl-bugs"><code>g-skl-bugs</code></a>, <a href="#g-skl-code-review"><code>g-skl-code-review</code></a>, <a href="#g-skl-qa"><code>g-skl-qa</code></a>, <a href="#g-skl-review"><code>g-skl-review</code></a>, <a href="#g-skl-security-scan"><code>g-skl-security-scan</code></a>, <a href="#g-skl-test"><code>g-skl-test</code></a>, <a href="#g-skl-verify-ladder"><code>g-skl-verify-ladder</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-swot-review/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-swot-review/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-tasks"><code>g-skl-tasks</code><a class="headerlink" href="#g-skl-tasks" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-tasks</code><br />
@@ -4983,7 +5041,7 @@
 <p><strong>Maturity:</strong> production<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-tasks/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-tasks/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-territory"><code>g-skl-territory</code><a class="headerlink" href="#g-skl-territory" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-territory</code><br />
@@ -4998,7 +5056,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a>, <a href="#g-skl-wpac-move"><code>g-skl-wpac-move</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-territory/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-territory/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-test"><code>g-skl-test</code><a class="headerlink" href="#g-skl-test" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-test</code><br />
@@ -5014,7 +5072,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code></a>, <a href="#g-skl-bugs"><code>g-skl-bugs</code></a>, <a href="#g-skl-code-review"><code>g-skl-code-review</code></a>, <a href="#g-skl-qa"><code>g-skl-qa</code></a>, <a href="#g-skl-review"><code>g-skl-review</code></a>, <a href="#g-skl-security-scan"><code>g-skl-security-scan</code></a>, <a href="#g-skl-swot-review"><code>g-skl-swot-review</code></a>, <a href="#g-skl-verify-ladder"><code>g-skl-verify-ladder</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-test/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-test/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-theme-editor"><code>g-skl-theme-editor</code><a class="headerlink" href="#g-skl-theme-editor" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-theme-editor</code><br />
@@ -5029,8 +5087,8 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-theme-editor/SKILL.md</code></p>
+<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-ghostwrite"><code>g-skl-ghostwrite</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-toon-output"><code>g-skl-toon-output</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-theme-editor/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-thinker"><code>g-skl-thinker</code><a class="headerlink" href="#g-skl-thinker" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-thinker</code><br />
@@ -5045,13 +5103,13 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-browser-use"><code>g-skl-browser-use</code></a>, <a href="#g-skl-computer-use"><code>g-skl-computer-use</code></a>, <a href="#g-skl-cross-review"><code>g-skl-cross-review</code></a>, <a href="#g-skl-curator"><code>g-skl-curator</code></a>, <a href="#g-skl-delegate"><code>g-skl-delegate</code></a>, <a href="#g-skl-ipb"><code>g-skl-ipb</code></a>, <a href="#g-skl-keep-it-simple"><code>g-skl-keep-it-simple</code></a>, <a href="#g-skl-marketing"><code>g-skl-marketing</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-thinker/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-thinker/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-toon-output"><code>g-skl-toon-output</code><a class="headerlink" href="#g-skl-toon-output" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-toon-output</code><br />
 <strong>Group:</strong> Output Formats</p>
 <p><strong>Purpose:</strong> Emit gald3r output as TOON (Token-Oriented Object Notation)</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to emit gald3r output as TOON (Token-Oriented Object Notation) — a compact, lossless, LLM-friendly format that states record keys once (tabular arrays) to cut tokens vs markdown/JSON. Operations ENCODE, DECODE, VALIDATE, EXPORT. Invoked by --toon flag commands. Coordination state files stay markdown.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to emit gald3r output as TOON (Token-Oriented Object Notation) — a compact, lossless, LLM-friendly format that states record keys once (tabular arrays) to cut tokens vs markdown/JSON. Operations ENCODE, DECODE, VALIDATE, EXPORT. Invoked by --toon flag commands (T1382). Coordination state files stay markdown.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -5060,8 +5118,8 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-toon-output/SKILL.md</code></p>
+<p><strong>Related:</strong> <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-ghostwrite"><code>g-skl-ghostwrite</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a>, <a href="#g-skl-theme-editor"><code>g-skl-theme-editor</code></a></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-toon-output/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-valk"><code>g-skl-valk</code><a class="headerlink" href="#g-skl-valk" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-valk</code><br />
@@ -5077,7 +5135,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a>, <a href="#g-skl-wpac-move"><code>g-skl-wpac-move</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-valk/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-valk/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-vault"><code>g-skl-vault</code><a class="headerlink" href="#g-skl-vault" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-vault</code><br />
@@ -5093,7 +5151,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-compress-memory"><code>g-skl-compress-memory</code></a>, <a href="#g-skl-context-builder"><code>g-skl-context-builder</code></a>, <a href="#g-skl-graphify"><code>g-skl-graphify</code></a>, <a href="#g-skl-knowledge-refresh"><code>g-skl-knowledge-refresh</code></a>, <a href="#g-skl-learn"><code>g-skl-learn</code></a>, <a href="#g-skl-memory"><code>g-skl-memory</code></a>, <a href="#g-skl-muninn"><code>g-skl-muninn</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-vault/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-vault/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-verify-ladder"><code>g-skl-verify-ladder</code><a class="headerlink" href="#g-skl-verify-ladder" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-verify-ladder</code><br />
@@ -5108,7 +5166,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code></a>, <a href="#g-skl-bugs"><code>g-skl-bugs</code></a>, <a href="#g-skl-code-review"><code>g-skl-code-review</code></a>, <a href="#g-skl-qa"><code>g-skl-qa</code></a>, <a href="#g-skl-review"><code>g-skl-review</code></a>, <a href="#g-skl-security-scan"><code>g-skl-security-scan</code></a>, <a href="#g-skl-swot-review"><code>g-skl-swot-review</code></a>, <a href="#g-skl-test"><code>g-skl-test</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-verify-ladder/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-verify-ladder/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code><a class="headerlink" href="#g-skl-wishlist-mine" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wishlist-mine</code><br />
@@ -5124,7 +5182,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wishlist-mine/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wishlist-mine/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-workspace"><code>g-skl-workspace</code><a class="headerlink" href="#g-skl-workspace" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-workspace</code><br />
@@ -5140,7 +5198,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a>, <a href="#g-skl-wpac-move"><code>g-skl-wpac-move</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-workspace/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-workspace/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code><a class="headerlink" href="#g-skl-wpac-adopt" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-adopt</code><br />
@@ -5156,7 +5214,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a>, <a href="#g-skl-wpac-move"><code>g-skl-wpac-move</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-adopt/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-adopt/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-ask"><code>g-skl-wpac-ask</code><a class="headerlink" href="#g-skl-wpac-ask" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-ask</code><br />
@@ -5172,7 +5230,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a>, <a href="#g-skl-wpac-move"><code>g-skl-wpac-move</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-ask/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-ask/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-claim"><code>g-skl-wpac-claim</code><a class="headerlink" href="#g-skl-wpac-claim" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-claim</code><br />
@@ -5188,7 +5246,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-move"><code>g-skl-wpac-move</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-claim/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-claim/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-move"><code>g-skl-wpac-move</code><a class="headerlink" href="#g-skl-wpac-move" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-move</code><br />
@@ -5204,7 +5262,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-move/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-move/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-notify"><code>g-skl-wpac-notify</code><a class="headerlink" href="#g-skl-wpac-notify" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-notify</code><br />
@@ -5220,7 +5278,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-notify/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-notify/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-order"><code>g-skl-wpac-order</code><a class="headerlink" href="#g-skl-wpac-order" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-order</code><br />
@@ -5236,7 +5294,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-order/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-order/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-read"><code>g-skl-wpac-read</code><a class="headerlink" href="#g-skl-wpac-read" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-read</code><br />
@@ -5252,7 +5310,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-read/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-read/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-send-to"><code>g-skl-wpac-send-to</code><a class="headerlink" href="#g-skl-wpac-send-to" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-send-to</code><br />
@@ -5268,7 +5326,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-send-to/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-send-to/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-spawn"><code>g-skl-wpac-spawn</code><a class="headerlink" href="#g-skl-wpac-spawn" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-spawn</code><br />
@@ -5284,7 +5342,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-spawn/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-spawn/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-wpac-sync"><code>g-skl-wpac-sync</code><a class="headerlink" href="#g-skl-wpac-sync" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-wpac-sync</code><br />
@@ -5300,7 +5358,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-drift"><code>g-skl-drift</code></a>, <a href="#g-skl-linking"><code>g-skl-linking</code></a>, <a href="#g-skl-territory"><code>g-skl-territory</code></a>, <a href="#g-skl-valk"><code>g-skl-valk</code></a>, <a href="#g-skl-workspace"><code>g-skl-workspace</code></a>, <a href="#g-skl-wpac-adopt"><code>g-skl-wpac-adopt</code></a>, <a href="#g-skl-wpac-ask"><code>g-skl-wpac-ask</code></a>, <a href="#g-skl-wpac-claim"><code>g-skl-wpac-claim</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-wpac-sync/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-wpac-sync/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-yt-video-analysis"><code>g-skl-yt-video-analysis</code><a class="headerlink" href="#g-skl-yt-video-analysis" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-yt-video-analysis</code><br />
@@ -5315,7 +5373,7 @@
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
 <p><strong>Related:</strong> <a href="#g-skl-crawl"><code>g-skl-crawl</code></a>, <a href="#g-skl-crr"><code>g-skl-crr</code></a>, <a href="#g-skl-monitor"><code>g-skl-monitor</code></a>, <a href="#g-skl-recon-docs"><code>g-skl-recon-docs</code></a>, <a href="#g-skl-recon-file"><code>g-skl-recon-file</code></a>, <a href="#g-skl-recon-repo"><code>g-skl-recon-repo</code></a>, <a href="#g-skl-recon-url"><code>g-skl-recon-url</code></a>, <a href="#g-skl-recon-yt"><code>g-skl-recon-yt</code></a></p>
-<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/skills/g-skl-yt-video-analysis/SKILL.md</code></p>
+<p><strong>Source:</strong> <code>neutral_source/skills/g-skl-yt-video-analysis/SKILL.md</code></p>
 <hr />
 
 

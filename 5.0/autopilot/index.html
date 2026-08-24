@@ -1315,6 +1315,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#completing-a-capped-critical-pass-bug-1140" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Completing a capped critical PASS (BUG-1140)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#where-next" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1975,6 +1986,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#completing-a-capped-critical-pass-bug-1140" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Completing a capped critical PASS (BUG-1140)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#where-next" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2265,6 +2287,30 @@ swarm parallelism; both flags are advanced settings — leave them off and nothi
 review-result commits) without stalling on a human to approve every single one. <code>housekeep</code>
 auto-commits ONLY paths it classifies as safe, routine controller coordination changes —
 anything it can't classify as safe stays blocked for a human, by design.</p>
+<h2 id="completing-a-capped-critical-pass-bug-1140">Completing a capped critical PASS (BUG-1140)<a class="headerlink" href="#completing-a-capped-critical-pass-bug-1140" title="Permanent link">&para;</a></h2>
+<p>A reviewer PASS on a task/bug whose priority or severity score resolves to <strong>8 or above</strong>
+(High/Critical on the 1-10 rubric) never auto-completes, even when the reviewer scored it a
+clean PASS. <code>applyGoReviewVerdict</code>/<code>applyGoBugReviewVerdict</code>
+(<code>gald3r_cli/internal/commands/bug1140_close_cap.go</code>) leave the item at
+<code>awaiting-verification</code> and append a note recording the reviewer's verdict plus the exact
+completion command — the item stays there until something <em>outside the agent loop</em> confirms
+it. This is deliberate (BUG-1140, beta.36): an agent reviewer alone is not "outside the agent"
+for a critical item, so autopilot cannot self-certify its own critical closes.</p>
+<p><strong>The operator vocabulary that completes a capped item:</strong></p>
+<ul>
+<li><strong>Tasks</strong> — <code>gald3r task verify &lt;id&gt; --pass --summary "EXTERNAL-CONFIRMATION: &lt;how you
+  confirmed it&gt;"</code>. The literal <code>EXTERNAL-CONFIRMATION:</code> prefix on <code>--summary</code> is the
+  falsifiable marker the cap logic checks for (<code>bug1140ExternalConfirmationToken</code> in
+  <code>bug1140_close_cap.go</code>) — nothing inside the autopilot loop ever emits that string, so its
+  presence can only come from a human or an external system (CI result, runtime probe,
+  operator ack) attaching it by hand.</li>
+<li><strong>Bugs</strong> — <code>gald3r bug resolve &lt;id&gt;</code> completes the bug directly; <code>gald3r bug resolve</code> carries
+  no <code>--summary</code> flag. If you want the same durable EXTERNAL-CONFIRMATION record on the bug,
+  append it as a note first (or after): <code>gald3r bug update &lt;id&gt; --note "EXTERNAL-CONFIRMATION:
+  &lt;how you confirmed it&gt;"</code>.</li>
+</ul>
+<p>Read <code>bug1140_close_cap.go</code>'s file-doc comment for the full rationale (the "WHY A LITERAL
+TOKEN" section) if you need to know why this is a fixed string and not a prose heuristic.</p>
 <h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../coordination/"><code>coordination.md</code></a> — running autopilot across MULTIPLE related projects,
@@ -2322,6 +2368,15 @@ which carry the same ladder for an agent to load at routing time.)</p>
   in any tier and can serve implementer turns while a subscription CLI
   coordinates -- the cheapest fully-autonomous configuration on a machine with
   a capable GPU.</li>
+<li><code>--provider cursor-agent</code> model slugs (BUG-1293 item 5): the <code>cursor-agent</code>
+  vendor binary has no <code>ls-models</code> (or similar list-and-exit) subcommand --
+  passing an unrecognized <code>--model</code>/<code>--*-model</code> value does NOT error, it
+  silently starts a real, billed conversational turn. Never guess a slug.
+  <code>claude-sonnet-5-medium</code> is field-verified working as of beta.39 (see
+  <code>docs/field_reports/20260809_coordinator_provider_routing_apigard.md</code>); the
+  vendor's own current catalog (it changes with your Cursor plan) is
+  authoritative -- see https://cursor.com/help/models-and-usage/available-models
+  and <code>cursor-agent --help</code>.</li>
 </ul>
 
 
