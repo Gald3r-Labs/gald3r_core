@@ -1991,6 +1991,22 @@ from an older binary version, both point you at it by name.</p>
 <td>Migrate a project's <code>.gald3r/</code> files forward to the current schema version (dry-run by default); <code>--restore-missing</code> also restores accidentally-deleted single-file artifacts from the embedded canonical snapshot.</td>
 </tr>
 <tr>
+<td><code>gald3r backup</code></td>
+<td>Take a full disaster-recovery snapshot of this project — a live, non-blocking SQLite backup of <code>gald3r.db</code> plus a tarball of the <code>.gald3r/</code> markdown tree, written under <code>.gald3r_backups/</code> with a manifest of content hashes. Reverse it with <code>gald3r restore</code>.</td>
+</tr>
+<tr>
+<td><code>gald3r restore &lt;artifact-path&gt;</code></td>
+<td>Reverse a <code>gald3r backup</code> snapshot — verifies the artifact's manifest hashes and that no other process currently holds <code>gald3r.db</code> open, then (only with <code>--apply</code>) restores the database and markdown tree and re-runs <code>gald3r validate</code> automatically.</td>
+</tr>
+<tr>
+<td><code>gald3r pack</code></td>
+<td>Build a portable, checksummed export of <code>.gald3r/</code> for moving a project to a different machine — no database and nothing credential- or identity-shaped (<code>.identity</code>, secrets, <code>.gald3r/config/</code>, <code>.gald3r/vault/</code> unless <code>--include-vault</code>). Reverse it with <code>gald3r unpack</code>.</td>
+</tr>
+<tr>
+<td><code>gald3r unpack &lt;artifact-path&gt;</code></td>
+<td>Reverse a <code>gald3r pack</code> export — verifies every file's checksum before writing anything, then (only with <code>--apply</code>) writes the <code>.gald3r/</code> tree (create/overwrite only, never deletes) and re-runs <code>gald3r validate</code> automatically. Run <code>gald3r db backfill</code> afterward to rebuild <code>gald3r.db</code> from the unpacked markdown.</td>
+</tr>
+<tr>
 <td><code>gald3r inbox</code></td>
 <td>Turn quick task/bug drafts left in the inbox into fully tracked tasks and bugs.</td>
 </tr>
@@ -2037,6 +2053,14 @@ from an older binary version, both point you at it by name.</p>
 <tr>
 <td><code>gald3r medic</code></td>
 <td>Diagnose and repair problems in your project's gald3r setup — broken links, stale indexes, drifted files — fixing what's safe to fix automatically. <code>medic heal --heal board-ingest-drift</code> WARNs on files-without-rows and fat indexes; diagnose-only even with <code>--apply</code> (no silent layout-migrate, BUG-947).</td>
+</tr>
+<tr>
+<td><code>gald3r triage sweep</code></td>
+<td>Walk the open backlog and classify each task/bug <code>already_done</code> / <code>duplicate</code> / <code>obsolete</code> with git/board-verified evidence. Report-only by default; <code>--apply</code> closes only the verified, uncapped findings. See <a href="../autopilot/"><code>autopilot.md</code></a>'s "Evidence-based triage sweep" section for the citation convention and the BUG-1140 cap contract.</td>
+</tr>
+<tr>
+<td><code>gald3r autopilot reconcile</code></td>
+<td>Salvage-sweep every <code>requires-user-attention</code> item with a stranded implementer branch: probe with <code>merge-tree</code>, land clean branches via the existing merge machinery (item returns to awaiting-verification citing the SHA), close conflicted ones only on triage-verified already-done evidence (caps respected), and stamp the rest with a durable needs-human marker the park gate can never re-park. Report-only by default; <code>--apply</code> executes. See <a href="../autopilot/"><code>autopilot.md</code></a>'s "Stranded-branch salvage sweep" section.</td>
 </tr>
 </tbody>
 </table>
@@ -2086,12 +2110,20 @@ from an older binary version, both point you at it by name.</p>
 <td>Read-only run-health check: the active loop's current state — alive, waiting, stalled, or stopped — without interrupting it.</td>
 </tr>
 <tr>
+<td><code>gald3r claim TASK_UUID</code></td>
+<td>Claim a task safely when more than one agent might grab it at the same moment — only one claimant wins. The lower-level primitive <code>autoclaim</code> and the <code>go*</code> verbs build on.</td>
+</tr>
+<tr>
 <td><code>gald3r autoclaim</code></td>
 <td>Autonomously pick, claim, and work eligible tasks off the local board.</td>
 </tr>
 <tr>
 <td><code>gald3r swarm</code></td>
 <td>Split a big batch of work across several agents running in parallel.</td>
+</tr>
+<tr>
+<td><code>gald3r xreview</code></td>
+<td>Cross-vendor review: pick a reviewer on a different AI vendor than whoever implemented the change, run your gates first, hand the reviewer a diff-only bundle, and re-dispatch the same implementer on any blocking finding — never merges, even on a clean pass.</td>
 </tr>
 <tr>
 <td><code>gald3r autopilot</code></td>
@@ -2110,8 +2142,24 @@ from an older binary version, both point you at it by name.</p>
 <td>Auto-commit safe, routine <code>.gald3r/</code> coordination changes so an autonomous run doesn't stall waiting on a human for housekeeping.</td>
 </tr>
 <tr>
+<td><code>gald3r msg</code></td>
+<td>Send an addressed message between a run's live agents — coordinator, a bucket, or a reviewer — without interrupting what they're doing (<code>send</code>/<code>list</code>/<code>approve</code>).</td>
+</tr>
+<tr>
+<td><code>gald3r handoff</code></td>
+<td>Emit and consume typed session-end handoff records — a structured, schema'd message for the next session to pick up, not hand-written prose (<code>emit</code>/<code>list</code>/<code>accept</code>/<code>consume</code>).</td>
+</tr>
+<tr>
+<td><code>gald3r report &lt;text&gt;</code></td>
+<td>Send a one-line progress update from inside an implementer/reviewer bucket straight to the run's coordinator, with no board/mailbox tool access required — it shows up in the coordinator's next brief.</td>
+</tr>
+<tr>
 <td><code>gald3r go-preflight</code> / <code>gald3r go-reconcile</code> / <code>gald3r go-verdicts</code></td>
 <td>Plumbing the swarm coordinators call to batch pre-flight checks, merge parallel work, and record verdicts in one call each — not typically run by hand.</td>
+</tr>
+<tr>
+<td><code>gald3r mission advance/checkpoint-threshold/exit-status</code></td>
+<td>Plumbing the <code>g-mission</code> state machine calls for its own gate/drain/budget progression and checkpoint timing — not typically run by hand, and does not run the mission loop itself (see <code>gald3r prompt get playbook.mission</code>).</td>
 </tr>
 <tr>
 <td><code>gald3r coordinator-preflight</code></td>
@@ -2145,12 +2193,20 @@ from an older binary version, both point you at it by name.</p>
 <td>See which of your Commands, Rules, Agents, Skills, and Hooks are actually firing during real sessions — not just installed, but used.</td>
 </tr>
 <tr>
+<td><code>gald3r parity-audit</code></td>
+<td>Compare the live gald3r CLI's verb tree against the legacy gald3r-agent reference verb set — a migration-completeness check, not a day-to-day command.</td>
+</tr>
+<tr>
 <td><code>gald3r muninn</code></td>
 <td>Query the local codebase knowledge graph — what calls this function, what depends on that file, what breaks if you change it — without grepping by hand.</td>
 </tr>
 <tr>
 <td><code>gald3r search</code></td>
 <td>Find text anywhere in the project, including files your normal search tool silently skips because they're gitignored.</td>
+</tr>
+<tr>
+<td><code>gald3r sync</code></td>
+<td>Maintainer-build-only (<code>gald3r_maintainer</code> tag; a release binary carries a hidden refusal stub): redeploy the neutral commands/rules/hooks/agents/skills set from <code>neutral_source/</code> to this source checkout's own IDE folders after editing them, replacing the untracked manual-copy workaround (BUG-538/BUG-541). Dry-run drift summary by default; <code>--apply</code> writes.</td>
 </tr>
 <tr>
 <td><code>gald3r lint</code></td>
@@ -2277,6 +2333,14 @@ across your machines and your team.</p>
 <td><code>gald3r login</code> / <code>gald3r logout</code></td>
 <td>Sign in or out of your gald3r account so team and multi-device features work — <code>login</code> opens a device-code flow by default (visit a URL, enter a short code); pass <code>--token</code> for CI/power-user use.</td>
 </tr>
+<tr>
+<td><code>gald3r auth reconcile</code></td>
+<td>World_tree identity maintenance — supersede this project's locally-generated user id with world_tree's official one, once you're properly signed in.</td>
+</tr>
+<tr>
+<td><code>gald3r billing checkout/portal</code></td>
+<td>Open a hosted Stripe Checkout or Customer Portal page for your gald3r plan — world_tree is the merchant of record, so no card details ever pass through the CLI.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="release-distribution-relevant-if-youre-shipping-your-own-gald3r-based-tool">Release &amp; distribution (relevant if you're shipping <em>your own</em> gald3r-based tool)<a class="headerlink" href="#release-distribution-relevant-if-youre-shipping-your-own-gald3r-based-tool" title="Permanent link">&para;</a></h2>
@@ -2364,6 +2428,18 @@ across your machines and your team.</p>
 <td>Drive real mouse/keyboard/screenshot steps against a native desktop app to verify a UI change actually works, not just that the code compiles.</td>
 </tr>
 <tr>
+<td><code>gald3r browser</code></td>
+<td>Drive a real headless Chrome/Chromium browser — open a page, run a scripted click/type/extract session, capture a screenshot, or hand a task to the model-driven browser agent loop (<code>open</code>/<code>run</code>/<code>screenshot</code>/<code>agent</code>).</td>
+</tr>
+<tr>
+<td><code>gald3r vision eval</code></td>
+<td>Ask a multimodal model to judge an image (file path, URL, or base64) against a plain-language question, and get back a structured pass/fail/confidence/reasoning verdict.</td>
+</tr>
+<tr>
+<td><code>gald3r voice</code></td>
+<td>Push-to-talk voice for your gald3r chat/run loop — local ASR/TTS, always shown as on-screen text too, never an audio-only path (<code>chat</code>/<code>activation</code>/<code>status</code>).</td>
+</tr>
+<tr>
 <td><code>gald3r learn</code></td>
 <td>Have gald3r learn from your sessions — extracts durable facts from recent chats so it remembers them next time, instead of relearning the same thing every session.</td>
 </tr>
@@ -2380,8 +2456,24 @@ across your machines and your team.</p>
 <td>Run a small local background service so other tools can check your project's status without shelling out to the CLI each time.</td>
 </tr>
 <tr>
+<td><code>gald3r scheduler</code></td>
+<td>Reads <code>.gald3r/config/HEARTBEAT.md</code> on a cron clock, runs watchdogs, and enqueues agent routines onto the wakeup queue — the clock behind Throne's settings GUI, distinct from <code>gald3r hearth</code> (<code>start</code>/<code>stop</code>/<code>status</code>/<code>tick</code>/<code>list</code>).</td>
+</tr>
+<tr>
 <td><code>gald3r gfix</code></td>
 <td>Build, redact, and file a diagnostic field report against this repo's own issue tracker — gathers evidence only from gald3r's own surfaces (version, OS shape, terminal state), never your repo contents or project paths, and requires an explicit confirm step before anything is actually filed.</td>
+</tr>
+<tr>
+<td><code>gald3r gfix-harvest pull</code></td>
+<td>Pull this project's own classified inbound issues back from world_tree (the reports <code>gald3r gfix</code> files) and store them locally.</td>
+</tr>
+<tr>
+<td><code>gald3r harvest-issues</code></td>
+<td>Classify inbound GitHub issues as defect / enhancement / hostile / non-work (dry-run only — no GitHub writes, no board writes).</td>
+</tr>
+<tr>
+<td><code>gald3r harvest-absorb</code></td>
+<td>Turn already-classified issue results into <code>.gald3r/</code> bug/task inbox drafts — writes drafts only; never claims work and never starts an agent run.</td>
 </tr>
 <tr>
 <td><code>gald3r completion</code></td>

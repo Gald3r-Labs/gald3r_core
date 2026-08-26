@@ -1247,17 +1247,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#g-rl-09-python_venv" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        g-rl-09-python_venv
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#g-rl-26-readme-changelog" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1383,6 +1372,17 @@
     <span class="md-ellipsis">
       
         g-rl-45-loop-routing-cost-ladder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-rl-46-chat-vs-factory-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-rl-46-chat-vs-factory-placement
       
     </span>
   </a>
@@ -2151,17 +2151,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#g-rl-09-python_venv" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        g-rl-09-python_venv
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#g-rl-26-readme-changelog" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2283,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-rl-46-chat-vs-factory-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-rl-46-chat-vs-factory-placement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gald3r_personality" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2331,7 +2331,7 @@
 
 <h1 id="crash-reference-rules">CRASH Reference: Rules<a class="headerlink" href="#crash-reference-rules" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>neutral_source/rules/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>gald3r platform crash-reference --apply</code>.</p>
+<p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>src/gald3r_core/platform/pipeline/neutral_source/rules/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>uv run gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>Rules load automatically at the start of every session (or whenever their file glob matches) -- there is no invocation, no argument list, and no <code>-h</code>. They encode standing constraints a project should never have to restate out loud. This page lists every rule this repo ships, grouped by the subsystem it protects.</p>
 <p><strong>19 rules total.</strong></p>
@@ -2344,17 +2344,18 @@
 <h3 id="bugs-quality">Bugs &amp; Quality<a class="headerlink" href="#bugs-quality" title="Permanent link">&para;</a></h3>
 <p><em>Reporting, fixing, and archiving defects; QA workflows.</em></p>
 <ul>
-<li><a href="#g-rl-04-code_reusability"><code>g-rl-04-code_reusability</code></a> -- Code Reusability (DRY Enforcement)</li>
+<li><a href="#g-rl-04-code_reusability"><code>g-rl-04-code_reusability</code></a> -- DRY enforcement</li>
 <li><a href="#g-rl-35-bug-discovery-gate"><code>g-rl-35-bug-discovery-gate</code></a> -- Bug-discovery gate</li>
 <li><a href="#g-rl-42-meaningful-naming"><code>g-rl-42-meaningful-naming</code></a> -- Meaningful, specific naming</li>
 </ul>
 <h3 id="pipelines-autopilot-the-g-go-family">Pipelines &amp; Autopilot (the g-go family)<a class="headerlink" href="#pipelines-autopilot-the-g-go-family" title="Permanent link">&para;</a></h3>
 <p><em>Implement/review pipelines, swarms, autopilot loops, and agent hiring.</em></p>
 <ul>
-<li><a href="#g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code></a> -- Think in Code</li>
+<li><a href="#g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code></a> -- Collapse 3+ sequential reads/greps/status-checks into a single script instead of many tool calls</li>
 <li><a href="#g-rl-40-foundation-truths"><code>g-rl-40-foundation-truths</code></a> -- Foundation truths</li>
 <li><a href="#g-rl-43-gald3r-search-mandate"><code>g-rl-43-gald3r-search-mandate</code></a> -- Prefer the gald3r search CLI verb for codebase content search; mandatory whenever a search must see .gald3r/ or .gald3r_sys/</li>
 <li><a href="#g-rl-45-loop-routing-cost-ladder"><code>g-rl-45-loop-routing-cost-ladder</code></a> -- Interactive loop/autopilot requests default to /g-go* pipelines; the gald3r autopilot verb is reserved for detached use</li>
+<li><a href="#g-rl-46-chat-vs-factory-placement"><code>g-rl-46-chat-vs-factory-placement</code></a> -- Chat-vs-factory rule placement test</li>
 </ul>
 <h3 id="setup-project-identity">Setup &amp; Project Identity<a class="headerlink" href="#setup-project-identity" title="Permanent link">&para;</a></h3>
 <p><em>First-time setup, PROJECT.md/CONSTRAINTS.md, ideas, and personality.</em></p>
@@ -2376,8 +2377,7 @@
 <h3 id="platforms-providers">Platforms &amp; Providers<a class="headerlink" href="#platforms-providers" title="Permanent link">&para;</a></h3>
 <p><em>Cross-IDE install/parity, per-platform specs, PowerShell/CLI reference.</em></p>
 <ul>
-<li><a href="#g-rl-08-powershell"><code>g-rl-08-powershell</code></a> -- PowerShell on Windows 10/11</li>
-<li><a href="#g-rl-09-python_venv"><code>g-rl-09-python_venv</code></a> -- UV package manager and virtual environment standards for Python projects</li>
+<li><a href="#g-rl-08-powershell"><code>g-rl-08-powershell</code></a> -- PowerShell-on-Windows syntax rules, curl/Invoke-WebRequest mapping, and single-line Python invocation</li>
 </ul>
 <h3 id="security-compliance">Security &amp; Compliance<a class="headerlink" href="#security-compliance" title="Permanent link">&para;</a></h3>
 <p><em>Secret scanning, license/dependency compliance, git-sanity gates.</em></p>
@@ -2392,7 +2392,7 @@
 <h3 id="logging-diagnostics">Logging &amp; Diagnostics<a class="headerlink" href="#logging-diagnostics" title="Permanent link">&para;</a></h3>
 <p><em>Activation stats, chat logs, and session diagnostics.</em></p>
 <ul>
-<li><a href="#g-rl-00-always"><code>g-rl-00-always</code></a> -- Include in the final line(s) on every response to the user:</li>
+<li><a href="#g-rl-00-always"><code>g-rl-00-always</code></a> -- Response footer contract (timestamp, tools, measured context) and the token-count file-size split gate</li>
 </ul>
 <h3 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h3>
 <p><em>No subsystem group declared, or a declared group outside the canonical PRODUCT_SYSTEMS.md registry -- see each item's own card for which case applies.</em></p>
@@ -2403,18 +2403,15 @@
 <h3 id="g-rl-00-always"><code>g-rl-00-always</code><a class="headerlink" href="#g-rl-00-always" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-00-always</code><br />
 <strong>Group:</strong> Logging &amp; Diagnostics</p>
-<p><strong>Purpose:</strong> Include in the final line(s) on every response to the user:</p>
-<p><strong>When to use:</strong> Include in the final line(s) on every response to the user:. Loads automatically every session (alwaysApply: true) -- no invocation.</p>
+<p><strong>Purpose:</strong> Response footer contract (timestamp, tools, measured context) and the token-count file-size split gate</p>
+<p><strong>When to use:</strong> Response footer contract (timestamp, tools, measured context) and the token-count file-size split gate. Loads automatically every session (alwaysApply: true) -- no invocation.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <p><em>No direct invocation -- see "When to use" above.</em></p>
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-00-always.md</code></p>
-<blockquote>
-<p><strong>Metadata note:</strong> rules/g-rl-00-always.md: missing description: frontmatter (fallback used)</p>
-</blockquote>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-00-always.md</code></p>
 <hr />
 <h3 id="g-rl-01-documentation"><code>g-rl-01-documentation</code><a class="headerlink" href="#g-rl-01-documentation" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-01-documentation</code><br />
@@ -2427,7 +2424,7 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> <a href="#g-rl-33-enforcement_catchall"><code>g-rl-33-enforcement_catchall</code></a>, <a href="#g-rl-38-component-creation-standards"><code>g-rl-38-component-creation-standards</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-01-documentation.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-01-documentation.md</code></p>
 <hr />
 <h3 id="g-rl-02-git_workflow"><code>g-rl-02-git_workflow</code><a class="headerlink" href="#g-rl-02-git_workflow" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-02-git_workflow</code><br />
@@ -2440,52 +2437,33 @@
 <p><strong>Always apply:</strong> False<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-02-git_workflow.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-02-git_workflow.md</code></p>
 <hr />
 <h3 id="g-rl-04-code_reusability"><code>g-rl-04-code_reusability</code><a class="headerlink" href="#g-rl-04-code_reusability" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-04-code_reusability</code><br />
 <strong>Group:</strong> Bugs &amp; Quality</p>
-<p><strong>Purpose:</strong> Code Reusability (DRY Enforcement)</p>
-<p><strong>When to use:</strong> Code Reusability (DRY Enforcement). Loads as part of the platform's rule surface -- no manual invocation.</p>
+<p><strong>Purpose:</strong> DRY enforcement</p>
+<p><strong>When to use:</strong> DRY enforcement -- 3-strike rule for extracting duplicated logic into shared modules. Loads as part of the platform's rule surface -- no manual invocation.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <p><em>No direct invocation -- see "When to use" above.</em></p>
 <p><strong>Always apply:</strong> unspecified<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> <a href="#g-rl-35-bug-discovery-gate"><code>g-rl-35-bug-discovery-gate</code></a>, <a href="#g-rl-42-meaningful-naming"><code>g-rl-42-meaningful-naming</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-04-code_reusability.md</code></p>
-<blockquote>
-<p><strong>Metadata note:</strong> rules/g-rl-04-code_reusability.md: missing description: frontmatter (fallback used)</p>
-</blockquote>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-04-code_reusability.md</code></p>
 <hr />
 <h3 id="g-rl-08-powershell"><code>g-rl-08-powershell</code><a class="headerlink" href="#g-rl-08-powershell" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-08-powershell</code><br />
 <strong>Group:</strong> Platforms &amp; Providers</p>
-<p><strong>Purpose:</strong> PowerShell on Windows 10/11</p>
-<p><strong>When to use:</strong> PowerShell on Windows 10/11. Loads as part of the platform's rule surface -- no manual invocation.</p>
+<p><strong>Purpose:</strong> PowerShell-on-Windows syntax rules, curl/Invoke-WebRequest mapping, and single-line Python invocation</p>
+<p><strong>When to use:</strong> PowerShell-on-Windows syntax rules, curl/Invoke-WebRequest mapping, and single-line Python invocation. Loads as part of the platform's rule surface -- no manual invocation.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <p><em>No direct invocation -- see "When to use" above.</em></p>
 <p><strong>Always apply:</strong> unspecified<br />
 <strong>Globs:</strong> none declared  </p>
-<p><strong>Related:</strong> <a href="#g-rl-09-python_venv"><code>g-rl-09-python_venv</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-08-powershell.md</code></p>
-<blockquote>
-<p><strong>Metadata note:</strong> rules/g-rl-08-powershell.md: missing description: frontmatter (fallback used)</p>
-</blockquote>
-<hr />
-<h3 id="g-rl-09-python_venv"><code>g-rl-09-python_venv</code><a class="headerlink" href="#g-rl-09-python_venv" title="Permanent link">&para;</a></h3>
-<p><strong>Rule ID:</strong> <code>g-rl-09-python_venv</code><br />
-<strong>Group:</strong> Platforms &amp; Providers</p>
-<p><strong>Purpose:</strong> UV package manager and virtual environment standards for Python projects</p>
-<p><strong>When to use:</strong> UV package manager and virtual environment standards for Python projects. Loads when ['<strong>/*.py', '</strong>/requirements.txt', '**/pyproject.toml'] matches the files in play -- no manual invocation.</p>
-<p><strong>Arguments:</strong> none</p>
-<p><strong>Example invocation:</strong></p>
-<p><em>No direct invocation -- see "When to use" above.</em></p>
-<p><strong>Always apply:</strong> False<br />
-<strong>Globs:</strong> ['<strong>/*.py', '</strong>/requirements.txt', '**/pyproject.toml']  </p>
-<p><strong>Related:</strong> <a href="#g-rl-08-powershell"><code>g-rl-08-powershell</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-09-python_venv.md</code></p>
+<p><strong>Related:</strong> none in the same group</p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-08-powershell.md</code></p>
 <hr />
 <h3 id="g-rl-26-readme-changelog"><code>g-rl-26-readme-changelog</code><a class="headerlink" href="#g-rl-26-readme-changelog" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-26-readme-changelog</code><br />
@@ -2498,7 +2476,7 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> ['<strong>/*.md', '</strong>/<em>.mdc', '</em><em>/</em>.json']  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-26-readme-changelog.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-26-readme-changelog.md</code></p>
 <hr />
 <h3 id="g-rl-33-enforcement_catchall"><code>g-rl-33-enforcement_catchall</code><a class="headerlink" href="#g-rl-33-enforcement_catchall" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-33-enforcement_catchall</code><br />
@@ -2511,7 +2489,7 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> <a href="#g-rl-01-documentation"><code>g-rl-01-documentation</code></a>, <a href="#g-rl-38-component-creation-standards"><code>g-rl-38-component-creation-standards</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-33-enforcement_catchall.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-33-enforcement_catchall.md</code></p>
 <hr />
 <h3 id="g-rl-34-todo_completion_gate"><code>g-rl-34-todo_completion_gate</code><a class="headerlink" href="#g-rl-34-todo_completion_gate" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-34-todo_completion_gate</code><br />
@@ -2524,7 +2502,7 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-34-todo_completion_gate.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-34-todo_completion_gate.md</code></p>
 <hr />
 <h3 id="g-rl-35-bug-discovery-gate"><code>g-rl-35-bug-discovery-gate</code><a class="headerlink" href="#g-rl-35-bug-discovery-gate" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-35-bug-discovery-gate</code><br />
@@ -2537,7 +2515,7 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> <a href="#g-rl-04-code_reusability"><code>g-rl-04-code_reusability</code></a>, <a href="#g-rl-42-meaningful-naming"><code>g-rl-42-meaningful-naming</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-35-bug-discovery-gate.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-35-bug-discovery-gate.md</code></p>
 <hr />
 <h3 id="g-rl-36-workspace-member-gald3r-guard"><code>g-rl-36-workspace-member-gald3r-guard</code><a class="headerlink" href="#g-rl-36-workspace-member-gald3r-guard" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-36-workspace-member-gald3r-guard</code><br />
@@ -2550,23 +2528,20 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-36-workspace-member-gald3r-guard.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-36-workspace-member-gald3r-guard.md</code></p>
 <hr />
 <h3 id="g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code><a class="headerlink" href="#g-rl-37-think-in-code" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-37-think-in-code</code><br />
 <strong>Group:</strong> Pipelines &amp; Autopilot (the g-go family)</p>
-<p><strong>Purpose:</strong> Think in Code</p>
-<p><strong>When to use:</strong> Think in Code — Context Reduction Pattern (g-rl-37). Loads as part of the platform's rule surface -- no manual invocation.</p>
+<p><strong>Purpose:</strong> Collapse 3+ sequential reads/greps/status-checks into a single script instead of many tool calls</p>
+<p><strong>When to use:</strong> Collapse 3+ sequential reads/greps/status-checks into a single script instead of many tool calls. Loads as part of the platform's rule surface -- no manual invocation.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <p><em>No direct invocation -- see "When to use" above.</em></p>
 <p><strong>Always apply:</strong> unspecified<br />
 <strong>Globs:</strong> none declared  </p>
-<p><strong>Related:</strong> <a href="#g-rl-40-foundation-truths"><code>g-rl-40-foundation-truths</code></a>, <a href="#g-rl-43-gald3r-search-mandate"><code>g-rl-43-gald3r-search-mandate</code></a>, <a href="#g-rl-45-loop-routing-cost-ladder"><code>g-rl-45-loop-routing-cost-ladder</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-37-think-in-code.md</code></p>
-<blockquote>
-<p><strong>Metadata note:</strong> rules/g-rl-37-think-in-code.md: missing description: frontmatter (fallback used)</p>
-</blockquote>
+<p><strong>Related:</strong> <a href="#g-rl-40-foundation-truths"><code>g-rl-40-foundation-truths</code></a>, <a href="#g-rl-43-gald3r-search-mandate"><code>g-rl-43-gald3r-search-mandate</code></a>, <a href="#g-rl-45-loop-routing-cost-ladder"><code>g-rl-45-loop-routing-cost-ladder</code></a>, <a href="#g-rl-46-chat-vs-factory-placement"><code>g-rl-46-chat-vs-factory-placement</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-37-think-in-code.md</code></p>
 <hr />
 <h3 id="g-rl-38-component-creation-standards"><code>g-rl-38-component-creation-standards</code><a class="headerlink" href="#g-rl-38-component-creation-standards" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-38-component-creation-standards</code><br />
@@ -2579,7 +2554,7 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> <a href="#g-rl-01-documentation"><code>g-rl-01-documentation</code></a>, <a href="#g-rl-33-enforcement_catchall"><code>g-rl-33-enforcement_catchall</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-38-component-creation-standards.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-38-component-creation-standards.md</code></p>
 <hr />
 <h3 id="g-rl-40-foundation-truths"><code>g-rl-40-foundation-truths</code><a class="headerlink" href="#g-rl-40-foundation-truths" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-40-foundation-truths</code><br />
@@ -2591,8 +2566,8 @@
 <p><em>No direct invocation -- see "When to use" above.</em></p>
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
-<p><strong>Related:</strong> <a href="#g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code></a>, <a href="#g-rl-43-gald3r-search-mandate"><code>g-rl-43-gald3r-search-mandate</code></a>, <a href="#g-rl-45-loop-routing-cost-ladder"><code>g-rl-45-loop-routing-cost-ladder</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-40-foundation-truths.md</code></p>
+<p><strong>Related:</strong> <a href="#g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code></a>, <a href="#g-rl-43-gald3r-search-mandate"><code>g-rl-43-gald3r-search-mandate</code></a>, <a href="#g-rl-45-loop-routing-cost-ladder"><code>g-rl-45-loop-routing-cost-ladder</code></a>, <a href="#g-rl-46-chat-vs-factory-placement"><code>g-rl-46-chat-vs-factory-placement</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-40-foundation-truths.md</code></p>
 <hr />
 <h3 id="g-rl-42-meaningful-naming"><code>g-rl-42-meaningful-naming</code><a class="headerlink" href="#g-rl-42-meaningful-naming" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-42-meaningful-naming</code><br />
@@ -2605,7 +2580,7 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> <a href="#g-rl-04-code_reusability"><code>g-rl-04-code_reusability</code></a>, <a href="#g-rl-35-bug-discovery-gate"><code>g-rl-35-bug-discovery-gate</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-42-meaningful-naming.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-42-meaningful-naming.md</code></p>
 <hr />
 <h3 id="g-rl-43-gald3r-search-mandate"><code>g-rl-43-gald3r-search-mandate</code><a class="headerlink" href="#g-rl-43-gald3r-search-mandate" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-43-gald3r-search-mandate</code><br />
@@ -2617,8 +2592,8 @@
 <p><em>No direct invocation -- see "When to use" above.</em></p>
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
-<p><strong>Related:</strong> <a href="#g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code></a>, <a href="#g-rl-40-foundation-truths"><code>g-rl-40-foundation-truths</code></a>, <a href="#g-rl-45-loop-routing-cost-ladder"><code>g-rl-45-loop-routing-cost-ladder</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-43-gald3r-search-mandate.md</code></p>
+<p><strong>Related:</strong> <a href="#g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code></a>, <a href="#g-rl-40-foundation-truths"><code>g-rl-40-foundation-truths</code></a>, <a href="#g-rl-45-loop-routing-cost-ladder"><code>g-rl-45-loop-routing-cost-ladder</code></a>, <a href="#g-rl-46-chat-vs-factory-placement"><code>g-rl-46-chat-vs-factory-placement</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-43-gald3r-search-mandate.md</code></p>
 <hr />
 <h3 id="g-rl-44-vault-first-research"><code>g-rl-44-vault-first-research</code><a class="headerlink" href="#g-rl-44-vault-first-research" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-44-vault-first-research</code><br />
@@ -2631,7 +2606,7 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-44-vault-first-research.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-44-vault-first-research.md</code></p>
 <hr />
 <h3 id="g-rl-45-loop-routing-cost-ladder"><code>g-rl-45-loop-routing-cost-ladder</code><a class="headerlink" href="#g-rl-45-loop-routing-cost-ladder" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>g-rl-45-loop-routing-cost-ladder</code><br />
@@ -2643,8 +2618,21 @@
 <p><em>No direct invocation -- see "When to use" above.</em></p>
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
-<p><strong>Related:</strong> <a href="#g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code></a>, <a href="#g-rl-40-foundation-truths"><code>g-rl-40-foundation-truths</code></a>, <a href="#g-rl-43-gald3r-search-mandate"><code>g-rl-43-gald3r-search-mandate</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/rules/g-rl-45-loop-routing-cost-ladder.md</code></p>
+<p><strong>Related:</strong> <a href="#g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code></a>, <a href="#g-rl-40-foundation-truths"><code>g-rl-40-foundation-truths</code></a>, <a href="#g-rl-43-gald3r-search-mandate"><code>g-rl-43-gald3r-search-mandate</code></a>, <a href="#g-rl-46-chat-vs-factory-placement"><code>g-rl-46-chat-vs-factory-placement</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-45-loop-routing-cost-ladder.md</code></p>
+<hr />
+<h3 id="g-rl-46-chat-vs-factory-placement"><code>g-rl-46-chat-vs-factory-placement</code><a class="headerlink" href="#g-rl-46-chat-vs-factory-placement" title="Permanent link">&para;</a></h3>
+<p><strong>Rule ID:</strong> <code>g-rl-46-chat-vs-factory-placement</code><br />
+<strong>Group:</strong> Pipelines &amp; Autopilot (the g-go family)</p>
+<p><strong>Purpose:</strong> Chat-vs-factory rule placement test</p>
+<p><strong>When to use:</strong> Chat-vs-factory rule placement test — decides what stays always-apply vs g-go*-only. Loads automatically every session (alwaysApply: true) -- no invocation.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<p><em>No direct invocation -- see "When to use" above.</em></p>
+<p><strong>Always apply:</strong> True<br />
+<strong>Globs:</strong> none declared  </p>
+<p><strong>Related:</strong> <a href="#g-rl-37-think-in-code"><code>g-rl-37-think-in-code</code></a>, <a href="#g-rl-40-foundation-truths"><code>g-rl-40-foundation-truths</code></a>, <a href="#g-rl-43-gald3r-search-mandate"><code>g-rl-43-gald3r-search-mandate</code></a>, <a href="#g-rl-45-loop-routing-cost-ladder"><code>g-rl-45-loop-routing-cost-ladder</code></a></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/g-rl-46-chat-vs-factory-placement.md</code></p>
 <hr />
 <h3 id="gald3r_personality"><code>gald3r_personality</code><a class="headerlink" href="#gald3r_personality" title="Permanent link">&para;</a></h3>
 <p><strong>Rule ID:</strong> <code>gald3r_personality</code><br />
@@ -2657,7 +2645,7 @@
 <p><strong>Always apply:</strong> True<br />
 <strong>Globs:</strong> none declared  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/rules/gald3r_personality.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/rules/gald3r_personality.md</code></p>
 <blockquote>
 <p><strong>Metadata note:</strong> rules/gald3r_personality.md: missing subsystem_memberships: frontmatter</p>
 </blockquote>
