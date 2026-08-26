@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/mcp-tools/">
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/agent-record-edits/">
       
       
       
@@ -23,7 +23,7 @@
     
     
       
-        <title>MCP tools reference - gald3r_core Product Docs</title>
+        <title>Editing records via the agent (the resolution layer) - gald3r_core Product Docs</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mcp-tools-reference" class="md-skip">
+        <a href="#editing-records-via-the-agent-the-resolution-layer" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MCP tools reference
+              Editing records via the agent (the resolution layer)
             
           </span>
         </div>
@@ -1524,10 +1524,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prompt-memory-tools" class="md-nav__link">
+  <a href="#the-contract" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prompt &amp; memory tools
+        The contract
       
     </span>
   </a>
@@ -1535,33 +1535,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#record-mutation-tools-t1148-part-of-the-t1143-record-mutation-api" class="md-nav__link">
+  <a href="#whats-wired-up-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Record-mutation tools (T1148, part of the T1143 record-mutation API)
+        What's wired up today
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Record-mutation tools (T1148, part of the T1143 record-mutation API)">
+    <nav class="md-nav" aria-label="What&#39;s wired up today">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-call" class="md-nav__link">
+  <a href="#the-reference-planners-recognized-request-shapes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example call
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#errors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Errors
+        The reference planner's recognized request shapes
       
     </span>
   </a>
@@ -1570,6 +1559,39 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-boundary-this-package-does-not-ship-an-llm-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design boundary: this package does not ship an LLM integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-record-classes-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported record classes today
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guard-a-child-process-cannot-bypass-the-api-with-a-direct-write" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guard: a "child process" cannot bypass the API with a direct write
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1593,153 +1615,116 @@
   
 
 
-<h1 id="mcp-tools-reference">MCP tools reference<a class="headerlink" href="#mcp-tools-reference" title="Permanent link">&para;</a></h1>
-<p><code>gald3r mcp</code> runs a minimal JSON-RPC 2.0 <a href="https://modelcontextprotocol.io/">MCP</a> server over
-stdio (<code>gald3r_mcp</code>, <code>internal/mcpserver</code>). Point any MCP-compatible client (Claude Code, Cursor,
-etc.) at it and it exposes the tools below via <code>tools/list</code> / <code>tools/call</code>.</p>
-<h2 id="prompt-memory-tools">Prompt &amp; memory tools<a class="headerlink" href="#prompt-memory-tools" title="Permanent link">&para;</a></h2>
+<h1 id="editing-records-via-the-agent-the-resolution-layer">Editing records via the agent (the resolution layer)<a class="headerlink" href="#editing-records-via-the-agent-the-resolution-layer" title="Permanent link">&para;</a></h1>
+<p>T1150, the last child task of the T1143 EPIC (the record-mutation API, D050's write side),
+builds the seam between "tell the agent what you want changed, in plain language" and the typed
+<code>Mutate&lt;Class&gt;</code> calls <a href="../mcp-tools/"><code>mcp-tools.md</code></a> documents. This page explains the
+contract and its current integration status honestly — read the "What's wired up today" section
+before assuming a command below already exists.</p>
+<h2 id="the-contract">The contract<a class="headerlink" href="#the-contract" title="Permanent link">&para;</a></h2>
+<pre><code>plain-language request
+    --[a Planner resolves it]--&gt; a Plan: zero or more typed Calls, shown for confirmation
+    --[you confirm, or decline]--
+    --[Execute dispatches each confirmed call]--&gt; the record's rendered text, reported back
+</code></pre>
+<ul>
+<li><strong>The agent never opens a record's markdown file in an editor.</strong> Every change goes through
+  the same typed <code>Mutate&lt;Class&gt;</code> functions the CLI verbs and MCP tools (<a href="../mcp-tools/"><code>mcp-tools.md</code></a>)
+  already call — there is no separate, parallel write path for agent-driven edits.</li>
+<li><strong>You always see the plan before anything happens.</strong> A Plan renders as a one-line summary plus
+  one line per call (e.g. <code>task 42: set status="paused", priority_score=8</code>) — nothing executes
+  until that plan is confirmed.</li>
+<li><strong>An unresolvable request refuses cleanly, with a reason</strong> — "I couldn't figure out what you
+  meant" is a normal outcome, not a crash or a guess.</li>
+<li><strong>One call failing does not abort the rest of the plan.</strong> If a request resolves to several
+  edits and one of them fails (an unknown id, a validation error), the others still run; you get
+  a per-call result.</li>
+</ul>
+<h2 id="whats-wired-up-today">What's wired up today<a class="headerlink" href="#whats-wired-up-today" title="Permanent link">&para;</a></h2>
+<p>This task landed the resolution layer itself — <code>gald3r_project/board/resolve</code> — as a Go package:
+a <code>Planner</code> interface (the seam any real language-understanding step plugs into), a small
+deterministic reference planner covering a narrow, fixed set of request shapes (see below), and
+the <code>Plan -&gt; confirm -&gt; Execute -&gt; rendered result</code> orchestration, wired against the real
+<code>ops.MutateTask</code>/<code>ops.MutateBug</code> functions.</p>
+<p><strong>It is not yet wired into <code>gald3r chat</code> or any other end-user command.</strong> That integration —
+along with the actual language-model-backed planner (see "Design boundary" below) — is expected
+to land on top of the always-on project-agent runtime (<code>gald3r.ai/swarm/projectagent</code>, tracked as
+a separate, larger epic) once that runtime reaches <code>main</code>. Until then, this page documents the
+package contract for whoever wires that integration up, and the narrow reference planner you can
+already exercise directly against the package.</p>
+<h3 id="the-reference-planners-recognized-request-shapes">The reference planner's recognized request shapes<a class="headerlink" href="#the-reference-planners-recognized-request-shapes" title="Permanent link">&para;</a></h3>
+<p><code>resolve.ReferencePlanner</code> is a small, fully deterministic, zero-model implementation that
+recognizes exactly these English sentence shapes (case-insensitive):</p>
 <table>
 <thead>
 <tr>
-<th>Tool</th>
-<th>What it does</th>
+<th>Request</th>
+<th>Effect</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>gald3r_prompt_get</code></td>
-<td>Fetch a prompt/judgment asset's rendered text (binds any <code>${slot}</code> inputs). Shipped gald3r-internal assets are refused.</td>
+<td><code>set task &lt;id&gt; status to &lt;status&gt;</code></td>
+<td>Sets the task's <code>status</code></td>
 </tr>
 <tr>
-<td><code>gald3r_prompt_list</code></td>
-<td>List prompt/judgment assets (<code>kind</code>: persona|role|rubric|playbook|voice|rule).</td>
+<td><code>set task &lt;id&gt; priority score to &lt;n&gt;</code></td>
+<td>Sets the task's <code>priority_score</code></td>
 </tr>
 <tr>
-<td><code>gald3r_memory_recall</code></td>
-<td>Chat-native recall over the file-first vault plus scoped memory records (user/project/workspace/team/company), merged into one token-budgeted result.</td>
+<td><code>pause task &lt;id&gt;</code></td>
+<td>Shorthand for <code>status: paused</code></td>
+</tr>
+<tr>
+<td><code>set bug &lt;id&gt; status to &lt;status&gt;</code></td>
+<td>Sets the bug's <code>status</code></td>
+</tr>
+<tr>
+<td><code>set bug &lt;id&gt; severity to &lt;severity&gt;</code></td>
+<td>Sets the bug's <code>severity</code></td>
+</tr>
+<tr>
+<td><code>resolve bug &lt;id&gt; as &lt;resolution&gt;</code></td>
+<td>Sets the bug's <code>status: done</code> and <code>resolution</code></td>
 </tr>
 </tbody>
 </table>
-<h2 id="record-mutation-tools-t1148-part-of-the-t1143-record-mutation-api">Record-mutation tools (T1148, part of the T1143 record-mutation API)<a class="headerlink" href="#record-mutation-tools-t1148-part-of-the-t1143-record-mutation-api" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>A plain-language edit request ("pause task 42 and drop its score to 8") maps onto these SAME
-<code>Mutate&lt;Class&gt;</code> calls one layer up, via the project-agent resolution layer
-(<code>gald3r_project/board/resolve</code>, T1150) — see
-<a href="../agent-record-edits/"><code>agent-record-edits.md</code></a> for that contract and its current
-integration status.</p>
-</blockquote>
-<p>One tool per <code>.gald3r</code> record class, each routing to the same typed Go mutation function
-(<code>gald3r_project/board/ops</code> or <code>gald3r_project/board/artifact</code>'s <code>Mutate&lt;Class&gt;</code>) the CLI verbs
-and the autopilot dispatcher call — a <code>&lt;class&gt;_update</code> verb is a thin wrapper over the identical
-call, never parallel logic. Every tool's <code>inputSchema</code> is generated by reflection over the exact
-Go struct (<code>&lt;Class&gt;UpdateFields</code>) the corresponding <code>Mutate&lt;Class&gt;</code> function accepts, so the
-schema and the Go function can never drift apart. Only the fields you supply change — omitted
-fields are left untouched. <code>uuid</code>/<code>created_date</code>/<code>created_at</code> are never accepted: no
-<code>UpdateFields</code> struct carries a field for them, and a caller who tries anyway gets a named
-<code>refused: immutable_field: ...</code> error rather than a silently-dropped value.</p>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Id parameter</th>
-<th>Class</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>gald3r_task_update</code></td>
-<td><code>task_id</code></td>
-<td>Task</td>
-<td>validates against <code>task_file.v1.schema.yaml</code></td>
-</tr>
-<tr>
-<td><code>gald3r_bug_update</code></td>
-<td><code>bug_id</code></td>
-<td>Bug</td>
-<td>validates against <code>bug_file.v1.schema.yaml</code></td>
-</tr>
-<tr>
-<td><code>gald3r_adr_update</code></td>
-<td><code>adr_id</code></td>
-<td>Architecture Decision Record</td>
-<td><code>supersedes</code>/<code>superseded_by</code> are owned by the supersede workflow, not exposed here</td>
-</tr>
-<tr>
-<td><code>gald3r_todo_update</code></td>
-<td><code>todo_id</code></td>
-<td>TO-DO</td>
-<td><code>user_authorized</code> (bool) is <strong>required</strong> — TO-DOs are user-write-only (T827 §3); the call is refused if it is missing or <code>false</code>, regardless of which other fields are supplied</td>
-</tr>
-<tr>
-<td><code>gald3r_idea_update</code></td>
-<td><code>idea_id</code></td>
-<td>IDEA_BOARD.md idea</td>
-<td><code>promoted_to</code> is owned by the promote workflow, not exposed here</td>
-</tr>
-<tr>
-<td><code>gald3r_decision_update</code></td>
-<td><code>decision_id</code></td>
-<td>DECISIONS.md ruling</td>
-<td><code>supersedes</code>/<code>superseded_by</code> are owned by the supersede workflow, not exposed here</td>
-</tr>
-<tr>
-<td><code>gald3r_prd_update</code></td>
-<td><code>prd_id</code></td>
-<td>PRD</td>
-<td>PRD Freeze Gate (C-019): a <code>released</code>/<code>superseded</code> PRD refuses every field change outright — use <code>@g-prd-revise</code> instead</td>
-</tr>
-<tr>
-<td><code>gald3r_feature_update</code></td>
-<td><code>feature_id</code></td>
-<td>Staged feature</td>
-<td>—</td>
-</tr>
-<tr>
-<td><code>gald3r_subsystem_update</code></td>
-<td><code>name</code></td>
-<td>Subsystem spec</td>
-<td>narrower field set (status/parent_system/parent_subsystem/min_tier) — children/dependencies/dependents/owners/locations are real file content this tool cannot reflect and are left byte-for-byte untouched</td>
-</tr>
-<tr>
-<td><code>gald3r_release_update</code></td>
-<td><code>release_id</code></td>
-<td>Release spec</td>
-<td>file-only (no DB row for this class yet)</td>
-</tr>
-<tr>
-<td><code>gald3r_constraint_update</code></td>
-<td><code>constraint_id</code></td>
-<td>CONSTRAINTS.md row</td>
-<td><code>severity</code> must be <code>block</code> or <code>warn</code></td>
-</tr>
-<tr>
-<td><code>gald3r_document_update</code></td>
-<td><code>kind</code></td>
-<td>Singleton document</td>
-<td>only <code>kind: "project"</code> (PROJECT.md) and <code>kind: "plan"</code> (PLAN.md) are mutable — every other document kind is a regenerated index and must never be hand-patched; <code>frontmatter_scalars</code> (required) is a <code>key -&gt; literal YAML scalar text</code> map, so quote a string value yourself when the key needs it, e.g. <code>{"status": "'active'"}</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="example-call">Example call<a class="headerlink" href="#example-call" title="Permanent link">&para;</a></h3>
-<pre><code class="language-json">{
-  &quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 1, &quot;method&quot;: &quot;tools/call&quot;,
-  &quot;params&quot;: {
-    &quot;name&quot;: &quot;gald3r_task_update&quot;,
-    &quot;arguments&quot;: { &quot;task_id&quot;: &quot;42&quot;, &quot;status&quot;: &quot;paused&quot;, &quot;priority_score&quot;: 8 }
-  }
+<p>Anything outside these shapes returns an unresolved <code>Plan</code> with a <code>Reason</code> explaining that
+nothing matched — it never guesses.</p>
+<h2 id="design-boundary-this-package-does-not-ship-an-llm-integration">Design boundary: this package does not ship an LLM integration<a class="headerlink" href="#design-boundary-this-package-does-not-ship-an-llm-integration" title="Permanent link">&para;</a></h2>
+<p>T1150's own description imagines a human telling "the AI what needed to be done" and the agent
+resolving that into calls — i.e. a language model doing the actual understanding. Which model to
+call, what prompt/context to give it, how much of the board to feed it, and how ambiguity gets
+surfaced back to the human are all real product decisions with no ratified answer on record as
+of this task. Wiring a live model call is also outside <code>gald3r_project/</code>'s territory (this task's
+scope): <code>gald3r_llm</code> and the always-on project-agent runtime are the natural home for a real
+<code>Planner</code> implementation once that design is ratified.</p>
+<p>Nothing about the package changes when that planner arrives — it is just another <code>Planner</code>:</p>
+<pre><code class="language-go">type Planner interface {
+    Plan(ctx context.Context, request string, board BoardContext) (Plan, error)
 }
 </code></pre>
-<h3 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">&para;</a></h3>
-<p>A bad id, an unknown enum value, a missing required argument, or an attempt to set an immutable
-field all come back as a JSON-RPC <code>-32602 Invalid params</code> error carrying a machine-checkable
-<code>reason:</code> token (e.g. <code>task_not_found</code>, <code>invalid_status</code>, <code>immutable_field</code>,
-<code>user_authorization_required</code>) — never a silent no-op. An unexpected failure (a DB write error, a
-render failure) comes back as <code>-32603 Internal error</code> instead, so a client can tell "your input
-was wrong" apart from "something broke on the server side."</p>
-<p>A missing <code>.gald3r/</code> project root (resolved by walking up from the server process's working
-directory) is reported as a domain-level tool result (<code>isError: true</code>) rather than a JSON-RPC
-error, matching <code>gald3r_memory_recall</code>'s existing convention.</p>
+<p>Any implementation — the reference planner above, a test's fake model, or a future LLM-backed
+one — plugs into the exact same <code>resolve.ResolveAndExecute</code> orchestration.</p>
+<h2 id="supported-record-classes-today">Supported record classes today<a class="headerlink" href="#supported-record-classes-today" title="Permanent link">&para;</a></h2>
+<p>Only <code>task</code> and <code>bug</code> ship a built-in dispatcher out of the box (<code>resolve.ClassTask</code> /
+<code>resolve.ClassBug</code>), routed to <code>ops.MutateTask</code> / <code>ops.MutateBug</code> — the two record classes with
+the richest, fully DB-first mutation API. The other ten classes T1143 named (ADR, TO-DO, idea,
+decision, PRD, feature, subsystem, release, constraint, document) already have their own
+<code>Mutate&lt;Class&gt;</code> functions (see <a href="../mcp-tools/"><code>mcp-tools.md</code></a>); wiring one into the resolution
+layer is a <code>resolve.RegisterClass("adr", myDispatchFunc)</code> call away, not a package change.</p>
+<h2 id="guard-a-child-process-cannot-bypass-the-api-with-a-direct-write">Guard: a "child process" cannot bypass the API with a direct write<a class="headerlink" href="#guard-a-child-process-cannot-bypass-the-api-with-a-direct-write" title="Permanent link">&para;</a></h2>
+<p>Every write this package ever performs goes through a registered <code>Mutate&lt;Class&gt;</code> function —
+<code>Execute</code> has no write path of its own to fall back to. While building this task, an audit found
+that <code>ops.MutateTask</code>/<code>MutateBug</code>/<code>MutateTodo</code>/<code>MutateIdea</code> (unlike every other <code>Mutate&lt;Class&gt;</code>
+function in the codebase) carried <strong>no</strong> <code>reviewsandbox.Guard</code> check at all: a sandboxed
+reviewer-turn child (<code>GALD3R_REVIEW_SANDBOX=1</code>) or a T1141 single-writer-board child
+(<code>GALD3R_SINGLE_WRITER_BOARD=1</code>) could call them directly and mutate the board anyway. This task
+closes that gap in <code>gald3r_project/board/ops</code> (<code>mutate.go</code>/<code>mutate2.go</code>) — both markers now
+refuse with the same named errors every other guarded write path in this codebase already uses —
+and proves the fix holds all the way through this package's own <code>Execute</code> step
+(<code>resolve_reviewsandbox_test.go</code>), not just when <code>Mutate&lt;Class&gt;</code> is called directly
+(<code>mutate_reviewsandbox_test.go</code>).</p>
 
 
 

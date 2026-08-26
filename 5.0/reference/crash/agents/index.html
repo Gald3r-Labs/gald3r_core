@@ -1788,7 +1788,7 @@
 
 <h1 id="crash-reference-agents">CRASH Reference: Agents<a class="headerlink" href="#crash-reference-agents" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>neutral_source/agents/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>gald3r platform crash-reference --apply</code>.</p>
+<p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>src/gald3r_core/platform/pipeline/neutral_source/agents/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>uv run gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>An agent definition narrows a whole session to one job -- invoke one directly (<code>@g-agnt-&lt;name&gt;</code> on Cursor; your platform's subagent/persona mechanism elsewhere, e.g. Claude Code's Task tool with a matching <code>subagent_type</code>) when you specifically want that narrower framing, such as forcing a fresh, unbiased verification pass. Most day-to-day work never needs a direct agent invocation -- commands route to the right skill on their own.</p>
 <p><strong>13 agents total.</strong></p>
@@ -1844,7 +1844,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-qa-engineer"><code>@g-agnt-qa-engineer</code></a>, <a href="#g-agnt-test"><code>@g-agnt-test</code></a>, <a href="#g-agnt-verifier"><code>@g-agnt-verifier</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-code-reviewer.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-code-reviewer.md</code></p>
 <hr />
 <h3 id="g-agnt-ideas-goals"><code>@g-agnt-ideas-goals</code><a class="headerlink" href="#g-agnt-ideas-goals" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-ideas-goals</code><br />
@@ -1859,7 +1859,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Glob  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-infrastructure"><code>@g-agnt-infrastructure</code></a>, <a href="#g-agnt-project"><code>@g-agnt-project</code></a>, <a href="#g-agnt-project-initializer"><code>@g-agnt-project-initializer</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-ideas-goals.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-ideas-goals.md</code></p>
 <hr />
 <h3 id="g-agnt-infrastructure"><code>@g-agnt-infrastructure</code><a class="headerlink" href="#g-agnt-infrastructure" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-infrastructure</code><br />
@@ -1874,7 +1874,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-ideas-goals"><code>@g-agnt-ideas-goals</code></a>, <a href="#g-agnt-project"><code>@g-agnt-project</code></a>, <a href="#g-agnt-project-initializer"><code>@g-agnt-project-initializer</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-infrastructure.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-infrastructure.md</code></p>
 <hr />
 <h3 id="g-agnt-marketing"><code>@g-agnt-marketing</code><a class="headerlink" href="#g-agnt-marketing" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-marketing</code><br />
@@ -1889,13 +1889,13 @@
 </ul>
 <p><strong>Tools:</strong> unspecified  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-marketing.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-marketing.md</code></p>
 <hr />
 <h3 id="g-agnt-platformer"><code>@g-agnt-platformer</code><a class="headerlink" href="#g-agnt-platformer" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-platformer</code><br />
 <strong>Group:</strong> Platforms &amp; Providers</p>
 <p><strong>Purpose:</strong> Use when maintaining cross-platform IDE/agent integration (Cursor, Claude, Copilot, Codex, Antigravity, and the rest of the roster), scanning platform docs for breaking changes, checking platform capability gaps vs.</p>
-<p><strong>When to use:</strong> Invoke this agent directly when you specifically want: use when maintaining cross-platform IDE/agent integration (Cursor, Claude, Copilot, Codex, Antigravity, and the rest of the roster), scanning platform docs for breaking changes, checking platform capability gaps vs. the Cursor reference, maintaining PLATFORM_STATUS.md / PLATFORM_CAPABILITY_MATRIX.md, or coordinating the T1461–T1483 per-platform spec work.</p>
+<p><strong>When to use:</strong> Invoke this agent directly when you specifically want: use when maintaining cross-platform IDE/agent integration (Cursor, Claude, Copilot, Codex, Antigravity, and the rest of the roster), scanning platform docs for breaking changes, checking platform capability gaps vs. the Cursor reference, maintaining the platform status index and capability matrix, or coordinating the per-platform spec work.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -1904,7 +1904,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-platformer.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-platformer.md</code></p>
 <hr />
 <h3 id="g-agnt-project"><code>@g-agnt-project</code><a class="headerlink" href="#g-agnt-project" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-project</code><br />
@@ -1919,7 +1919,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-ideas-goals"><code>@g-agnt-ideas-goals</code></a>, <a href="#g-agnt-infrastructure"><code>@g-agnt-infrastructure</code></a>, <a href="#g-agnt-project-initializer"><code>@g-agnt-project-initializer</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-project.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-project.md</code></p>
 <hr />
 <h3 id="g-agnt-project-initializer"><code>@g-agnt-project-initializer</code><a class="headerlink" href="#g-agnt-project-initializer" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-project-initializer</code><br />
@@ -1934,7 +1934,7 @@
 </ul>
 <p><strong>Tools:</strong> unspecified  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-ideas-goals"><code>@g-agnt-ideas-goals</code></a>, <a href="#g-agnt-infrastructure"><code>@g-agnt-infrastructure</code></a>, <a href="#g-agnt-project"><code>@g-agnt-project</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-project-initializer.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-project-initializer.md</code></p>
 <hr />
 <h3 id="g-agnt-qa-engineer"><code>@g-agnt-qa-engineer</code><a class="headerlink" href="#g-agnt-qa-engineer" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-qa-engineer</code><br />
@@ -1949,7 +1949,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-code-reviewer"><code>@g-agnt-code-reviewer</code></a>, <a href="#g-agnt-test"><code>@g-agnt-test</code></a>, <a href="#g-agnt-verifier"><code>@g-agnt-verifier</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-qa-engineer.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-qa-engineer.md</code></p>
 <hr />
 <h3 id="g-agnt-task-manager"><code>@g-agnt-task-manager</code><a class="headerlink" href="#g-agnt-task-manager" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-task-manager</code><br />
@@ -1964,7 +1964,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
 <p><strong>Related:</strong> none in the same group</p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-task-manager.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-task-manager.md</code></p>
 <hr />
 <h3 id="g-agnt-test"><code>@g-agnt-test</code><a class="headerlink" href="#g-agnt-test" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-test</code><br />
@@ -1979,7 +1979,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-code-reviewer"><code>@g-agnt-code-reviewer</code></a>, <a href="#g-agnt-qa-engineer"><code>@g-agnt-qa-engineer</code></a>, <a href="#g-agnt-verifier"><code>@g-agnt-verifier</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-test.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-test.md</code></p>
 <hr />
 <h3 id="g-agnt-verifier"><code>@g-agnt-verifier</code><a class="headerlink" href="#g-agnt-verifier" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-verifier</code><br />
@@ -1994,7 +1994,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-code-reviewer"><code>@g-agnt-code-reviewer</code></a>, <a href="#g-agnt-qa-engineer"><code>@g-agnt-qa-engineer</code></a>, <a href="#g-agnt-test"><code>@g-agnt-test</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-verifier.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-verifier.md</code></p>
 <hr />
 <h3 id="g-agnt-workspace-manager"><code>@g-agnt-workspace-manager</code><a class="headerlink" href="#g-agnt-workspace-manager" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-workspace-manager</code><br />
@@ -2009,7 +2009,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-wpac-coordinator"><code>@g-agnt-wpac-coordinator</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-workspace-manager.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-workspace-manager.md</code></p>
 <hr />
 <h3 id="g-agnt-wpac-coordinator"><code>@g-agnt-wpac-coordinator</code><a class="headerlink" href="#g-agnt-wpac-coordinator" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-wpac-coordinator</code><br />
@@ -2024,7 +2024,7 @@
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Glob, Grep, Bash  </p>
 <p><strong>Related:</strong> <a href="#g-agnt-workspace-manager"><code>@g-agnt-workspace-manager</code></a></p>
-<p><strong>Source:</strong> <code>neutral_source/agents/g-agnt-wpac-coordinator.md</code></p>
+<p><strong>Source:</strong> <code>src/gald3r_core/platform/pipeline/neutral_source/agents/g-agnt-wpac-coordinator.md</code></p>
 <hr />
 
 
