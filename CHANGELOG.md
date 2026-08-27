@@ -24,6 +24,41 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.43] - 2026-08-27
+
+This beta makes the autopilot genuinely self-healing and hardens the paths users
+actually hit.
+
+**Autopilot that finishes what it starts.** The engine now merges completed work
+itself with an automatic conflict-resolution ladder, salvages interrupted work
+before anything is lost (dirty worktrees are preserved automatically and stranded
+branches are garbage-collected), unblocks dependent items the moment their
+blockers complete, and runs an honesty gate at startup that refuses to launch on
+unverified board state. Agent lanes now report liveness continuously, and review
+verdicts apply end-to-end without manual intervention — including a
+severity-based cap that routes high-impact closures through explicit
+confirmation.
+
+**Safer economics.** Metered agent spawns are classified before launch and
+refused without explicit opt-in; the authenticated account identity is shown
+before anything spends. Context-window telemetry for agent lanes now reads the
+vendor's own transcript, so burn gates measure instead of guessing.
+
+**Memory that compounds.** Sessions now compile into a searchable project wiki
+automatically at session end, and each new session starts with that knowledge
+injected — bounded, and only when there is real content.
+
+**Quality of life.** Legacy provider configuration files migrate automatically
+with timestamped backups instead of being refused. `gald3r db query` offers
+fail-closed, read-only SQL over the project database. Release cuts now stamp
+every shipped item with its release and publish backlog momentum stats. The
+validator repairs previously hard-erroring status values. Numerous 3D
+entertainment-stage improvements landed: large static geometry batching,
+per-prop interaction hit-boxes (72% fewer interactive objects), character
+pose-rendering hardening, and verified demo + broadcast modes.
+
+Full technical detail is in CHANGELOG.md.
+
 ## [5.0.0-beta.28] - 2026-08-16
 
 **The resilience build.** The loop now survives its own worst moments — and
