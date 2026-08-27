@@ -1971,6 +1971,10 @@ from an older binary version, both point you at it by name.</p>
 <td>Rebuild a slim index (<code>TASKS.md</code> / <code>BUGS.md</code> / <code>ADRS.md</code> / <code>TO-DO_LIST.md</code> / <code>IDEA_BOARD.md</code> / <code>DECISIONS.md</code> / <code>PRDS.md</code>) from <code>gald3r.db</code> (<code>--kind</code>, default all). File-walk is fallback only when that kind has zero DB rows. Also mounted as <code>gald3r adr regenerate-index</code>, <code>gald3r todo regenerate-index</code>, and <code>gald3r idea regenerate-index</code>.</td>
 </tr>
 <tr>
+<td><code>gald3r db query</code></td>
+<td>Run one read-only <code>SELECT</code>/<code>WITH</code> statement against <code>gald3r.db</code> (<code>--param NAME=VALUE</code> for named binding, <code>--limit</code>/<code>--timeout</code>, <code>--json</code>), or inspect its schema with <code>--schema</code> — fail-closed: mutating statements, <code>ATTACH</code>/<code>DETACH</code>, <code>VACUUM</code>, and every <code>PRAGMA</code> are rejected before the database is even opened, and the connection itself is physically read-only. This is the DB-query surface <code>g-rl-40</code> rule 2 asks for instead of brute-reading task/bug files.</td>
+</tr>
+<tr>
 <td><code>gald3r logs</code></td>
 <td>Ingest gald3r's own logs and platform-native chat transcripts (Claude Code, Cursor, ...) into a separate, gitignored logs database — keeps bulk log volume out of the coordination database.</td>
 </tr>

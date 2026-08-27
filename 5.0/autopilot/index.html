@@ -1452,6 +1452,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#global-config-layer-and-the-verify-settings-gate-task1168" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global config layer and the verify-settings gate (task1168)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2228,6 +2239,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#global-config-layer-and-the-verify-settings-gate-task1168" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global config layer and the verify-settings gate (task1168)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2681,6 +2703,38 @@ which carry the same ladder for an agent to load at routing time.)</p>
   in any tier and can serve implementer turns while a subscription CLI
   coordinates -- the cheapest fully-autonomous configuration on a machine with
   a capable GPU.</li>
+<li><strong>Coordinator provider matrix (T1170, local-fleet inversion).</strong> The
+  coordinator used to be locked to <code>claude</code>/<code>cursor-agent</code> -- the one
+  unavoidable paid/subscription seat in an otherwise-free local-fleet loop.
+  Two additions close that gap:</li>
+<li><code>--coordinator-provider codex</code> and <code>--coordinator-provider gemini-cli</code>
+    join <code>claude</code>/<code>cursor-agent</code> as real coordinator-CLI vocabulary (the same
+    <code>providerLaunchSpecs</code> mechanism, <code>gald3r_swarm/autopilot/role_routing.go</code>)
+    -- a host with OpenAI's <code>codex</code> or Google's <code>gemini</code> CLI installed and
+    authenticated, but no Claude/Cursor subscription, can now coordinate at
+    all, closing the "35+ platform support" gap for the flagship loop. The
+    provider id is <code>gemini-cli</code>, not bare <code>gemini</code> -- that id names the
+    SEPARATE <code>gald3r_llm/providers</code> registry vocabulary (see
+    <code>docs/providers_template.yaml</code>'s own <code>gemini</code> block) implementer/reviewer
+    already accept; <code>gemini-cli</code> is the standalone agentic CLI tool.</li>
+<li><code>--coordinator-provider gald3r --coordinator-model &lt;providers.yaml spec&gt;</code>
+    (e.g. <code>local-compat:qwen2.5:7b-instruct</code>, or an OpenRouter model) is the
+    <strong>self-hosted registry route</strong>: the coordinator re-spawns gald3r's own
+    binary (<code>gald3r run --model &lt;spec&gt; --output-mode stream-json</code>) instead of
+    an external agent CLI, so a loop can coordinate against a fully local or
+    OpenRouter model -- the zero-dollar-coordinator configuration the
+    no-budget ruling asked for. <code>autopilot loop</code>'s own startup banner prints
+    a QUALITY WARNING whenever the resolved coordinator is this route (or any
+    other non-frontier id): a registry model's own task-selection/dispatch
+    judgment driving the full outer loop is meaningfully weaker than a
+    frontier CLI agent's, which is exactly why deterministic dispatch (this
+    loop's default) carries most of the fan-out -- see
+    <code>gald3r_swarm/autopilot/role_routing.go</code>'s <code>IsFrontierCoordinatorProvider</code>
+    and task714/T1169's own design notes for the full rationale. This route
+    does not (yet) get the richer provider-refusal/reset-time classification
+    cloud CLI-vocab providers get -- a registry error still fails the
+    iteration honestly via a non-zero exit code, just without that extra
+    detail.</li>
 <li><code>--provider cursor-agent</code> model slugs (BUG-1293 item 5): the <code>cursor-agent</code>
   vendor binary has no <code>ls-models</code> (or similar list-and-exit) subcommand --
   passing an unrecognized <code>--model</code>/<code>--*-model</code> value does NOT error, it
@@ -2775,6 +2829,46 @@ resolves (<code>GALD3R_SPEND_BELL=0</code> disables the bell). Playback is best-
 and fire-and-forget on every platform (winmm <code>PlaySoundW</code> on Windows,
 <code>afplay</code> on macOS, <code>paplay</code>/<code>aplay</code> on Linux) -- it never crashes or delays
 launch if unavailable.</p>
+<h2 id="global-config-layer-and-the-verify-settings-gate-task1168">Global config layer and the verify-settings gate (task1168)<a class="headerlink" href="#global-config-layer-and-the-verify-settings-gate-task1168" title="Permanent link">&para;</a></h2>
+<p>Per-project <code>.gald3r/config/AGENT_CONFIG.md</code> overrides are easy to forget once
+you have not touched a project in a while -- and a stale <code>implementer_model:</code>
+or <code>reviewer_provider:</code> pin silently steers a whole run. Two things address
+that:</p>
+<p><strong>A global config layer.</strong> <code>&lt;gald3r home&gt;/config/AGENT_CONFIG.md</code> (the same
+per-user directory <code>GALD3R_HOME</code> already points at) is a NEW, optional second
+layer with the same "key: value" scalar shape as the project file. Resolution
+order for every provider/model key is `flags &gt; project config &gt; global config</p>
+<blockquote>
+<p>engine defaults` -- a project's own override always wins, but a project
+with no override falls back to a sensible operator-wide default instead of a
+hardcoded one. View or edit either layer with:</p>
+</blockquote>
+<pre><code class="language-bash">gald3r config agent show              # every key set in either layer, with the winning source
+gald3r config agent get KEY           # one key's resolved value + source (project|global|unset)
+gald3r config agent set KEY VALUE --yes            # writes the PROJECT layer
+gald3r config agent set --global KEY VALUE --yes   # writes the GLOBAL layer
+</code></pre>
+<p><code>gald3r providers explain</code> also lints both layers now (not just the project
+file), including a "how many minor <code>gald3r_rel_version</code> releases behind this
+binary" distance when the two are comparable.</p>
+<p><strong>An opt-in verify-settings launch gate.</strong> <code>autopilot loop --verify-settings</code>
+prints the resolved provider/model/effort/lanes/budget receipt (the same
+information the launch banner already shows, plus any stale-config
+warnings) and requires an explicit <code>y</code>/<code>N</code> confirm in an interactive
+terminal, or <code>--verify-settings-yes</code> headless, before any claim/worktree/
+spend happens. This is deliberately <strong>opt-in</strong>, not the default: <code>autopilot
+loop</code> already hard-refuses a run that omits explicit per-role
+<code>--*-provider</code>/<code>--*-model</code> flags (T877), and flipping this gate to mandatory
+for every launch would break any existing headless script/wrapper that
+invokes it without <code>--verify-settings-yes</code> -- that default flip is a
+separate, deliberate decision for the owner, not something bundled into this
+change.</p>
+<p><code>--stale-config-margin N</code> (default 2) tunes how many minor <code>gald3r_rel_version</code>
+releases behind is tolerated before <code>--verify-settings</code> warns that a
+config file predates this binary. The same run also warns if a role
+resolved to the self-hosted <code>gald3r</code> provider with a <code>&lt;provider&gt;:&lt;model&gt;</code>
+registry spec whose model id is not (or no longer) in <code>providers.yaml</code>'s
+roster for that provider.</p>
 
 
 
