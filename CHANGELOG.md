@@ -24,6 +24,55 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.44] - 2026-08-28
+
+This beta closes a serious board-integrity defect class, removes the biggest
+throughput bottleneck in autonomous runs, and cleans internal-only content out
+of the installed payload.
+
+**Your completed work stays completed.** A multi-day defect class that could
+silently revert already-resolved tasks and bugs during autonomous merges is
+closed structurally: agent worktrees no longer see board records at all, commit
+safety fails closed whenever a merge or conflicted state is in progress, claim
+cleanup can no longer overwrite a resolution that landed in the meantime, and
+the verdict-recovery safety nets were rebuilt to survive the new isolation.
+Completing a task now also requires its acceptance criteria to be ticked at
+write time — the evidence gate fires when the status changes, not hours later.
+
+**Autonomous runs keep moving.** Finish-gate checks across pending branches now
+run in parallel instead of one at a time, so a single slow check no longer
+stalls everything queued behind it. Each agent lane is watched individually by
+silence rather than a shared deadline — one dead lane frees its slot while
+healthy siblings keep working, and results are credited the moment each lane
+reports instead of waiting for the whole batch. Repeatedly-failing merge
+attempts are remembered and skipped instead of retried from scratch every run.
+
+**Discipline your agents inherit.** New shipped protocols raise the floor for
+every agent driving the system: a three-verdict verification contract
+(VERIFIED / NOT VERIFIED / INCONCLUSIVE) for proving a fix actually works, a
+flake-handling protocol with a shared known-flaky-tests index that stops
+re-diagnosing the same failure, a standing merge-conflict-resolution brief with
+hard guardrails, and a reviewer flow that gathers evidence in parallel before
+the judgment pass — measured at a fraction of the previous review cost.
+
+**Cleaner installs.** Maintainer-only content that had leaked into installed
+projects — internal release-pipeline references that could misdirect your
+agents — is scrubbed from the shipped payload, a release gate now blocks it
+from ever shipping again, and upgrading overwrites the affected files in
+existing installs. Bug routing is now explicit: defects in your own project go
+on your board; suspected defects in gald3r itself go upstream via `gald3r
+gfix`. New projects also receive `COMMANDMENTS.md`, an owner-editable home for
+the guiding principles above any single rule (shipped intentionally blank).
+
+**Also in this build.** A backlog Momentum Board inside Throne (project page,
+landing module, and fleet tiles from live data), an update alert when a newer
+release is available, and a code-navigation tool (`gald3r graph
+explore|impact|callers` plus an MCP equivalent) that returns a symbol's
+declarations, callers, and blast radius in one call — byte-identical to what
+your editor reads.
+
+Full technical detail is in CHANGELOG.md.
+
 ## [5.0.0-beta.43] - 2026-08-27
 
 This beta makes the autopilot genuinely self-healing and hardens the paths users

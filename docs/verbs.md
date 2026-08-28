@@ -116,7 +116,9 @@ from an older binary version, both point you at it by name.
 | `gald3r errors` / `gald3r trace` | Aggregate error/failure/warning trace records across every task. |
 | `gald3r crash-stats` | See which of your Commands, Rules, Agents, Skills, and Hooks are actually firing during real sessions — not just installed, but used. |
 | `gald3r parity-audit` | Compare the live gald3r CLI's verb tree against the legacy gald3r-agent reference verb set — a migration-completeness check, not a day-to-day command. |
-| `gald3r muninn` | Query the local codebase knowledge graph — what calls this function, what depends on that file, what breaks if you change it — without grepping by hand. |
+| `gald3r graph explore TARGET` | One-call view of the code graph: a file's or symbol's declarations, direct callers/callees, transitive blast radius, and (by default) its own source content — all in one call. Source is fetched byte-identically to `gald3r`'s own Read tool (T837 pillar 5, task1117). |
+| `gald3r graph impact TARGET` | Transitive blast radius only: every file that would be affected if TARGET changed — what breaks if you change it. |
+| `gald3r graph callers TARGET` | Direct (depth 0) callers of a symbol, or of everything calling into a file — what calls this function. |
 | `gald3r search` | Find text anywhere in the project, including files your normal search tool silently skips because they're gitignored. |
 | `gald3r sync` | Maintainer-build-only (`gald3r_maintainer` tag; a release binary carries a hidden refusal stub): redeploy the neutral commands/rules/hooks/agents/skills set from `neutral_source/` to this source checkout's own IDE folders after editing them, replacing the untracked manual-copy workaround (BUG-538/BUG-541). Dry-run drift summary by default; `--apply` writes. |
 | `gald3r lint` | Catch problems the moment they happen: syntax errors right after a file is written, missing component tags, or a shell command that looks dangerous before it runs. |
