@@ -2699,6 +2699,22 @@ which carry the same ladder for an agent to load at routing time.)</p>
   stoppable, not because it happens to be free -- but under its own default
   it now IS free of extra CLI-session spend, not merely "attended despite the
   cost."</li>
+<li><strong>Reviewer staffing under <code>--executor session</code> splits evidence-gathering
+  from judgment (task1238).</strong> A session-executor reviewer bucket's own turn
+  used to spend its first several tool calls on mechanical <code>git diff</code>/file
+  reads before doing any real review judgment. The driving agent now
+  dispatches two cheap, parallel evidence-gathering subagent calls per
+  reviewer bucket first (diff + full changed-file contents), then hands the
+  assembled evidence plus the bucket's own review brief to a single
+  judgment-only reviewer turn -- see <code>playbook.session_executor.md</code>
+  (<code>gald3r prompt get playbook.session_executor</code>) §3a for the full contract
+  and a real measured wave (reviewer-turn tool calls: 12 -&gt; 0; reviewer-turn
+  wall time: -92%). This is a driving-agent staffing optimization only, so
+  it applies to <code>--executor session</code> (both <code>/g-go-go</code> and the bare verb);
+  <code>--executor headless</code>'s spawned <code>go-review</code>/<code>go-bug-review</code> subprocess
+  already gathers its own evidence inside a single metered CLI-agent
+  process rather than being staffed by a driving agent's own subagent
+  facility, so this split has no seam to attach to there.</li>
 <li>Local models (<code>local-compat</code> via Ollama or LM Studio) cost nothing per token
   in any tier and can serve implementer turns while a subscription CLI
   coordinates -- the cheapest fully-autonomous configuration on a machine with
@@ -2869,6 +2885,17 @@ config file predates this binary. The same run also warns if a role
 resolved to the self-hosted <code>gald3r</code> provider with a <code>&lt;provider&gt;:&lt;model&gt;</code>
 registry spec whose model id is not (or no longer) in <code>providers.yaml</code>'s
 roster for that provider.</p>
+<p><strong>A Throne surface for the same two layers.</strong> Settings &gt; Agent Config
+(<code>gald3r_throne/frontend/src/components/settings_pages/AgentConfigPage.tsx</code>)
+renders the same merged view <code>gald3r config agent show</code> prints -- every key
+set in either layer, tagged with the layer that won -- and a small form to
+write a new key into either the loaded project's layer or the global layer.
+It calls straight into the same Go <code>EffectiveAgentConfig</code>/
+<code>SetAgentConfigScalar</code> functions the CLI verbs call
+(<code>gald3r_throne/internal/bindings/agentconfig</code>), so the CLI receipt and the
+Throne view can never drift into two different readers/writers of
+<code>AGENT_CONFIG.md</code>. Read-only inspection works with no project loaded (global
+layer only); writing the project layer requires one.</p>
 
 
 

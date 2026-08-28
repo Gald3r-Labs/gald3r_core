@@ -2201,8 +2201,16 @@ from an older binary version, both point you at it by name.</p>
 <td>Compare the live gald3r CLI's verb tree against the legacy gald3r-agent reference verb set — a migration-completeness check, not a day-to-day command.</td>
 </tr>
 <tr>
-<td><code>gald3r muninn</code></td>
-<td>Query the local codebase knowledge graph — what calls this function, what depends on that file, what breaks if you change it — without grepping by hand.</td>
+<td><code>gald3r graph explore TARGET</code></td>
+<td>One-call view of the code graph: a file's or symbol's declarations, direct callers/callees, transitive blast radius, and (by default) its own source content — all in one call. Source is fetched byte-identically to <code>gald3r</code>'s own Read tool (T837 pillar 5, task1117).</td>
+</tr>
+<tr>
+<td><code>gald3r graph impact TARGET</code></td>
+<td>Transitive blast radius only: every file that would be affected if TARGET changed — what breaks if you change it.</td>
+</tr>
+<tr>
+<td><code>gald3r graph callers TARGET</code></td>
+<td>Direct (depth 0) callers of a symbol, or of everything calling into a file — what calls this function.</td>
 </tr>
 <tr>
 <td><code>gald3r search</code></td>
@@ -2418,6 +2426,10 @@ across your machines and your team.</p>
 <tr>
 <td><code>gald3r memory</code></td>
 <td>Scoped memory records (user/project/workspace/team/company/client) — small, individually-addressable facts, not a session-summary document — plus chat-native recall over them and your vault notes together.</td>
+</tr>
+<tr>
+<td><code>gald3r wiki</code></td>
+<td>Compile your captured sessions into a browsable project wiki (<code>wiki compile</code>) and list what it holds (<code>wiki catalog</code>) — runs automatically at session end on installed platforms, and each new session starts with the catalog in context when real articles exist.</td>
 </tr>
 <tr>
 <td><code>gald3r tel</code></td>

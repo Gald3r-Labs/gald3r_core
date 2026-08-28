@@ -1535,6 +1535,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#code-graph-tool-t837-pillar-5-task1117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code-graph tool (T837 pillar 5, task1117)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#record-mutation-tools-t1148-part-of-the-t1143-record-mutation-api" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1620,6 +1631,91 @@ etc.) at it and it exposes the tools below via <code>tools/list</code> / <code>t
 </tr>
 </tbody>
 </table>
+<h2 id="code-graph-tool-t837-pillar-5-task1117">Code-graph tool (T837 pillar 5, task1117)<a class="headerlink" href="#code-graph-tool-t837-pillar-5-task1117" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gald3r_explore</code></td>
+<td>Explore the code graph: declarations, direct callers/callees, transitive blast radius ("what would break if this changed"), and — by default — the resolved file's own source content, all in one call. Mirrors <code>gald3r graph explore</code> (and its narrower CLI siblings <code>graph impact</code>/<code>graph callers</code>).</td>
+</tr>
+</tbody>
+</table>
+<p><code>gald3r_explore</code> is backed by <code>gald3r_cartograph/graphquery</code> — the SAME query implementation
+the <code>gald3r graph explore|impact|callers</code> CLI verbs call, so the MCP tool and the CLI can never
+report different answers for the same query. It reads pillar 4's committable graph artifact
+(<code>gald3r_cartograph/graph/graph.jsonl</code>, kept fresh automatically by <code>gald3r worktree create</code>'s
+auto-rebuild hook, or built directly with <code>cartograph-build</code>); a missing artifact comes back as
+a domain-level tool result (<code>isError: true</code>) naming the exact command to run, not a JSON-RPC
+error.</p>
+<p><strong>Byte-parity guarantee:</strong> the <code>source</code> field in a <code>gald3r_explore</code> response is fetched through
+<code>gald3r.ai/engine/tools/handlers.ReadFileHandler</code> — the exact function backing gald3r's own
+<code>read_file</code> agent tool — so it is always byte-identical to a direct <code>read_file</code> call on the same
+file. There is only ever one file-reading code path in this codebase; a graph-mediated file view
+can never grow a second, subtly different one.</p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Type</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target</code></td>
+<td>string</td>
+<td>— (required)</td>
+<td>A repo-relative file path, or a bare symbol name.</td>
+</tr>
+<tr>
+<td><code>file</code></td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Disambiguates <code>target</code> when it names a symbol declared in more than one file.</td>
+</tr>
+<tr>
+<td><code>depth</code></td>
+<td>integer</td>
+<td>3</td>
+<td>Transitive blast-radius walk depth (hops).</td>
+</tr>
+<tr>
+<td><code>max_nodes</code></td>
+<td>integer</td>
+<td>200</td>
+<td>Cap on edges/files visited during the transitive walk.</td>
+</tr>
+<tr>
+<td><code>include_source</code></td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td>Include the resolved file's own source content. Set <code>false</code> to skip the file read entirely.</td>
+</tr>
+<tr>
+<td><code>graph_path</code></td>
+<td>string</td>
+<td><code>&lt;project root&gt;/gald3r_cartograph/graph/graph.jsonl</code></td>
+<td>Override the graph artifact path.</td>
+</tr>
+</tbody>
+</table>
+<p>When <code>target</code> names a symbol declared in more than one file and <code>file</code> does not disambiguate it,
+the response carries only <code>query</code>/<code>ambiguous</code> (the candidate declarations) — re-call with an
+explicit <code>file</code>.</p>
+<p>Transitive queries (the <code>impact</code> field, and the standalone CLI <code>graph impact</code>) operate at FILE
+granularity rather than per-symbol: a raw call-site fact never records which declaration encloses
+it, so there is no fact to answer "which specific function three hops up would be affected" —
+only "which file would be affected". See <code>gald3r_cartograph/graphquery</code>'s own <code>doc.go</code> for the
+full honesty note. Direct queries (<code>callers</code>/<code>callees</code>, depth 0) stay symbol-precise and carry
+the same confidence tier (<code>EXTRACTED</code>/<code>INFERRED</code>/<code>AMBIGUOUS</code>) pillars 2-3 already assigned —
+never upgraded, never invented.</p>
 <h2 id="record-mutation-tools-t1148-part-of-the-t1143-record-mutation-api">Record-mutation tools (T1148, part of the T1143 record-mutation API)<a class="headerlink" href="#record-mutation-tools-t1148-part-of-the-t1143-record-mutation-api" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>A plain-language edit request ("pause task 42 and drop its score to 8") maps onto these SAME
