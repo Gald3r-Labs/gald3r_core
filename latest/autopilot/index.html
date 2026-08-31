@@ -16,7 +16,7 @@
         <link rel="prev" href="../task-bug-workflow/">
       
       
-        <link rel="next" href="../platform-usage/">
+        <link rel="next" href="../worktree-lanes/">
       
       
         
@@ -444,6 +444,25 @@
     
   
   Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../worktree-lanes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Worktree Lanes
 
       </a>
     </li>
@@ -1477,6 +1496,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../worktree-lanes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worktree Lanes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
     
@@ -1489,10 +1535,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
         
           
-          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
             
   
   
@@ -1510,8 +1556,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_13">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1765,10 +1811,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
         
           
-          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
             
   
   
@@ -1786,8 +1832,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2372,6 +2418,16 @@ and it never counts against review turns. A task that keeps failing review gets 
 number of re-implement passes before it's handed back to you as <code>requires-user-attention</code>
 rather than looping forever, but reviewing an item is always free: a slow reviewer queue never
 starves the implementer side, and a fresh review never "spends" budget.</p>
+<p><strong>Gauntlet mode (<code>--gauntlet</code>, T1057 engine / T1058 <code>@g-go*</code> surface).</strong> Off by default.
+Same flag dialect on <code>gald3r autopilot loop</code> and every <code>@g-go*</code> command including swarm
+aliases — <code>@g-go-go --gauntlet</code> passes the flag and its scoped knobs through to the compiled
+engine; it does not invent a second meaning. Requires an inspectable oracle bar
+(tests/benchmark/answer-key/golden, or <code>--gauntlet-bar PATH</code>) and refuses rather than
+inventing "good." Review-only runs replace (never blend with) the AC-checklist verifier.
+<code>@g-go-bugs</code> / <code>-swarm</code> refuse a bug that has no inspectable repro. Hard caps:
+<code>--gauntlet-inner-round-cap</code> (default 8), <code>--gauntlet-max-spend-usd</code>,
+<code>--gauntlet-iteration-cost-ceiling-usd</code>, <code>--gauntlet-wall-clock-minutes</code>, plus the existing
+<code>--budget</code>. Coordinator judgment: <code>gald3r prompt get playbook.pipeline_gauntlet</code>.</p>
 <p><strong><code>gald3r autopilot replay RUN_ID</code></strong> reconstructs exactly what happened during a past <code>loop</code>
 run from its durable event ledger and correlated logs alone — never a live process, never the
 database. It renders a per-lane timeline and flags anything the on-disk artifacts can't
@@ -2466,7 +2522,8 @@ worker from one that's just being quiet while it works. Three layers, all active
 <li><strong>Proxy breakers for telemetry-less providers.</strong> When a provider gives the loop nothing to
   measure cost or time against directly, three proxy ceilings still arm: a per-iteration
   wall-clock outlier ceiling, a fallback iteration ceiling (only when you haven't set
-  <code>--max-iterations</code> yourself — it never overrides an explicit choice), and a cumulative
+  <code>--max-iterations</code> yourself — it never overrides an explicit choice; <code>-1</code> is an
+  explicit deactivate that skips the proxy ceiling too), and a cumulative
   output-byte budget. Each one trips a real breaker and records which kind of signal armed it
   (measured, estimated, or proxy), so a post-run read of the log tells you how much to trust
   the number that stopped things.</li>
@@ -2521,7 +2578,8 @@ fits the run's shape. The tier, from lightest to heaviest:</p>
    agent doesn't need a separate checkout directory at all — it runs on a short-lived
    feature branch cut <em>in</em> the primary checkout: create branch, implement, checkpoint-commit,
    merge back, return to the base branch. No worktree directory churn, no antivirus
-   file-lock friction on Windows, cheaper for solo flows. It refuses to start on a dirty
+   file-lock friction on Windows (swarm worktree <em>remove</em> now retries that same
+   lock class instead of leaving remnant directories behind), cheaper for solo flows. It refuses to start on a dirty
    checkout, and if the agent crashes mid-run the loop rescue-commits anything dirty and
    returns the checkout to the base branch cleanly, leaving the bucket branch intact for
    recovery. Swarm (parallel) runs ignore this flag with a logged warning — N concurrent
