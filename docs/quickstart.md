@@ -2,7 +2,7 @@
 
 ## 1. Install
 
-Download the platform bundle (or installer) for your OS from the **v5.0.0-beta.44** release, verify it
+Download the platform bundle (or installer) for your OS from the **v5.0.0-beta.45** release, verify it
 against `SHA256SUMS.txt`, and install it.
 
 **Windows** -- easiest: run `gald3r-windows-x86_64.msi`. Manual install: extract
@@ -12,7 +12,7 @@ against `SHA256SUMS.txt`, and install it.
 Expand-Archive gald3r-windows-x86_64.zip
 Get-FileHash .\gald3r-windows-x86_64\gald3r.exe -Algorithm SHA256
 Get-Content .\gald3r-windows-x86_64\SHA256SUMS      # must match
-gald3r --version                          # -> gald3r 5.0.0-beta.44 ...
+gald3r --version                          # -> gald3r 5.0.0-beta.45 ...
 ```
 
 **macOS** -- easiest: run `gald3r-macos-arm64.pkg` (Apple Silicon) or `gald3r-macos-x86_64.pkg`
@@ -67,7 +67,7 @@ gald3r task next
 ```
 
 `gald3r task update <id> --status in-progress` claims a task. See
-[`cli-reference.md`](./cli-reference.md) for the full task/bug verb surface.
+[`verbs.md`](./verbs.md) for the full task/bug verb surface.
 
 ## 6. Optional: a real agent run with a provider
 
@@ -84,5 +84,5 @@ OpenAI/Anthropic/etc. instead.
 ## 7. Where next
 
 - [Concepts](./concepts.md) -- CRASH, `.gald3r/`, and the DB-vs-markdown state model
-- [CLI reference](./cli-reference.md) -- the full verb catalog
+- [CLI reference](./verbs.md) -- the full verb catalog
 - `gald3r <verb> --help` -- always the authoritative source for any single verb's flags

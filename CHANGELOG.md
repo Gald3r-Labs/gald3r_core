@@ -24,6 +24,48 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.45] - 2026-08-31
+
+Your repo can answer you now. Talk to it from the terminal or a slash
+command — same brain as Throne — instead of opening a second editor
+window on the board.
+
+### Talk to the project
+
+- `gald3r project-agent status`, `ask`, and `chat` — or `@g-project-agent`
+- Same engine Throne and the resident connector already use
+- Set `GALD3R_AGENT_FITOUT` to pick the domain fit-out (terminal and Throne)
+- Agents offer Valkyrie when you need a live question to another project,
+  not only when you name it
+
+### Worktrees that clean up
+
+- Windows no longer dies on the first Permission denied from Defender,
+  Cursor, or the search indexer
+- Cleanup retries the lock, names leftovers that still will not delete,
+  and reclaims folders git already unregistered
+
+### Autopilot you can actually steer
+
+- `--gauntlet` on every `@g-go*` command (off by default; same knobs as
+  the autopilot loop)
+- `-1` turns a numeric cutoff off — no more fake `999999999`
+- Dispatch briefs can be a file path instead of a 4–5 KB paste
+- A graceful stop finishes in-flight work; only `--now` abandons it
+- Merged work is verified, not re-implemented from a stale bug text
+
+### Faster lookups, safer vault
+
+- `gald3r search` is about 10× faster on a large tree (seconds, not
+  minutes) — agents stop falling back to blind grep
+- Vault ingest commits the vault repo after a write, so research is not
+  sitting uncommitted on disk
+
+### New commands
+
+- `/g-cm` — CARVER matrix for what to do next
+- `/g-gilf` — senior-expert answers, no 101-level padding
+
 ## [5.0.0-beta.44] - 2026-08-28
 
 This beta closes a serious board-integrity defect class, removes the biggest

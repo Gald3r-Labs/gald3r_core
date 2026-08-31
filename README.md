@@ -5,7 +5,7 @@ multi-provider agent runtime (local models via Ollama/LM Studio/vLLM, or cloud p
 and the CRASH (Commands, Rules, Agents, Skills, Hooks) component system that turns agent
 guidance into behavior that actually executes. One signed executable, no IDE required.
 
-Version **5.0.0-beta.44** (v5.0.0-beta.44).
+Version **5.0.0-beta.45** (v5.0.0-beta.45).
 
 ## Install
 
@@ -72,7 +72,7 @@ gald3r status      # see what's tracked
 |---|---|
 | [Quickstart](docs/quickstart.md) | Install, first run, first useful command |
 | [Concepts](docs/concepts.md) | CRASH, `.gald3r/`, tasks and bugs, sessions |
-| [CLI reference](docs/cli-reference.md) | Every verb, grouped by what you're trying to do |
+| [CLI reference](docs/verbs.md) | Every verb, grouped by what you're trying to do |
 | [Changelog](CHANGELOG.md) | What shipped, and when |
 
 ## License
@@ -83,4 +83,4 @@ the Apache License 2.0 on its second anniversary.
 
 ---
 
-© Gald3r Labs LLC. Release `v5.0.0-beta.44`.
+© Gald3r Labs LLC. Release `v5.0.0-beta.45`.
