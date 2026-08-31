@@ -6,31 +6,35 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Install gald3r's task board, bug tracker, and CRASH overlay into Cline projects. One binary, gald3r platform install cline.">
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
       
       
       
-        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/platforms/cline/">
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/worktree-lanes/">
       
       
+        <link rel="prev" href="../autopilot/">
+      
+      
+        <link rel="next" href="../platform-usage/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Use gald3r with Cline - gald3r_core Product Docs</title>
+        <title>Worktree Lanes - gald3r_core Product Docs</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#use-gald3r-with-cline" class="md-skip">
+        <a href="#worktree-lanes-human-chat-implementers-and-reviewers" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+    <a href=".." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Use gald3r with Cline
+              Worktree Lanes
             
           </span>
         </div>
@@ -221,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href=".." class="md-tabs__link">
         
   
   
@@ -240,7 +244,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../install/" class="md-tabs__link">
+      <a href="../install/" class="md-tabs__link">
         
   
   
@@ -259,7 +263,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../quickstart/" class="md-tabs__link">
+      <a href="../quickstart/" class="md-tabs__link">
         
   
   
@@ -278,7 +282,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../first-project/" class="md-tabs__link">
+      <a href="../first-project/" class="md-tabs__link">
         
   
   
@@ -297,7 +301,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../concepts/" class="md-tabs__link">
+      <a href="../concepts/" class="md-tabs__link">
         
   
   
@@ -316,7 +320,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../commands/" class="md-tabs__link">
+      <a href="../commands/" class="md-tabs__link">
         
   
   
@@ -335,7 +339,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../skills/" class="md-tabs__link">
+      <a href="../skills/" class="md-tabs__link">
         
   
   
@@ -354,7 +358,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../agents/" class="md-tabs__link">
+      <a href="../agents/" class="md-tabs__link">
         
   
   
@@ -373,7 +377,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../verbs/" class="md-tabs__link">
+      <a href="../verbs/" class="md-tabs__link">
         
   
   
@@ -394,7 +398,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../crash/" class="md-tabs__link">
+        <a href="../crash/" class="md-tabs__link">
           
   
   
@@ -412,7 +416,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../task-bug-workflow/" class="md-tabs__link">
+      <a href="../task-bug-workflow/" class="md-tabs__link">
         
   
   
@@ -431,7 +435,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../autopilot/" class="md-tabs__link">
+      <a href="../autopilot/" class="md-tabs__link">
         
   
   
@@ -448,9 +452,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../../worktree-lanes/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -471,7 +477,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../platform-usage/" class="md-tabs__link">
+        <a href="../platform-usage/" class="md-tabs__link">
           
   
   
@@ -489,7 +495,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../coordination/" class="md-tabs__link">
+      <a href="../coordination/" class="md-tabs__link">
         
   
   
@@ -508,7 +514,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../memory/" class="md-tabs__link">
+      <a href="../memory/" class="md-tabs__link">
         
   
   
@@ -527,7 +533,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../providers/" class="md-tabs__link">
+      <a href="../providers/" class="md-tabs__link">
         
   
   
@@ -546,7 +552,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../local-ai/" class="md-tabs__link">
+      <a href="../local-ai/" class="md-tabs__link">
         
   
   
@@ -565,7 +571,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../plugins/" class="md-tabs__link">
+      <a href="../plugins/" class="md-tabs__link">
         
   
   
@@ -586,7 +592,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../longship/" class="md-tabs__link">
+        <a href="../longship/" class="md-tabs__link">
           
   
   
@@ -604,7 +610,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../troubleshooting/" class="md-tabs__link">
+      <a href="../troubleshooting/" class="md-tabs__link">
         
   
   
@@ -639,7 +645,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+    <a href=".." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -669,7 +675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -696,7 +702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/" class="md-nav__link">
+      <a href="../install/" class="md-nav__link">
         
   
   
@@ -723,7 +729,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quickstart/" class="md-nav__link">
+      <a href="../quickstart/" class="md-nav__link">
         
   
   
@@ -750,7 +756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../first-project/" class="md-nav__link">
+      <a href="../first-project/" class="md-nav__link">
         
   
   
@@ -777,7 +783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/" class="md-nav__link">
+      <a href="../concepts/" class="md-nav__link">
         
   
   
@@ -804,7 +810,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../commands/" class="md-nav__link">
+      <a href="../commands/" class="md-nav__link">
         
   
   
@@ -831,7 +837,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../skills/" class="md-nav__link">
+      <a href="../skills/" class="md-nav__link">
         
   
   
@@ -858,7 +864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../agents/" class="md-nav__link">
+      <a href="../agents/" class="md-nav__link">
         
   
   
@@ -885,7 +891,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../verbs/" class="md-nav__link">
+      <a href="../verbs/" class="md-nav__link">
         
   
   
@@ -962,7 +968,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../crash/" class="md-nav__link">
+      <a href="../crash/" class="md-nav__link">
         
   
   
@@ -990,7 +996,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/crash/rules/" class="md-nav__link">
+      <a href="../reference/crash/rules/" class="md-nav__link">
         
   
   
@@ -1018,7 +1024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/crash/hooks/" class="md-nav__link">
+      <a href="../reference/crash/hooks/" class="md-nav__link">
         
   
   
@@ -1053,7 +1059,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../task-bug-workflow/" class="md-nav__link">
+      <a href="../task-bug-workflow/" class="md-nav__link">
         
   
   
@@ -1080,7 +1086,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../autopilot/" class="md-nav__link">
+      <a href="../autopilot/" class="md-nav__link">
         
   
   
@@ -1104,10 +1110,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../worktree-lanes/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worktree Lanes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1123,6 +1156,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-seats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The three seats
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-clean-primary-actually-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What "clean primary" actually means
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#daily-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Daily pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-gald3r-still-shows-up-in-lanes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why .gald3r/ still shows up in lanes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-not-to-revive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What not to revive
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1184,7 +1303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../platform-usage/" class="md-nav__link">
+      <a href="../platform-usage/" class="md-nav__link">
         
   
   
@@ -1212,7 +1331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../platforms/" class="md-nav__link">
         
   
   
@@ -1240,7 +1359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/platforms/" class="md-nav__link">
+      <a href="../reference/platforms/" class="md-nav__link">
         
   
   
@@ -1275,7 +1394,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../coordination/" class="md-nav__link">
+      <a href="../coordination/" class="md-nav__link">
         
   
   
@@ -1302,7 +1421,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../memory/" class="md-nav__link">
+      <a href="../memory/" class="md-nav__link">
         
   
   
@@ -1329,7 +1448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../providers/" class="md-nav__link">
+      <a href="../providers/" class="md-nav__link">
         
   
   
@@ -1356,7 +1475,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../local-ai/" class="md-nav__link">
+      <a href="../local-ai/" class="md-nav__link">
         
   
   
@@ -1383,7 +1502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugins/" class="md-nav__link">
+      <a href="../plugins/" class="md-nav__link">
         
   
   
@@ -1460,7 +1579,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../longship/" class="md-nav__link">
+      <a href="../longship/" class="md-nav__link">
         
   
   
@@ -1488,7 +1607,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../throne/" class="md-nav__link">
+      <a href="../throne/" class="md-nav__link">
         
   
   
@@ -1523,7 +1642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/" class="md-nav__link">
+      <a href="../troubleshooting/" class="md-nav__link">
         
   
   
@@ -1570,10 +1689,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#get-started" class="md-nav__link">
+  <a href="#the-three-seats" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Get started
+        The three seats
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-clean-primary-actually-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What "clean primary" actually means
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#daily-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Daily pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-gald3r-still-shows-up-in-lanes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why .gald3r/ still shows up in lanes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-not-to-revive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What not to revive
       
     </span>
   </a>
@@ -1611,20 +1774,83 @@
   
 
 
-<h1 id="use-gald3r-with-cline">Use gald3r with Cline<a class="headerlink" href="#use-gald3r-with-cline" title="Permanent link">&para;</a></h1>
-<p>Cline — an open-source autonomous coding agent shipped as a VS Code / JetBrains extension, a CLI, and a public SDK / agent runtime (open-sourced ~May 2026, powers the CLI + Kanban board). The IDE chat is single-agent; the SDK / CLI surface adds subagents, multi-agent teams, and cron-able coordinators.</p>
-<p>Installing gald3r into a Cline project writes the CRASH overlay this tool actually reads into <code>.clinerules/</code> — the same task board, bug tracker, and <code>gald3r &lt;verb&gt;</code> CLI every other supported platform gets, wired the way Cline itself expects it. Today that's commands native, rules native, skills native, hooks partial, MCP native via the gald3r engine's MCP (L2). Ship AGENTS.md + the .cline<em> trees — rules → .clinerules/, commands → .clinerules/workflows/</em>.md, skills → .cline/skills/<name>/SKILL.md, MCP → cline_mcp_settings.json / ~/.cline/mcp.json. Subagents/teams are authored against the Cline SDK (CLI surface).</p>
-<p>Once installed, the same <code>.gald3r/TASKS.md</code> task board, bug tracker, and full <code>gald3r &lt;verb&gt;</code> CLI work identically to every other supported platform — Cline is one of 37 platforms gald3r reads and writes today.</p>
-<h2 id="get-started">Get started<a class="headerlink" href="#get-started" title="Permanent link">&para;</a></h2>
-<pre><code class="language-bash">gald3r setup
-gald3r platform install cline
-</code></pre>
+<h1 id="worktree-lanes-human-chat-implementers-and-reviewers">Worktree lanes — human chat, implementers, and reviewers<a class="headerlink" href="#worktree-lanes-human-chat-implementers-and-reviewers" title="Permanent link">&para;</a></h1>
+<p>How this factory keeps coding, review, and your interactive chats from
+colliding on the same working tree. No new product: same git repo, same
+<code>main</code>, different <strong>directories</strong>.</p>
+<h2 id="the-three-seats">The three seats<a class="headerlink" href="#the-three-seats" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Seat</th>
+<th>Directory</th>
+<th>What happens here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary</strong> (orchestration)</td>
+<td>The folder git calls the main worktree — today <code>gald3r_core_exp</code></td>
+<td>Housekeep, merge, <code>gald3r worktree create/remove</code>, review-result commits, board verbs (<code>gald3r task</code> / <code>bug</code>). Prefer this tree <strong>clean</strong> while a wave is in flight.</td>
+</tr>
+<tr>
+<td><strong>Implementer lane</strong></td>
+<td>A gald3r-owned worktree under <code>.gald3r-worktrees/&lt;repo&gt;/</code></td>
+<td>Code, tests, CHANGELOG for one task/bug. Commit <strong>on that branch</strong>. Do not hand-edit the live board here — use <code>gald3r … --dir &lt;primary&gt;</code>.</td>
+</tr>
+<tr>
+<td><strong>Reviewer lane</strong></td>
+<td>A <code>review-swarm</code> worktree</td>
+<td>Reads a SHA, writes a verdict. Does not need your chat dirt.</td>
+</tr>
+<tr>
+<td><strong>Human / interactive chat</strong></td>
+<td>A long-lived human worktree <strong>or</strong> Throne / <code>gald3r project-agent</code> / Valkyrie</td>
+<td>Your questions and WIP. If Cursor is pointed at <strong>primary</strong>, every overlay edit is mixed-dirty for the next housekeep.</td>
+</tr>
+</tbody>
+</table>
+<p>The project agent (T1167) is the intended <strong>human seat</strong>: you talk to the
+project; it uses board verbs on primary; coding agents stay in lanes.</p>
+<h2 id="what-clean-primary-actually-means">What "clean primary" actually means<a class="headerlink" href="#what-clean-primary-actually-means" title="Permanent link">&para;</a></h2>
+<p>A reviewer already looks at a <strong>commit</strong> (the worktree SHA). The whole
+machine does not need to be clean. Primary must be clean enough for
+housekeep, spawn, and merge. Human or chat dirt <strong>on primary</strong> is the
+<code>mixed-dirty</code> stop.</p>
+<p>Implementer dirt <strong>inside a lane worktree</strong> is allowed.</p>
+<h2 id="daily-pattern">Daily pattern<a class="headerlink" href="#daily-pattern" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Leave primary for orchestration. Do not park overlay WIP there while
+   reviewers run.</li>
+<li>Do factory coding in a lane (<code>gald3r worktree create --task-id N --role agent</code>).</li>
+<li>Land lane work by committing in the lane, then merge to primary when
+   housekeep is idle — same as an agent bucket.</li>
+<li>When you must touch primary (board verbs, cut, merge fight): do that,
+   housekeep if you dirtied <code>.gald3r/</code>, and <strong>stop</strong>. Do not leave
+   <code>.cursor</code> / <code>.claude</code> WIP sitting there.</li>
+<li>Talk to the project with <code>gald3r project-agent</code> / <code>@g-project-agent</code>
+   or Throne, not by treating primary as a scratch tree.</li>
+</ol>
+<h2 id="why-gald3r-still-shows-up-in-lanes">Why <code>.gald3r/</code> still shows up in lanes<a class="headerlink" href="#why-gald3r-still-shows-up-in-lanes" title="Permanent link">&para;</a></h2>
+<p>Git worktrees check out tracked files. <code>gald3r.db</code> is already gitignored.
+Lane sparse-checkout hides <code>tasks/</code> and <code>bugs/</code> (BUG-1404) so a stale
+board snapshot cannot be rescue-committed onto <code>main</code>. Other <code>.gald3r/</code>
+files may still materialize. Lanes read/write the board only via
+<code>--dir &lt;primary&gt;</code>.</p>
+<p>Gitignoring the live board is correct for a <strong>consumer SDLC</strong> project
+(local DB, or later world_tree). This factory / any WPAC controller still
+commits <code>.gald3r/</code> until world_tree is the shared store. That is T867
+unfinished conversion, not a second design.</p>
+<h2 id="what-not-to-revive">What not to revive<a class="headerlink" href="#what-not-to-revive" title="Permanent link">&para;</a></h2>
+<p>Environment branches named <code>dev</code> / <code>test</code> / <code>live</code> model <strong>promotion</strong>,
+not working-directory contention. They do not fix mixed-dirty and they
+re-open 3-way merges on the board and overlays.</p>
 <h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../reference/platforms/cline/">Cline technical reference</a></li>
-<li><a href="../../reference/platforms/">Platform Support Matrix — every capability, honestly marked</a></li>
-<li><a href="../">All gald3r-supported platforms</a></li>
-<li><a href="../../install/">Install gald3r</a></li>
+<li>T1167 project agent (user seat); realtime <code>.gald3r/</code> sync design: <a href="../design/project-agent-realtime-sync.md"><code>docs/design/project-agent-realtime-sync.md</code></a> (T1197 implements)</li>
+<li>T1288 Throne / Longship / Cartograph skill+command parity</li>
+<li>BUG-1404 / BUG-1531 worktree hide and Windows remove-retry</li>
+<li><code>g-rl-33</code> housekeep / mixed-dirty gates (factory playbooks)</li>
 </ul>
 
 
@@ -1632,9 +1858,6 @@ gald3r platform install cline
 
 
 
-
-  
-  
 
 
 
@@ -1684,10 +1907,10 @@ gald3r platform install cline
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

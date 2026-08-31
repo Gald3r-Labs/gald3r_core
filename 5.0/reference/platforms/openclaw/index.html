@@ -449,6 +449,25 @@
   
   
   
+    <li class="md-tabs__item">
+      <a href="../../../worktree-lanes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Worktree Lanes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
     
     
       <li class="md-tabs__item">
@@ -1087,6 +1106,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../../worktree-lanes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worktree Lanes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
     
@@ -1099,10 +1145,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
         
           
-          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
             
   
   
@@ -1120,8 +1166,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_13">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1375,10 +1421,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
         
           
-          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
             
   
   
@@ -1396,8 +1442,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_19">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1826,14 +1872,55 @@ confuse <code>SOUL.md</code> with <code>AGENTS.md</code> — OpenClaw reads both
   <code>message:received</code> / <code>message:transcribed</code> / <code>message:preprocessed</code> / <code>message:sent</code>.</li>
 <li><strong>Built-ins</strong>: <code>session-memory</code>, <code>command-logger</code>, <code>compaction-notifier</code>, <code>bootstrap-extra-files</code>,
   <code>boot-md</code> (runs <code>BOOT.md</code> when the gateway starts).</li>
-<li><strong>gald3r caveat (honest):</strong> the mechanism is native, but handlers are <strong>TypeScript</strong> (<code>handler.ts</code>),
-  and the event names differ from gald3r's (<code>gateway:startup</code> / <code>agent:bootstrap</code> / <code>command:new</code> vs
-  gald3r <code>SessionStart</code> / <code>Stop</code> / <code>PreToolUse</code>). gald3r's <code>g-hk-*.py</code> hooks are therefore
-  <strong>not drop-in portable</strong> — they must be re-expressed as <code>handler.ts</code> (or invoked as a child process
-  from one), and the gald3r event→hook mapping for OpenClaw is <strong>[STUB] / unverified</strong>. Do not
-  fabricate an event-to-hook mapping.</li>
-<li>Source: https://docs.openclaw.ai/automation/hooks</li>
+<li><strong>Discovery is purely folder-based</strong> (re-confirmed 2026-08-30) — no <code>hooks.json</code> or equivalent
+  registration file; discovery order is bundled → plugin → <code>~/.openclaw/hooks/</code> (managed,
+  user-global) → <code>hooks.internal.load.extraDirs</code> (config-declared, also global) →
+  <strong><code>&lt;workspace&gt;/hooks/</code></strong> (the one genuinely project-relative path, when the user's OpenClaw
+  workspace is pointed at this repo — same conditional dependency §1 already documents for
+  skills).</li>
+<li><strong>gald3r caveat (honest, partially resolved 2026-08-30):</strong> the mechanism is native, but
+  handlers are <strong>TypeScript</strong> (<code>handler.ts</code>), and the event names differ from gald3r's
+  (<code>gateway:startup</code> / <code>agent:bootstrap</code> / <code>command:new</code> vs gald3r <code>SessionStart</code> / <code>Stop</code> /
+  <code>PreToolUse</code>). gald3r's <code>g-hk-*.py</code> hooks are therefore <strong>not drop-in portable</strong> — they are
+  shelled out from a generated <code>handler.ts</code> (<code>gald3r_platforms/generate/hooks_openclaw.go</code>,
+  <code>spawnSync("python", ...)</code>, same <code>runHook()</code> shim pattern as Pi/OpenCode).</li>
+<li><strong>Confirmed gald3r event→hook mapping (live fetch of
+  https://docs.openclaw.ai/automation/hooks, 2026-08-30 — no longer <code>[STUB]</code>):</strong></li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>OpenClaw native event</th>
+<th>gald3r canonical event</th>
+<th>Confidence / citation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>command:new</code></td>
+<td><code>session-start</code></td>
+<td>Doc: "Authorized new-session command handling... awaited" — a <strong>per-session</strong> event, confirmed distinct from <code>gateway:startup</code> (fires once per <strong>gateway process lifetime</strong>, never per session).</td>
+</tr>
+<tr>
+<td><code>message:received</code></td>
+<td><code>user-prompt-submit</code></td>
+<td>Doc: "Accepted inbound dispatch with a session key" — the closest analog to an inbound user message.</td>
+</tr>
+<tr>
+<td><code>command:stop</code></td>
+<td><code>stop</code></td>
+<td>Doc: "Stop-command handling after the abort request... awaited" — best-available analog; OpenClaw has <strong>no</strong> separate "graceful stop" event, so this is the honest limit of the mapping, not a guaranteed 1:1 semantic match to Claude/Cursor's own <code>Stop</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deliberately NOT mapped</strong> (confirmed absent via the same fetch, not merely unconsidered):
+  <code>session-end</code> has no analog (<code>session:auto-reset</code> is a distinct, policy-driven session
+  <strong>replacement</strong> — "existing session replaced due to daily/idle policy" — not "session ended
+  normally"); <code>tool-start</code>/<code>tool-end</code> have <strong>no analog at all</strong> — OpenClaw's full documented
+  taxonomy has zero per-tool-call hook points (it is a chat-gateway bridging Discord/Telegram/
+  Slack/WhatsApp, not an agent tool-execution loop) — a genuine, confirmed capability floor, not
+  an oversight to fix later.
+- Source: https://docs.openclaw.ai/automation/hooks (re-fetched 2026-08-30 for the mapping above)</p>
 <h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Instruction/memory files</strong> are the rules mechanism: <code>AGENTS.md</code> (operating rules) + <code>SOUL.md</code>
@@ -1886,17 +1973,25 @@ gald3r's <code>AGENTS.md</code> + <code>g-skl-*/SKILL.md</code> artifacts are la
 <ul>
 <li><strong>Type</strong>: native (file-based, TypeScript handlers)</li>
 <li><strong>Config / declaration</strong>: per-hook directory with <code>HOOK.md</code> (YAML frontmatter,
-  <code>metadata.openclaw.events</code>) + <code>handler.ts</code>; hooks referenced from <code>~/.openclaw/openclaw.json</code></li>
+  <code>metadata.openclaw.events</code>) + <code>handler.ts</code>. <strong>Correction (2026-08-30 re-fetch):</strong> discovery is
+  <strong>purely folder-based</strong> — there is <strong>no</strong> <code>hooks.json</code>/<code>openclaw.json</code>-referenced registration
+  step; <code>HOOK.md</code>'s own frontmatter is what enables discovery. Discovery order: bundled → plugin →
+  <code>~/.openclaw/hooks/</code> (managed, global) → <code>hooks.internal.load.extraDirs</code> (config, also global) →
+  <code>&lt;workspace&gt;/hooks/</code> (workspace-relative — the one path gald3r can legitimately target
+  project-relatively, conditional on the workspace being pointed at this repo).</li>
 <li><strong>Events available</strong>: <code>command:new</code>, <code>command:reset</code>, <code>command:stop</code>, <code>session:compact:before</code>,
   <code>session:compact:after</code>, <code>agent:bootstrap</code>, <code>gateway:startup</code>, <code>gateway:shutdown</code>,
   <code>gateway:pre-restart</code>, <code>message:received</code>, <code>message:transcribed</code>, <code>message:preprocessed</code>,
-  <code>message:sent</code></li>
-<li><strong>Event payload format</strong>: async TypeScript handler (<code>handler.ts</code>) receives the event object; this
-  is <strong>not</strong> a stdin-JSON / exit-code contract</li>
+  <code>message:sent</code>. <code>gateway:*</code> fire <strong>once per gateway process lifetime</strong>, never per session.</li>
+<li><strong>Event payload format</strong>: async TypeScript handler (<code>handler.ts</code>) receives the event object
+  (<code>event.type</code>, <code>event.action</code>, <code>event.sessionKey</code>, <code>event.context</code>, ...); this is <strong>not</strong> a
+  stdin-JSON / exit-code contract.</li>
 <li><strong>Command extensions</strong>: <code>.ts</code> (TypeScript) — <strong>not</strong> <code>.py</code> / <code>.sh</code>. gald3r's Python hooks must be
   re-expressed as <code>handler.ts</code> or shelled out from one (e.g. spawning <code>python &lt;path&gt;</code>).</li>
-<li><strong>gald3r hook files</strong>: gald3r <code>g-hk-*.py</code> are <strong>[STUB] / unverified</strong> for OpenClaw — the
-  event→hook mapping is <strong>not</strong> fabricated here. Re-verify on the next <code>@g-platform-scan-docs openclaw</code>.</li>
+<li><strong>gald3r hook files</strong>: gald3r <code>g-hk-*.py</code> are shelled out from a generated <code>handler.ts</code>
+  (<code>gald3r_platforms/generate/hooks_openclaw.go</code>). The event→hook mapping is <strong>confirmed</strong> for
+<code>command:new</code>/<code>message:received</code>/<code>command:stop</code> — see section 6 above for the
+  full per-event citation and the events deliberately left unmapped.</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1917,8 +2012,10 @@ gald3r's <code>AGENTS.md</code> + <code>g-skl-*/SKILL.md</code> artifacts are la
   OpenClaw reads both every session. Do <strong>not</strong> rely on <code>CLAUDE.md</code>.</li>
 <li>Install gald3r <code>g-skl-*/SKILL.md</code> into the OpenClaw <strong>workspace</strong> <code>skills/</code> dir (or point the
   workspace at the gald3r skills source); folder-per-skill is identical to gald3r.</li>
-<li>Hooks require a <strong>TypeScript rewrite</strong> (<code>handler.ts</code>) — do not assume <code>.py</code> portability. Treat the
-  gald3r hook wiring as <strong>[STUB]</strong> until verified on a live install.</li>
+<li>Hooks require a <strong>TypeScript rewrite</strong> (<code>handler.ts</code>) — do not assume <code>.py</code> portability. A
+confirmed partial mapping is wired for <code>command:new</code>/<code>message:received</code>/
+  <code>command:stop</code>; treat it as doc-derived, not live-install-verified (no OpenClaw install exists
+  in the gald3r_core dev environment) until a real install confirms firing behavior.</li>
 <li>Re-declare MCP servers via <code>openclaw mcp set</code> (<code>mcp.servers</code> in <code>openclaw.json</code>).</li>
 <li>Re-verify on the next <code>@g-platform-scan-docs openclaw</code> (crawl_max_age_days: 14).</li>
 </ul>
@@ -1948,10 +2045,12 @@ gald3r's <code>AGENTS.md</code> + <code>g-skl-*/SKILL.md</code> artifacts are la
 </table>
 <p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
 <blockquote>
-<p>All six mechanisms are <strong>native</strong> per the 2026-06-02 docs crawl. The honest residual caveats
-(TypeScript hook handlers, prose-only rules, workspace-relative skill install, <code>maxSpawnDepth</code> 1)
-are documented in the sections above and do not downgrade native availability — but the gald3r
-<code>.py</code>→<code>handler.ts</code> hook wiring itself remains install-unverified.</p>
+<p>All six mechanisms are <strong>native</strong> per the 2026-06-02 docs crawl (hooks event-mapping re-fetched
+2026-08-30). The honest residual caveats (TypeScript hook handlers, prose-only rules,
+workspace-relative skill install, <code>maxSpawnDepth</code> 1) are documented in the sections above and do
+not downgrade native availability — the gald3r <code>.py</code>→<code>handler.ts</code> hook wiring now carries a
+confirmed partial event mapping (3 of gald3r's 6 canonical events; the other 3 have no OpenClaw
+analog) but remains install-unverified (doc-derived, no live OpenClaw install available here).</p>
 </blockquote>
 <hr />
 <h2 id="verification-evidence-docs-crawl-2026-06-02-httpsdocsopenclawai">Verification Evidence (docs crawl 2026-06-02, https://docs.openclaw.ai)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsdocsopenclawai" title="Permanent link">&para;</a></h2>
@@ -1984,6 +2083,10 @@ are documented in the sections above and do not downgrade native availability �
 <td>/automation/hooks — <code>HOOK.md</code> + <code>handler.ts</code> (async TS); events command:<em> / session:compact:</em> / agent:bootstrap / gateway:<em> / message:</em>; built-ins session-memory, command-logger, boot-md</td>
 </tr>
 <tr>
+<td>Hooks event mapping (re-fetched 2026-08-30)</td>
+<td>/automation/hooks — purely folder-based discovery, NO <code>openclaw.json</code>-referenced registration (corrects the 2026-06-02 crawl's "hooks referenced from openclaw.json" claim); confirmed <code>command:new</code>-&gt;session-start, <code>message:received</code>-&gt;user-prompt-submit, <code>command:stop</code>-&gt;stop; confirmed ABSENT: session-end, tool-start, tool-end (no per-tool-call event exists at all); <code>gateway:startup</code>/<code>shutdown</code> confirmed once-per-process, not per-session</td>
+</tr>
+<tr>
 <td>MCP</td>
 <td>/cli/mcp — client <code>mcp.servers</code> in <code>openclaw.json</code> (<code>openclaw mcp add/set/configure</code>, /mcp UI); stdio / HTTP-SSE / streamable-http; server <code>openclaw mcp serve</code>; <code>@modelcontextprotocol/sdk</code></td>
 </tr>
@@ -1997,7 +2100,7 @@ are documented in the sections above and do not downgrade native availability �
 </tr>
 <tr>
 <td>Caveats</td>
-<td>Hook handlers TypeScript-only (<code>handler.ts</code>); rules prose-only (no <code>.mdc</code>); skills install to <code>~/.openclaw/workspace/skills/</code>; gald3r <code>.py</code> hook wiring [STUB] / unverified</td>
+<td>Hook handlers TypeScript-only (<code>handler.ts</code>); rules prose-only (no <code>.mdc</code>); skills install to <code>~/.openclaw/workspace/skills/</code>; gald3r <code>.py</code> hook wiring is a CONFIRMED partial mapping (3 of 6 canonical events, 2026-08-30) but is doc-derived, not live-install-verified</td>
 </tr>
 </tbody>
 </table>
