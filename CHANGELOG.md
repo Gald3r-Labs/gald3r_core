@@ -24,6 +24,10 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.49] - 2026-09-02
+
+_No public release notes were provided for v5.0.0-beta.49._
+
 ## [5.0.0-beta.48] - 2026-09-02
 
 Your project agents can now talk, and you can put all of them in one room.
