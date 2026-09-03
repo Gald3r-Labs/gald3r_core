@@ -24,6 +24,11 @@ recommended for general use.
 
 ---
 
+## [5.0.0-beta.50] - 2026-09-03
+
+Further notes for the next cut go here. Hook first, then topic headings
+and bullets. Leave this placeholder until that copy is ready.
+
 ## [5.0.0-beta.49] - 2026-09-02
 
 _No public release notes were provided for v5.0.0-beta.49._
