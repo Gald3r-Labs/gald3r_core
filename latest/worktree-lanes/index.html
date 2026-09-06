@@ -1790,7 +1790,7 @@ colliding on the same working tree. No new product: same git repo, same
 <tbody>
 <tr>
 <td><strong>Primary</strong> (orchestration)</td>
-<td>The folder git calls the main worktree — today <code>gald3r_core_exp</code></td>
+<td>The folder git calls the main worktree — today an internal repository</td>
 <td>Housekeep, merge, <code>gald3r worktree create/remove</code>, review-result commits, board verbs (<code>gald3r task</code> / <code>bug</code>). Prefer this tree <strong>clean</strong> while a wave is in flight.</td>
 </tr>
 <tr>
@@ -1810,7 +1810,7 @@ colliding on the same working tree. No new product: same git repo, same
 </tr>
 </tbody>
 </table>
-<p>The project agent (T1167) is the intended <strong>human seat</strong>: you talk to the
+<p>The project agent is the intended <strong>human seat</strong>: you talk to the
 project; it uses board verbs on primary; coding agents stay in lanes.</p>
 <h2 id="what-clean-primary-actually-means">What "clean primary" actually means<a class="headerlink" href="#what-clean-primary-actually-means" title="Permanent link">&para;</a></h2>
 <p>A reviewer already looks at a <strong>commit</strong> (the worktree SHA). The whole
@@ -1833,13 +1833,13 @@ housekeep, spawn, and merge. Human or chat dirt <strong>on primary</strong> is t
 </ol>
 <h2 id="why-gald3r-still-shows-up-in-lanes">Why <code>.gald3r/</code> still shows up in lanes<a class="headerlink" href="#why-gald3r-still-shows-up-in-lanes" title="Permanent link">&para;</a></h2>
 <p>Git worktrees check out tracked files. <code>gald3r.db</code> is already gitignored.
-Lane sparse-checkout hides <code>tasks/</code> and <code>bugs/</code> (BUG-1404) so a stale
+Lane sparse-checkout hides <code>tasks/</code> and <code>bugs/</code> so a stale
 board snapshot cannot be rescue-committed onto <code>main</code>. Other <code>.gald3r/</code>
 files may still materialize. Lanes read/write the board only via
 <code>--dir &lt;primary&gt;</code>.</p>
 <p>Gitignoring the live board is correct for a <strong>consumer SDLC</strong> project
 (local DB, or later world_tree). This factory / any WPAC controller still
-commits <code>.gald3r/</code> until world_tree is the shared store. That is T867
+commits <code>.gald3r/</code> until world_tree is the shared store. That is
 unfinished conversion, not a second design.</p>
 <h2 id="what-not-to-revive">What not to revive<a class="headerlink" href="#what-not-to-revive" title="Permanent link">&para;</a></h2>
 <p>Environment branches named <code>dev</code> / <code>test</code> / <code>live</code> model <strong>promotion</strong>,
@@ -1847,9 +1847,9 @@ not working-directory contention. They do not fix mixed-dirty and they
 re-open 3-way merges on the board and overlays.</p>
 <h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
 <ul>
-<li>T1167 project agent (user seat); realtime <code>.gald3r/</code> sync design: <a href="../design/project-agent-realtime-sync.md"><code>docs/design/project-agent-realtime-sync.md</code></a> (T1197 implements)</li>
-<li>T1288 Throne / Longship / Cartograph skill+command parity</li>
-<li>BUG-1404 / BUG-1531 worktree hide and Windows remove-retry</li>
+<li>project agent (user seat); realtime <code>.gald3r/</code> sync design: <a href="../design/project-agent-realtime-sync.md"><code>docs/design/project-agent-realtime-sync.md</code></a> (implements)</li>
+<li>Throne / Longship / Cartograph skill+command parity</li>
+<li>/ worktree hide and Windows remove-retry</li>
 <li><code>g-rl-33</code> housekeep / mixed-dirty gates (factory playbooks)</li>
 </ul>
 

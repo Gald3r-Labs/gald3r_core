@@ -1940,7 +1940,7 @@ gald3r vault share check clients/acme/notes.md --to team --type client
                                                                  # dry-run: would this be refused, and why?
 </code></pre>
 <p>Brackets are <code>private | team | company | global</code> (<code>global</code> is the gald3r-users collective
-library, <strong>not</strong> the open internet). A <code>friend</code> bracket does not exist yet (T894). A path or
+library, <strong>not</strong> the open internet). A <code>friend</code> bracket does not exist yet. A path or
 note type in <code>private_always</code> is refused by the share path with a NAMED reason
 (<code>private_always_path</code> / <code>private_always_type</code>) — never silently dropped — regardless of the
 default bracket. <code>auto_publish</code> stays <code>false</code>; there is no flag to turn it on yet (a later,
@@ -1954,8 +1954,8 @@ whether the source actually changed since the last one (<code>docs/design/collec
 03_change_tracked_reanalysis.md</code>):</p>
 <pre><code>gald3r vault changetrack https://github.com/acme/widget          # default-branch request: cheap-probes live HEAD
 gald3r vault changetrack https://github.com/acme/widget --sha abc123def   # pin an exact commit instead
-gald3r vault changetrack https://youtube.com/watch?v=XXXX --duration-or-hash 754  # video needs this — T1781 rejects it otherwise
-gald3r vault changetrack https://example.com/post --refresh       # force re-analysis (always free — D044)
+gald3r vault changetrack https://youtube.com/watch?v=XXXX --duration-or-hash 754  # video needs this —  rejects it otherwise
+gald3r vault changetrack https://example.com/post --refresh       # force re-analysis (always free — )
 </code></pre>
 <p><code>decision</code> is <code>skipped_unchanged</code> (identity confirmed equal — logged to the vault run log),
 <code>analyze</code> (new/changed/unresolvable identity, or <code>--refresh</code>), or <code>use_stale_accepted</code>

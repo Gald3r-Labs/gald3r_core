@@ -1717,9 +1717,9 @@
 
 
 <!--
-Provenance: T1338 (this page), epic T1326, spec .gald3r/specifications_collection/SPEC_gald3r_ide_shared_editor_core.md.
-Shipped-in: T1327-T1334 (shared @gald3r/editor-core package, the AI-edit contract, the
-gald3r_ide binary). T1335 (Windows shell integration) and T1337 (shared theme tokens) are
+Provenance: (this page), epic, spec .gald3r/specifications_collection/SPEC_gald3r_ide_shared_editor_core.md.
+Shipped-in: (shared @gald3r/editor-core package, the AI-edit contract, the
+gald3r_ide binary). (Windows shell integration) and (shared theme tokens) are
 in progress and called out as forthcoming below, not described as shipped.
 -->
 
@@ -1740,7 +1740,7 @@ biggest complaint I have with Claude Code, Codex, New Cursor)... I am thinking a
 version of VS Code, back when it was more like (but more advanced) than notepad++ and
 ultra-edit, but still have syntax highlighting, language files with syntax, code folding
 etc."</p>
-<p>-- task1326 <code>requestor_verbatim</code>, 2026-09-02</p>
+<p>-- <code>requestor_verbatim</code>, 2026-09-02</p>
 </blockquote>
 <p>That "I want to see the code changes" complaint is not a stray preference. It is the same gap
 <code>docs/port/VISION_MASTER.md</code> section 2.7 item 10 names directly, citing the owner's own YC
@@ -1776,7 +1776,7 @@ the package exports:</p>
 <p>A small <code>HostFileIO</code> interface is the seam between the package and whichever app embeds it:
 Throne backs it with its own multi-project file bindings; <code>gald3r_ide</code> backs it with a slimmer
 binding scoped to a single opened folder. Shared CSS custom properties keep both apps' editor
-surfaces visually identical -- theme-token sharing between the two apps is in progress (T1337)
+surfaces visually identical -- theme-token sharing between the two apps is in progress
 rather than fully landed.</p>
 <h2 id="seeing-ai-edits-before-they-touch-disk">Seeing AI edits before they touch disk<a class="headerlink" href="#seeing-ai-edits-before-they-touch-disk" title="Permanent link">&para;</a></h2>
 <p>The agent panel never writes a file directly. Every proposed change goes through the same

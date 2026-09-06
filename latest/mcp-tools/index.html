@@ -1581,10 +1581,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#code-graph-tool-t837-pillar-5-task1117" class="md-nav__link">
+  <a href="#code-graph-tool-pillar-5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Code-graph tool (T837 pillar 5, task1117)
+        Code-graph tool (pillar 5, )
       
     </span>
   </a>
@@ -1592,15 +1592,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#record-mutation-tools-t1148-part-of-the-t1143-record-mutation-api" class="md-nav__link">
+  <a href="#record-mutation-tools-part-of-the-record-mutation-api" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Record-mutation tools (T1148, part of the T1143 record-mutation API)
+        Record-mutation tools (part of the record-mutation API)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Record-mutation tools (T1148, part of the T1143 record-mutation API)">
+    <nav class="md-nav" aria-label="Record-mutation tools (part of the record-mutation API)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1677,7 +1677,7 @@ etc.) at it and it exposes the tools below via <code>tools/list</code> / <code>t
 </tr>
 </tbody>
 </table>
-<h2 id="code-graph-tool-t837-pillar-5-task1117">Code-graph tool (T837 pillar 5, task1117)<a class="headerlink" href="#code-graph-tool-t837-pillar-5-task1117" title="Permanent link">&para;</a></h2>
+<h2 id="code-graph-tool-pillar-5">Code-graph tool (pillar 5, )<a class="headerlink" href="#code-graph-tool-pillar-5" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1762,11 +1762,11 @@ only "which file would be affected". See <code>gald3r_cartograph/graphquery</cod
 full honesty note. Direct queries (<code>callers</code>/<code>callees</code>, depth 0) stay symbol-precise and carry
 the same confidence tier (<code>EXTRACTED</code>/<code>INFERRED</code>/<code>AMBIGUOUS</code>) pillars 2-3 already assigned —
 never upgraded, never invented.</p>
-<h2 id="record-mutation-tools-t1148-part-of-the-t1143-record-mutation-api">Record-mutation tools (T1148, part of the T1143 record-mutation API)<a class="headerlink" href="#record-mutation-tools-t1148-part-of-the-t1143-record-mutation-api" title="Permanent link">&para;</a></h2>
+<h2 id="record-mutation-tools-part-of-the-record-mutation-api">Record-mutation tools (part of the record-mutation API)<a class="headerlink" href="#record-mutation-tools-part-of-the-record-mutation-api" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>A plain-language edit request ("pause task 42 and drop its score to 8") maps onto these SAME
 <code>Mutate&lt;Class&gt;</code> calls one layer up, via the project-agent resolution layer
-(<code>gald3r_project/board/resolve</code>, T1150) — see
+(<code>gald3r_project/board/resolve</code>) — see
 <a href="../agent-record-edits/"><code>agent-record-edits.md</code></a> for that contract and its current
 integration status.</p>
 </blockquote>
@@ -1811,7 +1811,7 @@ fields are left untouched. <code>uuid</code>/<code>created_date</code>/<code>cre
 <td><code>gald3r_todo_update</code></td>
 <td><code>todo_id</code></td>
 <td>TO-DO</td>
-<td><code>user_authorized</code> (bool) is <strong>required</strong> — TO-DOs are user-write-only (T827 §3); the call is refused if it is missing or <code>false</code>, regardless of which other fields are supplied</td>
+<td><code>user_authorized</code> (bool) is <strong>required</strong> — TO-DOs are user-write-only; the call is refused if it is missing or <code>false</code>, regardless of which other fields are supplied</td>
 </tr>
 <tr>
 <td><code>gald3r_idea_update</code></td>

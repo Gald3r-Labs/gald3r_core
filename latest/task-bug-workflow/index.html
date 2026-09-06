@@ -1944,8 +1944,8 @@ gald3r db regenerate-index    # rebuild slim indexes (TASKS.md / BUGS.md / ADRS.
 <p>Work clones install the compiled <code>gald3r</code> binary and talk to <code>.gald3r/gald3r.db</code>
 directly — no <code>uv</code>, no Python venv. <code>uv run gald3r</code> exists only in this source
 checkout. world_tree Postgres mapping for each board kind is specified in
-<code>gald3r_project/board/worldtreesync</code> and remains GATED while T684 / T836 /
-world_tree T1781 are blocked (the mapping does not pretend the server already
+<code>gald3r_project/board/worldtreesync</code> and remains GATED while / /
+world_tree are blocked (the mapping does not pretend the server already
 has the kinds).</p>
 <h2 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h2>
 <h3 id="create">Create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h3>
@@ -1996,7 +1996,7 @@ trusting a self-report.</p>
 <h3 id="housekeeping">Housekeeping<a class="headerlink" href="#housekeeping" title="Permanent link">&para;</a></h3>
 <pre><code>gald3r task-sync-check           # validate TASKS.md against the tasks/ files (--fix repairs)
 gald3r task archive               # move completed/failed/cancelled tasks into .gald3r/archive/
-gald3r task delete T999           # HARD delete -- only for tasks created in the wrong project
+gald3r task delete            # HARD delete -- only for tasks created in the wrong project
 gald3r task stale-claims           # find and resolve in-progress tasks whose claim has expired
 gald3r db rebuild                  # regenerate TASKS.md and the task files from the database
 </code></pre>

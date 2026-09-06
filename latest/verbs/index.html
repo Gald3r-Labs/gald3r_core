@@ -2102,11 +2102,11 @@ from an older binary version, both point you at it by name.</p>
 </tr>
 <tr>
 <td><code>gald3r medic</code></td>
-<td>Diagnose and repair problems in your project's gald3r setup — broken links, stale indexes, drifted files — fixing what's safe to fix automatically. <code>medic heal --heal board-ingest-drift</code> WARNs on files-without-rows and fat indexes; diagnose-only even with <code>--apply</code> (no silent layout-migrate, BUG-947).</td>
+<td>Diagnose and repair problems in your project's gald3r setup — broken links, stale indexes, drifted files — fixing what's safe to fix automatically. <code>medic heal --heal board-ingest-drift</code> WARNs on files-without-rows and fat indexes; diagnose-only even with <code>--apply</code> (no silent layout-migrate).</td>
 </tr>
 <tr>
 <td><code>gald3r triage sweep</code></td>
-<td>Walk the open backlog and classify each task/bug <code>already_done</code> / <code>duplicate</code> / <code>obsolete</code> with git/board-verified evidence. Report-only by default; <code>--apply</code> closes only the verified, uncapped findings. See <a href="../autopilot/"><code>autopilot.md</code></a>'s "Evidence-based triage sweep" section for the citation convention and the BUG-1140 cap contract.</td>
+<td>Walk the open backlog and classify each task/bug <code>already_done</code> / <code>duplicate</code> / <code>obsolete</code> with git/board-verified evidence. Report-only by default; <code>--apply</code> closes only the verified, uncapped findings. See <a href="../autopilot/"><code>autopilot.md</code></a>'s "Evidence-based triage sweep" section for the citation convention and the cap contract.</td>
 </tr>
 <tr>
 <td><code>gald3r autopilot reconcile</code></td>
@@ -2252,7 +2252,7 @@ from an older binary version, both point you at it by name.</p>
 </tr>
 <tr>
 <td><code>gald3r graph explore TARGET</code></td>
-<td>One-call view of the code graph: a file's or symbol's declarations, direct callers/callees, transitive blast radius, and (by default) its own source content — all in one call. Source is fetched byte-identically to <code>gald3r</code>'s own Read tool (T837 pillar 5, task1117).</td>
+<td>One-call view of the code graph: a file's or symbol's declarations, direct callers/callees, transitive blast radius, and (by default) its own source content — all in one call. Source is fetched byte-identically to <code>gald3r</code>'s own Read tool (pillar 5, ).</td>
 </tr>
 <tr>
 <td><code>gald3r graph impact TARGET</code></td>
@@ -2268,7 +2268,7 @@ from an older binary version, both point you at it by name.</p>
 </tr>
 <tr>
 <td><code>gald3r sync</code></td>
-<td>Maintainer-build-only (<code>gald3r_maintainer</code> tag; a release binary carries a hidden refusal stub): redeploy the neutral commands/rules/hooks/agents/skills set from <code>neutral_source/</code> to this source checkout's own IDE folders after editing them, replacing the untracked manual-copy workaround (BUG-538/BUG-541). Dry-run drift summary by default; <code>--apply</code> writes.</td>
+<td>Maintainer-build-only (<code>gald3r_maintainer</code> tag; a release binary carries a hidden refusal stub): redeploy the neutral commands/rules/hooks/agents/skills set from <code>neutral_source/</code> to this source checkout's own IDE folders after editing them, replacing the untracked manual-copy workaround. Dry-run drift summary by default; <code>--apply</code> writes.</td>
 </tr>
 <tr>
 <td><code>gald3r lint</code></td>
@@ -2441,6 +2441,10 @@ across your machines and your team.</p>
 <tr>
 <td><code>gald3r install throne</code></td>
 <td>Download, verify, and stage the signed Gald3r Throne desktop app from its own GitHub Releases.</td>
+</tr>
+<tr>
+<td><code>gald3r install longship</code></td>
+<td>Fresh-install the Longship TUI binary (<code>gald3r-longship</code>) — download the same signed platform archive <code>install update</code> uses, verify it, and place it next to whatever <code>gald3r</code> currently resolves to on <code>PATH</code>. Once installed, <code>install update</code> keeps it refreshed like any other bundle sibling.</td>
 </tr>
 <tr>
 <td><code>gald3r platform</code></td>

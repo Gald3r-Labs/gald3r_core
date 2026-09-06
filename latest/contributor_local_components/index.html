@@ -1667,7 +1667,7 @@
 
 
 <h1 id="contributor-local-components-and-how-a-canon-component-gets-retired">Contributor-local components, and how a canon component gets retired<a class="headerlink" href="#contributor-local-components-and-how-a-canon-component-gets-retired" title="Permanent link">&para;</a></h1>
-<p>task1208, slices (a) and (d). Written directly from the owner's own verbatim question that
+<p>, slices (a) and (d). Written directly from the owner's own verbatim question that
 opened this task: <em>"can I start putting my extra skills into the .claude and .cursor folders
 here or are they still used as the basis of what ships"</em> and <em>"how do we retire old gald3r
 CRASH, or does it just get left out there and might be causing behaviour issues?"</em> This page is
@@ -1687,7 +1687,7 @@ consumer project ends up with, kept current via <code>gald3r sync</code> (<code>
 sync.go</code>, <code>gald3r_maintainer</code>-build-tag-gated, checkout-only). Editing a file inside this repo's
 <code>.claude/rules/g-rl-43-*.md</code> directly, instead of editing <code>neutral_source/rules/g-rl-43-*.md</code> and
 re-running <code>gald3r sync --apply</code>, edits a <em>copy</em> that the next sync will either overwrite (if
-<code>neutral_source</code> never caught up — BUG-1339's own regression guard now catches and flags that
+<code>neutral_source</code> never caught up's own regression guard now catches and flags that
 case rather than silently reverting it) or leave stale forever (if nobody remembers this
 checkout even has its own drifted copy). Either way, a canon-named file is the wrong place for
 one-off local content.</p>
@@ -1721,8 +1721,8 @@ never blocks a sync or an install. If you are building tooling on top of <code>g
 <code>orphaned</code> array, do not treat a non-"g-"-prefixed entry as a problem to fix — that is exactly
 the contributor-local shape this contract exists to protect.</p>
 <h2 id="retiring-a-canon-component-the-tombstone-registry">Retiring a canon component: the tombstone registry<a class="headerlink" href="#retiring-a-canon-component-the-tombstone-registry" title="Permanent link">&para;</a></h2>
-<p>Before task1208, there was no way to actually <em>remove</em> a canon component from an
-already-installed project. Deleting a rule from <code>neutral_source</code> (as task1195 did for
+<p>Before, there was no way to actually <em>remove</em> a canon component from an
+already-installed project. Deleting a rule from <code>neutral_source</code> (as did for
 <code>g-rl-09-python_venv.md</code>, once the product stopped being Python/UV-based) only ever stops it
 from being written to <em>new</em> installs — every project that had already run <code>platform install</code>
 before that change keeps the retired file forever, still always-applying, with no cleanup path.
@@ -1736,7 +1736,7 @@ per affected platform:</p>
 <pre><code class="language-go">{
     Platform: &quot;claude&quot;,
     RelPath:  &quot;.claude/rules/g-rl-09-python_venv.md&quot;,
-    Reason:   &quot;task1195 (2026-08-25 owner ruling): the product is no longer Python/UV-based; ...&quot;,
+    Reason:   &quot; (2026-08-25 owner ruling): the product is no longer Python/UV-based; ...&quot;,
 }
 </code></pre>
 <p>From that point on, every <code>gald3r platform install</code> (default behavior; opt out with
@@ -1745,7 +1745,7 @@ per affected platform:</p>
 <ol>
 <li><strong>tombstoned</strong> — explicitly listed in <code>RetiredOverlayPaths</code> for this platform.</li>
 <li><strong>manifest-tracked</strong> — this platform's install-provenance ledger
-   (<code>pipeline.UserModLedgerPath</code>, the same ledger task1208(b)'s <code>--preserve-user-mods</code> reads)
+ (<code>pipeline.UserModLedgerPath</code>, the same ledger (b)'s <code>--preserve-user-mods</code> reads)
    has a recorded baseline for this exact path, i.e. gald3r itself is proven to have written it.</li>
 <li><strong>content-hash-matches-shipped</strong> — the current on-disk bytes still hash to that recorded
    baseline. Any mismatch means something (almost certainly the user) touched the file since
