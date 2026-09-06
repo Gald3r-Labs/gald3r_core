@@ -24,6 +24,10 @@ recommended for general use.
 
 ---
 
+## [5.0.53] - 2026-09-06
+
+_No public release notes were provided for v5.0.53._
+
 ## [5.0.52] - 2026-09-06
 
 _No public release notes were provided for v5.0.52._
