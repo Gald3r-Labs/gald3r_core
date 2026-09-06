@@ -175,6 +175,7 @@ across your machines and your team.
 | `gald3r shutdown` | Safely stop persistent gald3r MCP, Valkyrie, and autopilot processes before an in-place binary upgrade — especially on Windows, where a running process can lock the binary (`--dry-run` previews without signalling anything; `--force` kills stragglers left after the graceful `--wait` window). See [Install → Stop the local fleet](./install.md#stop-the-local-fleet-before-replacing-files). |
 | `gald3r install update` | Download, verify, and install the latest signed gald3r_core release, replacing whatever `gald3r` currently resolves to on `PATH`. |
 | `gald3r install throne` | Download, verify, and stage the signed Gald3r Throne desktop app from its own GitHub Releases. |
+| `gald3r install longship` | Fresh-install the Longship TUI binary (`gald3r-longship`) — download the same signed platform archive `install update` uses, verify it, and place it next to whatever `gald3r` currently resolves to on `PATH`. Once installed, `install update` keeps it refreshed like any other bundle sibling. |
 | `gald3r platform` | Keep gald3r's support for Cursor, Claude Code, Copilot, and every other AI IDE up to date as their own docs change. |
 | `gald3r throne` | Open Gald3r Throne, the visual desktop companion to this CLI. |
 | `gald3r acp` | Compatibility ACP stdio adapter, for editors like Zed that drive an agent over the Agent Client Protocol. |
