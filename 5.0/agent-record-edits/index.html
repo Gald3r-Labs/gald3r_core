@@ -1662,7 +1662,7 @@
 
 
 <h1 id="editing-records-via-the-agent-the-resolution-layer">Editing records via the agent (the resolution layer)<a class="headerlink" href="#editing-records-via-the-agent-the-resolution-layer" title="Permanent link">&para;</a></h1>
-<p>T1150, the last child task of the T1143 EPIC (the record-mutation API, D050's write side),
+<p>, the last child task of the EPIC (the record-mutation API, the write side),
 builds the seam between "tell the agent what you want changed, in plain language" and the typed
 <code>Mutate&lt;Class&gt;</code> calls <a href="../mcp-tools/"><code>mcp-tools.md</code></a> documents. This page explains the
 contract and its current integration status honestly — read the "What's wired up today" section
@@ -1738,7 +1738,7 @@ recognizes exactly these English sentence shapes (case-insensitive):</p>
 <p>Anything outside these shapes returns an unresolved <code>Plan</code> with a <code>Reason</code> explaining that
 nothing matched — it never guesses.</p>
 <h2 id="design-boundary-this-package-does-not-ship-an-llm-integration">Design boundary: this package does not ship an LLM integration<a class="headerlink" href="#design-boundary-this-package-does-not-ship-an-llm-integration" title="Permanent link">&para;</a></h2>
-<p>T1150's own description imagines a human telling "the AI what needed to be done" and the agent
+<p>'s own description imagines a human telling "the AI what needed to be done" and the agent
 resolving that into calls — i.e. a language model doing the actual understanding. Which model to
 call, what prompt/context to give it, how much of the board to feed it, and how ambiguity gets
 surfaced back to the human are all real product decisions with no ratified answer on record as
@@ -1755,7 +1755,7 @@ one — plugs into the exact same <code>resolve.ResolveAndExecute</code> orchest
 <h2 id="supported-record-classes-today">Supported record classes today<a class="headerlink" href="#supported-record-classes-today" title="Permanent link">&para;</a></h2>
 <p>Only <code>task</code> and <code>bug</code> ship a built-in dispatcher out of the box (<code>resolve.ClassTask</code> /
 <code>resolve.ClassBug</code>), routed to <code>ops.MutateTask</code> / <code>ops.MutateBug</code> — the two record classes with
-the richest, fully DB-first mutation API. The other ten classes T1143 named (ADR, TO-DO, idea,
+the richest, fully DB-first mutation API. The other ten classes named (ADR, TO-DO, idea,
 decision, PRD, feature, subsystem, release, constraint, document) already have their own
 <code>Mutate&lt;Class&gt;</code> functions (see <a href="../mcp-tools/"><code>mcp-tools.md</code></a>); wiring one into the resolution
 layer is a <code>resolve.RegisterClass("adr", myDispatchFunc)</code> call away, not a package change.</p>
@@ -1764,7 +1764,7 @@ layer is a <code>resolve.RegisterClass("adr", myDispatchFunc)</code> call away, 
 <code>Execute</code> has no write path of its own to fall back to. While building this task, an audit found
 that <code>ops.MutateTask</code>/<code>MutateBug</code>/<code>MutateTodo</code>/<code>MutateIdea</code> (unlike every other <code>Mutate&lt;Class&gt;</code>
 function in the codebase) carried <strong>no</strong> <code>reviewsandbox.Guard</code> check at all: a sandboxed
-reviewer-turn child (<code>GALD3R_REVIEW_SANDBOX=1</code>) or a T1141 single-writer-board child
+reviewer-turn child (<code>GALD3R_REVIEW_SANDBOX=1</code>) or a single-writer-board child
 (<code>GALD3R_SINGLE_WRITER_BOARD=1</code>) could call them directly and mutate the board anyway. This task
 closes that gap in <code>gald3r_project/board/ops</code> (<code>mutate.go</code>/<code>mutate2.go</code>) — both markers now
 refuse with the same named errors every other guarded write path in this codebase already uses —
