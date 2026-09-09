@@ -2,33 +2,20 @@
 
 ## 1. Install
 
-Download the platform bundle (or installer) for your OS from the **v5.0.54** release, verify it
-against `SHA256SUMS.txt`, and install it.
+Choose the recommended installer for your processor from the [v5.0.55 release](https://github.com/Gald3r-Labs/gald3r_core/releases/tag/v5.0.55), and verify your download against its `SHA256SUMS.txt`.
 
-**Windows** -- easiest: run `gald3r-windows-x86_64.msi`. Manual install: extract
-`gald3r-windows-x86_64.zip`, put it on your PATH.
+| Platform | Recommended installer |
+|---|---|
+| Windows x86_64 | `gald3r-windows-x86_64.msi` — choose Core, Throne and/or IDE |
+| Linux x86_64 | `gald3r-suite-linux-x86_64.tar.gz` — extract, read the included README and run `sh install.sh` from the extracted suite directory |
+| Mac Apple silicon | `gald3r-suite-macos-arm64.pkg` — signed and notarized; choose Core, Throne and/or IDE |
+| Mac Intel | `gald3r-macos-x86_64.pkg` — Core and companions only |
 
-```powershell
-Expand-Archive gald3r-windows-x86_64.zip
-Get-FileHash .\gald3r-windows-x86_64\gald3r.exe -Algorithm SHA256
-Get-Content .\gald3r-windows-x86_64\SHA256SUMS      # must match
-gald3r --version                          # -> gald3r 5.0.54 ...
-```
+Linux desktop apps require WebKit2GTK 4.1; the shell installer does not install system dependencies. Linux ARM64 and Mac Intel desktop apps are not supplied in this release.
+Standalone binary archives are advanced alternatives, not a self-contained USB workspace.
+No Python, `uv`, or source checkout is required to install the compiled programs.
 
-**macOS** -- easiest: run `gald3r-macos-arm64.pkg` (Apple Silicon) or `gald3r-macos-x86_64.pkg`
-(Intel). Manual install: extract the matching `.tar.gz` and run its bundled `install.sh`.
-
-**Linux**
-
-```bash
-tar xzf gald3r-linux-x86_64.tar.gz
-cd gald3r-*-linux-x86_64
-sha256sum -c SHA256SUMS                   # must match
-./install.sh
-gald3r --version
-```
-
-No Python, no `uv`, no source checkout required -- these are the compiled binaries.
+If you selected Core, open a new terminal and run `gald3r --version` to verify 5.0.55.
 
 ## 2. First run -- confirm the install is healthy
 
