@@ -1757,9 +1757,7 @@ native, but there is no documented user-definable custom-agent file format). <st
 <strong>commands</strong> are <strong>not</strong> supported — there is no lifecycle-hook config and no user-authored
 slash-command registry (Workflows are adjacent shell-command runners, not an agent command surface).</p>
 <p><strong>Authoring path: UPDATE. Verified 2026-06-02</strong> against https://docs.replit.com (see Verification
-Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code>/<code>2026-05-20</code>), which incorrectly
-marked <strong>skills</strong> as unsupported and <strong>agents</strong> as a hard ❌ — Agent Skills shipped (~April 2026) and
-are NATIVE, and Plan/Build modes + effort tiers make agents an honest ⚠️ partial.</p>
+Evidence).</p>
 <blockquote>
 <p><strong>Instruction-file convention:</strong> Replit standardizes on <strong><code>replit.md</code></strong> (project root), NOT
 <code>AGENTS.md</code>/<code>CLAUDE.md</code>. Replit's own docs say "Agent automatically reads your <code>replit.md</code> file"
@@ -1861,7 +1859,7 @@ committed, gald3r-shippable surface.</p>
   Git-workflow hooks are an <strong>open community feature request</strong>, not a shipped feature.</li>
 <li><strong>Compounding constraint</strong>: the container is <strong>Linux</strong> — even if hooks could be wired, gald3r's
   <code>g-hk-*.py</code> scripts need a <code>python</code> interpreter on the container (availability in a standard
-Replit Nix container is unverified; no PowerShell dependency post- Python port).</li>
+  Replit Nix container is unverified; no PowerShell dependency (Python port)).</li>
 <li><strong>gald3r mapping</strong>: session-start context injection, agent-complete, pre-commit, and shell-guard
   hooks must be replaced by <code>replit.md</code> prose (e.g. "before completing a task, re-read
   CONSTRAINTS.md") or git <code>core.hooksPath</code> bash scripts — not enforced gald3r code.</li>
@@ -1915,14 +1913,14 @@ etc.) distinct from generic MCP.</p>
   observational, not a script-execution hook</li>
 <li><strong>Event payload format</strong>: none</li>
 <li><strong>Limitations</strong>: container is <strong>Linux</strong> — even if wired, <code>g-hk-*.py</code> scripts need a <code>python</code>
-interpreter on the container (availability unverified; no PowerShell dependency post- port); container restarts reset
+  interpreter on the container (availability unverified; no PowerShell dependency); container restarts reset
   uncommitted state. Git-workflow hooks are an open community request, not shipped</li>
 <li><strong>gald3r hook files</strong>: none auto-fire — hook behaviors must run via <code>replit.md</code> prose, git
   <code>core.hooksPath</code> bash scripts, or manual invocation</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Cloud Linux container: gald3r <code>.py</code> hooks need a <code>python</code> interpreter on the container (availability unverified; no PowerShell dependency post- port).</li>
+<li>Cloud Linux container: gald3r <code>.py</code> hooks need a <code>python</code> interpreter on the container (availability unverified; no PowerShell dependency).</li>
 <li>Instruction file is <strong><code>replit.md</code></strong> (auto-created, auto-read, self-updated) — <strong>not</strong> AGENTS.md/CLAUDE.md.</li>
 <li>Skills load from <strong><code>/.agents/skills/</code></strong> (agentskills.io standard) — a real native surface.</li>
 <li>MCP/Integrations live in the cloud UI (not committed files); the gald3r MCP endpoint must be a

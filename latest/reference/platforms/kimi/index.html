@@ -1747,10 +1747,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#prior-scan-httpsmoonshotaigithubiokimi-clien-pre-rebrand-mirror-now-superseded" class="md-nav__link">
+  <a href="#prior-scan-2026-06-02-httpsmoonshotaigithubiokimi-clien-pre-rebrand-mirror-now-superseded" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prior scan — https://moonshotai.github.io/kimi-cli/en/ (pre-rebrand mirror, now superseded)
+        Prior scan (2026-06-02) — https://moonshotai.github.io/kimi-cli/en/ (pre-rebrand mirror, now superseded)
       
     </span>
   </a>
@@ -1918,7 +1918,7 @@ as additional scopes. gald3r's <code>AGENTS.md</code> is the first-class instruc
   desktop notifications, verifying task completion before session close — so gald3r SessionStart
   context injection, PreToolUse <code>.gald3r/</code> guards, and pre-commit gates wire in via shell commands.</li>
 <li><strong>OS note:</strong> hook <code>command</code> is an arbitrary shell command; gald3r <code>g-hk-*.py</code> hooks
-run by invoking <code>python &lt;path&gt;</code> directly (post- Python port; no PowerShell involved — Kimi
+  run by invoking <code>python &lt;path&gt;</code> directly (no PowerShell involved — Kimi
   Code is cross-platform and shell-agnostic).</li>
 <li><strong>gald3r wiring status (re-verified 2026-08-30):</strong> still <strong>not wired</strong> in
   <code>layout_map.yaml</code> — <code>[[hooks]]</code> registration lives only in the USER-GLOBAL
@@ -1984,7 +1984,7 @@ platforms), plus an <code>AGENTS.md</code>, with hooks wired in <code>$KIMI_CODE
   PermissionResult, Notification (partial list confirmed; full 13-event enumeration pending a
   dedicated re-scan — see rebrand_note in frontmatter)</li>
 <li><strong>Event payload format</strong>: JSON via stdin; result via exit codes (<code>0</code> allow / <code>2</code> block / other = log only); optional <code>matcher</code> regex + <code>timeout</code> (1-600s, default 30s)</li>
-<li><strong>Command extensions</strong>: arbitrary shell <code>command</code>; <code>g-hk-*.py</code> wire via <code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved — cross-platform agent)</li>
+<li><strong>Command extensions</strong>: arbitrary shell <code>command</code>; <code>g-hk-*.py</code> wire via <code>python &lt;path&gt;</code> (no PowerShell involved — cross-platform agent)</li>
 <li><strong>Maturity</strong>: documented as a complete customization surface post-rebrand; re-verify stability given the Python/uv → Node.js runtime change</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
@@ -2006,7 +2006,7 @@ platforms), plus an <code>AGENTS.md</code>, with hooks wired in <code>$KIMI_CODE
 <li>Ship gald3r's <code>SKILL.md</code> tree into <code>.kimi-code/skills/</code> (native) or <code>.agents/skills/</code>
   (cross-tool) + an <code>AGENTS.md</code> instruction file (or run <code>/init</code>).</li>
 <li>Wire hooks in <code>$KIMI_CODE_HOME/config.toml</code> (default <code>~/.kimi-code/config.toml</code>) via <code>[[hooks]]</code>;
-invoke <code>g-hk-*.py</code> through <code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved).</li>
+  invoke <code>g-hk-*.py</code> through <code>python &lt;path&gt;</code> (no PowerShell involved).</li>
 <li>Map gald3r commands to Kimi <code>/skill:&lt;name&gt;</code>; consider Flow skills (<code>type: flow</code>) for multi-step
   gald3r workflows and Custom Plugins for executable tooling.</li>
 <li>Re-verify on the next <code>@g-platform-scan-docs kimi</code> (crawl_max_age_days: 14) — confirm the full
@@ -2085,7 +2085,7 @@ invoke <code>g-hk-*.py</code> through <code>python &lt;path&gt;</code> (post- Py
 </table>
 <p>Sources cited by the task brief and cross-checked here: https://github.com/MoonshotAI/kimi-code ;
 https://www.techtimes.com/articles/319556/20260702/open-weight-ai-enters-github-copilot-kimi-k27-code-costs-less-audits-differently.htm</p>
-<h3 id="prior-scan-httpsmoonshotaigithubiokimi-clien-pre-rebrand-mirror-now-superseded">Prior scan — https://moonshotai.github.io/kimi-cli/en/ (pre-rebrand mirror, now superseded)<a class="headerlink" href="#prior-scan-httpsmoonshotaigithubiokimi-clien-pre-rebrand-mirror-now-superseded" title="Permanent link">&para;</a></h3>
+<h3 id="prior-scan-2026-06-02-httpsmoonshotaigithubiokimi-clien-pre-rebrand-mirror-now-superseded">Prior scan (2026-06-02) — https://moonshotai.github.io/kimi-cli/en/ (pre-rebrand mirror, now superseded)<a class="headerlink" href="#prior-scan-2026-06-02-httpsmoonshotaigithubiokimi-clien-pre-rebrand-mirror-now-superseded" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>

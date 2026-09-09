@@ -2450,7 +2450,10 @@ gald3r autopilot events --run-id &lt;stamp&gt;     # replay a specific past run'
 </code></pre>
 <p><code>autopilot status</code> and a live run's own startup line both compute the swarm-candidate count
 (open tasks + open bugs, floor-eligible) through the exact same function, and <code>status</code> names
-the floor it applied — so the two can never again disagree about whether there is work to do.</p>
+the floor it applied — so the two can never again disagree about whether there is work to do.
+<code>--max-severity</code>/<code>--max-value</code> (owner: "assigning work to a lower end model") are the ceiling
+twin of <code>--min-severity</code>/<code>--min-value</code> — default 10 (no ceiling), refused at the CLI when set
+below the floor, and named on the same <code>status</code> line whenever a run has one active.</p>
 <h3 id="live-view-watching-what-a-bucket-or-coordinator-is-actually-saying">Live view: watching what a bucket or coordinator is actually saying<a class="headerlink" href="#live-view-watching-what-a-bucket-or-coordinator-is-actually-saying" title="Permanent link">&para;</a></h3>
 <p>The ledger above narrates <em>lifecycle occurrences</em> (a bucket spawned, a merge landed) — it does
 not carry a bucket agent's or the coordinator's own running commentary. That commentary used to

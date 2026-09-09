@@ -1869,8 +1869,8 @@ consumer installs lean (large instruction files compete for context window — u
   in an agent's workflow." Events: <strong>sessionStart</strong>, <strong>userPromptSubmitted</strong>, <strong>preToolUse</strong>,
   <strong>postToolUse</strong>, <strong>sessionEnd</strong>, <strong>errorOccurred</strong>. For <strong>preToolUse</strong>, a hook returning <strong><code>deny</code>
   blocks the tool</strong>. Configured in <strong><code>.github/hooks/*.json</code></strong> with <strong>bash / any-executable variants</strong>
-— so gald3r <code>g-hk-*.py</code> hooks wire via the bash variant running <code>python &lt;path&gt;</code> (post- Python
-  port; no PowerShell involved; sessionStart context injection,
+  — so gald3r <code>g-hk-*.py</code> hooks wire via the bash variant running <code>python &lt;path&gt;</code> (no PowerShell
+  involved; sessionStart context injection,
   preToolUse <code>.gald3r/</code> guards, etc.).</li>
 <li><strong>Surface caveat</strong>: hooks are GA on the <strong>Copilot CLI</strong>; <strong>Agent hooks are also in preview for
   VS Code</strong>.</li>

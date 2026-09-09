@@ -1055,6 +1055,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#prompt-playbooks-fetch-by-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt playbooks: fetch by ID
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#agents-scoped-personas" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1727,6 +1738,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#prompt-playbooks-fetch-by-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt playbooks: fetch by ID
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#agents-scoped-personas" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1846,7 +1868,7 @@ pulled from this repo's own component source (not invented samples).</p>
 <h2 id="commands-g-wpac-notify-real-file">Commands: <code>/g-wpac-notify</code> (real file)<a class="headerlink" href="#commands-g-wpac-notify-real-file" title="Permanent link">&para;</a></h2>
 <p>Commands are thin dispatchers — a short markdown file describing usage, that hands off to a
 skill for the actual instructions. This repo's own
-<code>src/gald3r_core/platform/pipeline/neutral_source/commands/g-wpac-notify.md</code>:</p>
+<code>gald3r_platforms/assets/neutral_source/commands/g-wpac-notify.md</code>:</p>
 <pre><code class="language-markdown">---
 description: Send a lightweight [INFO] notification to one or more project INBOXes -- no task created, no approval needed.
 subsystem_memberships: [WORKSPACE_COORDINATION]
@@ -1876,6 +1898,18 @@ example <code>g-rl-43</code> (this repo's own rule) mandates <code>gald3r search
 that might touch a gitignored tree like <code>.gald3r_sys/</code>, because a plain <code>grep</code>/ripgrep search
 silently skips gitignored directories and produces a false "doesn't exist" result. The rule
 exists specifically because that false negative happened in practice.</p>
+<h2 id="prompt-playbooks-fetch-by-id">Prompt playbooks: fetch by ID<a class="headerlink" href="#prompt-playbooks-fetch-by-id" title="Permanent link">&para;</a></h2>
+<p>Pipeline-specific instructions are retrieved with commands such as
+<code>gald3r prompt get playbook.pipeline_gates</code> and
+<code>gald3r prompt get playbook.pipeline_ggo_commands</code>. The chat-vs-factory rules
+keep only the relevant pointers in always-loaded context. Installed agents use
+these prompt IDs; they do not need a checkout of gald3r's source code.</p>
+<p>For maintainers, CRASH components are authored in
+<code>gald3r_platforms/assets/neutral_source/</code>, and prompt documents in
+<code>gald3r_engine/crash/assets/prompt_assets/</code>. Generated platform overlays and
+compiled binaries are derived outputs, not additional authoring locations.
+Python compatibility distributions also derive their prompt data from that same
+prompt corpus. Rebuild a development binary before using it to check newer source.</p>
 <h2 id="agents-scoped-personas">Agents: scoped personas<a class="headerlink" href="#agents-scoped-personas" title="Permanent link">&para;</a></h2>
 <p>An agent definition narrows a session to one job — <code>g-agnt-qa-engineer</code> only reasons about
 bugs and quality, <code>g-agnt-verifier</code> only verifies work it did NOT itself implement (a

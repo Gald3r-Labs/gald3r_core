@@ -1866,12 +1866,12 @@ one tailored to the repo (Goose's own repo ships an <code>AGENTS.md</code>). Goo
 <li><strong>gald3r mapping</strong>: gald3r <code>@g-*</code> / <code>/g-*</code> workflows map to <strong>Recipes</strong> surfaced as custom slash
   commands. Unlike markdown command files on other platforms, the durable form on Goose is recipe
   YAML.</li>
-<li><strong>Implemented (follow-up to):</strong> the installer's overlay generator
-  (<code>platform/pipeline/generate.py</code>) now carries a real Recipe-YAML CONTENT TRANSFORM
+<li><strong>Implemented:</strong> the installer's overlay generator
+  (<code>platform/pipeline/generate.py</code>) carries a real Recipe-YAML CONTENT TRANSFORM
   (<code>_emit_recipe_yaml_commands</code>/<code>_render_recipe_yaml</code>, opted into via <code>layout_map.yaml</code>'s
   <code>transform: "recipe_yaml"</code>), so each neutral <code>g-*</code> command lands at project-relative
   <code>.goose/recipes/&lt;name&gt;.yaml</code> as a real Recipe (<code>instructions</code>/<code>prompt</code>/<code>extensions</code>/typed
-<code>parameters</code>) instead of the flat, uninvokable <code>.md</code> drop correctly refused to fake.
+  <code>parameters</code>) instead of a flat, uninvokable <code>.md</code> drop.
   Placement verified against https://block.github.io/goose/docs/guides/recipes/storing-recipes/
   (project-relative <code>./.goose/recipes/</code>, also the CWD Goose searches by default).</li>
 <li>Source: https://block.github.io/goose/docs/guides/recipes/ ·
@@ -1890,7 +1890,7 @@ one tailored to the repo (Goose's own repo ships an <code>AGENTS.md</code>). Goo
   <code>AfterShellExecution</code>.</li>
 <li><strong>gald3r mapping</strong>: gald3r <code>g-hk-*.py</code> behaviors (SessionStart context injection, PreToolUse <code>.gald3r/</code>
   guards, pre-commit/shell guards) wire natively. Hooks run <strong>shell commands</strong> — gald3r hooks are
-invoked via <code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved), which runs
+  invoked via <code>python &lt;path&gt;</code>, which runs
   identically on Windows and POSIX.</li>
 <li><strong>Recency caveat</strong>: this feature was <strong>announced 2026-05-14</strong>, ~3 weeks before this assessment.
   Treat the event list and <code>hooks.json</code> schema as fresh-but-young; re-verify on the next crawl.</li>
@@ -1954,8 +1954,8 @@ bundle + an MCP extension entry.</p>
 <li><strong>Events available</strong>: SessionStart, SessionEnd, Stop, UserPromptSubmit, PreToolUse, PostToolUse,
   PostToolUseFailure, BeforeReadFile, AfterFileEdit, BeforeShellExecution, AfterShellExecution</li>
 <li><strong>Event payload / mechanism</strong>: hooks run <strong>shell scripts</strong> on the above events</li>
-<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> wire natively — invoked via <code>python &lt;path&gt;</code> (post- Python
-  port; no PowerShell involved), which runs identically on Windows and POSIX</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> wire natively — invoked via <code>python &lt;path&gt;</code> (no PowerShell
+  involved), which runs identically on Windows and POSIX</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
 <ul>

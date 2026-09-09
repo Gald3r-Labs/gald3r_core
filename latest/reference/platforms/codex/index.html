@@ -23,7 +23,7 @@
     
     
       
-        <title>PLATFORM_SPEC.md — OpenAI Codex (CLI / IDE / app) - gald3r_core Product Docs</title>
+        <title>Codex integration contract - gald3r_core Product Docs</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#platform_specmd-openai-codex-cli-ide-app" class="md-skip">
+        <a href="#codex-integration-contract" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PLATFORM_SPEC.md — OpenAI Codex (CLI / IDE / app)
+              Codex integration contract
             
           </span>
         </div>
@@ -1570,10 +1570,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-folder-hierarchy" class="md-nav__link">
+  <a href="#instructions-skills-and-agents" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Folder Hierarchy
+        Instructions, skills and agents
       
     </span>
   </a>
@@ -1581,10 +1581,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-ai-instruction-file" class="md-nav__link">
+  <a href="#configuration-and-mcp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. AI Instruction File
+        Configuration and MCP
       
     </span>
   </a>
@@ -1592,10 +1592,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-agents-support-native" class="md-nav__link">
+  <a href="#hook-registration-and-trust" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Agents Support — ✅ NATIVE
+        Hook registration and trust
       
     </span>
   </a>
@@ -1603,10 +1603,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-skills-support-native" class="md-nav__link">
+  <a href="#adapter-boundary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Skills Support — ✅ NATIVE
+        Adapter boundary
       
     </span>
   </a>
@@ -1614,10 +1614,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-commands-workflows-native" class="md-nav__link">
+  <a href="#evidence-required-before-calling-an-install-operational" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Commands / Workflows — ✅ NATIVE
+        Evidence required before calling an install operational
       
     </span>
   </a>
@@ -1625,109 +1625,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-hooks-system-native" class="md-nav__link">
+  <a href="#official-references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Hooks System — ✅ NATIVE
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-rules-memory-native" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. Rules / Memory — ✅ NATIVE
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-mcp-support-native" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. MCP Support — ✅ NATIVE
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-plugins-apps-distribution-channels" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        9. Plugins / Apps — distribution channels
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parity-vs-cursor-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Parity vs. Cursor Reference
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hook-system" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hook System
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#atypical-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Atypical Handling
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gald3r-integration-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gald3r Integration Notes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#capability-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Capability Summary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verification-evidence-docs-crawl-2026-06-02-httpsdevelopersopenaicomcodex" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verification Evidence (docs crawl 2026-06-02, https://developers.openai.com/codex)
+        Official references
       
     </span>
   </a>
@@ -1754,272 +1655,80 @@
   
 
 
-<h1 id="platform_specmd-openai-codex-cli-ide-app">PLATFORM_SPEC.md — OpenAI Codex (CLI / IDE / app)<a class="headerlink" href="#platform_specmd-openai-codex-cli-ide-app" title="Permanent link">&para;</a></h1>
+<h1 id="codex-integration-contract">Codex integration contract<a class="headerlink" href="#codex-integration-contract" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p><strong>New to gald3r on this platform?</strong> Start at <a href="../../../platforms/codex/">Use gald3r with OpenAI Codex</a> for a short overview before the full breakdown below.</p>
 </blockquote>
-<p>OpenAI Codex ships as the <strong><code>codex</code> CLI</strong>, an IDE integration, and a hosted app, all driven by a
-single schema-validated <strong><code>config.toml</code></strong>. As of mid-2026 Codex natively supports <strong>all six</strong>
-gald3r-relevant extension primitives — custom slash commands, rules/memory, subagents, Agent
-Skills, lifecycle hooks, and MCP. Critically for gald3r, Codex reads <strong><code>AGENTS.md</code></strong> (NOT
-<code>CLAUDE.md</code>) as its instruction file, and discovers skills from the <strong>open Agent Skills standard</strong>
-(<code>.agents/skills/</code>), so gald3r's <code>SKILL.md</code> artifacts are <strong>directly portable</strong> onto Codex.</p>
-<p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://developers.openai.com/codex (see
-Verification Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code>) which incorrectly
-marked hooks/commands as unsupported and rules/skills/MCP as partial — they are now all NATIVE in
-Codex. The legacy <code>codex.config.json</code> + <code>suggest</code>/<code>auto-edit</code>/<code>full-auto</code> naming is also superseded by
-<code>config.toml</code> + <code>approval_policy</code>/<code>sandbox_mode</code>.</p>
-<blockquote>
-<p><strong>Surface split:</strong> the full extensibility (commands/rules/agents/skills/hooks/MCP/plugins) is driven
-by <strong><code>config.toml</code></strong> + filesystem directories, available to the <strong><code>codex</code> CLI</strong>. The IDE/app exposes
-the same config plus an MCP settings panel; where a feature is CLI-centric or has an IDE caveat it is
-noted inline. <strong>OS note:</strong> managed (enterprise) hooks run automatically; non-managed hooks require
-per-user trust before they fire.</p>
-</blockquote>
-<hr />
-<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
-<pre><code>&lt;project-root&gt;/
-├── AGENTS.md                     ← instruction file Codex reads (NOT CLAUDE.md)
-├── AGENTS.override.md            ← higher-precedence override (optional)
-├── TEAM_GUIDE.md / .agents.md    ← lower-precedence instruction fallbacks
-├── .agents/
-│   └── skills/   &lt;name&gt;/SKILL.md ← Agent Skills (open standard, shared w/ Claude/others)
-└── .codex/
-    ├── config.toml               ← model, sandbox/approval, [mcp_servers.*], [hooks], [[skills.config]]
-    ├── hooks.json                ← lifecycle hooks (or inline [hooks] in config.toml)
-    ├── agents/    *.toml         ← subagents (standalone TOML files)
-    └── prompts/   *.md           ← Custom Prompts → slash commands (DEPRECATED; use skills)
-
-~/.codex/                         ← personal/global tree (merged below project; less specific loses)
-├── AGENTS.md                     ← global instruction file
-├── config.toml                   ← global config
-├── agents/    *.toml             ← personal subagents
-├── memories/                     ← persistent Memories injected into future sessions
-└── prompts/   *.md               ← personal Custom Prompts (DEPRECATED)
-
-$HOME/.agents/skills/             ← personal Agent Skills
-</code></pre>
-<p>Codex resolves config and instructions <strong>most-specific-wins</strong> (project <code>.codex/</code> over <code>~/.codex/</code>;
-nested <code>AGENTS.md</code> over repo root over global). gald3r's open-standard <code>.agents/skills/SKILL.md</code>
-load on Codex with <strong>no Codex-specific port</strong>.</p>
-<p><strong>gald3r writes</strong>: <code>AGENTS.md</code>, <code>.agents/skills/g-skl-*/</code>, <code>.codex/config.toml</code>,
-<code>.codex/hooks.json</code> (or inline <code>[hooks]</code>), <code>.codex/agents/*.toml</code>.
-<strong>Codex owns</strong>: the <code>config.toml</code>/<code>hooks.json</code> schemas, <code>~/.codex/</code> global state, sandbox internals,
-auth/session state, and the <code>execpolicy</code> hard allow/block layer.</p>
-<hr />
-<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
-<p>Codex reads <strong><code>AGENTS.md</code></strong> automatically at session start before any work begins. Per-directory
-lookup order is <code>AGENTS.override.md</code> → <code>AGENTS.md</code> → <code>TEAM_GUIDE.md</code> → <code>.agents.md</code>. Resolution
-walks global <code>~/.codex/AGENTS.md</code> → repo root <code>AGENTS.md</code> → nested directory <code>AGENTS.md</code>, with
-<strong>more specific winning</strong>. No <code>CODEX.md</code> is required and <strong><code>CLAUDE.md</code> is NOT read</strong> — gald3r's
-<code>AGENTS.md</code> is the first-class, always-apply instruction surface. Source:
-https://developers.openai.com/codex/guides/agents-md</p>
-<hr />
-<h2 id="3-agents-support-native">3. Agents Support — ✅ NATIVE<a class="headerlink" href="#3-agents-support-native" title="Permanent link">&para;</a></h2>
+<p>This is a configuration guide, not a live installation certificate. Check the
+target executable's help and current official docs when implementing an adapter.</p>
+<h2 id="instructions-skills-and-agents">Instructions, skills and agents<a class="headerlink" href="#instructions-skills-and-agents" title="Permanent link">&para;</a></h2>
+<p>Codex reads <code>AGENTS.md</code> instructions and discovers open-standard <code>SKILL.md</code>
+skills under <code>.agents/skills/</code>. Use <code>AGENTS.override.md</code> only deliberately;
+fallback filenames are configurable, not an unconditional discovery promise.
+Keep shared Gald3r rules in the generated instruction surface.</p>
+<p>Custom agents use TOML definitions under <code>.codex/agents/</code>, with fields such as
+<code>name</code>, <code>description</code> and <code>developer_instructions</code>. Check current agent schema
+before generating definitions. Delegation depends on the user's request and the
+host's active instructions/capabilities; do not impose an assumed universal
+explicit-spawn-only rule.</p>
+<p>Use skills for reusable workflows. Deprecated custom-prompt directories and
+built-in slash commands are not interchangeable with a generated Gald3r command.</p>
+<h2 id="configuration-and-mcp">Configuration and MCP<a class="headerlink" href="#configuration-and-mcp" title="Permanent link">&para;</a></h2>
+<p>User and trusted project configuration use <code>config.toml</code>. Managed requirements
+and command-line settings also participate. Preserve unrelated configuration and
+do not assume every setting follows a single replacement rule: hook sources merge.</p>
+<p>MCP uses named <code>[mcp_servers.&lt;name&gt;]</code> tables. A stdio entry needs a working executable
+and argument list; a configured server is not necessarily reachable or healthy.
+Keep credentials out of generated project files. Check discovery with
+<code>codex mcp list</code> and validate one read-only tool call.</p>
+<h2 id="hook-registration-and-trust">Hook registration and trust<a class="headerlink" href="#hook-registration-and-trust" title="Permanent link">&para;</a></h2>
+<p>Hooks may be configured in <code>hooks.json</code> or inline <code>[hooks]</code> in the relevant
+configuration layer. Avoid duplicating the same handlers in both forms.
+Project trust allows the project layer to load; nonmanaged hook definitions
+require separate user review. Codex exposes that review through <code>/hooks</code>.
+Modified definitions need renewed trust. Never fabricate trust state, set a
+bypass flag, or call a trust-writing API to avoid asking the user.</p>
+<p>Native protocol event names include SessionStart, SessionEnd, UserPromptSubmit,
+PreToolUse, PermissionRequest, PostToolUse, PreCompact, PostCompact, SubagentStart,
+SubagentStop, Stop and Interrupt. Gald3r's generated Codex integration currently
+registers five canonical entrypoints: SessionStart, UserPromptSubmit, PreToolUse,
+PostToolUse and Stop. Do not claim the other events are wired.</p>
+<p>Commands run in the session working directory. Generated command paths must be
+anchored for the actual project; moving a project requires refreshing those paths.
+Validate Windows quoting separately from POSIX quoting. An absolute executable
+path must also be quoted correctly for the selected shell; directory names with
+spaces are a test case, not a reason to rely on a batch launcher.</p>
+<h2 id="adapter-boundary">Adapter boundary<a class="headerlink" href="#adapter-boundary" title="Permanent link">&para;</a></h2>
+<p>Keep concern logic shared; translate input/output at the Codex boundary. Context
+for supported events uses <code>hookSpecificOutput.additionalContext</code> together with
+<code>hookEventName</code>. Decisions are event-specific: test permitted allow/deny/block
+behavior rather than assuming a generic continue flag blocks every event.
+Read the current hooks reference for exact schemas and timeout semantics.</p>
+<p>Transcript paths are not a stable vendor-independent log format. Select a parser
+for the observed platform shape. Keep tool output and reasoning out of human chat
+logs; avoid counting duplicate transcript representations twice. Repeated Stop
+must not duplicate records, while distinct turns with identical text must remain
+distinct. Treat native session IDs as identities, not optional display labels.</p>
+<h2 id="evidence-required-before-calling-an-install-operational">Evidence required before calling an install operational<a class="headerlink" href="#evidence-required-before-calling-an-install-operational" title="Permanent link">&para;</a></h2>
+<p>Use an isolated consumer project first. Verify generation, actual installed
+command paths, interpreter/native-engine discovery, and preservation of custom
+configuration. Then inspect hook discovery and trust through the target Codex host.
+Have the user review the final definitions before a real lifecycle test.</p>
+<p>For the real test, record the executable version, project, event and session ID,
+and resulting durable artifact. Do not copy private transcript content into
+diagnostic reports. Distinguish event-ledger writes from chat-log/database ingestion.
+A manually invoked hook, a synthetic fixture, a successful MCP configuration
+listing and a green source suite each prove different things; none alone proves
+a real trusted session hook ran.</p>
+<h2 id="official-references">Official references<a class="headerlink" href="#official-references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Subagents / custom agents</strong>: standalone <strong>TOML</strong> files under <code>.codex/agents/</code> (project) or
-  <code>~/.codex/agents/</code> (personal). Required keys: <code>name</code>, <code>description</code>, <code>developer_instructions</code>;
-  optional <code>model</code>, <code>sandbox_mode</code>, <code>mcp_servers</code>, <code>skills.config</code>. Built-in agents: <code>default</code>,
-  <code>worker</code>, <code>explorer</code>. Managed via the <code>/agent</code> slash command.</li>
-<li>Codex spawns specialized agents <strong>in parallel</strong> and collects results into one response — but
-  subagents are <strong>NOT auto-spawned</strong>: they run only on explicit user request (natural language or
-  <code>/agent</code>).</li>
-<li>gald3r <code>g-agnt-*</code> definitions map to Codex <code>.codex/agents/*.toml</code> files (TOML, not the markdown+YAML
-  used elsewhere — parity sync emits the TOML form).</li>
-<li>Source: https://developers.openai.com/codex/subagents</li>
+<li>Instructions: https://developers.openai.com/codex/guides/agents-md</li>
+<li>Skills: https://developers.openai.com/codex/skills</li>
+<li>Agents: https://developers.openai.com/codex/subagents</li>
+<li>Hooks and event schemas: https://developers.openai.com/codex/hooks</li>
+<li>Configuration: https://developers.openai.com/codex/config-reference</li>
+<li>MCP: https://developers.openai.com/codex/mcp</li>
 </ul>
-<h2 id="4-skills-support-native">4. Skills Support — ✅ NATIVE<a class="headerlink" href="#4-skills-support-native" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Agent Skills</strong> (open <code>SKILL.md</code> standard) discovered in <strong><code>.agents/skills/</code></strong> from CWD up to repo
-  root, plus user/admin/system locations and <strong><code>$HOME/.agents/skills/</code></strong> (personal). A skill is a
-  directory with a <code>SKILL.md</code> plus optional scripts/references. Frontmatter requires <code>name</code> and
-  <code>description</code>.</li>
-<li>Invoked <strong>explicitly</strong> (<code>/skills</code> or a <code>$</code>-mention) or <strong>implicitly</strong> when a task matches the skill
-  description.</li>
-<li>Uses the <strong>same open Agent Skills standard shared with Claude and other tools</strong> — gald3r
-  <code>g-skl-*/SKILL.md</code> load natively, directly from <code>.agents/skills/</code>, with no Codex-specific port.</li>
-<li>Source: https://developers.openai.com/codex/skills</li>
-</ul>
-<h2 id="5-commands-workflows-native">5. Commands / Workflows — ✅ NATIVE<a class="headerlink" href="#5-commands-workflows-native" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Built-in slash commands</strong>: ~40 ship with the CLI (e.g. <code>/init</code>, <code>/review</code>, <code>/agent</code>, <code>/skills</code>,
-  <code>/mcp</code>, <code>/plugins</code>, <code>/apps</code>), typed via <code>/</code>.</li>
-<li><strong>User-defined commands</strong>: historically authored as <strong>Custom Prompts</strong> (<code>~/.codex/prompts/*.md</code> or
-  <code>.codex/prompts/*.md</code>, invoked as slash commands with <code>$1..$9</code> and named placeholders). <strong>Custom
-  Prompts are DEPRECATED</strong> — OpenAI directs reusable invocable workflows to <strong>skills</strong> instead.</li>
-<li>gald3r <code>@g-*</code> / <code>/g-*</code> workflows map to skills (preferred) and/or built-in slash commands; the
-  legacy prompts path still works but should not be the target.</li>
-<li>Source: https://developers.openai.com/codex/cli/slash-commands</li>
-</ul>
-<h2 id="6-hooks-system-native">6. Hooks System — ✅ NATIVE<a class="headerlink" href="#6-hooks-system-native" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Lifecycle hooks</strong> inject custom scripts into the agentic loop, configured via <strong><code>hooks.json</code></strong> or
-  inline <strong><code>[hooks]</code></strong> tables in <code>config.toml</code> (under <code>~/.codex/</code> or project <code>.codex/</code>). Each hook
-  declares an event type, an optional <strong>regex matcher</strong>, and command handlers.</li>
-<li><strong>Ten events</strong>: <code>SessionStart</code>, <code>SubagentStart</code>, <code>PreToolUse</code>, <code>PermissionRequest</code>, <code>PostToolUse</code>,
-  <code>PreCompact</code>, <code>PostCompact</code>, <code>UserPromptSubmit</code>, <code>SubagentStop</code>, <code>Stop</code>. This is a notably <strong>deep</strong>
-  hook surface — well beyond typical competitor sets — covering session lifecycle, pre/post tool,
-  permission, compaction, prompt submit, and subagent lifecycle.</li>
-<li><strong>Trust model</strong>: managed (enterprise) hooks run automatically; non-managed hooks require explicit
-  user trust before firing.</li>
-<li>gald3r <code>g-hk-*.py</code> hooks wire natively via <code>.codex/hooks.json</code> (/ stage 1 refresh —
-post- Python port; no PowerShell involved): <code>SessionStart</code> → <code>g-hk-on-session-start.py</code>,
-  <code>UserPromptSubmit</code> → <code>g-hk-on-user-prompt-submit.py</code>, <code>PreToolUse</code> → <code>g-hk-on-tool-start.py</code>
-  (<code>.gald3r/</code> guards and every other <code>tool-start</code> concern hook), <code>PostToolUse</code> →
-  <code>g-hk-on-tool-end.py</code>, <code>Stop</code> → <code>g-hk-on-stop.py</code> — each a thin canonical entrypoint that fans
-  out to gald3r's shared <code>g_hk_core.py</code> <code>CONCERN_CHAIN</code> for that event (<code>command</code>: <code>python &lt;path&gt;</code>).</li>
-<li>Source: https://developers.openai.com/codex/hooks (redirects to https://learn.chatgpt.com/docs/hooks)</li>
-</ul>
-<h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>AGENTS.md instruction hierarchy</strong> carries always-on rules (test commands, paths to avoid, commit
-  conventions) and is read automatically at session start.</li>
-<li><strong>Memories</strong>: persistent context under <code>~/.codex/memories/</code>, injected into future sessions
-  (<code>memories.use_memories</code>).</li>
-<li><strong>execpolicy</strong>: rule files defining <strong>enforced</strong> hard allow/block policies for commands — the hard
-  guardrail layer beneath the prose instructions.</li>
-<li>gald3r <code>g-rl-*</code> always-apply rules fold into <code>AGENTS.md</code>; hard <code>.gald3r/</code>/secret guards can also be
-  expressed as <code>execpolicy</code> rules and/or <code>PreToolUse</code> hooks.</li>
-<li>Source: https://developers.openai.com/codex/guides/agents-md</li>
-</ul>
-<h2 id="8-mcp-support-native">8. MCP Support — ✅ NATIVE<a class="headerlink" href="#8-mcp-support-native" title="Permanent link">&para;</a></h2>
-<ul>
-<li>MCP servers configured via <strong><code>[mcp_servers.&lt;name&gt;]</code></strong> tables in <code>config.toml</code>. Supports <strong>stdio</strong>
-  (<code>command</code>, <code>args</code>, <code>env_vars</code>) and <strong>HTTP</strong> (<code>bearer_token_env_var</code>, <code>http_headers</code>) servers, plus
-  <code>default_tools_approval_mode</code> (<code>auto</code>/<code>prompt</code>/<code>approve</code>) and per-tool <code>approval_mode</code> overrides.</li>
-<li>Managed via <strong><code>codex mcp add</code></strong> (or editing <code>~/.codex/config.toml</code>); the IDE exposes an MCP settings
-  panel; <strong><code>/mcp</code></strong> lists servers.</li>
-<li>Source: https://developers.openai.com/codex/mcp</li>
-</ul>
-<h2 id="9-plugins-apps-distribution-channels">9. Plugins / Apps — distribution channels<a class="headerlink" href="#9-plugins-apps-distribution-channels" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Codex Plugins</strong>: a documented plugin system for packaging extensions, managed via the
-  <strong><code>/plugins</code></strong> slash command (overview + build guide). The natural distribution channel for a
-  bundled gald3r Codex extension. Source: https://developers.openai.com/codex/plugins</li>
-<li><strong>Codex Apps</strong>: installable apps surfaced via <strong><code>/apps</code></strong>, an extensibility surface alongside
-  plugins and MCP. Source: https://developers.openai.com/codex/cli/slash-commands</li>
-</ul>
-<hr />
-<h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
-<p>Codex reaches <strong>full parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
-<strong>commands, rules, agents, skills, hooks, and MCP</strong> — a 1:1 map onto every gald3r extension primitive.
-Codex's hook surface (10 lifecycle events) is <strong>deeper</strong> than Cursor's, and <code>execpolicy</code> adds an
-enforced hard allow/block layer with no direct Cursor analog. Caveats: subagents are <strong>not
-auto-spawned</strong> (explicit <code>/agent</code>/NL only), agents are authored as <strong>TOML</strong> (not markdown+YAML), and
-<strong>Custom Prompts are deprecated</strong> in favor of skills for user-defined commands.</p>
-<p><strong>Reuse note (important):</strong> Codex skills use the <strong>same open Agent Skills <code>SKILL.md</code> standard</strong> and
-<code>.agents/skills/</code> directory as Claude and other tools, so gald3r's skill artifacts are directly
-portable. The instruction file is <strong><code>AGENTS.md</code> (not <code>CLAUDE.md</code>)</strong> — ship the <code>AGENTS.md</code> form.</p>
-<h2 id="hook-system">Hook System<a class="headerlink" href="#hook-system" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Type</strong>: native (<code>hooks.json</code> or inline <code>[hooks]</code> in <code>config.toml</code>)</li>
-<li><strong>Config file</strong>: <code>.codex/hooks.json</code> or <code>[hooks]</code> in <code>~/.codex/config.toml</code> / <code>.codex/config.toml</code></li>
-<li><strong>Events available</strong>: SessionStart, SubagentStart, PreToolUse, PermissionRequest, PostToolUse, PreCompact, PostCompact, UserPromptSubmit, SubagentStop, Stop (10)</li>
-<li><strong>Event payload format</strong>: single JSON object on stdin per invocation (<code>tool_name</code>/<code>tool_input</code> for
-  PreToolUse/PostToolUse — the same field names gald3r's <code>_hook_common.read_stdin_json()</code> already
-  reads); optional regex <code>matcher</code> (omit/<code>"*"</code>/<code>""</code> matches every occurrence); exit code 2 + stderr
-  blocks/denies, exit 0 + JSON on stdout (<code>{"continue": true, ...}</code>) allows</li>
-<li><strong>Command extensions</strong>: any executable command (gald3r ships Python — <code>command</code>: <code>python &lt;path&gt;</code>,
-post- Python port; no PowerShell involved); <code>commandWindows</code> is an optional Windows-only
-  override</li>
-<li><strong>Trust model</strong>: managed/enterprise hooks auto-run; non-managed hooks require user trust</li>
-<li><strong>gald3r hook files</strong> (/ stage 1, cross-checked against <code>neutral_source/hooks/
-  g_hk_core.py</code>'s real <code>PLATFORM_EVENT_MAP["codex"]</code>): <code>g-hk-on-session-start.py</code> (SessionStart),
-  <code>g-hk-on-user-prompt-submit.py</code> (UserPromptSubmit), <code>g-hk-on-tool-start.py</code> (PreToolUse —
-  <code>.gald3r/</code> guards and every other <code>tool-start</code> concern hook), <code>g-hk-on-tool-end.py</code>
-  (PostToolUse), <code>g-hk-on-stop.py</code> (Stop) — each a thin canonical entrypoint fanning out to
-  <code>g_hk_core.py</code>'s <code>CONCERN_CHAIN</code> for that event via <code>.codex/hooks.json</code></li>
-</ul>
-<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Two-tier config: project <code>.codex/config.toml</code> merges below <code>~/.codex/config.toml</code> (most-specific-wins).</li>
-<li>Instruction file is <strong><code>AGENTS.md</code>, not <code>CLAUDE.md</code></strong> — plus <code>AGENTS.override.md</code> / <code>TEAM_GUIDE.md</code> / <code>.agents.md</code> fallbacks and a global <code>~/.codex/AGENTS.md</code>.</li>
-<li>Subagents are authored as standalone <strong>TOML</strong> files and are <strong>explicit-spawn only</strong> (never auto-spawned).</li>
-<li>User-defined commands via <strong>Custom Prompts are DEPRECATED</strong> — use skills for reusable invocable workflows.</li>
-<li>Shell execution is additionally gated by <code>approval_policy</code> + <code>sandbox_mode</code> and the <code>execpolicy</code> hard layer, alongside <code>PreToolUse</code>/<code>PermissionRequest</code> hooks.</li>
-</ul>
-<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Ship gald3r's open-standard <code>.agents/skills/g-skl-*/SKILL.md</code> tree — Codex discovers it natively.</li>
-<li>Author the instruction surface as <strong><code>AGENTS.md</code></strong> (not <code>CLAUDE.md</code>); fold <code>g-rl-*</code> always-apply rules in.</li>
-<li>Map <code>g-agnt-*</code> to <code>.codex/agents/*.toml</code>; remember subagents need explicit <code>/agent</code>/NL invocation.</li>
-<li>Hooks fire natively (<code>.codex/hooks.json</code>, <code>g-hk-*.py</code> scripts via <code>python &lt;path&gt;</code>, post- Python port — no PowerShell involved; / stage 1); no need to degrade session-start/pre-commit to manual.</li>
-<li>Prefer skills over Custom Prompts for user-defined <code>@g-*</code> workflows (prompts are deprecated).</li>
-<li>Re-verify on the next <code>@g-platform-scan-docs codex</code> (crawl_max_age_days: 7).</li>
-</ul>
-<hr />
-<h2 id="capability-summary">Capability Summary<a class="headerlink" href="#capability-summary" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Hooks</th>
-<th>Rules</th>
-<th>Skills</th>
-<th>Commands</th>
-<th>MCP</th>
-<th>Docs Fresh</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-</tr>
-</tbody>
-</table>
-<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
-<hr />
-<h2 id="verification-evidence-docs-crawl-2026-06-02-httpsdevelopersopenaicomcodex">Verification Evidence (docs crawl 2026-06-02, https://developers.openai.com/codex)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-httpsdevelopersopenaicomcodex" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Capability</th>
-<th>How verified</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Instruction file</td>
-<td>/codex/guides/agents-md — reads <code>AGENTS.md</code> (not <code>CLAUDE.md</code>); order AGENTS.override.md/AGENTS.md/TEAM_GUIDE.md/.agents.md; global <code>~/.codex/AGENTS.md</code>, most-specific-wins</td>
-</tr>
-<tr>
-<td>Commands</td>
-<td>/codex/cli/slash-commands — ~40 built-in slash commands; Custom Prompts (<code>~/.codex/prompts/</code>) deprecated → skills</td>
-</tr>
-<tr>
-<td>Rules</td>
-<td>/codex/guides/agents-md — AGENTS.md always-on rules + Memories (<code>~/.codex/memories/</code>) + execpolicy hard allow/block</td>
-</tr>
-<tr>
-<td>Agents</td>
-<td>/codex/subagents — standalone TOML in <code>.codex/agents/</code> (<code>name</code>/<code>description</code>/<code>developer_instructions</code>); parallel; explicit-spawn only; <code>/agent</code></td>
-</tr>
-<tr>
-<td>Skills</td>
-<td>/codex/skills — open Agent Skills <code>SKILL.md</code> in <code>.agents/skills/</code> (repo) + <code>$HOME/.agents/skills/</code>; <code>/skills</code> or <code>$</code>-mention; shared standard</td>
-</tr>
-<tr>
-<td>Hooks</td>
-<td>/codex/hooks — <code>hooks.json</code> or inline <code>[hooks]</code>; 10 events (SessionStart…Stop); regex matchers; managed auto / non-managed trust</td>
-</tr>
-<tr>
-<td>MCP</td>
-<td>/codex/mcp — <code>[mcp_servers.&lt;name&gt;]</code> in config.toml (stdio + HTTP); <code>codex mcp add</code>; <code>/mcp</code>; approval modes</td>
-</tr>
-<tr>
-<td>Plugins / Apps</td>
-<td>/codex/plugins + /codex/cli/slash-commands — <code>/plugins</code> packaging system; <code>/apps</code> installable apps</td>
-</tr>
-<tr>
-<td>Config</td>
-<td>/codex/config-reference — central <code>config.toml</code> (global <code>~/.codex/</code> + project <code>.codex/</code>) governs model, sandbox/approval, MCP, hooks, agent overrides</td>
-</tr>
-</tbody>
-</table>
 <hr />
 <p><em>Reference page — canonical source: <code>g-skl-platform-codex/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
 

@@ -906,6 +906,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#hook-engine-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook engine discovery
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1967,6 +1978,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#hook-engine-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook engine discovery
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2103,6 +2125,10 @@ definitions exist in this repo but are not yet wired into the release CI matrix 
 above is the fully automated path today; see <code>packaging/deb/README.md</code> /
 <code>packaging/aur/README.md</code> for the manual build.</p>
 <h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<p>The MSI's per-user destination is <code>%LOCALAPPDATA%\gald3r\bin</code>. A ZIP can
+be extracted to a directory of your choice; <code>%LOCALAPPDATA%\Programs\gald3r</code>
+is the documented manual-install example. These are different supported
+layouts, not interchangeable names for one directory.</p>
 <pre><code class="language-powershell">gald3r install update
 </code></pre>
 <p><code>install update</code> downloads the latest signed release for your OS from
@@ -2130,7 +2156,7 @@ the OS-appropriate bare-binary asset from the release's GitHub page.</p>
 being granted access first. If you just want to <em>use</em> gald3r, you do not need this section at
 all.</p>
 <p><code>gald3r</code> is implemented as a Go monorepo (<code>gald3r.ai/cli</code> and its supporting modules). A small
-Python layer remains for build/release tooling and this documentation site, but the CLI itself
+Python layer remains for IDE lifecycle hooks, build/release tooling, and this documentation site, but the CLI itself
 is a native Go binary you build with the standard Go toolchain.</p>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2239,6 +2265,34 @@ already have.</p>
 <p>If you ever see hook scripts sitting in <code>.claude/hooks/</code> that don't seem to be firing, check
 that <code>.claude/settings.json</code> actually has a populated <code>"hooks"</code> key; re-running <code>gald3r
 platform install claude --into .</code> repairs it without touching your other settings.</p>
+<h3 id="hook-engine-discovery">Hook engine discovery<a class="headerlink" href="#hook-engine-discovery" title="Permanent link">&para;</a></h3>
+<p>Python hooks still need a working Python interpreter in the IDE's environment;
+the native CLI itself does not require Python. Hooks resolve their engine in
+this order:</p>
+<ol>
+<li>An explicit <code>GALD3R_BIN</code> executable path.</li>
+<li>The hook's own source checkout's <code>bin/gald3r.exe</code> (Windows) or
+   <code>bin/gald3r</code> (POSIX), identified by <code>go.work</code> and <code>gald3r_cli/go.mod</code>.
+   A consumer project's arbitrary <code>bin/</code> directory is not searched this way.</li>
+<li><code>gald3r</code> on <code>PATH</code>, then known native package destinations: the Windows
+   directories above, <code>~/.local/bin</code>, <code>/usr/local/bin</code>, <code>/usr/bin</code>, and
+   <code>/opt/homebrew/bin</code> on macOS.</li>
+<li>The legacy local Python resolver, when present.</li>
+</ol>
+<p>Batch shims (<code>.cmd</code> and <code>.bat</code>) are never passed engine arguments. Discovery
+may substitute a native sibling or known installed executable. Set
+<code>GALD3R_BIN</code> to the intended native executable for custom prefixes or multiple
+installations. If discovery fails, <code>.gald3r/logs/hook_diag.log</code> names the paths
+tried without corrupting the hook's JSON output.</p>
+<p><code>gald3r doctor</code> reports <code>hook_engine_resolution</code> separately from hook wiring.
+It checks the installed resolver against the binary's embedded copy and runs
+only the embedded, read-only locator. It does not import installed hook code,
+run an engine candidate, or execute legacy Python resolvers. A located file is
+discovery evidence in doctor's environment, <strong>not proof of engine launch,
+the IDE's interpreter choice, hook trust, or a lifecycle event firing</strong>.
+Missing Python, unresolved engines, and stale or customized resolver files
+produce a warning. Refresh/reconcile the overlay before testing an actual
+event in its intended host; an already-running IDE may retain an older PATH.</p>
 <h2 id="upgrading-an-existing-install">Upgrading an existing install<a class="headerlink" href="#upgrading-an-existing-install" title="Permanent link">&para;</a></h2>
 <pre><code>gald3r install update    # replace the PATH binary with the latest signed release
 gald3r version-check     # find out if a newer gald3r is available -- works offline

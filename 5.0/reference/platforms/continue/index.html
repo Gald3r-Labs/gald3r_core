@@ -1681,10 +1681,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-path-corrected" class="md-nav__link">
+  <a href="#install-path" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Install Path (corrected)
+        Install Path
       
     </span>
   </a>
@@ -1742,12 +1742,9 @@
 <blockquote>
 <p><strong>New to gald3r on this platform?</strong> Start at <a href="../../../platforms/continue/">Use gald3r with Continue.dev</a> for a short overview before the full breakdown below.</p>
 <p><strong>Authoring status</strong>: <code>refresh</code> — re-verified 2026-07-18 against the live
-docs.continue.dev deep-dive pages listed above, replacing the 2026-06-13 <code>create</code>
-scaffold. <strong>Root cause of the "23 vs 38/39 platform-roster disconnect"</strong>:
-Continue's commands were being written to <code>.continue/commands/</code>, a directory
-Continue's Prompt-file engine never reads — so every gald3r command silently failed
-to load while every other roster bookkeeping surface reported Continue as
-"installed". See section 5 and 10 below for the corrected path.</p>
+docs.continue.dev deep-dive pages listed above. Commands install to
+<code>.continue/prompts/</code>, not <code>.continue/commands/</code> — Continue's Prompt-file engine
+never reads the latter. See sections 5 and 10 below for the corrected path.</p>
 </blockquote>
 <p>Open-source AI coding extension for VS Code and JetBrains. Context providers, slash
 commands via <code>.prompt</code>-style Markdown files ("Prompts"), MCP integration, custom
@@ -1827,9 +1824,7 @@ one without a fresh crawl if that distinction becomes load-bearing.</p>
 </table>
 <hr />
 <h2 id="3-instruction-files-rules-equivalent">3. Instruction Files (Rules Equivalent)<a class="headerlink" href="#3-instruction-files-rules-equivalent" title="Permanent link">&para;</a></h2>
-<p><strong>Continue does NOT natively read a root <code>AGENTS.md</code>.</strong> This was the single most
-consequential correction of this refresh — the prior scaffold assumed AGENTS.md
-parity with gald3r's other platforms; it does not exist.</p>
+<p><strong>Continue does NOT natively read a root <code>AGENTS.md</code>.</strong></p>
 <ul>
 <li><code>.continue/rules/*.md</code> — the real, documented, native mechanism. "You can create
   project-specific rules by adding a <code>.continue/rules</code> folder to the root of your
@@ -1870,9 +1865,8 @@ parity with gald3r's other platforms; it does not exist.</p>
 <h2 id="5-commands-slash-commands-prompt-files">5. Commands (Slash Commands / Prompt Files)<a class="headerlink" href="#5-commands-slash-commands-prompt-files" title="Permanent link">&para;</a></h2>
 <p>✅ Native, via <strong>Prompt files</strong>.</p>
 <ul>
-<li><strong>Directory</strong>: <code>.continue/prompts/*.md</code> (project scope). This is the corrected
-  path — the prior scaffold (and gald3r's shipped <code>layout_map.yaml</code> entry, until
-pointed at <code>.continue/commands/</code>, which Continue never reads.</li>
+<li><strong>Directory</strong>: <code>.continue/prompts/*.md</code> (project scope). Continue never reads
+  <code>.continue/commands/</code>.</li>
 <li><strong>Format</strong>: Markdown with YAML frontmatter (<code>name</code>, <code>description</code>,
   <code>invokable: true</code>). Setting <code>invokable: true</code> makes the file available as a <code>/</code>
   slash command in Chat, Plan, and Agent mode. Files can also use full prompt
@@ -1910,9 +1904,8 @@ pages crawled this scan. Do not fabricate a hook config surface for Continue.</p
   (from Claude Desktop, Cursor, etc.) directly in <code>.continue/mcpServers/</code> and
   Continue will automatically recognize them, such as <code>.continue/mcpServers/mcp.json</code>."
   This is the shape gald3r's generic minimal-JSON MCP registration
-  (<code>generate.py</code>'s <code>_emit_mcp</code>) already produces — corrected <code>layout_map.yaml</code> target:
-  <code>.continue/mcpServers/mcp.json</code> (was <code>.continue/.mcp.json</code>, a path Continue never
-  reads).</li>
+  (<code>generate.py</code>'s <code>_emit_mcp</code>) already produces. The <code>layout_map.yaml</code> target is
+  <code>.continue/mcpServers/mcp.json</code> — Continue never reads <code>.continue/.mcp.json</code>.</li>
 <li><strong>Inline in <code>config.yaml</code></strong>: <code>mcpServers:</code> can also be declared directly inside
   the main <code>config.yaml</code> (a Block-composition alternative to the per-file form
   above) — not gald3r's install target, documented here for completeness.</li>
@@ -1933,7 +1926,7 @@ pages crawled this scan. Do not fabricate a hook config surface for Continue.</p
 <p>"instruction file" concept distinct from Rules).</p>
 <hr />
 <h2 id="10-gald3r-installation">10. gald3r Installation<a class="headerlink" href="#10-gald3r-installation" title="Permanent link">&para;</a></h2>
-<h3 id="install-path-corrected">Install Path (corrected)<a class="headerlink" href="#install-path-corrected" title="Permanent link">&para;</a></h3>
+<h3 id="install-path">Install Path<a class="headerlink" href="#install-path" title="Permanent link">&para;</a></h3>
 <pre><code>&lt;project-root&gt;/
 └── .continue/
     ├── rules/&lt;name&gt;.md            ← g-rl-* rules

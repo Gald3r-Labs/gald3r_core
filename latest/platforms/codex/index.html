@@ -1612,13 +1612,39 @@
 
 
 <h1 id="use-gald3r-with-openai-codex">Use gald3r with OpenAI Codex<a class="headerlink" href="#use-gald3r-with-openai-codex" title="Permanent link">&para;</a></h1>
-<p>OpenAI Codex — the codex CLI, an IDE integration, and a hosted app, all governed by a single schema-validated config.toml (model, sandbox/approval, MCP, hooks, agents, skill registration). The CLI is the full-extensibility surface; the IDE/app share the config plus an MCP settings panel.</p>
-<p>Installing gald3r into an OpenAI Codex project writes the CRASH overlay this tool actually reads into <code>.codex/</code> — the same task board, bug tracker, and <code>gald3r &lt;verb&gt;</code> CLI every other supported platform gets, wired the way OpenAI Codex itself expects it. Today that's commands native, rules native, skills native, hooks native, MCP native via the gald3r engine's MCP (L2). Cheapest full-parity install: ship gald3r's .agents/skills/g-skl-<em>/SKILL.md (open standard) + an AGENTS.md — Codex loads both natively. Map g-agnt-</em> to .codex/agents/<em>.toml, wire g-hk-</em>.py via hooks.json/[hooks] (10 events), declare MCP under [mcp_servers.<em>], and fold g-rl-</em> always-apply rules into AGENTS.md (hard guards optionally as execpolicy rules / PreToolUse hooks).</p>
-<p>Once installed, the same <code>.gald3r/TASKS.md</code> task board, bug tracker, and full <code>gald3r &lt;verb&gt;</code> CLI work identically to every other supported platform — OpenAI Codex is one of 37 platforms gald3r reads and writes today. Commonly searched as Codex CLI, Codex.</p>
+<p>Gald3r integrates with local Codex CLI, desktop and IDE installations. Check the
+installed Codex version and help: available settings and hook events vary by
+version. This page does not claim parity with hosted Codex environments.</p>
+<p>The generated overlay supplies project instructions, skills, agent definitions,
+MCP configuration and five lifecycle hooks: SessionStart, UserPromptSubmit,
+PreToolUse, PostToolUse and Stop. Generation is not proof that a particular host
+discovered or executed them. Legacy prompt files are not a guarantee of native
+slash-command support.</p>
+<p>The board lives under <code>.gald3r/project/</code> in layout v2. Use <code>gald3r task</code>
+and <code>gald3r bug</code> commands to resolve the layout rather than hardcoding paths.</p>
 <h2 id="get-started">Get started<a class="headerlink" href="#get-started" title="Permanent link">&para;</a></h2>
 <pre><code class="language-bash">gald3r setup
-gald3r platform install codex
+gald3r platform install codex --generated
 </code></pre>
+<p>Python 3 is still required for these hook scripts; the main Gald3r CLI is
+native. Install preparation resolves Python through the shared platform
+resolver, enables UTF-8 mode, and anchors the script paths to the target project. It fails with an
+actionable prerequisite message if Python cannot be found. Windows hook paths
+containing quotes, percent signs or exclamation marks are rejected rather than
+passed to the command interpreter with ambiguous meaning.</p>
+<p>For an existing overlay, inspect the installation preview and preserve custom
+files. Reinstallation requires <code>--force</code>; pair it with
+<code>--preserve-user-mods</code> to keep customized files and produce reconciliation
+sidecars. <code>--force</code> alone permits overwrites, with a backup by default.
+A changed generated hook definition may require renewed trust. After
+installation, use Codex's hook review interface (<code>/hooks</code> where available) to
+review and approve the exact definitions yourself. Project trust, MCP discovery
+and hook trust are separate. Gald3r must not write approvals on your behalf.</p>
+<p>Verify a fresh session produces the expected lifecycle events and a scoped chat
+log with the same session identity. Simulated calls and an enabled MCP entry are
+useful diagnostics, but do not establish working Codex lifecycle integration.
+After moving a project, regenerate and review its anchored commands again;
+use the preservation option to retain customized hooks for reconciliation.</p>
 <h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../reference/platforms/codex/">OpenAI Codex technical reference</a></li>

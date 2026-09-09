@@ -1724,10 +1724,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verification-evidence-docs-crawl-2026-06-02-re-verified-2026-07-18-for-httpsaiderchatdocs" class="md-nav__link">
+  <a href="#verification-evidence-docs-crawl-2026-06-02-re-verified-2026-07-18-httpsaiderchatdocs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verification Evidence (docs crawl 2026-06-02, re-verified 2026-07-18 for, https://aider.chat/docs)
+        Verification Evidence (docs crawl 2026-06-02, re-verified 2026-07-18, https://aider.chat/docs)
       
     </span>
   </a>
@@ -1768,8 +1768,8 @@ bus. <strong>Skills</strong> and <strong>MCP</strong> are <strong>not native</st
 <p>Critically for gald3r, aider has <strong>no <code>AGENTS.md</code>/<code>CLAUDE.md</code> auto-discovery</strong> — instruction files
 reach it only by pointing <code>--read</code> / <code>.aider.conf.yml</code> <code>read:</code> at an arbitrary markdown file
 (<code>CONVENTIONS.md</code> is the documented default). gald3r's Claude-Code artifacts are therefore <strong>NOT
-drop-in reusable</strong>; the install must fold guidance into a pinned read-only convention file.<strong>
-automated that fold</strong>: <code>gald3r platform install aider</code> now writes a real <code>CONVENTIONS.md</code> AND the
+drop-in reusable</strong>; the install must fold guidance into a pinned read-only convention file.
+<code>gald3r platform install aider</code> automates that fold: it now writes a real <code>CONVENTIONS.md</code> AND the
 companion <code>.aider.conf.yml</code> <code>read:</code> pin in one step (see section 2 and "gald3r Integration Notes"
 below) — a <code>layout_map.yaml</code> <code>conventions_file</code> entry, deliberately distinct from the generic
 <code>root_instructions</code> mechanism other platforms get, because aider's convention file needs that
@@ -1912,7 +1912,7 @@ Integration Notes" below.</p>
   SessionStart / SessionEnd / PreToolUse / Stop / arbitrary-event hooks</li>
 <li><strong>Event payload format</strong>: none (lint/test invoke configured shell commands; no stdin JSON payload)</li>
 <li><strong>Command extensions</strong>: any shell command via <code>lint-cmd</code>/<code>test-cmd</code>/<code>/run</code>; gald3r's <code>.py</code> hooks
-run only when invoked explicitly (e.g. <code>python &lt;path&gt;</code>, post- Python port; no PowerShell involved), not auto-fired on lifecycle events</li>
+  run only when invoked explicitly (e.g. <code>python &lt;path&gt;</code>; no PowerShell involved), not auto-fired on lifecycle events</li>
 <li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> have <strong>no native event home</strong> — run them manually via <code>/run</code>,
   encode their intent as <code>CONVENTIONS.md</code> guidance, or wire pre-commit/pre-push via git
   <code>core.hooksPath</code>. General pre/post-prompt hooks are open feature request #2045.</li>
@@ -1922,7 +1922,7 @@ run only when invoked explicitly (e.g. <code>python &lt;path&gt;</code>, post- P
 <li><strong>No <code>AGENTS.md</code>/<code>CLAUDE.md</code> auto-read</strong> (issue #4363, still open/unimplemented as of the
   2026-07-18 re-verification) — fold enforcement into <code>CONVENTIONS.md</code> + <code>read:</code> pins; arbitrary
   filenames work only as explicit <code>--read</code> targets. <code>gald3r platform install aider</code> writes this pin
-automatically now — see below.</li>
+  automatically now — see below.</li>
 <li><strong>Auto-commit collision</strong>: aider auto-commits each accepted edit — set <code>auto-commits: false</code> to
   defer to gald3r's task-scoped commit discipline, or audit commits after the fact.</li>
 <li><strong>Core vs. AiderDesk split</strong>: MCP and external skill loading exist only in AiderDesk / third-party
@@ -1930,7 +1930,7 @@ automatically now — see below.</li>
 </ul>
 <h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><code>gald3r platform install aider</code> automates the fold .</strong> A fresh install writes a real,
+<li><strong><code>gald3r platform install aider</code> automates the fold.</strong> A fresh install writes a real,
   non-stub <code>CONVENTIONS.md</code> (the same generic instructions body every <code>root_instructions</code> platform
   shares) AND a companion <code>.aider.conf.yml</code> with a <code>read:</code> key pinning it, via <code>layout_map.yaml</code>'s
   <code>conventions_file</code> entry + <code>generate.py</code>'s <code>_emit_conventions_wiring</code> — a distinct mechanism from
@@ -1971,7 +1971,7 @@ automatically now — see below.</li>
 </table>
 <p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
 <hr />
-<h2 id="verification-evidence-docs-crawl-2026-06-02-re-verified-2026-07-18-for-httpsaiderchatdocs">Verification Evidence (docs crawl 2026-06-02, re-verified 2026-07-18 for, https://aider.chat/docs)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-re-verified-2026-07-18-for-httpsaiderchatdocs" title="Permanent link">&para;</a></h2>
+<h2 id="verification-evidence-docs-crawl-2026-06-02-re-verified-2026-07-18-httpsaiderchatdocs">Verification Evidence (docs crawl 2026-06-02, re-verified 2026-07-18, https://aider.chat/docs)<a class="headerlink" href="#verification-evidence-docs-crawl-2026-06-02-re-verified-2026-07-18-httpsaiderchatdocs" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -2006,7 +2006,7 @@ automatically now — see below.</li>
 </tr>
 <tr>
 <td>Instruction file</td>
-<td>/usage/conventions.html + /config/aider_conf.html + issue #4363 (re-checked 2026-07-18, still OPEN/unimplemented) — no AGENTS.md/CLAUDE.md auto-discovery; <code>CONVENTIONS.md</code> is documented default, any filename works via explicit <code>--read</code>/<code>read:</code>; NOT auto-discovered by filename alone.: <code>gald3r platform install aider</code> now writes both the content file and the <code>.aider.conf.yml</code> <code>read:</code> pin automatically via the <code>conventions_file</code> layout_map.yaml mechanism (distinct from <code>root_instructions</code>).</td>
+<td>/usage/conventions.html + /config/aider_conf.html + issue #4363 (re-checked 2026-07-18, still OPEN/unimplemented) — no AGENTS.md/CLAUDE.md auto-discovery; <code>CONVENTIONS.md</code> is documented default, any filename works via explicit <code>--read</code>/<code>read:</code>; NOT auto-discovered by filename alone. <code>gald3r platform install aider</code> now writes both the content file and the <code>.aider.conf.yml</code> <code>read:</code> pin automatically via the <code>conventions_file</code> layout_map.yaml mechanism (distinct from <code>root_instructions</code>).</td>
 </tr>
 <tr>
 <td>Other extensibility</td>

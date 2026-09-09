@@ -1916,7 +1916,7 @@ cheapest high-parity install ships the gald3r skill tree plus <code>AGENTS.md</c
   (<code>0</code> ok, <code>2</code> blocks <code>PreToolUse</code>). IDE — action is <strong>"Ask Kiro"</strong> (agent prompt) or
   <strong>"Run Command"</strong> (shell command).</li>
 <li><strong>Command extensions</strong>: shell <code>Run Command</code> (IDE) / shell command (CLI). gald3r <code>g-hk-*.py</code> hooks
-wire via <code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved) as the shell command,
+  wire via <code>python &lt;path&gt;</code> (no PowerShell involved) as the shell command,
   wired under the CLI lifecycle events.</li>
 <li><strong>gald3r hook files</strong>: gald3r <code>g-hk-*.py</code> map most cleanly to the <strong>CLI</strong> lifecycle events
   (<code>agentSpawn</code> ≈ session start, <code>userPromptSubmit</code>, <code>preToolUse</code>/<code>postToolUse</code>, <code>Stop</code>). The IDE

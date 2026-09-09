@@ -1592,10 +1592,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-agents-support-not-yet-wired-execution-layer-exists" class="md-nav__link">
+  <a href="#3-agents-support-not-yet-wired-execution-layer-exists-the-recursive-agent-primitive" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Agents Support — ❌ not yet wired (execution layer exists: )
+        3. Agents Support — ❌ not yet wired (execution layer exists: the recursive agent primitive)
       
     </span>
   </a>
@@ -1658,10 +1658,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-owners-suggested-sequencing-description-2026-08-12-pre-shutdown-ask" class="md-nav__link">
+  <a href="#9-owners-suggested-sequencing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        9. Owner's Suggested Sequencing ( description, 2026-08-12 pre-shutdown ask)
+        9. Owner's Suggested Sequencing
       
     </span>
   </a>
@@ -1669,10 +1669,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#10-relationship-to-and" class="md-nav__link">
+  <a href="#10-relationship-to-the-self-coordinator-provider-and-the-recursive-agent-primitive" class="md-nav__link">
     <span class="md-ellipsis">
       
-        10. Relationship to and
+        10. Relationship to the Self-Coordinator Provider and the Recursive Agent Primitive
       
     </span>
   </a>
@@ -1749,10 +1749,10 @@ without any external IDE/agent tool in front of it. Today the platform roster ha
 targets</strong> (Claude Code, Cursor, Codex, ...) and gald3r is the one harness NOT on its own roster:
 <code>run</code>/<code>chat</code> load CRASH from the compiled binary (<code>gald3r_engine/crash</code>) but expose no
 user-extensible overlay the way an installed <code>.claude/</code>/<code>.cursor/</code> tree does for those platforms.
-makes gald3r the <strong>38th roster entry</strong>, closing that strange loop.</p>
+This work makes gald3r the <strong>38th roster entry</strong>, closing that strange loop.</p>
 <blockquote>
 <p><strong>Authoring path: NEW.</strong> There is no prior spec for this platform — it did not exist on the
-roster before. Unlike every other spec in this tree, <code>docs_url</code> is <code>internal</code>: there is no
+roster before this. Unlike every other spec in this tree, <code>docs_url</code> is <code>internal</code>: there is no
 external product page to crawl: the "documentation" IS this repo's own source
 (<code>gald3r_engine/</code>, <code>gald3r_platforms/</code>) and the task's own Agent/Status History record.
 <code>crawl_max_age_days: 0</code> signals "not a live-docs-crawl candidate" rather than "always stale" —
@@ -1805,20 +1805,20 @@ Once ratified, gald3r's own generic <code>AGENTS.md</code> template (the same pa
 other <code>root_instructions</code> platform already emits, per <code>layout_map.yaml</code>'s own <code>root_instructions</code>
 documentation) is the obvious candidate — gald3r has no reason to invent a second convention here.</p>
 <hr />
-<h2 id="3-agents-support-not-yet-wired-execution-layer-exists">3. Agents Support — ❌ not yet wired (execution layer exists: )<a class="headerlink" href="#3-agents-support-not-yet-wired-execution-layer-exists" title="Permanent link">&para;</a></h2>
+<h2 id="3-agents-support-not-yet-wired-execution-layer-exists-the-recursive-agent-primitive">3. Agents Support — ❌ not yet wired (execution layer exists: the recursive agent primitive)<a class="headerlink" href="#3-agents-support-not-yet-wired-execution-layer-exists-the-recursive-agent-primitive" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>What already exists</strong>: <code>gald3r_engine/agent</code> is the harness's own agent-loop package
- (<code>act_halting.go</code>, <code>context.go</code>, ...) — the runtime that runs a session at all. (the
-  "recursive agent primitive") is the layer that makes a <strong>subagent</strong> invocation possible from
+  (<code>act_halting.go</code>, <code>context.go</code>, ...) — the runtime that runs a session at all. The
+  recursive agent primitive is the layer that makes a <strong>subagent</strong> invocation possible from
   inside that loop — i.e. the mechanism a <code>g-agnt-*.md</code> persona would actually execute through,
   the same way Claude Code's <code>Agent</code> tool or Cursor's subagent dispatch does today.</li>
 <li><strong>What's missing</strong>: a rendered <code>agents:</code> overlay location (§1) PLUS the actual wiring from a
- discovered <code>g-agnt-*.md</code> persona file to a recursive-agent invocation. Neither exists
- yet. This is explicitly named in the description as depending on landing first
+  discovered <code>g-agnt-*.md</code> persona file to a recursive-agent invocation. Neither exists
+  yet. This depends on the recursive agent primitive landing first
   — do not build a parallel, competing agent-dispatch mechanism here.</li>
-<li>Relationship: is the <em>execution primitive</em>; this platform's <code>agents:</code> layout entry is
- the <em>discovery/placement convention</em> that would point at personas for to run. Two
-  different, sequenced pieces of work.</li>
+<li>Relationship: the recursive agent primitive is the <em>execution primitive</em>; this platform's
+  <code>agents:</code> layout entry is the <em>discovery/placement convention</em> that would point at personas
+  for it to run. Two different, sequenced pieces of work.</li>
 </ul>
 <h2 id="4-skills-support-not-yet-wired">4. Skills Support — ❌ not yet wired<a class="headerlink" href="#4-skills-support-not-yet-wired" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1832,7 +1832,7 @@ documentation) is the obvious candidate — gald3r has no reason to invent a sec
 <h2 id="5-commands-workflows-not-yet-wired-dispatch-exists-chat-verb-dispatch">5. Commands / Workflows — ❌ not yet wired (dispatch exists: chat verb dispatch)<a class="headerlink" href="#5-commands-workflows-not-yet-wired-dispatch-exists-chat-verb-dispatch" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>What already exists</strong>: <code>gald3r chat</code> already dispatches slash-style verbs inside a chat
- session (the description calls this out explicitly: "chat verb dispatch exists"). This
+  session ("chat verb dispatch exists"). This
   is the SAME class of mechanism a <code>@g-*</code>/<code>/g-*</code> command needs to hook into.</li>
 <li><strong>What's missing</strong>: a rendered <code>commands:</code> overlay location (§1) that projects
   <code>g-*.md</code>/<code>g-command-new</code>-authored command files into something the existing chat-verb dispatcher
@@ -1848,7 +1848,7 @@ documentation) is the obvious candidate — gald3r has no reason to invent a sec
   optionally blocking the guarded operation on failure (see that package's own doc comment).
   <code>gald3r_engine/stream</code> independently folds the harness's fine-grained event stream into
   render-ready blocks (text/reasoning/tool_group/error/lifecycle) tagged with agent/depth/turn —
- the description's "hook-shaped events per the stream protocol".</li>
+  hook-shaped events per the stream protocol.</li>
 <li><strong>What's missing</strong>: <code>gald3r_engine/hooks</code>' loader currently reads hook CONFIG from wherever the
   engine's own caller points it (not yet a platform-overlay convention), and there is no
   <code>hooks:</code> <code>layout_map.yaml</code> entry projecting <code>g-hk-*.py</code>-style neutral hook scripts into that
@@ -1873,7 +1873,7 @@ documentation) is the obvious candidate — gald3r has no reason to invent a sec
   layout entries do" — undecided, not prioritized in the owner's suggested first wave (§9).</li>
 </ul>
 <hr />
-<h2 id="9-owners-suggested-sequencing-description-2026-08-12-pre-shutdown-ask">9. Owner's Suggested Sequencing ( description, 2026-08-12 pre-shutdown ask)<a class="headerlink" href="#9-owners-suggested-sequencing-description-2026-08-12-pre-shutdown-ask" title="Permanent link">&para;</a></h2>
+<h2 id="9-owners-suggested-sequencing">9. Owner's Suggested Sequencing<a class="headerlink" href="#9-owners-suggested-sequencing" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>"which components the runtime can actually honor first (suggest hooks + commands first --
 engine events exist, chat verb dispatch exists)"</p>
@@ -1884,25 +1884,26 @@ engine events exist, chat verb dispatch exists)"</p>
    <code>hooks:</code> layout entry projecting scripts into the existing loader, once §1 is ratified.</li>
 <li><strong>Commands</strong> — chat verb dispatch already exists; needs a <code>commands:</code> layout entry
    projecting <code>g-*.md</code> files into the existing dispatcher, once §1 is ratified.</li>
-<li><strong>CRASH folders</strong> — <code>gald3r_engine/crash</code> already loads CRASH from the compiled binary
- (per the description); extending it to also load a user overlay is a natural
+<li><strong>CRASH folders</strong> — <code>gald3r_engine/crash</code> already loads CRASH from the compiled binary;
+   extending it to also load a user overlay is a natural
    next step once §1 lands, since the mechanism (dispatch/activation) already exists.</li>
-<li><strong>Agents</strong> — blocked on (the recursive-agent execution primitive) landing;
+<li><strong>Agents</strong> — blocked on the recursive-agent execution primitive landing;
    the <code>agents:</code> layout entry alone does not make subagents runnable.</li>
 <li><strong>Rules</strong> — needs new context-assembly injection work beyond the ratification question.</li>
 <li><strong>Skills</strong> — lowest priority; no runtime skill-discovery loader exists yet.</li>
 </ol>
-<h2 id="10-relationship-to-and">10. Relationship to and<a class="headerlink" href="#10-relationship-to-and" title="Permanent link">&para;</a></h2>
+<h2 id="10-relationship-to-the-self-coordinator-provider-and-the-recursive-agent-primitive">10. Relationship to the Self-Coordinator Provider and the Recursive Agent Primitive<a class="headerlink" href="#10-relationship-to-the-self-coordinator-provider-and-the-recursive-agent-primitive" title="Permanent link">&para;</a></h2>
 <ul>
-<li><em><em><em><em> (self-coordinator provider) — a </em>different feature</em> with the </em>same self-hosting
- theme</em> as this task: gald3r acting as its own coordinator/provider. is about gald3r
- users getting the CRASH/Commands/Rules/Agents/Skills/Hooks <em>component surface</em>; is
-  about gald3r <em>coordinating itself</em> as a provider. Related in spirit, not a dependency in
-  either direction as currently scoped — flag for the owner if Friday's ratification reveals
-  a real shared mechanism (e.g. both wanting the same overlay-location decision).</li>
-<li><strong><em>* (recursive agent primitive) — a </em>*real dependency</strong> for §3 (Agents Support) only:
+<li><strong>The self-coordinator provider</strong> — a <em>different feature</em> with the <em>same self-hosting
+  theme</em> as this one: gald3r acting as its own coordinator/provider. This platform work is
+  about gald3r users getting the CRASH/Commands/Rules/Agents/Skills/Hooks <em>component surface</em>;
+  the self-coordinator provider is about gald3r <em>coordinating itself</em> as a provider. Related
+  in spirit, not a dependency in either direction as currently scoped — flag for the owner if
+  Friday's ratification reveals a real shared mechanism (e.g. both wanting the same
+  overlay-location decision).</li>
+<li><strong>The recursive agent primitive</strong> — a <strong>real dependency</strong> for §3 (Agents Support) only:
   it is the execution layer a discovered <code>g-agnt-*.md</code> persona would run through. Every other
- component (hooks, commands, rules, skills, CRASH) is independent of.</li>
+  component (hooks, commands, rules, skills, CRASH) is independent of it.</li>
 </ul>
 <hr />
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
@@ -1952,7 +1953,7 @@ engine events exist, chat verb dispatch exists)"</p>
 <p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported yet · ❓ untested.</p>
 <p>Overall platform <code>status: ❌</code> — <strong>honest, decision-gated, not fabricated.</strong> gald3r has real
 runtime seams for hooks and commands (§6, §5) and a real execution-primitive dependency for
-agents (§3, ) — none are wired to a user-extensible overlay yet because WHERE that
+agents (§3) — none are wired to a user-extensible overlay yet because WHERE that
 overlay lives (§1) is an explicit open owner decision, not an oversight.</p>
 <hr />
 <h2 id="verification-evidence-internal-source-read-2026-08-22">Verification Evidence (internal source read, 2026-08-22)<a class="headerlink" href="#verification-evidence-internal-source-read-2026-08-22" title="Permanent link">&para;</a></h2>
@@ -1966,11 +1967,11 @@ overlay lives (§1) is an explicit open owner decision, not an oversight.</p>
 <tbody>
 <tr>
 <td>Roster today is 37, not 38</td>
-<td><code>gald3r_platforms/registry/registry.go</code> <code>FallbackPlatforms</code> (pre) enumerated exactly 37 canonical names</td>
+<td><code>gald3r_platforms/registry/registry.go</code> <code>FallbackPlatforms</code> (before this spec) enumerated exactly 37 canonical names</td>
 </tr>
 <tr>
 <td>Hook events exist</td>
-<td><code>gald3r_engine/hooks/doc.go</code> native lifecycle hook system (session/compact/tool-use)</td>
+<td><code>gald3r_engine/hooks/doc.go</code> — native lifecycle hook system (session/compact/tool-use)</td>
 </tr>
 <tr>
 <td>Stream protocol exists</td>
@@ -1982,11 +1983,11 @@ overlay lives (§1) is an explicit open owner decision, not an oversight.</p>
 </tr>
 <tr>
 <td>Chat verb dispatch exists</td>
-<td>description, owner-asserted 2026-08-12; not independently re-verified by this session (out of this session's declared scope)</td>
+<td>owner-asserted 2026-08-12; not independently re-verified by this session (out of this session's declared scope)</td>
 </tr>
 <tr>
-<td>is the agents execution layer</td>
-<td>description's own framing: "agents (subagent personas via the recursive primitive)"</td>
+<td>The recursive agent primitive is the agents execution layer</td>
+<td>this spec's own framing: "agents (subagent personas via the recursive primitive)"</td>
 </tr>
 <tr>
 <td>No prior <code>layout_map.yaml</code>/roster entry for gald3r</td>

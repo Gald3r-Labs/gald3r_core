@@ -1768,8 +1768,8 @@ and the Claude Code file <code>~/.claude/CLAUDE.md</code> (unless disabled). Thi
 (which reads <code>CLAUDE.md</code>, not <code>AGENTS.md</code>).</p>
 <p><strong>Hooks caveat:</strong> OpenCode's lifecycle hooks are <strong>in-process JS/TS plugins</strong> (event handlers),
 not drop-in shell scripts and not a JSON wiring file. Lifecycle coverage is broad, but there is
-<strong>no first-class git pre-commit / pre-push event</strong> and gald3r's Python <code>g-hk-*.py</code> hooks (
-port; NOT PowerShell) must be shelled out from a JS/TS wrapper rather than registered directly.
+<strong>no first-class git pre-commit / pre-push event</strong> and gald3r's Python <code>g-hk-*.py</code> hooks (not
+PowerShell) must be shelled out from a JS/TS wrapper rather than registered directly.
 This is the single largest friction point (see §6 + §9).</p>
 </blockquote>
 <hr />
@@ -1871,7 +1871,7 @@ Source: https://opencode.ai/docs/rules/</p>
   <code>tui.toast.show</code>, <code>server.connected</code>, <code>installation.updated</code>.</li>
 <li><strong>Mapping</strong>: <code>tool.execute.before</code>/<code>after</code> gives pre-tool gating (PreToolUse-equivalent);
   <code>file.edited</code> / <code>file.watcher.updated</code> covers file-watch; <code>session.created</code> covers session-start.</li>
-<li><strong>Two dispatch surfaces, not one uniform key set (correction).</strong> Live-verified against
+<li><strong>Two dispatch surfaces, not one uniform key set.</strong> Live-verified against
   OpenCode's real, on-disk TypeScript source (<code>packages/plugin/src/index.ts</code>'s
   <code>export interface Hooks {...}</code>, https://github.com/sst/opencode/blob/dev/packages/plugin/src/index.ts):
   only <code>tool.execute.before</code> / <code>tool.execute.after</code> (and a handful of chat/permission/experimental
@@ -1883,9 +1883,9 @@ Source: https://opencode.ai/docs/rules/</p>
   discriminated by <code>event.type</code>. A plugin object key literally named <code>"session.created"</code> is never
   invoked by OpenCode's real plugin loader.</li>
 <li><strong>gald3r friction (largest gap)</strong>: hooks are <strong>event-driven JS/TS plugins</strong>, not drop-in shell
-scripts and not a JSON wiring file. gald3r ships hooks as <strong>Python <code>g-hk-*.py</code></strong> scripts (
-port), which do <strong>not</strong> run natively as OpenCode plugins. A thin JS/TS plugin ( /,
-corrected: <code>gald3r-hooks-plugin.ts</code>, <code>spawnSync("python", …)</code>) shells out to the six
+  scripts and not a JSON wiring file. gald3r ships hooks as <strong>Python <code>g-hk-*.py</code></strong> scripts,
+  which do <strong>not</strong> run natively as OpenCode plugins. A thin JS/TS plugin (<code>gald3r-hooks-plugin.ts</code>,
+  <code>spawnSync("python", …)</code>) shells out to the six
   canonical <code>g-hk-on-&lt;event&gt;.py</code> entrypoints — <code>tool.execute.before</code> / <code>tool.execute.after</code>
   registered directly (real <code>Hooks</code> keys), <code>session.created</code> / <code>session.deleted</code> / <code>session.idle</code>
   routed through the single generic <code>event</code> hook's <code>switch (event.type)</code> (they are not <code>Hooks</code>
@@ -1928,7 +1928,7 @@ corrected: <code>gald3r-hooks-plugin.ts</code>, <code>spawnSync("python", …)</
   via API/SDK (2026 update).</p>
 <p><strong>Gaps / friction vs. Cursor reference:</strong>
 1. <strong>Hooks are JS/TS plugins, not Python-native</strong> (✅ native, but not portable). gald3r <code>g-hk-*.py</code>
-require a JS/TS plugin shim (: <code>gald3r-hooks-plugin.ts</code>) that shells
+   hooks require a JS/TS plugin shim (<code>gald3r-hooks-plugin.ts</code>) that shells
    out via Node's <code>child_process.spawnSync("python", …)</code>. <strong>No first-class git pre-commit / pre-push
    event</strong> — wire via <code>command.executed</code> or external git hooks.
 2. <strong>No <code>.mdc</code> glob-scoped rule engine</strong> (rule content transfers via <code>AGENTS.md</code>/<code>CLAUDE.md</code>; per-rule
@@ -1957,9 +1957,9 @@ gald3r <code>.claude/skills/</code> tree + <code>AGENTS.md</code>, then add a th
 <li><strong>Event payload format</strong>: JS/TS context object (project info, cwd, git worktree path, SDK client,
   Bun shell API); a plugin exports a function returning a hooks object</li>
 <li><strong>Limitations</strong>: plugin language is JavaScript/TypeScript (npm supported) — gald3r's Python
-<code>g-hk-*.py</code> hooks (port; NOT PowerShell) must be shelled out from a JS/TS wrapper; <strong>no
+  <code>g-hk-*.py</code> hooks (not PowerShell) must be shelled out from a JS/TS wrapper; <strong>no
   first-class git pre-commit / pre-push event</strong> (wire via <code>command.executed</code> or external git hooks)</li>
-<li><strong>gald3r hook files</strong> (corrected): <code>gald3r-hooks-plugin.ts</code> wires
+<li><strong>gald3r hook files</strong>: <code>gald3r-hooks-plugin.ts</code> wires
   gald3r's five relevant native events to six canonical <code>g-hk-on-&lt;event&gt;.py</code> entrypoints via
   <code>spawnSync("python", …)</code>, per <code>neutral_source/hooks/g_hk_core.py</code>'s
   <code>PLATFORM_EVENT_MAP["opencode"]</code> — but across TWO real dispatch mechanisms, not one uniform key
@@ -1972,14 +1972,14 @@ gald3r <code>.claude/skills/</code> tree + <code>AGENTS.md</code>, then add a th
   per <code>packages/sdk/js/src/gen/types.gen.ts</code>) into a <code>{session_id}</code> dict. Each entrypoint fans out
   to the full per-event concern chain (<code>g_hk_core.dispatch(...)</code>); no OpenCode event maps to
   canonical <code>user-prompt-submit</code> today.</li>
-<li><strong>Tool-id/path-key normalization (fixed).</strong> OpenCode's real builtin tool ids are
+<li><strong>Tool-id/path-key normalization.</strong> OpenCode's real builtin tool ids are
   lowercase (<code>edit</code>, <code>write</code>, <code>apply_patch</code>, <code>read</code>, live-verified against
   <code>packages/opencode/src/tool/*.ts</code>'s <code>Tool.define(...)</code> calls) and its tool-argument path field
   is camelCase (<code>filePath</code>), neither of which matched gald3r's Claude/Cursor-centric <code>WRITE_TOOLS</code>
   (<code>Edit</code>, <code>Write</code>, ...) / <code>PATH_KEYS</code> (<code>file_path</code>, ...) conventions used by
   <code>g-hk-pre-tool-call-gald3r-guard.py</code> and its sibling <code>tool-start</code> concern hooks
   (<code>g-hk-pre-tool-call-prd-freeze.py</code>, <code>g-hk-pre-tool-call-member-gald3r-guard.py</code>) — so even with
-the corrected dict payload shape, those guard hooks did not fire on a real OpenCode
+  the corrected dict payload shape, those guard hooks did not fire on a real OpenCode
   install. Fixed by a <code>normalizeToolPayload</code> marshaling step inside <code>gald3r-hooks-plugin.ts</code>
   itself (<code>_OPENCODE_WRITE_TOOL_ID_MAP</code> in <code>generate.py</code>): <code>edit</code>/<code>write</code>/<code>apply_patch</code> are
   renamed to <code>Edit</code>/<code>Write</code>/<code>ApplyPatch</code> and gain an additional <code>file_path</code> key (alongside the
@@ -1987,12 +1987,12 @@ the corrected dict payload shape, those guard hooks did not fire on a real OpenC
   platform-agnostic Python concern hooks free of OpenCode-specific vocabulary. Live/executable
   end-to-end regression: <code>tests/platform/test_opencode_plugin_hooks_shape.py</code>'s
   <code>test_opencode_gald3r_guard_blocks_real_generated_plugin_write_end_to_end</code> /
-  <code>test_opencode_prd_freeze_blocks_real_generated_plugin_write_end_to_end</code>. <strong><code>apply_patch</code> gap
-closed (fixed).</strong> <code>apply_patch</code>'s sole real argument is <code>patchText</code> (a unified-diff
+  <code>test_opencode_prd_freeze_blocks_real_generated_plugin_write_end_to_end</code>. <strong><code>apply_patch</code>
+  gap.</strong> <code>apply_patch</code>'s sole real argument is <code>patchText</code> (a unified-diff
   body with per-hunk target paths embedded in <code>*** {Add,Delete,Update} File:</code> / <code>*** Move to:</code>
   header lines, live-verified against <code>packages/opencode/src/patch/index.ts</code>'s real
   <code>parsePatchHeader()</code>) — it has no top-level path field of its own to copy the way <code>edit</code>/<code>write</code>'s
-  <code>filePath</code> is copied. <code>normalizeToolPayload</code> now also extracts every recognized header path out of
+  <code>filePath</code> is copied. <code>normalizeToolPayload</code> also extracts every recognized header path out of
   <code>patchText</code>; when a patch touches multiple files, whichever extracted path resolves under
   <code>.gald3r/</code> is surfaced as <code>file_path</code> (never just the first one), and a malformed/unrecognized
   <code>patchText</code> still catches a literal <code>.gald3r/</code>-containing path token elsewhere in the body via a
@@ -2011,15 +2011,15 @@ closed (fixed).</strong> <code>apply_patch</code>'s sole real argument is <code>
   (shared Agent-Skills locations), loaded on-demand via the native <code>skill</code> tool.</li>
 <li>Hooks are JS/TS plugins exporting a function, not a JSON wiring file and not bare <code>.py</code> scripts —
   a format mismatch with gald3r's Python hooks, bridged by a generated <code>gald3r-hooks-plugin.ts</code>
-shim (corrected); no first-class git pre-commit event.</li>
+  shim; no first-class git pre-commit event.</li>
 <li>Config is <code>opencode.json</code> (root, NOT inside <code>.opencode/</code>); MCP lives under its <code>mcp</code> field.</li>
 </ul>
 <h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Cheapest high-parity install: ship gald3r's <code>.claude/skills/</code> tree + <code>AGENTS.md</code>/<code>CLAUDE.md</code> —
   OpenCode loads them natively. Put commands in <code>.opencode/commands/</code>, agents in <code>.opencode/agents/</code>.</li>
-<li>gald3r <code>g-hk-*.py</code> hooks do NOT run natively — <code>gald3r platform install opencode</code> ( /,
-corrected ) authors a thin <code>gald3r-hooks-plugin.ts</code> in <code>.opencode/plugins/</code> that shells
+<li>gald3r <code>g-hk-*.py</code> hooks do NOT run natively — <code>gald3r platform install opencode</code>
+  authors a thin <code>gald3r-hooks-plugin.ts</code> in <code>.opencode/plugins/</code> that shells
   out to <code>spawnSync("python", …)</code>: <code>tool.execute.before</code> / <code>tool.execute.after</code> registered
   directly (real <code>Hooks</code> keys), <code>session.created</code> / <code>session.deleted</code> / <code>session.idle</code> routed
   through the generic <code>event</code> hook (they are bus <code>Event</code> variants, not <code>Hooks</code> keys). Re-verify
@@ -2053,7 +2053,7 @@ corrected ) authors a thin <code>gald3r-hooks-plugin.ts</code> in <code>.opencod
 <p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
 <ul>
 <li><strong>Hooks ✅</strong>: native lifecycle hooks via JS/TS plugins (20 events); gald3r's Python <code>g-hk-*.py</code>
-hooks need a JS/TS shim (: <code>gald3r-hooks-plugin.ts</code>) and there is no first-class
+  hooks need a JS/TS shim (<code>gald3r-hooks-plugin.ts</code>) and there is no first-class
   git pre-commit event.</li>
 <li><strong>Rules ✅</strong>: <code>AGENTS.md</code> (CLAUDE.md fallback) + <code>instructions</code> array; no <code>.mdc</code> glob scoping.</li>
 <li><strong>Skills ✅</strong>: native <code>skill</code> tool; discovered in <code>.opencode/skills/</code> + <code>.claude/skills/</code> +

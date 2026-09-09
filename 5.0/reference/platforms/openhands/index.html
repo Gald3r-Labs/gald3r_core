@@ -1871,7 +1871,7 @@ does <strong>not</strong> require a <code>CLAUDE.md</code> — <code>AGENTS.md</
 <li>Works across <strong>Cloud, CLI, and local GUI</strong> — a true deterministic control layer comparable to
   Claude Code hooks (block dangerous commands on PreToolUse, enforce tests/lint before Stop, inject
   context on SessionStart). gald3r <code>g-hk-*.py</code> hooks wire natively; invoke <code>python &lt;path&gt;</code> directly
-as the shell command (post- Python port; no PowerShell involved, no wrapper needed) since hooks are shell-command based.</li>
+  as the shell command (no PowerShell involved, no wrapper needed) since hooks are shell-command based.</li>
 <li>Source: https://docs.openhands.dev/openhands/usage/customization/hooks</li>
 </ul>
 <h2 id="7-rules-context-native">7. Rules / Context — ✅ NATIVE<a class="headerlink" href="#7-rules-context-native" title="Permanent link">&para;</a></h2>
@@ -1928,7 +1928,7 @@ bundle.</p>
 <li><strong>Event payload format</strong>: JSON via <strong>stdin</strong> (<code>event_type</code>, <code>tool_name</code>, <code>tool_input</code>,
   <code>session_id</code>, <code>working_dir</code>); block via <code>{"decision": "deny", "reason", "additionalContext"}</code></li>
 <li><strong>Command extensions</strong>: shell command + <code>timeout</code> + <code>matcher</code>; gald3r <code>.py</code> hooks run via
-<code>python &lt;path&gt;</code> directly (post- Python port; no PowerShell involved, no wrapper needed)</li>
+  <code>python &lt;path&gt;</code> directly (no PowerShell involved, no wrapper needed)</li>
 <li><strong>Surfaces</strong>: Cloud, CLI, local GUI</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
@@ -1942,7 +1942,7 @@ bundle.</p>
 <li><strong>Advanced agents are code-only</strong> — file-based agents cover the basics; multi-agent roles via
   <code>DelegateTool</code> / <code>register_agent()</code> require Python.</li>
 <li><strong>Hooks are shell-command based</strong> — JSON config, stdin payload; gald3r's <code>g-hk-*.py</code> hooks run
-directly via <code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved, no wrapper needed).</li>
+  directly via <code>python &lt;path&gt;</code> (no PowerShell involved, no wrapper needed).</li>
 </ul>
 <h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
 <ul>

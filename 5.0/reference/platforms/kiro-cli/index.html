@@ -1768,10 +1768,7 @@ instruction surface is <strong><code>.kiro/steering/</code></strong> and it hono
 <strong>not</strong> read <code>CLAUDE.md</code>), and it discovers <strong>Agent Skills (<code>SKILL.md</code>)</strong> from <code>.kiro/skills/</code>, so
 gald3r's <code>SKILL.md</code> artifacts are <strong>drop-in compatible</strong>.</p>
 <p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://kiro.dev/docs/cli (see
-Verification Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code> / <code>2026-05-20</code>)
-which marked skills as ❌ and hooks/rules/commands as ⚠️ — Agent Skills are now <strong>NATIVE</strong> (each
-discovered skill also becomes a <code>/skill-name</code> slash command, CLI v2.1, 2026-04-24), and the
-lifecycle hook + custom-agent surface is fully native.</p>
+Verification Evidence).</p>
 <blockquote>
 <p><strong>Distinct from Kiro IDE.</strong> Kiro CLI and Kiro IDE share the <code>.kiro/</code> namespace and the <strong>steering</strong>
 context mechanism, but the CLI has a <strong>richer agent/hook/command/skills surface</strong> than the IDE. Do
@@ -1944,7 +1941,8 @@ and <code>.kiro/settings/mcp.json</code>.</p>
 <li><strong>Events available</strong>: <code>agentSpawn</code> (≈ sessionStart), <code>userPromptSubmit</code>, <code>preToolUse</code>, <code>postToolUse</code>, <code>stop</code> (≈ session end)</li>
 <li><strong>Event payload format</strong>: JSON via STDIN (fields include <code>hook_event_name</code>, <code>cwd</code>, <code>session_id</code>); <code>matcher</code> scopes pre/postToolUse to internal tools (<code>fs_read</code>/<code>fs_write</code>/<code>execute_bash</code>/<code>use_aws</code>)</li>
 <li><strong>Blocking semantics</strong>: exit code <code>2</code> (PreToolUse only) blocks tool execution and returns STDERR to the LLM; other non-zero = failure warning</li>
-<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> map to <code>agentSpawn</code>/<code>stop</code>/<code>preToolUse</code>/<code>postToolUse</code> via STDIN-JSON command entries — wiring is per-agent JSON; gald3r <code>.py</code> hooks (<code>python &lt;path&gt;</code>) must read <code>$input</code>/stdin (not <code>$env:*</code>). gald3r wiring is <strong>[STUB] / unverified</strong> — confirm field names before authoring.</li>
+<li><strong><code>hooks</code> field JSON shape</strong> (re-verified 2026-08-30 against https://kiro.dev/docs/custom-agents/configuration-reference/, worked example on the page): an <strong>OBJECT</strong> keyed by trigger name (<code>agentSpawn</code>/<code>userPromptSubmit</code>/<code>preToolUse</code>/<code>postToolUse</code>/<code>stop</code>), each value an <strong>ARRAY</strong> of <code>{"command": &lt;str&gt;, "matcher": &lt;str&gt;?}</code> entries — <code>matcher</code> is optional, scoped to <code>preToolUse</code>/<code>postToolUse</code> only.</li>
+<li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> map to <code>agentSpawn</code>/<code>stop</code>/<code>preToolUse</code>/<code>postToolUse</code> via STDIN-JSON command entries — wiring is per-agent JSON; gald3r <code>.py</code> hooks (<code>python &lt;path&gt;</code>) must read <code>$input</code>/stdin (not <code>$env:*</code>). The <code>hooks</code> field's own shape is now confirmed (see above); wiring it for real is still blocked (gald3r authors no kiro-cli-native custom-agent JSON to embed <code>hooks</code> into yet) — do not author a fabricated custom-agent JSON just to have somewhere to put <code>hooks</code>.</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
 <ul>

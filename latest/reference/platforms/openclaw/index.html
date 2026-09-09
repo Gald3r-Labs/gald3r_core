@@ -1990,7 +1990,7 @@ gald3r's <code>AGENTS.md</code> + <code>g-skl-*/SKILL.md</code> artifacts are la
   re-expressed as <code>handler.ts</code> or shelled out from one (e.g. spawning <code>python &lt;path&gt;</code>).</li>
 <li><strong>gald3r hook files</strong>: gald3r <code>g-hk-*.py</code> are shelled out from a generated <code>handler.ts</code>
   (<code>gald3r_platforms/generate/hooks_openclaw.go</code>). The event→hook mapping is <strong>confirmed</strong> for
-<code>command:new</code>/<code>message:received</code>/<code>command:stop</code> — see section 6 above for the
+  <code>command:new</code>/<code>message:received</code>/<code>command:stop</code> (2026-08-30) — see section 6 above for the
   full per-event citation and the events deliberately left unmapped.</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
@@ -2013,7 +2013,7 @@ gald3r's <code>AGENTS.md</code> + <code>g-skl-*/SKILL.md</code> artifacts are la
 <li>Install gald3r <code>g-skl-*/SKILL.md</code> into the OpenClaw <strong>workspace</strong> <code>skills/</code> dir (or point the
   workspace at the gald3r skills source); folder-per-skill is identical to gald3r.</li>
 <li>Hooks require a <strong>TypeScript rewrite</strong> (<code>handler.ts</code>) — do not assume <code>.py</code> portability. A
-confirmed partial mapping is wired for <code>command:new</code>/<code>message:received</code>/
+  confirmed partial mapping (2026-08-30) is wired for <code>command:new</code>/<code>message:received</code>/
   <code>command:stop</code>; treat it as doc-derived, not live-install-verified (no OpenClaw install exists
   in the gald3r_core dev environment) until a real install confirms firing behavior.</li>
 <li>Re-declare MCP servers via <code>openclaw mcp set</code> (<code>mcp.servers</code> in <code>openclaw.json</code>).</li>

@@ -2093,6 +2093,10 @@ from an older binary version, both point you at it by name.</p>
 <td>Declare and enforce ad-hoc, per-project rules on agent writes.</td>
 </tr>
 <tr>
+<td><code>gald3r commandment</code></td>
+<td>Manage numbered project guiding principles with <code>list</code>/<code>add</code>/<code>update</code>/<code>delete</code>/<code>ratify</code>. <code>add --proposed</code> marks a proposal; <code>ratify NUMBER</code> clears that marker after owner approval.</td>
+</tr>
+<tr>
 <td><code>gald3r decision</code></td>
 <td>Record a binding call once and stop re-litigating it — decisions are append-only, so changing your mind mints a new, chain-linked decision (<code>supersede</code>) rather than editing or deleting the old ruling.</td>
 </tr>
@@ -2247,6 +2251,10 @@ from an older binary version, both point you at it by name.</p>
 <td>See which of your Commands, Rules, Agents, Skills, and Hooks are actually firing during real sessions — not just installed, but used.</td>
 </tr>
 <tr>
+<td><code>gald3r momentum report</code></td>
+<td>Summarize commit history by author and bugfix/tech-debt/net-new category over a configurable date window (last seven days by default). Outputs Markdown or <code>--json</code>, with optional <code>--out FILE</code>; the Momentum Board UI is still planned.</td>
+</tr>
+<tr>
 <td><code>gald3r parity-audit</code></td>
 <td>Compare the live gald3r CLI's verb tree against the legacy gald3r-agent reference verb set — a migration-completeness check, not a day-to-day command.</td>
 </tr>
@@ -2306,12 +2314,20 @@ from an older binary version, both point you at it by name.</p>
 <td>List, add/remove/edit providers and models in <code>providers.yaml</code> without hand-editing YAML, validate the whole file, and store API keys securely in your OS's keyring.</td>
 </tr>
 <tr>
+<td><code>gald3r resource-controller</code></td>
+<td>Issue, list, and revoke local resource/provider lease records (<code>lease issue/list/revoke</code>) with configurable model, spend, and expiry limits; inspect their audit history with <code>audit list</code>. This command group does not yet include credential management.</td>
+</tr>
+<tr>
 <td><code>gald3r local-model</code></td>
 <td>Find out which local LLM your hardware can actually run well, and get the exact command to serve it.</td>
 </tr>
 <tr>
 <td><code>gald3r config</code></td>
 <td>Show or change your gald3r configuration — default provider/model, personal preferences, and platform install defaults (<code>get</code>/<code>set</code>/<code>show</code>).</td>
+</tr>
+<tr>
+<td><code>gald3r languages pack</code></td>
+<td>List, validate, add, or remove editor language packs in user or project scope. <code>publish</code> packages a valid pack into a local ZIP but currently refuses remote catalog publication; it does not upload the pack.</td>
 </tr>
 <tr>
 <td><code>gald3r profile</code></td>
@@ -2388,6 +2404,10 @@ across your machines and your team.</p>
 <td>Coordinate work across multiple related projects — read incoming requests from linked repos, check what's safe to touch before a multi-repo change, and keep member repos in the expected shape.</td>
 </tr>
 <tr>
+<td><code>gald3r wpac mark MESSAGE_ID --status STATUS</code></td>
+<td>Short form of <code>gald3r workspace inbox mark</code>: durably update an inbox message's status, with optional <code>--note</code> and <code>--source</code> for an ambiguous ID. Only <code>mark</code> is mounted under <code>wpac</code>; use <code>workspace inbox</code> for the other inbox operations.</td>
+</tr>
+<tr>
 <td><code>gald3r connect</code></td>
 <td>Link a provider account with a device code, like signing into a streaming app on a TV (this is the world_tree device-code sign-in itself — for a third-party AI provider, use <code>gald3r providers add</code>/<code>set-key</code> instead). See <a href="../providers/"><code>providers.md</code></a> for real, current output.</td>
 </tr>
@@ -2427,8 +2447,16 @@ across your machines and your team.</p>
 <td>Push a built release out to a remote destination, and let your team know it went out.</td>
 </tr>
 <tr>
+<td><code>gald3r web-sync</code></td>
+<td>Compare the local gald3r_web release data with published entries in the source checkout's CHANGELOG. <code>status</code> and <code>plan</code> are read-only; bare <code>web-sync</code> runs <code>plan</code>. <code>apply</code> edits the web working tree only, refusing a dirty tree; it never commits, pushes, or deploys.</td>
+</tr>
+<tr>
 <td><code>gald3r template</code></td>
 <td>Get ready-made CI/release config files (GitHub Actions, release-please, ...) written into your project instead of writing them by hand.</td>
+</tr>
+<tr>
+<td><code>gald3r repo protect</code></td>
+<td>Preview a GitHub branch ruleset derived from this project's CI job names. Requires an authenticated <code>gh</code> CLI even for preview; GitHub writes require <code>--apply</code> plus confirmation (or <code>--yes</code> for a scripted run).</td>
 </tr>
 <tr>
 <td><code>gald3r shutdown</code></td>

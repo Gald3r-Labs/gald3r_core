@@ -1770,16 +1770,13 @@ instruction files</strong> (it auto-loads <code>AGENTS.md</code> / <code>CLAUDE.
 only partial primitive (built-in slash commands + skills-as-<code>/skill-name</code>; no user-authored non-skill
 command file). This is <strong>near-full parity</strong> with the Cursor reference.</p>
 <p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-20</strong> against the live GitHub repo + hosted docs (see
-Verification Evidence). This <strong>supersedes</strong> the stub (<code>last_doc_scan: never</code>, <code>status: ❓</code>, all
-cells <code>❓</code>, wrong <code>docs_url: https://hermes.dev</code>), which made no capability claims. The correct docs
-host is <strong><code>hermes-agent.nousresearch.com/docs</code></strong> + the <strong><code>NousResearch/hermes-agent</code></strong> GitHub repo.</p>
+Verification Evidence). The correct docs host is <strong><code>hermes-agent.nousresearch.com/docs</code></strong> + the
+<strong><code>NousResearch/hermes-agent</code></strong> GitHub repo.</p>
 <blockquote>
-<p><strong>Correction (2026-06-20 re-verify):</strong> an earlier pass of this spec claimed Hooks were "not
-documented (the one real gap)" and told users to fold SessionStart guardrails into <code>AGENTS.md</code>
-because there was no hook. <strong>That was wrong.</strong> Hermes ships a <strong>native hooks system</strong> —
-documented at <code>…/docs/user-guide/features/hooks</code> — including a <strong>shell-hook block in
+<p><strong>Hooks:</strong> Hermes ships a <strong>native hooks system</strong> — documented at
+<code>…/docs/user-guide/features/hooks</code> — including a <strong>shell-hook block in
 <code>~/.hermes/config.yaml</code></strong> with <strong>17+ lifecycle events</strong> and <strong><code>pre_tool_call</code> tool-call blocking</strong>.
-The Hooks cell is now <strong>✅ NATIVE</strong> and the tier is re-derived to near-full parity (see below).</p>
+The Hooks cell is <strong>✅ NATIVE</strong>, putting the tier at near-full parity (see below).</p>
 <p><strong>Distribution opportunity (headline):</strong> Hermes Skills use the <strong>agentskills.io open <code>SKILL.md</code>
 standard</strong> in a <strong>folder-per-skill</strong> layout (<code>&lt;skill&gt;/SKILL.md</code> + optional scripts/references) —
 the <strong>same standard gald3r already ships</strong> (<code>g-skl-*/SKILL.md</code>). gald3r's skills are <strong>structurally
@@ -1924,10 +1921,10 @@ Source: https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user
   <code>hooks:</code> block — wire a SessionStart-style <code>.gald3r/</code> context injector onto <strong><code>on_session_start</code></strong>
   and a PreToolUse-style guardrail onto <strong><code>pre_tool_call</code></strong> (returning the <code>block</code> action for hard
   gating). Because Hermes shell hooks run an arbitrary command, point them directly at
-<code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved, no wrapper needed). Folding guardrails into
+  <code>python &lt;path&gt;</code> (no PowerShell involved, no wrapper needed). Folding guardrails into
   <code>AGENTS.md</code> (§2) remains a useful belt-and-suspenders layer, but is <strong>no longer the only option</strong> —
   native <code>pre_tool_call</code> blocking is available.</li>
-<li><strong>gald3r wiring status (re-verified 2026-08-30):</strong> still <strong>not wired</strong> in
+<li><strong>gald3r wiring status:</strong> still <strong>not wired</strong> in
   <code>layout_map.yaml</code> — the registration surface above (<code>~/.hermes/config.yaml</code>) is USER-GLOBAL with
   no project-relative override anywhere in these docs, so <code>generate_overlay</code> has no legitimate
   target to write. A 2026-08-30 live re-fetch additionally confirmed the shell-hook <code>command</code> field
@@ -2013,7 +2010,7 @@ only, no separate command-file primitive). Hermes's distinctive strengths are th
   only an explicit <code>block</code> action gates a tool (verify firing with an install test)</li>
 <li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> <strong>map natively</strong> — wire SessionStart logic onto
   <code>on_session_start</code> and PreToolUse logic onto <code>pre_tool_call</code> by invoking <code>python &lt;path&gt;</code> directly
-(no shell wrapper needed, post- Python port)</li>
+  (no shell wrapper needed)</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2036,9 +2033,8 @@ only, no separate command-file primitive). Hermes's distinctive strengths are th
   migration step). Fold <code>g-rl-*</code> always-apply rules into it.</li>
 <li><strong>Wire <code>g-hk-*.py</code> hooks via <code>config.yaml</code></strong>: map SessionStart <code>.gald3r/</code> injection onto
   <code>on_session_start</code> and PreToolUse guardrails onto <code>pre_tool_call</code> (return <code>{"action":"block",…}</code> to
-hard-gate). Invoke <code>python &lt;path&gt;</code> directly (no shell wrapper needed, post- Python port);
-  remember hook <em>failures</em> are swallowed, so the guardrail must succeed and emit the block action to
-  enforce.</li>
+  hard-gate). Invoke <code>python &lt;path&gt;</code> directly (no shell wrapper needed); remember hook <em>failures</em>
+  are swallowed, so the guardrail must succeed and emit the block action to enforce.</li>
 <li><strong>Distribute gald3r Skills as a Hermes tap</strong>: publish <code>g-skl-*/SKILL.md</code> to a repo, then
   <code>hermes skills tap add &lt;repo&gt;</code>; they index + surface as <code>/&lt;name&gt;</code> natively. A baseline <code>SKILL.md</code>
   (<code>name</code>+<code>description</code>) loads as-is; <code>version</code>/<code>author</code>/<code>license</code> are optional distribution polish.</li>
@@ -2076,9 +2072,8 @@ hard-gate). Invoke <code>python &lt;path&gt;</code> directly (no shell wrapper n
 <p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
 <p>Overall platform <code>status: ✅</code> — <strong>near-full parity</strong>. Five of six primitives native —
 Hooks/Rules/Skills/MCP (+ <code>delegate_task</code> subagents, <code>AGENTS.md</code>-native instruction file); <strong>Commands</strong>
-is the only partial primitive (skills-as-<code>/skill-name</code>, no command-file). This corrects an earlier
-pass that wrongly marked Hooks absent. Honest, re-verified state as of the 2026-06-20 live docs crawl
-(hooks + skills-frontmatter facts re-fetched).</p>
+is the only partial primitive (skills-as-<code>/skill-name</code>, no command-file). Re-verified state as of the
+2026-06-20 live docs crawl (hooks + skills-frontmatter facts re-fetched).</p>
 <hr />
 <h2 id="verification-evidence-live-crawl-2026-06-20">Verification Evidence (live crawl 2026-06-20)<a class="headerlink" href="#verification-evidence-live-crawl-2026-06-20" title="Permanent link">&para;</a></h2>
 <table>

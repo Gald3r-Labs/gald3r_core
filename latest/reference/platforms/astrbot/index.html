@@ -1755,7 +1755,7 @@ a live docs crawl. Run <code>@g-platform-scan-docs astrbot</code> (crawl <code>h
 <code>@g-platform-check astrbot</code> to upgrade this spec from curated to verified.</p>
 </blockquote>
 <p><strong>AstrBot</strong> is registered in the gald3r platform roster. Per the <strong>curated</strong> capability matrix
-(<code>platform_matrix_data.json</code>, reconciled here), the five matrix-tracked primitives —
+(<code>platform_matrix_data.json</code>), the five matrix-tracked primitives —
 <strong>Hooks, Rules, Skills, Commands, and MCP</strong> — are all assessed <strong>✅ supported</strong>, with an
 <strong>MCP (L2)</strong> engine-integration tier and no established rules-file extension (<code>rules_ext: "—"</code>).
 This is a <strong>human-assessed curation</strong>, not the result of a live docs crawl or install test: the
@@ -1813,7 +1813,7 @@ an install test. Re-derive a verified parity comparison against
 <h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Capability cells (Hooks/Rules/Skills/Commands/MCP) are now <strong>curated</strong> to match
-the platform capability matrix. Do not assume any <code>.claude/</code> reuse, hook, rule,
+  the platform capability matrix. Do not assume any <code>.claude/</code> reuse, hook, rule,
   skill, command, or MCP wiring <strong>mechanism</strong> works on AstrBot until a live docs crawl / install
   test verifies it — curated only means "assessed as supported," not "implementation confirmed."</li>
 <li>Run <code>@g-platform-scan-docs astrbot</code> (crawl <code>https://astrbot.app</code>) then <code>@g-platform-check astrbot</code>.</li>
@@ -1843,11 +1843,11 @@ the platform capability matrix. Do not assume any <code>.claude/</code> reuse, h
 </tbody>
 </table>
 <p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
-<p><strong>Provenance :</strong> the five capability cells above are <strong>curated</strong> (human-assessed, sourced
+<p><strong>Provenance:</strong> the five capability cells above are <strong>curated</strong> (human-assessed, sourced
 from <code>platform_matrix_data.json</code> / the platform capability matrix) — they are <strong>not</strong>
 live-crawl-verified. Docs Fresh stays <code>❓</code> because <code>last_doc_scan: never</code>.</p>
 <p>Overall platform <code>status: ❓</code> (crawl-untested) — capability cells are <strong>curated ✅ across the
-board</strong> (reconciliation) but <strong>not yet confirmed</strong> by a live docs crawl or install test.
+board</strong> (a reconciled curation) but <strong>not yet confirmed</strong> by a live docs crawl or install test.
 This is the honest state: curated, not verified.</p>
 <hr />
 <h2 id="verification-evidence">Verification Evidence<a class="headerlink" href="#verification-evidence" title="Permanent link">&para;</a></h2>

@@ -1746,8 +1746,7 @@
 <h1 id="platform_specmd-void-vs-code-fork">PLATFORM_SPEC.md — Void (VS Code fork)<a class="headerlink" href="#platform_specmd-void-vs-code-fork" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p><strong>New to gald3r on this platform?</strong> Start at <a href="../../../platforms/void/">Use gald3r with Void</a> for a short overview before the full breakdown below.</p>
-<p><strong>Authoring status</strong>: <code>create</code> (STUB — generated to end the ghost-platform
-invisibility; capability cells below were subsequently reconciled with the curated
+<p><strong>Authoring status</strong>: <code>create</code> (STUB — capability cells below were reconciled with the curated
 the platform capability matrix / <code>platform_matrix_data.json</code> values). This
 platform ships an overlay (<code>platforms/void/</code>) and is registered in <code>PLATFORM_REGISTRY.yaml</code>.
 Hooks/Rules/Skills/Commands/MCP below reflect a <strong>curated, human-assessed</strong> capability set, not
@@ -1755,7 +1754,7 @@ a live docs crawl. Run <code>@g-platform-scan-docs void</code> (crawl <code>http
 <code>@g-platform-check void</code> to upgrade this spec from curated to verified.</p>
 </blockquote>
 <p><strong>Void (VS Code fork)</strong> is registered in the gald3r platform roster. Per the <strong>curated</strong>
-capability matrix (<code>platform_matrix_data.json</code>, reconciled here), the five
+capability matrix (<code>platform_matrix_data.json</code>), the five
 matrix-tracked primitives split: <strong>Hooks, Skills, and Commands</strong> are assessed <strong>❌ not
 supported</strong>, while <strong>Rules and MCP</strong> are assessed <strong>✅ supported</strong> — Rules specifically via the
 legacy <strong><code>.cursorrules</code></strong> file (<code>rules_ext: ".cursorrules"</code>), with an <strong>MCP (L2)</strong>
@@ -1818,7 +1817,7 @@ against <code>g-skl-platform-cursor/PLATFORM_SPEC.md</code> after <code>@g-platf
 <h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Capability cells (Hooks/Rules/Skills/Commands/MCP) are now <strong>curated</strong> to match
-the platform capability matrix: Hooks/Skills/Commands curated <strong>❌</strong>, Rules curated
+  the platform capability matrix: Hooks/Skills/Commands curated <strong>❌</strong>, Rules curated
   <strong>✅</strong> via <code>.cursorrules</code>, MCP curated <strong>✅</strong>. Do not assume any <code>.claude/</code> reuse, hook, skill, or
   command wiring <strong>mechanism</strong> works on Void until a live docs crawl / install test verifies it —
   curated only means "assessed as (not) supported," not "implementation confirmed."</li>
@@ -1851,11 +1850,11 @@ the platform capability matrix: Hooks/Skills/Commands curated <strong>❌</stron
 </tbody>
 </table>
 <p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
-<p><strong>Provenance :</strong> the five capability cells above are <strong>curated</strong> (human-assessed, sourced
+<p><strong>Provenance:</strong> the five capability cells above are <strong>curated</strong> (human-assessed, sourced
 from <code>platform_matrix_data.json</code> / the platform capability matrix) — they are <strong>not</strong>
 live-crawl-verified. Docs Fresh stays <code>❓</code> because <code>last_doc_scan: never</code>.</p>
-<p>Overall platform <code>status: ❓</code> (crawl-untested) — capability cells are <strong>curated
-(Hooks/Skills/Commands = ❌, Rules = ✅ via <code>.cursorrules</code>, MCP = ✅) but </strong>not yet confirmed** by a
+<p>Overall platform <code>status: ❓</code> (crawl-untested) — capability cells are <strong>curated</strong>
+(Hooks/Skills/Commands = ❌, Rules = ✅ via <code>.cursorrules</code>, MCP = ✅) but <strong>not yet confirmed</strong> by a
 live docs crawl or install test. This is the honest state: curated, not verified.</p>
 <hr />
 <h2 id="verification-evidence">Verification Evidence<a class="headerlink" href="#verification-evidence" title="Permanent link">&para;</a></h2>
@@ -1869,7 +1868,7 @@ live docs crawl or install test. This is the honest state: curated, not verified
 <tbody>
 <tr>
 <td>Hooks / Skills / Commands</td>
-<td><strong>Curated ❌, not crawled.</strong> Sourced from <code>platform_matrix_data.json</code> (human-assessed) / the platform capability matrix; reconciled into this spec.</td>
+<td><strong>Curated ❌, not crawled.</strong> Sourced from <code>platform_matrix_data.json</code> (human-assessed) / the platform capability matrix.</td>
 </tr>
 <tr>
 <td>Rules</td>

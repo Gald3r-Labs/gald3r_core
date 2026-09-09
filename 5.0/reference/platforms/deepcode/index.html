@@ -1856,11 +1856,11 @@ gald3r's <code>AGENTS.md</code> is therefore a first-class input; <code>CLAUDE.m
 <li>gald3r <code>g-rl-*</code> rules map into the single <code>AGENTS.md</code> instruction file (concatenated always-apply
   content); there is no per-rule <code>always_apply</code>/<code>agent_requested</code> typing and no <code>globs:</code> scoping.</li>
 <li><strong>Generator status</strong>: <code>layout_map.yaml</code> currently declares no dedicated <code>rules:</code> entry for
-<code>deepcode</code> (the bootstrap-provenance convention: an entry is added only once a REAL donor
-  placement is verified, never guessed). <code>AGENTS.md</code> emission is the <strong>general per-platform fix
-covered by sibling task</strong> ("Generator must always emit a root AGENTS.md per platform") —
+  <code>deepcode</code> (the bootstrap-provenance convention: an entry is added only once a REAL donor
+  placement is verified, never guessed). <code>AGENTS.md</code> emission is the <strong>general per-platform fix</strong>
+  ("Generator must always emit a root AGENTS.md per platform") —
   its per-platform instruction-filename mapping is the correct place to add <code>deepcode → AGENTS.md</code>,
-  not a deepcode-specific branch here. This remains a <code>CAPABILITY_GAPS.md</code>
+  not a deepcode-specific branch here. Until that lands, this remains a <code>CAPABILITY_GAPS.md</code>
   entry for the <code>rules</code> component when a deepcode overlay is generated.</li>
 <li>Source: live README <code>/init</code> slash-command description, 2026-07-18 fetch.</li>
 </ul>
@@ -1884,7 +1884,7 @@ covered by sibling task</strong> ("Generator must always emit a root AGENTS.md p
 <hr />
 <h2 id="parity-vs-cursor-reference">Parity vs. Cursor Reference<a class="headerlink" href="#parity-vs-cursor-reference" title="Permanent link">&para;</a></h2>
 <p>Deep Code reaches <strong>partial parity</strong> with the Cursor reference (<code>g-skl-platform-cursor</code>): native
-<strong>rules</strong> (<code>AGENTS.md</code>, pending the central emission), <strong>skills</strong> (Agent Skills standard, native
+<strong>rules</strong> (<code>AGENTS.md</code>, pending central emission), <strong>skills</strong> (Agent Skills standard, native
 today), and <strong>MCP</strong> (<code>mcpServers</code> in <code>settings.json</code>, path now corrected); <strong>partial commands</strong>
 (fixed built-in slash set only); <strong>no subagents</strong> and <strong>no lifecycle hooks</strong>. The biggest gaps vs.
 the reference are custom commands, subagents, and the hook system — these are real capability
@@ -1914,7 +1914,7 @@ are directly reusable; the Claude-Code-specific <code>CLAUDE.md</code> / <code>.
   model/API-key/notify config. <code>layout_map.yaml</code>'s <code>mcp: {file: ".deepcode/settings.json"}</code> mapping
   reuses the SAME target path a user might already have populated with their own model settings;
   <code>generate_overlay</code>'s existing overwrite-not-merge <code>materialize_overlay</code> behavior (uniform across
-every platform) means a fresh MCP overlay write will <strong>replace</strong> an existing project-level
+  every platform) means a fresh MCP overlay write will <strong>replace</strong> an existing project-level
   <code>.deepcode/settings.json</code> wholesale if one is already present — this is a pre-existing, generic
   generator characteristic (not unique to deepcode) and out of this task's scope to change; flagged
   here for visibility since deepcode is the platform most likely to have a pre-populated file at
@@ -1925,7 +1925,7 @@ every platform) means a fresh MCP overlay write will <strong>replace</strong> an
 </ul>
 <h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Ship gald3r's <strong><code>AGENTS.md</code></strong> (instruction/rules, pending) + <strong><code>.agents/skills/&lt;name&gt;/
+<li>Ship gald3r's <strong><code>AGENTS.md</code></strong> (instruction/rules, pending central emission) + <strong><code>.agents/skills/&lt;name&gt;/
   SKILL.md</code></strong> tree — Deep Code discovers both natively today.</li>
 <li>Surface gald3r commands <strong>as skills</strong> (invocable via the <code>/</code> picker); there is no custom-command
   directory to target.</li>
@@ -1960,8 +1960,8 @@ every platform) means a fresh MCP overlay write will <strong>replace</strong> an
 </tbody>
 </table>
 <p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported · ❓ untested.</p>
-<p>Overall platform <code>status: ⚠️</code> — real, verified config surface (skills + MCP fully wired by this
-task; rules/AGENTS.md pending sibling task's central emission); commands/agents/hooks are
+<p>Overall platform <code>status: ⚠️</code> — real, verified config surface (skills + MCP fully wired;
+rules/AGENTS.md pending central emission); commands/agents/hooks are
 genuine tool-side gaps, not integration gaps. This is a <strong>stub-tier, non-roster platform</strong> (not one
 of the 23 fully-supported IDE targets) — kept per owner directive because it has a real, working
 config surface, not merely because it exists.</p>
@@ -1985,7 +1985,7 @@ config surface, not merely because it exists.</p>
 </tr>
 <tr>
 <td>Rules</td>
-<td>Live README — <code>/init</code> scaffolds <strong><code>AGENTS.md</code></strong>; reads <code>AGENTS.md</code> <strong>not</strong> <code>CLAUDE.md</code>; no <code>rules/</code> dir → ✅ native (gald3r wiring pending)</td>
+<td>Live README — <code>/init</code> scaffolds <strong><code>AGENTS.md</code></strong>; reads <code>AGENTS.md</code> <strong>not</strong> <code>CLAUDE.md</code>; no <code>rules/</code> dir → ✅ native (gald3r wiring pending central emission)</td>
 </tr>
 <tr>
 <td>Agents</td>

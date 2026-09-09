@@ -23,7 +23,7 @@
     
     
       
-        <title>Qwen - gald3r_core Product Docs</title>
+        <title>PLATFORM_SPEC.md — Qwen Code (Alibaba CLI coding agent) - gald3r_core Product Docs</title>
       
     
     
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Qwen
+              PLATFORM_SPEC.md — Qwen Code (Alibaba CLI coding agent)
             
           </span>
         </div>
@@ -1754,8 +1754,6 @@
   
 
 
-<!-- BUG[] kind=code: leading UTF-8 BOM broke frontmatter parsing; stripped here -- see .gald3r/bugs/bug474_g-skl-platform-qwen-platform-spec-md-lea.md -->
-
 <h1 id="platform_specmd-qwen-code-alibaba-cli-coding-agent">PLATFORM_SPEC.md — Qwen Code (Alibaba CLI coding agent)<a class="headerlink" href="#platform_specmd-qwen-code-alibaba-cli-coding-agent" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p><strong>New to gald3r on this platform?</strong> Start at <a href="../../../platforms/qwen/">Use gald3r with Qwen Code</a> for a short overview before the full breakdown below.</p>
@@ -1768,9 +1766,7 @@ commands/memory/MCP from its Gemini-CLI lineage and has since added a <strong>Cl
 system (14 events)</strong>, <strong>Markdown subagents</strong>, and <strong>Anthropic-style Agent Skills (<code>SKILL.md</code>)</strong> that
 reached <strong>GA (the <code>--experimental-skills</code> flag was removed) in the 2026-02-09 v0.9.x release</strong>.</p>
 <p><strong>Authoring path</strong>: UPDATE. <strong>Verified 2026-06-02</strong> against https://qwenlm.github.io/qwen-code-docs/
-(see Verification Evidence). This <strong>supersedes</strong> the prior spec (<code>last_doc_scan: never</code> / <code>2026-05-20</code>)
-which incorrectly marked hooks/skills as unsupported and agents/commands as partial — they are now all
-NATIVE in Qwen Code.</p>
+(see Verification Evidence).</p>
 <blockquote>
 <p><strong>Instruction-file truth (read carefully):</strong> Qwen Code's default context/instruction file is
 <strong><code>QWEN.md</code></strong> (hierarchically loaded), <strong>not <code>AGENTS.md</code></strong>. <code>context.fileName</code> is configurable and
@@ -1851,7 +1847,7 @@ imports.</p>
   <code>PostToolUseFailure</code>, <code>UserPromptSubmit</code>, <code>SessionStart</code>, <code>SessionEnd</code>, <code>Stop</code>, <code>StopFailure</code>,
   <code>SubagentStart</code>, <code>SubagentStop</code>, <code>PreCompact</code>, <code>PostCompact</code>, <code>Notification</code>, <code>PermissionRequest</code>.
   Supports timeouts and env vars. Because <code>command</code> hooks accept any executable, gald3r <code>g-hk-*.py</code>
-hooks wire <strong>natively</strong> via <code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved;
+  hooks wire <strong>natively</strong> via <code>python &lt;path&gt;</code> (no PowerShell involved;
   SessionStart context injection, PreToolUse <code>.gald3r/</code> guards, pre-commit gates, etc.).</li>
 <li>Source: https://qwenlm.github.io/qwen-code-docs/en/users/features/hooks/</li>
 </ul>
@@ -1914,7 +1910,7 @@ commands/agents/skills trees and a <code>.qwen/settings.json</code> carrying hoo
 <li><strong>Event payload format</strong>: JSON via stdin/stdout; hook types <code>command</code> (shell/bash/PowerShell) or
   <code>http</code> (POST); per-event <code>matcher</code> regex, timeouts, env vars</li>
 <li><strong>Command extensions</strong>: any shell, including <strong>PowerShell</strong> — so gald3r <code>g-hk-*.py</code> wire natively
-via <code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved)</li>
+  via <code>python &lt;path&gt;</code> (no PowerShell involved)</li>
 <li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> fire via the events above (SessionStart injection, PreToolUse
   <code>.gald3r/</code> guards, pre-commit/pre-push gates)</li>
 </ul>
@@ -1933,7 +1929,7 @@ via <code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved)
 <ul>
 <li>Ship a <code>QWEN.md</code> overlay that <code>@AGENTS.md</code>-imports the gald3r instruction set; install commands,
   subagents, and <code>SKILL.md</code> skills under <code>.qwen/</code>.</li>
-<li>Hooks fire natively (<code>python &lt;path&gt;</code>, post- Python port; no PowerShell involved); no need to degrade session-start/pre-commit to manual.</li>
+<li>Hooks fire natively (<code>python &lt;path&gt;</code>, no PowerShell involved); no need to degrade session-start/pre-commit to manual.</li>
 <li>Because Qwen tracks Gemini CLI, re-check upstream additions on the next
   <code>@g-platform-scan-docs qwen</code> (crawl_max_age_days: 14).</li>
 </ul>

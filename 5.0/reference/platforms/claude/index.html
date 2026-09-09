@@ -1875,9 +1875,9 @@ policy paths per OS). It loads at the start of <strong>every</strong> session as
   (via <code>PostToolUse</code>/<code>Stop</code>), and file-watch (<code>FileChanged</code>). <code>InstructionsLoaded</code> logs which
   instruction files loaded.</li>
 <li><strong>gald3r wiring</strong>: <code>g-hk-*.py</code> invoked via <code>{ "type": "command", "command": "python &lt;path&gt;" }</code>
-(post- Python port; no PowerShell involved) under the matching PascalCase event in <code>settings.json</code>. SessionStart
+  (a Python port; no PowerShell involved) under the matching PascalCase event in <code>settings.json</code>. SessionStart
   context injection, <code>PreToolUse</code> <code>.gald3r/</code> guards, and <code>Stop</code>/<code>PostToolUse</code> gates all wire natively.
-<strong>On Windows the command MUST be <code>pythonw &lt;path&gt;</code>, not <code>python &lt;path&gt;</code></strong>: <code>python.exe</code>
+  <strong>On Windows the command MUST be <code>pythonw &lt;path&gt;</code>, not <code>python &lt;path&gt;</code></strong>: <code>python.exe</code>
   is a console-subsystem binary, so every hook fire pops a visible, focus-stealing console window —
   a busy session fires the Stop chain (12 hooks) per turn plus 3-4 PreToolUse/PostToolUse hooks per
   tool call, which rendered the desktop unusable. <code>pythonw.exe</code> never allocates a console; hook
@@ -1964,7 +1964,7 @@ shimming, and Plugins + Agent SDK + Routines + Channels extend well beyond the C
   <code>{ "type": "command", "command": "..." }</code> (also <code>http</code> / LLM-prompt hook types)</li>
 <li><strong>Blocking</strong>: <code>PreToolUse</code> can block a tool call</li>
 <li><strong>gald3r hook files</strong>: <code>g-hk-*.py</code> wire natively under the matching PascalCase event via
-<code>python &lt;path&gt;</code> (post- Python port; no PowerShell involved; migrate legacy lowercase <code>hooks.json</code> entries here)</li>
+  <code>python &lt;path&gt;</code> (a Python port; no PowerShell involved; migrate legacy lowercase <code>hooks.json</code> entries here)</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
 <ul>

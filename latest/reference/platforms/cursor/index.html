@@ -1760,7 +1760,7 @@
 </blockquote>
 <p>Cursor is the <strong>reference platform</strong> for gald3r. All gald3r primitives originate in the Cursor
 (<code>.cursor/</code>) tree and propagate to every other platform via
-<code>gald3r sync</code> / <code>gald3r platform install</code> (C-NO-PS1/ —
+<code>gald3r sync</code> / <code>gald3r platform install</code> (C-NO-PS1 —
 <code>custom_scripts/platform_parity_sync.ps1</code> never existed on disk). As of mid-2026 Cursor natively supports <strong>all six</strong> <!-- ps1-gate-allow -->
 gald3r-relevant extension primitives — custom slash commands, always-on rules (plus <code>AGENTS.md</code>),
 specialized subagents, Agent Skills (<code>SKILL.md</code>), a rich lifecycle hooks system, and MCP — each with
@@ -1856,8 +1856,8 @@ gitignored (see <code>g-rl-02</code> protected files).</p>
 <li>gald3r <code>g-hk-*.py</code> hooks wire natively via these events (e.g. <code>g-hk-session-start.py</code> →
   <code>sessionStart</code>; <code>g-hk-validate-shell.py</code> → <code>beforeShellExecution</code>; <code>g-hk-pre-tool-call-*.py</code> →
   <code>preToolUse</code>; session-end hooks → <code>stop</code>). Each entry: <code>command</code> (Python invocation, <code>python
-&lt;path&gt;</code> -- post- Python port; no PowerShell involved), optional <code>matcher</code> (regex over tool
-names), optional <code>_hook_md</code> (companion doc).</li>
+  &lt;path&gt;</code>; no PowerShell involved), optional <code>matcher</code> (regex over tool
+  names), optional <code>_hook_md</code> (companion doc).</li>
 <li>Source: https://cursor.com/docs/hooks</li>
 </ul>
 <h2 id="7-rules-memory-native">7. Rules / Memory — ✅ NATIVE<a class="headerlink" href="#7-rules-memory-native" title="Permanent link">&para;</a></h2>
@@ -1919,12 +1919,9 @@ Cursor without a separate port</strong>. (Unlike Auggie, Cursor's primary instru
   (<code>beforeTabFileRead</code>/<code>afterTabFileEdit</code>), <code>workspaceOpen</code></li>
 <li><strong>Event payload format</strong>: JSON over stdio in <strong>both directions</strong> (hooks observe/block/modify; return
   the standard <code>{ continue = true }</code> envelope or block via exit code / verdict)</li>
-<li>
-<p><strong>Command extensions</strong>: Python invocation (<code>python &lt;path&gt;</code> -- post- Python port; no
-  PowerShell involved), optional <code>matcher</code> regex over tool names; <code>_hook_md</code> companion-doc path</p>
-</li>
-<li>
-<p><strong>gald3r hook files</strong> (/ refresh, cross-checked against <code>neutral_source/hooks/g_hk_core.py</code>'s
+<li><strong>Command extensions</strong>: Python invocation (<code>python &lt;path&gt;</code>; no
+  PowerShell involved), optional <code>matcher</code> regex over tool names; <code>_hook_md</code> companion-doc path</li>
+<li><strong>gald3r hook files</strong> (cross-checked against <code>neutral_source/hooks/g_hk_core.py</code>'s
   <code>CONCERN_CHAIN</code> and this repo's own real <code>.claude/settings.json</code> / <code>.cursor/hooks.json</code>): <code>g-hk-session-start.py</code>,
   <code>g-hk-pre-session-trace.py</code>, <code>g-hk-vault-resolve.py</code>, <code>g-hk-vault-migrate.py</code> (<code>--if-diverged</code>),
   <code>g-hk-agent-worktree-janitor.py</code> (<code>-EventName SessionStart</code>) (sessionStart); <code>g-hk-agent-complete.py</code>,
@@ -1934,16 +1931,14 @@ Cursor without a separate port</strong>. (Unlike Auggie, Cursor's primary instru
   <code>g-hk-vault-reindex.py</code>, <code>g-hk-agent-worktree-janitor.py</code> (<code>-EventName Stop</code>) (stop);
   <code>g-hk-validate-shell.py</code> (beforeShellExecution); <code>g-hk-pre-tool-call.py</code>,
   <code>g-hk-pre-tool-call-gald3r-guard.py</code>, <code>g-hk-pre-tool-call-prd-freeze.py</code>,
-  <code>g-hk-pre-tool-call-member-gald3r-guard.py</code> (preToolUse corrected
-  <code>g-hk-pre-tool-call.py</code> from a mis-documented <code>beforeShellExecution</code> entry: its own
+  <code>g-hk-pre-tool-call-member-gald3r-guard.py</code> (preToolUse — its own
   docstring/payload contract reads an already-executed tool's output and returns
   <code>additional_context</code>, which only <code>preToolUse</code> supports); <code>g-hk-on-tool-end.py</code> (postToolUse);
   <code>g-hk-on-user-prompt-submit.py</code> (beforeSubmitPrompt). Two further <code>CONCERN_CHAIN</code> members are
   <strong>not</strong> direct <code>hooks.json</code> entries today, honestly noted rather than overclaimed: <code>g-hk-policy-check.py</code>
   (tool-start concern) is unwired pending a future canonical-core fan-out; <code>g-hk-tel-tap.py</code>
   (tool-end/stop concern) fires indirectly via <code>g-hk-on-tool-end.py</code>'s canonical dispatch rather
-  than its own registration.</p>
-</li>
+  than its own registration.</li>
 </ul>
 <h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1955,7 +1950,7 @@ Cursor without a separate port</strong>. (Unlike Auggie, Cursor's primary instru
   comes from <code>.cursor/rules/*.mdc</code> (<code>alwaysApply: true</code>).</li>
 <li>Cross-tool discovery: <code>.claude/agents/</code> + <code>.codex/agents/</code> (subagents) and <code>.agents/skills/</code>
   (skills) are read directly — prefer reusing them.</li>
-<li>Hook execution: Python (<code>python &lt;path&gt;</code>, post- port) -- cross-platform by construction, no
+<li>Hook execution: Python (<code>python &lt;path&gt;</code>) -- cross-platform by construction, no
   PowerShell involved. Enterprise hook path on Windows is <code>C:\ProgramData\Cursor\hooks.json</code>.</li>
 <li>MCP may be configured via <code>.cursor/mcp.json</code>, <code>~/.cursor/mcp.json</code>, or Cursor settings; concrete
   server set is per-machine.</li>
@@ -1966,7 +1961,7 @@ Cursor without a separate port</strong>. (Unlike Auggie, Cursor's primary instru
   other platforms mirror. There are no "gaps vs another platform."</li>
 <li>Ship gald3r's <code>AGENTS.md</code> + <code>.cursor/</code> tree; Cursor also discovers <code>.claude/agents/</code> +
   <code>.codex/agents/</code> + <code>.agents/skills/</code> so Claude-format agent/skill artifacts are reused as-is.</li>
-<li>Hooks fire natively (<code>.py</code> scripts via <code>python &lt;path&gt;</code>, post- port); session-start / pre-commit /
+<li>Hooks fire natively (<code>.py</code> scripts via <code>python &lt;path&gt;</code>); session-start / pre-commit /
   pre-tool guards wire without degrading to manual.</li>
 <li>Re-verify on the next <code>@g-platform-scan-docs cursor</code> (crawl_max_age_days: 7) against
   https://cursor.com/docs — watch for new hook events and Rules/Memories changes.</li>
