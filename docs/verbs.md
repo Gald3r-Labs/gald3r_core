@@ -73,6 +73,7 @@ from an older binary version, both point you at it by name.
 | `gald3r subsystem` | Validate and regenerate the project's subsystem hierarchy. |
 | `gald3r prd` | Keep a formal, sign-off-ready spec for a feature — Product Requirements Docs that stay frozen once released, with a clean revision trail when they need to change. |
 | `gald3r constraint` | Declare and enforce ad-hoc, per-project rules on agent writes. |
+| `gald3r commandment` | Manage numbered project guiding principles with `list`/`add`/`update`/`delete`/`ratify`. `add --proposed` marks a proposal; `ratify NUMBER` clears that marker after owner approval. |
 | `gald3r decision` | Record a binding call once and stop re-litigating it — decisions are append-only, so changing your mind mints a new, chain-linked decision (`supersede`) rather than editing or deleting the old ruling. |
 | `gald3r dependency-graph` | See what's blocking what — a visual map of task dependencies, the critical path, and which blocked tasks are stuck waiting. |
 | `gald3r medic` | Diagnose and repair problems in your project's gald3r setup — broken links, stale indexes, drifted files — fixing what's safe to fix automatically. `medic heal --heal board-ingest-drift` WARNs on files-without-rows and fat indexes; diagnose-only even with `--apply` (no silent layout-migrate, BUG-947). |
@@ -116,6 +117,7 @@ from an older binary version, both point you at it by name.
 | `gald3r context` | See exactly how much of your context window an agent is actually using, measured from its session transcript — never a guess. Reports "unmeasured" honestly instead of fabricating a number when it can't tell. |
 | `gald3r errors` / `gald3r trace` | Aggregate error/failure/warning trace records across every task. |
 | `gald3r crash-stats` | See which of your Commands, Rules, Agents, Skills, and Hooks are actually firing during real sessions — not just installed, but used. |
+| `gald3r momentum report` | Summarize commit history by author and bugfix/tech-debt/net-new category over a configurable date window (last seven days by default). Outputs Markdown or `--json`, with optional `--out FILE`; the Momentum Board UI is still planned. |
 | `gald3r parity-audit` | Compare the live gald3r CLI's verb tree against the legacy gald3r-agent reference verb set — a migration-completeness check, not a day-to-day command. |
 | `gald3r graph explore TARGET` | One-call view of the code graph: a file's or symbol's declarations, direct callers/callees, transitive blast radius, and (by default) its own source content — all in one call. Source is fetched byte-identically to `gald3r`'s own Read tool (T837 pillar 5, task1117). |
 | `gald3r graph impact TARGET` | Transitive blast radius only: every file that would be affected if TARGET changed — what breaks if you change it. |
@@ -133,8 +135,10 @@ from an older binary version, both point you at it by name.
 |---|---|
 | `gald3r init-providers` | Get set up to use local LLMs (Ollama, LM Studio, vLLM, llama.cpp) — auto-detects what's installed and writes the config for you. Full guide: [`providers.md`](./providers.md). |
 | `gald3r providers` | List, add/remove/edit providers and models in `providers.yaml` without hand-editing YAML, validate the whole file, and store API keys securely in your OS's keyring. |
+| `gald3r resource-controller` | Issue, list, and revoke local resource/provider lease records (`lease issue/list/revoke`) with configurable model, spend, and expiry limits; inspect their audit history with `audit list`. This command group does not yet include credential management. |
 | `gald3r local-model` | Find out which local LLM your hardware can actually run well, and get the exact command to serve it. |
 | `gald3r config` | Show or change your gald3r configuration — default provider/model, personal preferences, and platform install defaults (`get`/`set`/`show`). |
+| `gald3r languages pack` | List, validate, add, or remove editor language packs in user or project scope. `publish` packages a valid pack into a local ZIP but currently refuses remote catalog publication; it does not upload the pack. |
 | `gald3r profile` | See or change your personal display preferences for this gald3r install (voice/tone and similar settings). |
 | `gald3r user-profile` | Manage your global and per-project gald3r identity/preferences profile. |
 | `gald3r pers` | Give your agent a distinct voice and style — switch between personality packs, or customize your own. |
@@ -159,6 +163,7 @@ across your machines and your team.
 |---|---|
 | `gald3r valk` | Let your projects and agents talk to each other — and to you — while they work. Ask another project a question and get a grounded, cited answer from its real context; message a running swarm without interrupting it; keep state in sync across machines and teammates. |
 | `gald3r workspace` | Coordinate work across multiple related projects — read incoming requests from linked repos, check what's safe to touch before a multi-repo change, and keep member repos in the expected shape. |
+| `gald3r wpac mark MESSAGE_ID --status STATUS` | Short form of `gald3r workspace inbox mark`: durably update an inbox message's status, with optional `--note` and `--source` for an ambiguous ID. Only `mark` is mounted under `wpac`; use `workspace inbox` for the other inbox operations. |
 | `gald3r connect` | Link a provider account with a device code, like signing into a streaming app on a TV (this is the world_tree device-code sign-in itself — for a third-party AI provider, use `gald3r providers add`/`set-key` instead). See [`providers.md`](./providers.md) for real, current output. |
 | `gald3r login` / `gald3r logout` | Sign in or out of your gald3r account so team and multi-device features work — `login` opens a device-code flow by default (visit a URL, enter a short code); pass `--token` for CI/power-user use. |
 | `gald3r auth reconcile` | World_tree identity maintenance — supersede this project's locally-generated user id with world_tree's official one, once you're properly signed in. |
@@ -171,7 +176,9 @@ across your machines and your team.
 | `gald3r ship` | Ship a release: bump version, promote CHANGELOG, tag, update badge. |
 | `gald3r push-gate` | Catch a missing CHANGELOG entry or version bump before a release push goes out, not after. |
 | `gald3r release` | Push a built release out to a remote destination, and let your team know it went out. |
+| `gald3r web-sync` | Compare the local gald3r_web release data with published entries in the source checkout's CHANGELOG. `status` and `plan` are read-only; bare `web-sync` runs `plan`. `apply` edits the web working tree only, refusing a dirty tree; it never commits, pushes, or deploys. |
 | `gald3r template` | Get ready-made CI/release config files (GitHub Actions, release-please, ...) written into your project instead of writing them by hand. |
+| `gald3r repo protect` | Preview a GitHub branch ruleset derived from this project's CI job names. Requires an authenticated `gh` CLI even for preview; GitHub writes require `--apply` plus confirmation (or `--yes` for a scripted run). |
 | `gald3r shutdown` | Safely stop persistent gald3r MCP, Valkyrie, and autopilot processes before an in-place binary upgrade — especially on Windows, where a running process can lock the binary (`--dry-run` previews without signalling anything; `--force` kills stragglers left after the graceful `--wait` window). See [Install → Stop the local fleet](./install.md#stop-the-local-fleet-before-replacing-files). |
 | `gald3r install update` | Download, verify, and install the latest signed gald3r_core release, replacing whatever `gald3r` currently resolves to on `PATH`. |
 | `gald3r install throne` | Download, verify, and stage the signed Gald3r Throne desktop app from its own GitHub Releases. |
