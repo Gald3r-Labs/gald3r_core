@@ -1742,6 +1742,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-backlog-consolidate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /g-backlog-consolidate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#g-backlog-curate" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4213,11 +4224,12 @@
 <p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>gald3r_platforms/assets/neutral_source/commands/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>go run -tags gald3r_maintainer ./gald3r_cli/cmd/gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>Commands are the slash-command layer of CRASH -- what you actually type in an AI IDE (<code>/g-&lt;name&gt;</code> in Claude Code, <code>@g-&lt;name&gt;</code> in Cursor and most of the rest of the supported roster) to dispatch a piece of gald3r's workflow. Every command below is a thin, generated dispatcher onto a skill; the description, arguments, and grouping come straight from that command's own frontmatter -- nothing here is hand-guessed.</p>
-<p><strong>223 commands total.</strong></p>
+<p><strong>224 commands total.</strong></p>
 <h2 id="browse-by-category">Browse by category<a class="headerlink" href="#browse-by-category" title="Permanent link">&para;</a></h2>
 <h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
 <p><em>Creating, updating, and tracking work in .gald3r/tasks/.</em></p>
 <ul>
+<li><a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a> -- Group related backlog commitments by subsystem and propose traceable consolidations, without false completion credit.</li>
 <li><a href="#g-backlog-curate"><code>/g-backlog-curate</code></a> -- Walk the live backlog against shipped code and propose dispositions (never auto-cancels).</li>
 <li><a href="#g-carver-matrix"><code>/g-carver-matrix</code></a> -- CARVER weighted prioritization matrix (alias for g-cm): score items on Criticality, Accessibility, Recuperability, Vulnerability, Effect, Recognizability.</li>
 <li><a href="#g-cm"><code>/g-cm</code></a> -- CARVER weighted prioritization matrix: score items on Criticality, Accessibility, Recuperability, Vulnerability, Effect, Recognizability.</li>
@@ -4502,6 +4514,21 @@
 <p><strong>Related:</strong> <a href="#g-gilf"><code>/g-gilf</code></a>, <a href="#g-gilfoyle"><code>/g-gilfoyle</code></a>, <a href="#g-go-status"><code>/g-go-status</code></a>, <a href="#g-go-xreview"><code>/g-go-xreview</code></a>, <a href="#g-ipb"><code>/g-ipb</code></a>, <a href="#g-marketing-audit"><code>/g-marketing-audit</code></a>, <a href="#g-marketing-content"><code>/g-marketing-content</code></a>, <a href="#g-marketing-geo"><code>/g-marketing-geo</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-agent-hire.md</code></p>
 <hr />
+<h3 id="g-backlog-consolidate"><code>/g-backlog-consolidate</code><a class="headerlink" href="#g-backlog-consolidate" title="Permanent link">&para;</a></h3>
+<p><strong>Command ID:</strong> <code>g-backlog-consolidate</code><br />
+<strong>Group:</strong> Tasks</p>
+<p><strong>Purpose:</strong> Group related backlog commitments by subsystem and propose traceable consolidations, without false completion credit.</p>
+<p><strong>When to use:</strong> Reach for this when you need to group related backlog commitments by subsystem and propose traceable consolidations, without false completion credit.</p>
+<p><strong>Arguments:</strong> <code>[subsystem or named task/bug IDs]</code></p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Claude Code:</strong> <code>/g-backlog-consolidate</code></li>
+<li><strong>Cursor:</strong> <code>@g-backlog-consolidate</code></li>
+</ul>
+<p><strong>Execution tier:</strong> guarded_prompt  </p>
+<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-backlog-consolidate.md</code></p>
+<hr />
 <h3 id="g-backlog-curate"><code>/g-backlog-curate</code><a class="headerlink" href="#g-backlog-curate" title="Permanent link">&para;</a></h3>
 <p><strong>Command ID:</strong> <code>g-backlog-curate</code><br />
 <strong>Group:</strong> Tasks</p>
@@ -4514,7 +4541,7 @@
 <li><strong>Cursor:</strong> <code>@g-backlog-curate</code></li>
 </ul>
 <p><strong>Execution tier:</strong> guarded_prompt  </p>
-<p><strong>Related:</strong> <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a>, <a href="#g-go-review-swarm"><code>/g-go-review-swarm</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-backlog-curate.md</code></p>
 <hr />
 <h3 id="g-bug-add"><code>/g-bug-add</code><a class="headerlink" href="#g-bug-add" title="Permanent link">&para;</a></h3>
@@ -4664,7 +4691,7 @@
 <li><strong>Cursor:</strong> <code>@g-carver-matrix</code></li>
 </ul>
 <p><strong>Execution tier:</strong> prompt_only  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a>, <a href="#g-go-review-swarm"><code>/g-go-review-swarm</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-carver-matrix.md</code></p>
 <hr />
 <h3 id="g-cleanup"><code>/g-cleanup</code><a class="headerlink" href="#g-cleanup" title="Permanent link">&para;</a></h3>
@@ -4754,7 +4781,7 @@
 <li><strong>Cursor:</strong> <code>@g-cm</code></li>
 </ul>
 <p><strong>Execution tier:</strong> prompt_only  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a>, <a href="#g-go-review-swarm"><code>/g-go-review-swarm</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-cm.md</code></p>
 <hr />
 <h3 id="g-code-review"><code>/g-code-review</code><a class="headerlink" href="#g-code-review" title="Permanent link">&para;</a></h3>
@@ -5279,7 +5306,7 @@
 <li><strong>Cursor:</strong> <code>@g-go</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a>, <a href="#g-go-review-swarm"><code>/g-go-review-swarm</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-go.md</code></p>
 <hr />
 <h3 id="g-go-bug"><code>/g-go-bug</code><a class="headerlink" href="#g-go-bug" title="Permanent link">&para;</a></h3>
@@ -5339,7 +5366,7 @@
 <li><strong>Cursor:</strong> <code>@g-go-code</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a>, <a href="#g-go-review-swarm"><code>/g-go-review-swarm</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-go-code.md</code></p>
 <hr />
 <h3 id="g-go-code-swarm"><code>/g-go-code-swarm</code><a class="headerlink" href="#g-go-code-swarm" title="Permanent link">&para;</a></h3>
@@ -5354,7 +5381,7 @@
 <li><strong>Cursor:</strong> <code>@g-go-code-swarm</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a>, <a href="#g-go-review-swarm"><code>/g-go-review-swarm</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-go-code-swarm.md</code></p>
 <hr />
 <h3 id="g-go-go"><code>/g-go-go</code><a class="headerlink" href="#g-go-go" title="Permanent link">&para;</a></h3>
@@ -5369,7 +5396,7 @@
 <li><strong>Cursor:</strong> <code>@g-go-go</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a>, <a href="#g-go-review-swarm"><code>/g-go-review-swarm</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-go-go.md</code></p>
 <hr />
 <h3 id="g-go-review"><code>/g-go-review</code><a class="headerlink" href="#g-go-review" title="Permanent link">&para;</a></h3>
@@ -5384,7 +5411,7 @@
 <li><strong>Cursor:</strong> <code>@g-go-review</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review-swarm"><code>/g-go-review-swarm</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-go-review.md</code></p>
 <hr />
 <h3 id="g-go-review-swarm"><code>/g-go-review-swarm</code><a class="headerlink" href="#g-go-review-swarm" title="Permanent link">&para;</a></h3>
@@ -5399,7 +5426,7 @@
 <li><strong>Cursor:</strong> <code>@g-go-review-swarm</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-go-review-swarm.md</code></p>
 <hr />
 <h3 id="g-go-status"><code>/g-go-status</code><a class="headerlink" href="#g-go-status" title="Permanent link">&para;</a></h3>
@@ -5429,7 +5456,7 @@
 <li><strong>Cursor:</strong> <code>@g-go-swarm</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-go-swarm.md</code></p>
 <hr />
 <h3 id="g-go-xreview"><code>/g-go-xreview</code><a class="headerlink" href="#g-go-xreview" title="Permanent link">&para;</a></h3>
@@ -5489,7 +5516,7 @@
 <li><strong>Cursor:</strong> <code>@g-grooming</code></li>
 </ul>
 <p><strong>Execution tier:</strong> guarded_prompt  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-grooming.md</code></p>
 <hr />
 <h3 id="g-gw"><code>/g-gw</code><a class="headerlink" href="#g-gw" title="Permanent link">&para;</a></h3>
@@ -5654,7 +5681,7 @@
 <li><strong>Cursor:</strong> <code>@g-juggernaut</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-juggernaut.md</code></p>
 <hr />
 <h3 id="g-kamikaze"><code>/g-kamikaze</code><a class="headerlink" href="#g-kamikaze" title="Permanent link">&para;</a></h3>
@@ -5669,7 +5696,7 @@
 <li><strong>Cursor:</strong> <code>@g-kamikaze</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-kamikaze.md</code></p>
 <hr />
 <h3 id="g-keep-it-simple"><code>/g-keep-it-simple</code><a class="headerlink" href="#g-keep-it-simple" title="Permanent link">&para;</a></h3>
@@ -5984,7 +6011,7 @@
 <li><strong>Cursor:</strong> <code>@g-mission</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-mission.md</code></p>
 <hr />
 <h3 id="g-ooda"><code>/g-ooda</code><a class="headerlink" href="#g-ooda" title="Permanent link">&para;</a></h3>
@@ -6269,7 +6296,7 @@
 <li><strong>Cursor:</strong> <code>@g-propose</code></li>
 </ul>
 <p><strong>Execution tier:</strong> guarded_prompt  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-propose.md</code></p>
 <hr />
 <h3 id="g-pt"><code>/g-pt</code><a class="headerlink" href="#g-pt" title="Permanent link">&para;</a></h3>
@@ -6284,7 +6311,7 @@
 <li><strong>Cursor:</strong> <code>@g-pt</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-pt.md</code></p>
 <hr />
 <h3 id="g-qa"><code>/g-qa</code><a class="headerlink" href="#g-qa" title="Permanent link">&para;</a></h3>
@@ -6314,7 +6341,7 @@
 <li><strong>Cursor:</strong> <code>@g-queue</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-queue.md</code></p>
 <hr />
 <h3 id="g-recon-docs"><code>/g-recon-docs</code><a class="headerlink" href="#g-recon-docs" title="Permanent link">&para;</a></h3>
@@ -6494,7 +6521,7 @@
 <li><strong>Cursor:</strong> <code>@g-report</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-report.md</code></p>
 <hr />
 <h3 id="g-res-apply"><code>/g-res-apply</code><a class="headerlink" href="#g-res-apply" title="Permanent link">&para;</a></h3>
@@ -6584,7 +6611,7 @@
 <li><strong>Cursor:</strong> <code>@g-sesh-goal-add</code></li>
 </ul>
 <p><strong>Execution tier:</strong> prompt_only  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-sesh-goal-add.md</code></p>
 <hr />
 <h3 id="g-sesh-goal-rem"><code>/g-sesh-goal-rem</code><a class="headerlink" href="#g-sesh-goal-rem" title="Permanent link">&para;</a></h3>
@@ -6599,7 +6626,7 @@
 <li><strong>Cursor:</strong> <code>@g-sesh-goal-rem</code></li>
 </ul>
 <p><strong>Execution tier:</strong> prompt_only  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-sesh-goal-rem.md</code></p>
 <hr />
 <h3 id="g-setup"><code>/g-setup</code><a class="headerlink" href="#g-setup" title="Permanent link">&para;</a></h3>
@@ -6749,7 +6776,7 @@
 <li><strong>Cursor:</strong> <code>@g-steer</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-steer.md</code></p>
 <hr />
 <h3 id="g-stz"><code>/g-stz</code><a class="headerlink" href="#g-stz" title="Permanent link">&para;</a></h3>
@@ -6899,7 +6926,7 @@
 <li><strong>Cursor:</strong> <code>@g-task-add</code></li>
 </ul>
 <p><strong>Execution tier:</strong> guarded_prompt  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-task-add.md</code></p>
 <hr />
 <h3 id="g-task-archive"><code>/g-task-archive</code><a class="headerlink" href="#g-task-archive" title="Permanent link">&para;</a></h3>
@@ -6914,7 +6941,7 @@
 <li><strong>Cursor:</strong> <code>@g-task-archive</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-task-archive.md</code></p>
 <hr />
 <h3 id="g-task-del"><code>/g-task-del</code><a class="headerlink" href="#g-task-del" title="Permanent link">&para;</a></h3>
@@ -6929,7 +6956,7 @@
 <li><strong>Cursor:</strong> <code>@g-task-del</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-task-del.md</code></p>
 <hr />
 <h3 id="g-task-new"><code>/g-task-new</code><a class="headerlink" href="#g-task-new" title="Permanent link">&para;</a></h3>
@@ -6944,7 +6971,7 @@
 <li><strong>Cursor:</strong> <code>@g-task-new</code></li>
 </ul>
 <p><strong>Execution tier:</strong> guarded_prompt  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-task-new.md</code></p>
 <hr />
 <h3 id="g-task-sync-check"><code>/g-task-sync-check</code><a class="headerlink" href="#g-task-sync-check" title="Permanent link">&para;</a></h3>
@@ -6959,7 +6986,7 @@
 <li><strong>Cursor:</strong> <code>@g-task-sync-check</code></li>
 </ul>
 <p><strong>Execution tier:</strong> orchestration  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-task-sync-check.md</code></p>
 <hr />
 <h3 id="g-task-upd"><code>/g-task-upd</code><a class="headerlink" href="#g-task-upd" title="Permanent link">&para;</a></h3>
@@ -6974,7 +7001,7 @@
 <li><strong>Cursor:</strong> <code>@g-task-upd</code></li>
 </ul>
 <p><strong>Execution tier:</strong> guarded_prompt  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-task-upd.md</code></p>
 <hr />
 <h3 id="g-task-update"><code>/g-task-update</code><a class="headerlink" href="#g-task-update" title="Permanent link">&para;</a></h3>
@@ -6989,7 +7016,7 @@
 <li><strong>Cursor:</strong> <code>@g-task-update</code></li>
 </ul>
 <p><strong>Execution tier:</strong> guarded_prompt  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-task-update.md</code></p>
 <hr />
 <h3 id="g-test"><code>/g-test</code><a class="headerlink" href="#g-test" title="Permanent link">&para;</a></h3>
@@ -7394,7 +7421,7 @@
 <li><strong>Cursor:</strong> <code>@g-wishlist-mine</code></li>
 </ul>
 <p><strong>Execution tier:</strong> guarded_prompt  </p>
-<p><strong>Related:</strong> <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a>, <a href="#g-go-review"><code>/g-go-review</code></a></p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-wishlist-mine.md</code></p>
 <hr />
 <h3 id="g-workflow"><code>/g-workflow</code><a class="headerlink" href="#g-workflow" title="Permanent link">&para;</a></h3>

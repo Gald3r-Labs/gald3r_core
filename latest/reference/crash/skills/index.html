@@ -3597,12 +3597,12 @@
 <p><strong>Skill ID:</strong> <code>g-skl-backlog-curate</code><br />
 <strong>Group:</strong> Tasks</p>
 <p><strong>Purpose:</strong> Thorough backlog-vs-code curation.</p>
-<p><strong>When to use:</strong> This skill is relevant when you need to thorough backlog-vs-code curation. Walks live tasks/bugs against shipped code and proposes dispositions (complete-as-shipped, close-out-only, cancel-competes, leave-open, needs-owner). Never auto-cancels.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to thorough backlog-vs-code curation. Walks live tasks/bugs against shipped code and proposes dispositions (complete-as-shipped, close-out-only, consolidated, superseded, leave-open, needs-owner). Groups commitments by subsystem into reviewed successors. Never auto-cancels or auto-applies.</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
-<li><strong>Claude Code:</strong> <code>/g-backlog-curate</code></li>
-<li><strong>Cursor:</strong> <code>@g-backlog-curate</code></li>
+<li><strong>Claude Code:</strong> <code>/g-backlog-consolidate (also: /g-backlog-curate)</code></li>
+<li><strong>Cursor:</strong> <code>@g-backlog-consolidate</code></li>
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> high  </p>

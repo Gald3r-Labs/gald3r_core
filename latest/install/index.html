@@ -2294,7 +2294,7 @@ Missing Python, unresolved engines, and stale or customized resolver files
 produce a warning. Refresh/reconcile the overlay before testing an actual
 event in its intended host; an already-running IDE may retain an older PATH.</p>
 <h2 id="upgrading-an-existing-install">Upgrading an existing install<a class="headerlink" href="#upgrading-an-existing-install" title="Permanent link">&para;</a></h2>
-<pre><code>gald3r install update    # replace the PATH binary with the latest signed release
+<pre><code>gald3r install update    # verify the release and refresh changed Core/companion files
 gald3r version-check     # find out if a newer gald3r is available -- works offline
 </code></pre>
 <h3 id="stop-the-local-fleet-before-replacing-files">Stop the local fleet before replacing files<a class="headerlink" href="#stop-the-local-fleet-before-replacing-files" title="Permanent link">&para;</a></h3>
@@ -2305,6 +2305,37 @@ its cooperative shutdown:</p>
 gald3r shutdown --wait 30
 gald3r install update
 </code></pre>
+<p>Starting with 5.0.56, <code>install update</code> requests graceful shutdown of identified
+sessions in the target installation after verifying the downloaded archive and
+before replacing files. It also recycles sessions on an identical-version update,
+because a previous file replacement may have left old code running. It reports
+each shutdown outcome and aborts replacement if a targeted process survives or
+respawns. Use
+<code>--stop-running=false</code> to keep sessions running, or <code>--force-stop-running</code> to
+explicitly authorize terminating sessions that do not exit gracefully.
+Other installations and the updater's ancestor processes are excluded from stopping.</p>
+<p>Stopped project residents (<code>project-agent serve</code>) restart automatically after the
+whole binary bundle installs successfully, using their captured executable and
+arguments. Launches remain hidden and success requires a fresh resident health
+check. Use <code>--restart-running=false</code> to keep them stopped. Failed or partial binary
+installation leaves services stopped and reports the failure.</p>
+<p><code>gald3r upgrade-project</code> also stops identified services for the selected project
+after its backup succeeds and before changing project files, then restarts project
+residents after successful changes. It supports the same <code>--stop-running</code>,
+<code>--force-stop-running</code>, and <code>--restart-running</code> options. Its dry-run never stops
+or launches services. It does not download binaries: run <code>install update</code> first
+when upgrading the application itself.</p>
+<p>Stdio MCP bridges belong to their editor/agent host and cannot be relaunched as
+detached processes with working connections. The command reports that those
+hosts must reconnect. Autonomous task loops and other session types also require
+explicit manual restart; the upgrader does not replay their work.</p>
+<p>Identical file contents report <strong>already up to date</strong> without replacement or a new
+backup. The archive is still downloaded and verified so damaged files and stale
+companions can be repaired even when their version labels match. Existing sessions
+may retain old code after a file replacement; new invocations use the installed
+binary. Locked old backups are retained safely, with cleanup retried on a later
+update, including an already-current update. This command updates Core and its
+installed companions; it does not update the complete desktop suite.</p>
 <p><code>shutdown</code> identifies executable shims and resident MCP, Valkyrie, and autopilot processes from
 their executable path and command line. It never targets the command's own shell-parent chain.
 The command waits only for the bounded <code>--wait</code> period and exits nonzero if a process remains;
