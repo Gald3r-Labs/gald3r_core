@@ -18,6 +18,7 @@ per-platform quick-start matrix.
 | Flag | What it does |
 |---|---|
 | `--dir PATH` | Explicit project root directory — skips the `.gald3r/` walk-up entirely (the directory must already contain a `.gald3r/` directory). Highest-precedence root override; accepted by every verb. A verb's own `--root`/`--project-root` flag, where one is already defined locally on that verb, still wins over `--dir` on that same command. |
+| `--report-to-parent PATH` | Worker mode: use the scoped ticket issued by the parent coordinator to report changes instead of updating authoritative task/bug state directly. The parent validates and applies the report. |
 
 ## Getting started & health
 
@@ -45,6 +46,7 @@ from an older binary version, both point you at it by name.
 | Verb | What it does |
 |---|---|
 | `gald3r task add/list/show/update/next/ready` | Track the work that needs doing — create tasks, see what's ready to pick up, and move them through to done. |
+| `gald3r board` | Coordinate managed board writes. `board managed -- task …` or `board managed -- bug …` lets the orchestrator update SQLite while deferring Markdown projections. After workers stop, `board export` writes the pending projections and indexes; it also recovers export debt after an interrupted run. Workers use their issued `--report-to-parent` ticket. |
 | `gald3r task ac-check` / `ac-status` | Tick an acceptance-criterion checkbox for a task (per-criterion attestation), or check its current checked/unchecked status. |
 | `gald3r task verify` | Record a reviewer verdict (`--pass` → completed, `--fail` → back to pending). |
 | `gald3r task stale-claims` | List in-progress tasks whose claim has expired, classify them, and resolve simple ones automatically — complex ones get a recommendation instead of a silent auto-release. |
