@@ -1909,6 +1909,10 @@ per-platform quick-start matrix.</p>
 <td><code>--dir PATH</code></td>
 <td>Explicit project root directory — skips the <code>.gald3r/</code> walk-up entirely (the directory must already contain a <code>.gald3r/</code> directory). Highest-precedence root override; accepted by every verb. A verb's own <code>--root</code>/<code>--project-root</code> flag, where one is already defined locally on that verb, still wins over <code>--dir</code> on that same command.</td>
 </tr>
+<tr>
+<td><code>--report-to-parent PATH</code></td>
+<td>Worker mode: use the scoped ticket issued by the parent coordinator to report changes instead of updating authoritative task/bug state directly. The parent validates and applies the report.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="getting-started-health">Getting started &amp; health<a class="headerlink" href="#getting-started-health" title="Permanent link">&para;</a></h2>
@@ -1979,6 +1983,10 @@ from an older binary version, both point you at it by name.</p>
 <tr>
 <td><code>gald3r task add/list/show/update/next/ready</code></td>
 <td>Track the work that needs doing — create tasks, see what's ready to pick up, and move them through to done.</td>
+</tr>
+<tr>
+<td><code>gald3r board</code></td>
+<td>Coordinate managed board writes. <code>board managed -- task …</code> or <code>board managed -- bug …</code> lets the orchestrator update SQLite while deferring Markdown projections. After workers stop, <code>board export</code> writes the pending projections and indexes; it also recovers export debt after an interrupted run. Workers use their issued <code>--report-to-parent</code> ticket.</td>
 </tr>
 <tr>
 <td><code>gald3r task ac-check</code> / <code>ac-status</code></td>

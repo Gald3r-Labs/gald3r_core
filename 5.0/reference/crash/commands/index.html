@@ -5329,7 +5329,7 @@
 <strong>Group:</strong> Bugs &amp; Quality</p>
 <p><strong>Purpose:</strong> Two-phase pipeline: reproduce and fix open bugs, then an independent reviewer agent verifies each fix</p>
 <p><strong>When to use:</strong> Reach for this when you need to two-phase pipeline: reproduce and fix open bugs, then an independent reviewer agent verifies each fix.</p>
-<p><strong>Arguments:</strong> <code>[severity:LEVEL[,LEVEL]] [bug:BUG-N[,BUG-N]] [--dry-run] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--implementer-model &lt;id&gt;] [--reviewer-model &lt;id&gt;] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
+<p><strong>Arguments:</strong> <code>[--min-severity N] [--max-severity N] [severity:LEVEL[,LEVEL]] [bug:BUG-N[,BUG-N]] [--dry-run] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--implementer-model &lt;id&gt;] [--reviewer-model &lt;id&gt;] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
 <p><strong>Example invocation:</strong></p>
 <ul>
 <li><strong>Claude Code:</strong> <code>/g-go-bugs</code></li>
@@ -5344,7 +5344,7 @@
 <strong>Group:</strong> Bugs &amp; Quality</p>
 <p><strong>Purpose:</strong> Parallel swarm variant of g-go-bugs: partitions open bugs into buckets, fixes then reviews them concurrently</p>
 <p><strong>When to use:</strong> Reach for this when you need to parallel swarm variant of g-go-bugs: partitions open bugs into buckets, fixes then reviews them concurrently.</p>
-<p><strong>Arguments:</strong> <code>[severity:LEVEL[,LEVEL]] [bug:BUG-N[,BUG-N]] [--dry-run] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--implementer-model &lt;id&gt;] [--reviewer-model &lt;id&gt;] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
+<p><strong>Arguments:</strong> <code>[--min-severity N] [--max-severity N] [severity:LEVEL[,LEVEL]] [bug:BUG-N[,BUG-N]] [--dry-run] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--implementer-model &lt;id&gt;] [--reviewer-model &lt;id&gt;] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
 <p><strong>Example invocation:</strong></p>
 <ul>
 <li><strong>Claude Code:</strong> <code>/g-go-bugs-swarm</code></li>
@@ -5359,7 +5359,7 @@
 <strong>Group:</strong> Tasks</p>
 <p><strong>Purpose:</strong> Implement queued tasks/bugs through to awaiting-verification only; never runs review itself</p>
 <p><strong>When to use:</strong> Reach for this when you need to implement queued tasks/bugs through to awaiting-verification only; never runs review itself.</p>
-<p><strong>Arguments:</strong> <code>[tasks N,M | bugs BUG-N | subsystem NAME | bugs-only] [--swarm] [--mode fast|standard] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--implementer-provider &lt;id&gt;] [--implementer-model &lt;id&gt;] [--resume T{id}] [--max-iterations N|-1] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
+<p><strong>Arguments:</strong> <code>[--min-value N] [--max-value N] [--min-severity N] [--max-severity N] [tasks N,M | bugs BUG-N | subsystem NAME | bugs-only] [--swarm] [--mode fast|standard] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--implementer-provider &lt;id&gt;] [--implementer-model &lt;id&gt;] [--resume T{id}] [--max-iterations N|-1] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] …[truncated for display -- see Source]</code></p>
 <p><strong>Example invocation:</strong></p>
 <ul>
 <li><strong>Claude Code:</strong> <code>/g-go-code</code></li>
@@ -5374,7 +5374,7 @@
 <strong>Group:</strong> Tasks</p>
 <p><strong>Purpose:</strong> Alias for g-go-code --swarm: implementation-only swarm that partitions tasks into parallel coding buckets</p>
 <p><strong>When to use:</strong> Reach for this when you need to alias for g-go-code --swarm: implementation-only swarm that partitions tasks into parallel coding buckets.</p>
-<p><strong>Arguments:</strong> <code>[tasks N,M] [bugs BUG-N] [bugs-only] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--implementer-provider &lt;id&gt;] [--implementer-model &lt;id&gt;] [--max-iterations N|-1] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
+<p><strong>Arguments:</strong> <code>[--min-value N] [--max-value N] [--min-severity N] [--max-severity N] [tasks N,M] [bugs BUG-N] [bugs-only] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--implementer-provider &lt;id&gt;] [--implementer-model &lt;id&gt;] [--max-iterations N|-1] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
 <p><strong>Example invocation:</strong></p>
 <ul>
 <li><strong>Claude Code:</strong> <code>/g-go-code-swarm</code></li>
@@ -5404,7 +5404,7 @@
 <strong>Group:</strong> Tasks</p>
 <p><strong>Purpose:</strong> Verify tasks/bugs awaiting review in a fresh session: PASS/FAIL scoring, no self-review, auto-commits verdict.</p>
 <p><strong>When to use:</strong> Reach for this when you need to verify tasks/bugs awaiting review in a fresh session: PASS/FAIL scoring, no self-review, auto-commits verdict.</p>
-<p><strong>Arguments:</strong> <code>[tasks &lt;id...&gt;] [--swarm] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--reviewer-provider &lt;id&gt;] [--reviewer-model &lt;id&gt;] [--max-iterations N|-1] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
+<p><strong>Arguments:</strong> <code>[--min-value N] [--max-value N] [--min-severity N] [--max-severity N] [tasks &lt;id...&gt;] [--swarm] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--reviewer-provider &lt;id&gt;] [--reviewer-model &lt;id&gt;] [--max-iterations N|-1] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
 <p><strong>Example invocation:</strong></p>
 <ul>
 <li><strong>Claude Code:</strong> <code>/g-go-review</code></li>
@@ -5419,7 +5419,7 @@
 <strong>Group:</strong> Tasks</p>
 <p><strong>Purpose:</strong> Run g-go-review verification in parallel across M reviewer agents on the review queue (round-robin).</p>
 <p><strong>When to use:</strong> Reach for this when you need to run g-go-review verification in parallel across M reviewer agents on the review queue (round-robin).</p>
-<p><strong>Arguments:</strong> <code>[tasks &lt;id...&gt;] [bugs &lt;BUG-id...&gt;] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--reviewer-provider &lt;id&gt;] [--reviewer-model &lt;id&gt;] [--max-iterations N|-1] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
+<p><strong>Arguments:</strong> <code>[--min-value N] [--max-value N] [--min-severity N] [--max-severity N] [tasks &lt;id...&gt;] [bugs &lt;BUG-id...&gt;] [--provider &lt;id&gt;[:&lt;model&gt;]] [--model &lt;id&gt;] [--reviewer-provider &lt;id&gt;] [--reviewer-model &lt;id&gt;] [--max-iterations N|-1] [--gauntlet] [--gauntlet-bar PATH] [--gauntlet-pieces N] [--gauntlet-concurrency N] [--gauntlet-inner-round-cap N] [--gauntlet-max-spend-usd N] [--gauntlet-iteration-cost-ceiling-usd N] [--gauntlet-wall-clock-minutes N]</code></p>
 <p><strong>Example invocation:</strong></p>
 <ul>
 <li><strong>Claude Code:</strong> <code>/g-go-review-swarm</code></li>
