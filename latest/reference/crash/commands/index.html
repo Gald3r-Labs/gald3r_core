@@ -4349,7 +4349,7 @@
 <h3 id="wpac-workspace-coordination">WPAC &amp; Workspace Coordination<a class="headerlink" href="#wpac-workspace-coordination" title="Permanent link">&para;</a></h3>
 <p><em>Cross-project topology, inbox triage, broadcasts, and Workspace-Control.</em></p>
 <ul>
-<li><a href="#g-valk-ask"><code>/g-valk-ask</code></a> -- Ask another project a grounded, cited question via Valkyrie (gald3r valk ask), queuing if offline</li>
+<li><a href="#g-valk-ask"><code>/g-valk-ask</code></a> -- Queue a peer-agent question via Valkyrie and report its delivery receipt</li>
 <li><a href="#g-valk-connect"><code>/g-valk-connect</code></a> -- Set or verify this repo's Valkyrie connector base URL and login token against world_tree</li>
 <li><a href="#g-valk-inquire"><code>/g-valk-inquire</code></a> -- Stream a grounded, cited answer from a project's context via Valkyrie SSE ask/stream route</li>
 <li><a href="#g-valk-list"><code>/g-valk-list</code></a> -- List every registered Valkyrie world_tree connector on this machine via gald3r valk list</li>
@@ -4358,7 +4358,7 @@
 <li><a href="#g-valk-status"><code>/g-valk-status</code></a> -- Check whether this project's Valkyrie world_tree connector is currently running (read-only)</li>
 <li><a href="#g-valk-stop"><code>/g-valk-stop</code></a> -- Stop the running Valkyrie world_tree connector for this project and clear its lock</li>
 <li><a href="#g-valk-sync"><code>/g-valk-sync</code></a> -- Flush every queued Valkyrie outbox entry to world_tree (reconcile-on-reconnect up-sync)</li>
-<li><a href="#g-workspace-export"><code>/g-workspace-export</code></a> -- Dry-run plan of a Workspace-Control export via g-skl-workspace EXPORT PLAN; alias for g-wrkspc-export</li>
+<li><a href="#g-workspace-export"><code>/g-workspace-export</code></a> -- Compatibility alias for reviewed Workspace-Control template export</li>
 <li><a href="#g-workspace-status"><code>/g-workspace-status</code></a> -- Show read-only Workspace-Control status via g-skl-workspace STATUS; alias for g-wrkspc-status</li>
 <li><a href="#g-workspace-sync"><code>/g-workspace-sync</code></a> -- Preview a Workspace-Control manifest sync dry-run via g-skl-workspace SYNC PLAN (alias for g-wrkspc-sync).</li>
 <li><a href="#g-workspace-validate"><code>/g-workspace-validate</code></a> -- Validate the Workspace-Control manifest and task/bug routing metadata via g-skl-workspace VALIDATE.</li>
@@ -4377,7 +4377,7 @@
 <li><a href="#g-wpac-sync"><code>/g-wpac-sync</code></a> -- Sync contract changes with sibling project(s) via WPAC INBOX using g-skl-wpac-sync (advisory only)</li>
 <li><a href="#g-wrkspc"><code>/g-wrkspc</code></a> -- Dispatch to Workspace-Control subcommands (status/validate/member-list/init/spawn/etc.) via g-skl-workspace</li>
 <li><a href="#g-wrkspc-adopt"><code>/g-wrkspc-adopt</code></a> -- Adopt an existing populated gald3r project into Workspace-Control via g-skl-workspace ADOPT</li>
-<li><a href="#g-wrkspc-export"><code>/g-wrkspc-export</code></a> -- Dry-run plan a Workspace-Control export of manifest members via g-skl-workspace EXPORT_PLAN</li>
+<li><a href="#g-wrkspc-export"><code>/g-wrkspc-export</code></a> -- Plan or explicitly apply a reviewed Workspace-Control template export</li>
 <li><a href="#g-wrkspc-init"><code>/g-wrkspc-init</code></a> -- Create or promote the Workspace-Control manifest via g-skl-workspace INIT_PLAN/INIT_APPLY</li>
 <li><a href="#g-wrkspc-member-add"><code>/g-wrkspc-member-add</code></a> -- Register a repo as a Workspace-Control manifest member via g-skl-workspace MEMBER_ADD_PLAN/APPLY</li>
 <li><a href="#g-wrkspc-member-list"><code>/g-wrkspc-member-list</code></a> -- List repositories declared in the Workspace-Control manifest via g-skl-workspace MEMBER_LIST</li>
@@ -7142,9 +7142,9 @@
 <h3 id="g-valk-ask"><code>/g-valk-ask</code><a class="headerlink" href="#g-valk-ask" title="Permanent link">&para;</a></h3>
 <p><strong>Command ID:</strong> <code>g-valk-ask</code><br />
 <strong>Group:</strong> WPAC &amp; Workspace Coordination</p>
-<p><strong>Purpose:</strong> Ask another project a grounded, cited question via Valkyrie (gald3r valk ask), queuing if offline</p>
-<p><strong>When to use:</strong> Reach for this when you need to ask another project a grounded, cited question via Valkyrie (gald3r valk ask), queuing if offline.</p>
-<p><strong>Arguments:</strong> <code>&lt;question&gt; [--project-id &lt;id&gt;] [--context-budget &lt;n&gt;] [--json]</code></p>
+<p><strong>Purpose:</strong> Queue a peer-agent question via Valkyrie and report its delivery receipt</p>
+<p><strong>When to use:</strong> Reach for this when you need to queue a peer-agent question via Valkyrie and report its delivery receipt.</p>
+<p><strong>Arguments:</strong> <code>&lt;question&gt; --project-id &lt;destination-uuid&gt; [--json]</code></p>
 <p><strong>Example invocation:</strong></p>
 <ul>
 <li><strong>Claude Code:</strong> <code>/g-valk-ask</code></li>
@@ -7442,9 +7442,9 @@
 <h3 id="g-workspace-export"><code>/g-workspace-export</code><a class="headerlink" href="#g-workspace-export" title="Permanent link">&para;</a></h3>
 <p><strong>Command ID:</strong> <code>g-workspace-export</code><br />
 <strong>Group:</strong> WPAC &amp; Workspace Coordination</p>
-<p><strong>Purpose:</strong> Dry-run plan of a Workspace-Control export via g-skl-workspace EXPORT PLAN; alias for g-wrkspc-export</p>
-<p><strong>When to use:</strong> Reach for this when you need to dry-run plan of a Workspace-Control export via g-skl-workspace EXPORT PLAN; alias for g-wrkspc-export.</p>
-<p><strong>Arguments:</strong> <code>[--dry-run]</code></p>
+<p><strong>Purpose:</strong> Compatibility alias for reviewed Workspace-Control template export</p>
+<p><strong>When to use:</strong> Reach for this when you need to compatibility alias for reviewed Workspace-Control template export.</p>
+<p><strong>Arguments:</strong> <code>[--project-root ROOT --task-file TASK --member ID] | [--apply --plan FILE]</code></p>
 <p><strong>Example invocation:</strong></p>
 <ul>
 <li><strong>Claude Code:</strong> <code>/g-workspace-export</code></li>
@@ -7727,9 +7727,9 @@
 <h3 id="g-wrkspc-export"><code>/g-wrkspc-export</code><a class="headerlink" href="#g-wrkspc-export" title="Permanent link">&para;</a></h3>
 <p><strong>Command ID:</strong> <code>g-wrkspc-export</code><br />
 <strong>Group:</strong> WPAC &amp; Workspace Coordination</p>
-<p><strong>Purpose:</strong> Dry-run plan a Workspace-Control export of manifest members via g-skl-workspace EXPORT_PLAN</p>
-<p><strong>When to use:</strong> Reach for this when you need to dry-run plan a Workspace-Control export of manifest members via g-skl-workspace EXPORT_PLAN.</p>
-<p><strong>Arguments:</strong> <code>[--dry-run]</code></p>
+<p><strong>Purpose:</strong> Plan or explicitly apply a reviewed Workspace-Control template export</p>
+<p><strong>When to use:</strong> Reach for this when you need to plan or explicitly apply a reviewed Workspace-Control template export.</p>
+<p><strong>Arguments:</strong> <code>[--project-root ROOT --task-file TASK --member ID] | [--apply --plan FILE]</code></p>
 <p><strong>Example invocation:</strong></p>
 <ul>
 <li><strong>Claude Code:</strong> <code>/g-wrkspc-export</code></li>
