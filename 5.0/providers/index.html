@@ -1490,6 +1490,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#freetoken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FreeToken
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ollama" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2189,6 +2200,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#freetoken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FreeToken
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ollama" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2815,6 +2837,13 @@ only template placeholders (<code>ollama</code>, <code>lm-studio</code>) and <co
 literal key in the file is still supported, but every <code>providers.yaml</code> load logs a warning if
 it finds one (or loose file permissions, on POSIX) — prefer <code>set-key</code> or a <code>$ENV_VAR</code> reference.</p>
 <h2 id="local-backends">Local backends<a class="headerlink" href="#local-backends" title="Permanent link">&para;</a></h2>
+<h3 id="freetoken">FreeToken<a class="headerlink" href="#freetoken" title="Permanent link">&para;</a></h3>
+<p>Gald3r includes FreeToken engine detection and serve-command support. Connect its
+running server with provider type <code>openai_compat</code>, normally at
+<code>http://localhost:1919/v1</code>, using the model ID returned by <code>/v1/models</code>.
+See the <a href="../local-ai/#freetoken">FreeToken setup and first-run guide</a>.
+Configure it explicitly: <code>init-providers</code> does not currently include FreeToken in
+its default HTTP probe list.</p>
 <p>Each recipe below: install the runtime, pull/load a model, the <code>providers.yaml</code> block, and how
 to confirm gald3r actually reaches it. <code>gald3r init-providers</code> auto-detects three of the first
 four runtimes below by <strong>probing their default port for a live, unauthenticated OpenAI-compatible

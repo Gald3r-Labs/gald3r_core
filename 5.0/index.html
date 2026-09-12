@@ -1786,11 +1786,14 @@ per-OS quick start.</p>
 </blockquote>
 <h2 id="what-is-gald3r">What is gald3r?<a class="headerlink" href="#what-is-gald3r" title="Permanent link">&para;</a></h2>
 <p><code>gald3r</code> is a single-binary CLI coding-agent platform: a task/bug tracker, a multi-provider
-agent runtime (local models via Ollama/LM Studio/vLLM, or cloud providers), and the CRASH
+agent runtime (local models via FreeToken, Ollama, LM Studio, vLLM and Unsloth Studio, or cloud providers), and the CRASH
 component system (Commands, Rules, Agents, Skills, Hooks, and CLI Verbs) that turns those into
 enforced, executing behavior in a project — not just markdown instructions an LLM might follow.</p>
 <p>It is built to be comparable to tools like Claude Code, Cursor's <code>agent</code>, or OpenCode, but
 standalone: one binary, no required IDE.</p>
+<p><strong>Using FreeToken?</strong> Gald3r includes local-engine detection and serve-command support,
+and connects agent runs and chat to FreeToken's OpenAI-compatible endpoint.
+Start with the <a href="local-ai/#freetoken">FreeToken setup guide</a>.</p>
 <h2 id="who-this-is-for">Who this is for<a class="headerlink" href="#who-this-is-for" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Someone who wants to <strong>use</strong> the <code>gald3r</code> command in their own project (task tracking,

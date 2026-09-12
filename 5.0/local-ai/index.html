@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#local-ai-ollama-lm-studio-and-other-local-backends" class="md-skip">
+        <a href="#local-ai-freetoken-ollama-lm-studio-and-other-local-backends" class="md-skip">
           Skip to content
         </a>
       
@@ -1466,6 +1466,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#freetoken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FreeToken
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#unsloth-studio-keyed-local-backend" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1744,6 +1755,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#freetoken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FreeToken
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#unsloth-studio-keyed-local-backend" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1796,11 +1818,11 @@
   
 
 
-<h1 id="local-ai-ollama-lm-studio-and-other-local-backends">Local AI (Ollama, LM Studio, and other local backends)<a class="headerlink" href="#local-ai-ollama-lm-studio-and-other-local-backends" title="Permanent link">&para;</a></h1>
+<h1 id="local-ai-freetoken-ollama-lm-studio-and-other-local-backends">Local AI (FreeToken, Ollama, LM Studio, and other local backends)<a class="headerlink" href="#local-ai-freetoken-ollama-lm-studio-and-other-local-backends" title="Permanent link">&para;</a></h1>
 <p><code>gald3r</code> can run entirely against a model on your own machine — no cloud account, no API
 key, and (once you've pulled a model) no network connection required. This page is the
 copy-pasteable setup path for that: point <code>gald3r</code> at a local OpenAI-compatible server
-(Ollama, LM Studio, vLLM, llama.cpp, or Unsloth Studio) and start running real agent
+(FreeToken, Ollama, LM Studio, vLLM, llama.cpp, or Unsloth Studio) and start running real agent
 turns against it.</p>
 <p>For the full <code>providers.yaml</code> reference (cloud providers, keyring-backed keys, editing
 verbs, troubleshooting) see <a href="../providers/"><code>providers.md</code></a> — this page is the local-only
@@ -1835,7 +1857,10 @@ actually finds running, using the real model IDs already pulled/loaded there. No
 to be on your <code>PATH</code> for this to work; it's a plain HTTP probe against each backend's own
 API, so a service-only deployment (the daemon running with no CLI installed alongside it)
 is discovered the same way a full local install would be.</p>
-<p><strong>Unsloth Studio is the one supported local runtime NOT probed by discovery</strong> — its
+<p><strong>FreeToken has a separate local-engine integration</strong>, including engine detection,
+serve-command generation and model verification against <code>/v1/models</code>. It is not in
+the <code>init-providers</code> default probe list; use the <a href="#freetoken">explicit setup below</a>.</p>
+<p><strong>Unsloth Studio is also not probed by discovery</strong> — its
 endpoint requires a real API key, so an unauthenticated <code>/models</code> probe can't see it. It
 gets its own setup path in <a href="#unsloth-studio-keyed-local-backend">its section below</a>.</p>
 <p>Re-running <code>gald3r init-providers --dry-run</code> any time is itself the verification step —
@@ -1851,7 +1876,7 @@ else.</p>
          ok: reachable (http://localhost:11434/v1/models)
 </code></pre>
 <p>See <a href="../providers/#local-backends"><code>providers.md</code></a> for a per-backend recipe (install,
-pull/load a model, verify) covering all four supported local runtimes.</p>
+pull/load a model, verify) covering the local runtimes and their setup requirements.</p>
 <h2 id="adding-a-model-or-a-whole-new-provider">Adding a model, or a whole new provider<a class="headerlink" href="#adding-a-model-or-a-whole-new-provider" title="Permanent link">&para;</a></h2>
 <pre><code>gald3r providers model add ollama gemma3:27b --role vision --context-window 32768
 </code></pre>
@@ -1868,9 +1893,32 @@ gald3r chat --model lmstudio:qwen2.5-coder-14b
 <p>A local model goes through the exact same session engine, tool-calling loop, and
 <code>stream-json</code> protocol events as a cloud model — nothing about <code>gald3r run</code>/<code>gald3r chat</code>
 changes based on where the model is served from.</p>
+<h2 id="freetoken">FreeToken<a class="headerlink" href="#freetoken" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/FlashML-org/FreeToken">FreeToken</a> serves open-weight MoE models
+on local hardware. Gald3r includes a FreeToken engine manifest: installation detection,
+serve-command generation, default port <code>1919</code>, and model checks through <code>/v1/models</code>.
+Agent runs and chat connect through the existing OpenAI-compatible provider adapter.</p>
+<p>Install FreeToken using its <a href="https://github.com/FlashML-org/FreeToken#getting-started">upstream instructions</a>,
+then load and serve a supported model. The upstream project provides desktop downloads
+for Windows and Linux. Choose a model that fits your available GPU and system memory;
+this guide makes no throughput or model-size guarantee.</p>
+<p>With the server running, copy its model ID from <code>http://localhost:1919/v1/models</code>.
+Replace <code>YOUR_SERVED_MODEL_ID</code> below with that exact ID:</p>
+<pre><code class="language-text">gald3r providers add freetoken --type openai_compat --base-url http://localhost:1919/v1 --api-key local --model YOUR_SERVED_MODEL_ID
+gald3r providers validate
+gald3r run &quot;reply with exactly: LOCAL_OK&quot; --model freetoken:YOUR_SERVED_MODEL_ID
+gald3r chat --model freetoken:YOUR_SERVED_MODEL_ID
+</code></pre>
+<p>Here <code>freetoken</code> is the configured provider name; <code>openai_compat</code> is its adapter type.
+<code>local</code> is a placeholder for a loopback server without authentication, not a real key.
+If you enabled server authentication, configure its credential with
+<code>gald3r providers set-key freetoken</code> instead. Adjust the base URL for a nondefault port.</p>
+<p>Use <code>gald3r local-model serve --help</code> for gald3r's engine-aware serve options.
+The local-engine manifest and <code>init-providers</code> discovery are separate: a missing
+FreeToken entry in discovery does not mean the explicit provider connection is unsupported.</p>
 <h2 id="unsloth-studio-keyed-local-backend">Unsloth Studio (keyed local backend)<a class="headerlink" href="#unsloth-studio-keyed-local-backend" title="Permanent link">&para;</a></h2>
-<p><a href="https://unsloth.ai/docs/desktop">Unsloth Studio</a> is supported as a fifth local runtime
-with a dedicated <code>unsloth</code> provider id — but unlike the four runtimes above, its
+<p><a href="https://unsloth.ai/docs/desktop">Unsloth Studio</a> is supported as a local runtime
+with a dedicated <code>unsloth</code> provider id — its
 OpenAI-compatible endpoint is <strong>not keyless</strong>, which is why <code>gald3r init-providers</code>
 doesn't auto-discover it. Setup is three steps:</p>
 <pre><code># 1. Start Studio's API server (every concrete example in Unsloth's own API guide
