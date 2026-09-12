@@ -24,6 +24,14 @@ recommended for general use.
 
 ---
 
+## [5.0.58] - 2026-09-12
+
+- Project upgrades preserve local customizations and unknown file provenance, retain recovery backups, and report incomplete or failed migrations explicitly. Maintainer release checks now exercise upgrades across the full workspace.
+- More reliable recovery for legacy decisions, constraints and project indexes, with checks for original content and repeat upgrades.
+- Windows Codex hooks now run through the native PowerShell host with correct UTF-8 input and blocking exit codes. Conversation capture separates real user messages from injected setup context.
+- Native Windows Cursor hooks now capture conversations into searchable history, including answers containing Markdown horizontal rules. Cursor's non-interactive CLI omits prompt and stop hooks; complete capture requires a host mode that emits those events.
+- FreeToken is now included in the README and local-AI setup documentation, with instructions for connecting its OpenAI-compatible endpoint.
+
 ## [5.0.57] - 2026-09-11
 
 This release focuses on reliable autonomous runs and safer project upgrades.

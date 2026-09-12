@@ -2,7 +2,7 @@
 
 ## 1. Install
 
-Choose the recommended installer for your processor from the [v5.0.57 release](https://github.com/Gald3r-Labs/gald3r_core/releases/tag/v5.0.57), and verify your download against its `SHA256SUMS.txt`.
+Choose the recommended installer for your processor from the [v5.0.58 release](https://github.com/Gald3r-Labs/gald3r_core/releases/tag/v5.0.58), and verify your download against its `SHA256SUMS.txt`.
 
 | Platform | Recommended installer |
 |---|---|
@@ -15,7 +15,7 @@ Linux desktop apps require WebKit2GTK 4.1; the shell installer does not install 
 Standalone binary archives are advanced alternatives, not a self-contained USB workspace.
 No Python, `uv`, or source checkout is required to install the compiled programs.
 
-If you selected Core, open a new terminal and run `gald3r --version` to verify 5.0.57.
+If you selected Core, open a new terminal and run `gald3r --version` to verify 5.0.58.
 
 ## 2. First run -- confirm the install is healthy
 
