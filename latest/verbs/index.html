@@ -2200,6 +2200,18 @@ from an older binary version, both point you at it by name.</p>
 <td>Give each agent its own isolated git checkout to work in, so parallel agents never step on each other's uncommitted changes.</td>
 </tr>
 <tr>
+<td><code>gald3r blueprint</code></td>
+<td>List ready-made HEARTBEAT job blueprints or add one to the project's scheduled jobs.</td>
+</tr>
+<tr>
+<td><code>gald3r integration-drain</code></td>
+<td>Land one accepted implementation on its recorded completion branch through the guarded parent workflow.</td>
+</tr>
+<tr>
+<td><code>gald3r integration-recover</code></td>
+<td>Record a stranded integration after proving its reviewed commit already landed, using the current controller lease and an explicit recovery request.</td>
+</tr>
+<tr>
 <td><code>gald3r housekeep</code></td>
 <td>Auto-commit safe, routine <code>.gald3r/</code> coordination changes so an autonomous run doesn't stall waiting on a human for housekeeping.</td>
 </tr>

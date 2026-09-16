@@ -3117,6 +3117,72 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-skl-user-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-skl-user-agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-skl-user-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-skl-user-command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-skl-user-hook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-skl-user-hook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-skl-user-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-skl-user-mcp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-skl-user-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-skl-user-rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-skl-user-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-skl-user-skill
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#g-skl-valk" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3322,7 +3388,7 @@
 <p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>gald3r_platforms/assets/neutral_source/skills/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>go run -tags gald3r_maintainer ./gald3r_cli/cmd/gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>A skill (<code>SKILL.md</code>) is the actual instruction package a command hands off to -- commands themselves are thin dispatchers. A skill loads either because a command invoked it, or because your agent's own judgment matched its frontmatter <code>description:</code> field without you typing a slash command at all. You never hand-edit a skill's local copy; behavior changes land upstream in <code>neutral_source/</code> and arrive on your next <code>platform install</code>/<code>update</code>.</p>
-<p><strong>142 skills total.</strong></p>
+<p><strong>148 skills total.</strong></p>
 <h2 id="browse-by-category">Browse by category<a class="headerlink" href="#browse-by-category" title="Permanent link">&para;</a></h2>
 <h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
 <p><em>Creating, updating, and tracking work in .gald3r/tasks/.</em></p>
@@ -3384,6 +3450,12 @@
 <li><a href="#g-skl-setup"><code>g-skl-setup</code></a> -- Initialize gald3r in a project</li>
 <li><a href="#g-skl-subsystem-graph"><code>g-skl-subsystem-graph</code></a> -- Generate and update .gald3r/SUBSYSTEM_GRAPH.md from subsystem spec file dependencies.</li>
 <li><a href="#g-skl-subsystems"><code>g-skl-subsystems</code></a> -- Own and manage SUBSYSTEMS.md (registry + mermaid graph) and subsystems/ spec files.</li>
+<li><a href="#g-skl-user-agent"><code>g-skl-user-agent</code></a> -- Walk a user through authoring their OWN subagent definition, and write a correctly-shaped, correctly-namespaced file into .gald3r/agents/</li>
+<li><a href="#g-skl-user-command"><code>g-skl-user-command</code></a> -- Walk a user through authoring their OWN reusable command, and write a correctly-shaped, correctly-namespaced file into .gald3r/commands/</li>
+<li><a href="#g-skl-user-hook"><code>g-skl-user-hook</code></a> -- Walk a user through authoring their OWN lifecycle-hook script, and write a correctly-shaped, correctly-namespaced Python file into .gald3r/hooks/</li>
+<li><a href="#g-skl-user-mcp"><code>g-skl-user-mcp</code></a> -- Walk a user through authoring their OWN MCP server definition, and write a correctly-shaped, correctly-namespaced JSON file into .gald3r/mcps/</li>
+<li><a href="#g-skl-user-rule"><code>g-skl-user-rule</code></a> -- Walk a user through authoring their OWN standing instruction, and write a correctly-shaped, correctly-namespaced file into .gald3r/rules/</li>
+<li><a href="#g-skl-user-skill"><code>g-skl-user-skill</code></a> -- Walk a user through authoring their OWN skill, and write a correctly-shaped, correctly-namespaced folder into .gald3r/skills/</li>
 </ul>
 <h3 id="wpac-workspace-coordination">WPAC &amp; Workspace Coordination<a class="headerlink" href="#wpac-workspace-coordination" title="Permanent link">&para;</a></h3>
 <p><em>Cross-project topology, inbox triage, broadcasts, and Workspace-Control.</em></p>
@@ -3914,8 +3986,7 @@
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
-<li><strong>Claude Code:</strong> <code>/g-go-xreview</code></li>
-<li><strong>Cursor:</strong> <code>@g-go-xreview</code></li>
+<li><strong>Any platform:</strong> No command dispatches to this skill by name in its body -- it activates by the agent's own judgment matching this skill's <code>description:</code>, or by direct mention (e.g. "use g-skl-cross-review") in your prompt.</li>
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> unspecified  </p>
@@ -5224,7 +5295,7 @@
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
-<li><strong>Claude Code:</strong> <code>/g-sesh-goal-add (also: /g-sesh-goal-rem)</code></li>
+<li><strong>Claude Code:</strong> <code>/g-sesh-goal-add (also: /g-sesh-goal-loop, /g-sesh-goal-rem)</code></li>
 <li><strong>Cursor:</strong> <code>@g-sesh-goal-add</code></li>
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
@@ -5349,7 +5420,7 @@
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
-<li><strong>Claude Code:</strong> <code>/g-crash-stats (also: /g-feat-promote, /g-go-bugs-swarm, /g-go-xreview, /g-hotfix-open, /g-issue-sync)</code></li>
+<li><strong>Claude Code:</strong> <code>/g-crash-stats (also: /g-feat-promote, /g-hotfix-open, /g-issue-sync, /g-migrate, /g-queue)</code></li>
 <li><strong>Cursor:</strong> <code>@g-crash-stats</code></li>
 </ul>
 <p><strong>Maturity:</strong> production<br />
@@ -5465,6 +5536,96 @@
 <strong>Token budget:</strong> low  </p>
 <p><strong>Related:</strong> <a href="#g-skl-3d-animation"><code>g-skl-3d-animation</code></a>, <a href="#g-skl-argument-diagrams"><code>g-skl-argument-diagrams</code></a>, <a href="#g-skl-cartograph"><code>g-skl-cartograph</code></a>, <a href="#g-skl-comfyui"><code>g-skl-comfyui</code></a>, <a href="#g-skl-design"><code>g-skl-design</code></a>, <a href="#g-skl-ghostwrite"><code>g-skl-ghostwrite</code></a>, <a href="#g-skl-html-output"><code>g-skl-html-output</code></a>, <a href="#g-skl-json-output"><code>g-skl-json-output</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-toon-output/SKILL.md</code></p>
+<hr />
+<h3 id="g-skl-user-agent"><code>g-skl-user-agent</code><a class="headerlink" href="#g-skl-user-agent" title="Permanent link">&para;</a></h3>
+<p><strong>Skill ID:</strong> <code>g-skl-user-agent</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Walk a user through authoring their OWN subagent definition, and write a correctly-shaped, correctly-namespaced file into .gald3r/agents/</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to walk a user through authoring their OWN subagent definition, and write a correctly-shaped, correctly-namespaced file into .gald3r/agents/ -- never a g- prefixed name (that prefix is reserved for gald3r system agents). Part of the CRASH+ user-extension family alongside g-skl-user-command/g-skl-user-rule/g-skl-user-skill/g-skl-user-hook/g-skl-user-mcp.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> No command dispatches to this skill by name in its body -- it activates by the agent's own judgment matching this skill's <code>description:</code>, or by direct mention (e.g. "use g-skl-user-agent") in your prompt.</li>
+</ul>
+<p><strong>Maturity:</strong> unspecified<br />
+<strong>Token budget:</strong> low  </p>
+<p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-user-agent/SKILL.md</code></p>
+<hr />
+<h3 id="g-skl-user-command"><code>g-skl-user-command</code><a class="headerlink" href="#g-skl-user-command" title="Permanent link">&para;</a></h3>
+<p><strong>Skill ID:</strong> <code>g-skl-user-command</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Walk a user through authoring their OWN reusable command, and write a correctly-shaped, correctly-namespaced file into .gald3r/commands/</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to walk a user through authoring their OWN reusable command, and write a correctly-shaped, correctly-namespaced file into .gald3r/commands/ -- never a g- prefixed name (that prefix is reserved for gald3r system commands). Part of the CRASH+ user-extension family alongside g-skl-user-rule/g-skl-user-agent/g-skl-user-skill/g-skl-user-hook/g-skl-user-mcp.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> No command dispatches to this skill by name in its body -- it activates by the agent's own judgment matching this skill's <code>description:</code>, or by direct mention (e.g. "use g-skl-user-command") in your prompt.</li>
+</ul>
+<p><strong>Maturity:</strong> unspecified<br />
+<strong>Token budget:</strong> low  </p>
+<p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-user-command/SKILL.md</code></p>
+<hr />
+<h3 id="g-skl-user-hook"><code>g-skl-user-hook</code><a class="headerlink" href="#g-skl-user-hook" title="Permanent link">&para;</a></h3>
+<p><strong>Skill ID:</strong> <code>g-skl-user-hook</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Walk a user through authoring their OWN lifecycle-hook script, and write a correctly-shaped, correctly-namespaced Python file into .gald3r/hooks/</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to walk a user through authoring their OWN lifecycle-hook script, and write a correctly-shaped, correctly-namespaced Python file into .gald3r/hooks/ -- never a g- prefixed name (that prefix is reserved for gald3r system hooks). Part of the CRASH+ user-extension family alongside g-skl-user-command/g-skl-user-rule/g-skl-user-agent/g-skl-user-skill/g-skl-user-mcp.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> No command dispatches to this skill by name in its body -- it activates by the agent's own judgment matching this skill's <code>description:</code>, or by direct mention (e.g. "use g-skl-user-hook") in your prompt.</li>
+</ul>
+<p><strong>Maturity:</strong> unspecified<br />
+<strong>Token budget:</strong> low  </p>
+<p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-user-hook/SKILL.md</code></p>
+<hr />
+<h3 id="g-skl-user-mcp"><code>g-skl-user-mcp</code><a class="headerlink" href="#g-skl-user-mcp" title="Permanent link">&para;</a></h3>
+<p><strong>Skill ID:</strong> <code>g-skl-user-mcp</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Walk a user through authoring their OWN MCP server definition, and write a correctly-shaped, correctly-namespaced JSON file into .gald3r/mcps/</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to walk a user through authoring their OWN MCP server definition, and write a correctly-shaped, correctly-namespaced JSON file into .gald3r/mcps/ -- never a g- prefixed name (that prefix is reserved for gald3r's own MCP wiring). Part of the CRASH+ user-extension family alongside g-skl-user-command/g-skl-user-rule/g-skl-user-agent/g-skl-user-skill/g-skl-user-hook.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> No command dispatches to this skill by name in its body -- it activates by the agent's own judgment matching this skill's <code>description:</code>, or by direct mention (e.g. "use g-skl-user-mcp") in your prompt.</li>
+</ul>
+<p><strong>Maturity:</strong> unspecified<br />
+<strong>Token budget:</strong> low  </p>
+<p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-user-mcp/SKILL.md</code></p>
+<hr />
+<h3 id="g-skl-user-rule"><code>g-skl-user-rule</code><a class="headerlink" href="#g-skl-user-rule" title="Permanent link">&para;</a></h3>
+<p><strong>Skill ID:</strong> <code>g-skl-user-rule</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Walk a user through authoring their OWN standing instruction, and write a correctly-shaped, correctly-namespaced file into .gald3r/rules/</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to walk a user through authoring their OWN standing instruction, and write a correctly-shaped, correctly-namespaced file into .gald3r/rules/ -- never a g- prefixed name (that prefix is reserved for gald3r system rules). Part of the CRASH+ user-extension family alongside g-skl-user-command/g-skl-user-agent/g-skl-user-skill/g-skl-user-hook/g-skl-user-mcp.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> No command dispatches to this skill by name in its body -- it activates by the agent's own judgment matching this skill's <code>description:</code>, or by direct mention (e.g. "use g-skl-user-rule") in your prompt.</li>
+</ul>
+<p><strong>Maturity:</strong> unspecified<br />
+<strong>Token budget:</strong> low  </p>
+<p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-user-rule/SKILL.md</code></p>
+<hr />
+<h3 id="g-skl-user-skill"><code>g-skl-user-skill</code><a class="headerlink" href="#g-skl-user-skill" title="Permanent link">&para;</a></h3>
+<p><strong>Skill ID:</strong> <code>g-skl-user-skill</code><br />
+<strong>Group:</strong> Setup &amp; Project Identity</p>
+<p><strong>Purpose:</strong> Walk a user through authoring their OWN skill, and write a correctly-shaped, correctly-namespaced folder into .gald3r/skills/</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to walk a user through authoring their OWN skill, and write a correctly-shaped, correctly-namespaced folder into .gald3r/skills/ -- never a g- prefixed name (that prefix is reserved for gald3r system skills). Part of the CRASH+ user-extension family alongside g-skl-user-command/g-skl-user-rule/g-skl-user-agent/g-skl-user-hook/g-skl-user-mcp.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> No command dispatches to this skill by name in its body -- it activates by the agent's own judgment matching this skill's <code>description:</code>, or by direct mention (e.g. "use g-skl-user-skill") in your prompt.</li>
+</ul>
+<p><strong>Maturity:</strong> unspecified<br />
+<strong>Token budget:</strong> low  </p>
+<p><strong>Related:</strong> <a href="#g-skl-codename"><code>g-skl-codename</code></a>, <a href="#g-skl-constraints"><code>g-skl-constraints</code></a>, <a href="#g-skl-features"><code>g-skl-features</code></a>, <a href="#g-skl-ideas"><code>g-skl-ideas</code></a>, <a href="#g-skl-medic"><code>g-skl-medic</code></a>, <a href="#g-skl-plan"><code>g-skl-plan</code></a>, <a href="#g-skl-prds"><code>g-skl-prds</code></a>, <a href="#g-skl-project"><code>g-skl-project</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-user-skill/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-valk"><code>g-skl-valk</code><a class="headerlink" href="#g-skl-valk" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-valk</code><br />

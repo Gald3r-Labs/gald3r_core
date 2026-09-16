@@ -1393,6 +1393,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-hk-on-subagent-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-subagent-start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-subagent-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-subagent-stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#g-hk-on-tool-end" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1595,6 +1617,17 @@
     <span class="md-ellipsis">
       
         g-hk-session-start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-session-worker-observe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-session-worker-observe
       
     </span>
   </a>
@@ -2549,6 +2582,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-hk-on-subagent-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-subagent-start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-hk-on-subagent-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-on-subagent-stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#g-hk-on-tool-end" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2758,6 +2813,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-hk-session-worker-observe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-hk-session-worker-observe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#g-hk-setup-user" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2886,7 +2952,7 @@
 <p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>gald3r_platforms/assets/neutral_source/hooks/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>go run -tags gald3r_maintainer ./gald3r_cli/cmd/gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>Hooks are the one CRASH type that is real, executing code -- plain scripts (mostly <code>.py</code>) wired into your IDE's lifecycle events (session start, pre-tool-call, stop, ...) by a platform-specific registration file. You do not invoke a hook by name; it fires automatically when its registered event happens. This page documents what each hook does and when it fires -- never its internal implementation.</p>
-<p><strong>42 hooks total.</strong></p>
+<p><strong>45 hooks total.</strong></p>
 <h2 id="browse-by-category">Browse by category<a class="headerlink" href="#browse-by-category" title="Permanent link">&para;</a></h2>
 <h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
 <p><em>Creating, updating, and tracking work in .gald3r/tasks/.</em></p>
@@ -2937,9 +3003,12 @@
 <li><a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a> -- Canonical <code>session-end</code> event entrypoint.</li>
 <li><a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a> -- Canonical <code>session-start</code> event entrypoint.</li>
 <li><a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a> -- Canonical <code>stop</code> event entrypoint.</li>
+<li><a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a> -- Thin native subagent-start entrypoint; all behavior belongs to the shared core.</li>
+<li><a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a> -- Thin native subagent-stop entrypoint; all behavior belongs to the shared core.</li>
 <li><a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a> -- Canonical <code>tool-end</code> event entrypoint.</li>
 <li><a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a> -- Canonical <code>tool-start</code> event entrypoint.</li>
 <li><a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a> -- Canonical <code>user-prompt-submit</code> event entrypoint.</li>
+<li><a href="#g-hk-session-worker-observe"><code>g-hk-session-worker-observe</code></a> -- Forward whitelisted native worker metadata to the generation-fenced engine.</li>
 <li><a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a> -- TEL host-CLI hook tap (Claude Code first).</li>
 <li><a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a> -- Thin resolver+verb dispatcher for the dangerous-shell-command guard.</li>
 </ul>
@@ -3087,7 +3156,7 @@
 <p><strong>Fires on:</strong> pre-commit (git hook)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
 <strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-encoding-normalize.py, gald3r_platforms/assets/neutral_source/hooks/g-hk-encoding-normalize.md  </p>
-<p><strong>Related:</strong> <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Related:</strong> <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-encoding-normalize.py</code></p>
 <hr />
 <h3 id="g-hk-ggo-stop-detect"><code>g-hk-ggo-stop-detect</code><a class="headerlink" href="#g-hk-ggo-stop-detect" title="Permanent link">&para;</a></h3>
@@ -3167,7 +3236,7 @@
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
 <strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-on-session-end.py  </p>
-<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-on-session-end.py</code></p>
 <hr />
 <h3 id="g-hk-on-session-start"><code>g-hk-on-session-start</code><a class="headerlink" href="#g-hk-on-session-start" title="Permanent link">&para;</a></h3>
@@ -3183,7 +3252,7 @@
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
 <strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-on-session-start.py  </p>
-<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-on-session-start.py</code></p>
 <hr />
 <h3 id="g-hk-on-stop"><code>g-hk-on-stop</code><a class="headerlink" href="#g-hk-on-stop" title="Permanent link">&para;</a></h3>
@@ -3199,8 +3268,40 @@
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
 <strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-on-stop.py  </p>
-<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-on-stop.py</code></p>
+<hr />
+<h3 id="g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code><a class="headerlink" href="#g-hk-on-subagent-start" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-on-subagent-start</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Thin native subagent-start entrypoint; all behavior belongs to the shared core.</p>
+<p><strong>When to use:</strong> Thin native subagent-start entrypoint; all behavior belongs to the shared core. Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-on-subagent-start.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-on-subagent-start.py</code></p>
+<hr />
+<h3 id="g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code><a class="headerlink" href="#g-hk-on-subagent-stop" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-on-subagent-stop</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Thin native subagent-stop entrypoint; all behavior belongs to the shared core.</p>
+<p><strong>When to use:</strong> Thin native subagent-stop entrypoint; all behavior belongs to the shared core. Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-on-subagent-stop.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-on-subagent-stop.py</code></p>
 <hr />
 <h3 id="g-hk-on-tool-end"><code>g-hk-on-tool-end</code><a class="headerlink" href="#g-hk-on-tool-end" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-on-tool-end</code><br />
@@ -3215,7 +3316,7 @@
 <p><strong>Fires on:</strong> PostToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
 <strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-on-tool-end.py, gald3r_platforms/assets/neutral_source/hooks/g-hk-on-tool-end.md  </p>
-<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-on-tool-end.py</code></p>
 <hr />
 <h3 id="g-hk-on-tool-start"><code>g-hk-on-tool-start</code><a class="headerlink" href="#g-hk-on-tool-start" title="Permanent link">&para;</a></h3>
@@ -3231,7 +3332,7 @@
 <p><strong>Fires on:</strong> PreToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
 <strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-on-tool-start.py  </p>
-<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-on-tool-start.py</code></p>
 <hr />
 <h3 id="g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code><a class="headerlink" href="#g-hk-on-user-prompt-submit" title="Permanent link">&para;</a></h3>
@@ -3247,7 +3348,7 @@
 <p><strong>Fires on:</strong> UserPromptSubmit<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
 <strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-on-user-prompt-submit.py, gald3r_platforms/assets/neutral_source/hooks/g-hk-on-user-prompt-submit.md  </p>
-<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-on-user-prompt-submit.py</code></p>
 <hr />
 <h3 id="g-hk-policy-check"><code>g-hk-policy-check</code><a class="headerlink" href="#g-hk-policy-check" title="Permanent link">&para;</a></h3>
@@ -3494,7 +3595,23 @@
 <p><strong>Hook ID:</strong> <code>g-hk-session-start</code><br />
 <strong>Group:</strong> Logging &amp; Diagnostics</p>
 <p><strong>Purpose:</strong> g-hk-session-start.</p>
-<p><strong>When to use:</strong> g-hk-session-start. Fires on: lifecycle event (see source for exact trigger).</p>
+<p><strong>When to use:</strong> g-hk-session-start. Fires on: SessionStart.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Any platform:</strong> Registered automatically by <code>gald3r platform install &lt;platform&gt;</code>'s hook wiring -- not manually invoked.</li>
+</ul>
+<p><strong>Fires on:</strong> SessionStart<br />
+<strong>Naming:</strong> standard g-hk- naming convention<br />
+<strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-session-start.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-cursor-chat-logger"><code>g-hk-cursor-chat-logger</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-session-start.py</code></p>
+<hr />
+<h3 id="g-hk-session-worker-observe"><code>g-hk-session-worker-observe</code><a class="headerlink" href="#g-hk-session-worker-observe" title="Permanent link">&para;</a></h3>
+<p><strong>Hook ID:</strong> <code>g-hk-session-worker-observe</code><br />
+<strong>Group:</strong> Platforms &amp; Providers</p>
+<p><strong>Purpose:</strong> Forward whitelisted native worker metadata to the generation-fenced engine.</p>
+<p><strong>When to use:</strong> Forward whitelisted native worker metadata to the generation-fenced engine. Fires on: lifecycle event (see source for exact trigger).</p>
 <p><strong>Arguments:</strong> none</p>
 <p><strong>Example invocation:</strong></p>
 <ul>
@@ -3502,9 +3619,9 @@
 </ul>
 <p><strong>Fires on:</strong> lifecycle event (see source for exact trigger)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
-<strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-session-start.py  </p>
-<p><strong>Related:</strong> <a href="#g-hk-agent-complete"><code>g-hk-agent-complete</code></a>, <a href="#g-hk-crash-record"><code>g-hk-crash-record</code></a>, <a href="#g-hk-cursor-chat-logger"><code>g-hk-cursor-chat-logger</code></a>, <a href="#g-hk-post-session-trace"><code>g-hk-post-session-trace</code></a>, <a href="#g-hk-post-skill-timing"><code>g-hk-post-skill-timing</code></a>, <a href="#g-hk-pre-session-trace"><code>g-hk-pre-session-trace</code></a>, <a href="#g-hk-pre-skill-timing"><code>g-hk-pre-skill-timing</code></a>, <a href="#g-hk-session-end"><code>g-hk-session-end</code></a></p>
-<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-session-start.py</code></p>
+<strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-session-worker-observe.py  </p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-session-worker-observe.py</code></p>
 <hr />
 <h3 id="g-hk-setup-user"><code>g-hk-setup-user</code><a class="headerlink" href="#g-hk-setup-user" title="Permanent link">&para;</a></h3>
 <p><strong>Hook ID:</strong> <code>g-hk-setup-user</code><br />
@@ -3535,7 +3652,7 @@
 <p><strong>Fires on:</strong> PostToolUse<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
 <strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-tel-tap.py, gald3r_platforms/assets/neutral_source/hooks/g-hk-tel-tap.md  </p>
-<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-validate-shell"><code>g-hk-validate-shell</code></a></p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-tel-tap.py</code></p>
 <hr />
 <h3 id="g-hk-validate-shell"><code>g-hk-validate-shell</code><a class="headerlink" href="#g-hk-validate-shell" title="Permanent link">&para;</a></h3>
@@ -3551,7 +3668,7 @@
 <p><strong>Fires on:</strong> PreToolUse, pre-push (git hook)<br />
 <strong>Naming:</strong> standard g-hk- naming convention<br />
 <strong>Source files:</strong> gald3r_platforms/assets/neutral_source/hooks/g-hk-validate-shell.py  </p>
-<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a>, <a href="#g-hk-on-user-prompt-submit"><code>g-hk-on-user-prompt-submit</code></a>, <a href="#g-hk-tel-tap"><code>g-hk-tel-tap</code></a></p>
+<p><strong>Related:</strong> <a href="#g-hk-encoding-normalize"><code>g-hk-encoding-normalize</code></a>, <a href="#g-hk-on-session-end"><code>g-hk-on-session-end</code></a>, <a href="#g-hk-on-session-start"><code>g-hk-on-session-start</code></a>, <a href="#g-hk-on-stop"><code>g-hk-on-stop</code></a>, <a href="#g-hk-on-subagent-start"><code>g-hk-on-subagent-start</code></a>, <a href="#g-hk-on-subagent-stop"><code>g-hk-on-subagent-stop</code></a>, <a href="#g-hk-on-tool-end"><code>g-hk-on-tool-end</code></a>, <a href="#g-hk-on-tool-start"><code>g-hk-on-tool-start</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/hooks/g-hk-validate-shell.py</code></p>
 <hr />
 <h3 id="g-hk-vault-migrate"><code>g-hk-vault-migrate</code><a class="headerlink" href="#g-hk-vault-migrate" title="Permanent link">&para;</a></h3>
