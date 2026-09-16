@@ -1,0 +1,3024 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/autopilot/">
+      
+      
+        <link rel="prev" href="../task-bug-workflow/">
+      
+      
+        <link rel="next" href="../worktree-lanes/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Autopilot - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#autopilot-letting-gald3r-work-the-queue-itself" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Autopilot
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../commands/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Commands
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../skills/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Skills
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../agents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Agents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../verbs/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Verbs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../crash/" class="md-tabs__link">
+          
+  
+  
+  CRASH Explained
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../worktree-lanes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Worktree Lanes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../platform-usage/" class="md-tabs__link">
+          
+  
+  
+  Platforms
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../local-ai/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Local AI (Ollama, LM Studio)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../longship/" class="md-tabs__link">
+          
+  
+  
+  Other gald3r Apps
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../verbs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verbs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Explained
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-escalation-ladder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The escalation ladder
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The escalation ladder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-go-one-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r go — one step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-go-code-gald3r-go-review-the-two-phase-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r go-code / gald3r go-review — the two-phase pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-autoclaim-sequential-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r autoclaim — sequential batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-swarm-parallel-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r swarm — parallel batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-autopilot-the-continuous-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r autopilot — the continuous loop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#watching-a-run-event-ledger-heartbeat-and-the-stall-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Watching a run — event ledger, heartbeat, and the stall watchdog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Watching a run — event ledger, heartbeat, and the stall watchdog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#live-view-watching-what-a-bucket-or-coordinator-is-actually-saying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live view: watching what a bucket or coordinator is actually saying
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishing-events-live-to-world_tree-opt-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publishing events live to world_tree (opt-in)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heartbeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heartbeat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deterministic-dispatch-is-the-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deterministic dispatch is the default
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supervision-gates-breakers-and-the-liveness-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supervision: gates, breakers, and the liveness watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stall-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stall watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-on-the-human-tty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color on the human TTY
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worktrees-isolating-parallel-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worktrees: isolating parallel agents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branch-discipline-the-isolation-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Branch discipline: the isolation tier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#housekeeping-during-unattended-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Housekeeping during unattended runs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#completing-a-capped-critical-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Completing a capped critical PASS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence-based-triage-sweep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evidence-based triage sweep
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-dispatch-alignment-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-dispatch alignment gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stranded-branch-salvage-sweep-autopilot-reconcile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stranded-branch salvage sweep (autopilot reconcile)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-and-auth-choosing-how-you-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost and auth: choosing how you loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#billing-surfaces-and-consent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Billing surfaces and consent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Billing surfaces and consent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting-unexpected-api-billing-on-a-headless-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting: unexpected API billing on a headless run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-allow-usage-spend-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The --allow-usage-spend gate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-identity-and-credential-swap-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Account identity and credential-swap detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-audible-cue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The audible cue
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-config-layer-and-the-verify-settings-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global config layer and the verify-settings gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../worktree-lanes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worktree Lanes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using gald3r With Your Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Setup by Tool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/platforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local AI (Ollama, LM Studio)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other gald3r Apps
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Other gald3r Apps
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../longship/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Longship (Terminal UI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../throne/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Throne (Desktop App)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-escalation-ladder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The escalation ladder
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The escalation ladder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-go-one-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r go — one step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-go-code-gald3r-go-review-the-two-phase-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r go-code / gald3r go-review — the two-phase pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-autoclaim-sequential-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r autoclaim — sequential batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-swarm-parallel-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r swarm — parallel batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gald3r-autopilot-the-continuous-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r autopilot — the continuous loop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#watching-a-run-event-ledger-heartbeat-and-the-stall-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Watching a run — event ledger, heartbeat, and the stall watchdog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Watching a run — event ledger, heartbeat, and the stall watchdog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#live-view-watching-what-a-bucket-or-coordinator-is-actually-saying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live view: watching what a bucket or coordinator is actually saying
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishing-events-live-to-world_tree-opt-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publishing events live to world_tree (opt-in)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heartbeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heartbeat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deterministic-dispatch-is-the-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deterministic dispatch is the default
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supervision-gates-breakers-and-the-liveness-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supervision: gates, breakers, and the liveness watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stall-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stall watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-on-the-human-tty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color on the human TTY
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worktrees-isolating-parallel-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worktrees: isolating parallel agents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branch-discipline-the-isolation-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Branch discipline: the isolation tier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#housekeeping-during-unattended-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Housekeeping during unattended runs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#completing-a-capped-critical-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Completing a capped critical PASS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence-based-triage-sweep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evidence-based triage sweep
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-dispatch-alignment-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-dispatch alignment gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stranded-branch-salvage-sweep-autopilot-reconcile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stranded-branch salvage sweep (autopilot reconcile)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-and-auth-choosing-how-you-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost and auth: choosing how you loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#billing-surfaces-and-consent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Billing surfaces and consent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Billing surfaces and consent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting-unexpected-api-billing-on-a-headless-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting: unexpected API billing on a headless run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-allow-usage-spend-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The --allow-usage-spend gate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-identity-and-credential-swap-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Account identity and credential-swap detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-audible-cue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The audible cue
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-config-layer-and-the-verify-settings-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global config layer and the verify-settings gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="autopilot-letting-gald3r-work-the-queue-itself">Autopilot — Letting gald3r Work the Queue Itself<a class="headerlink" href="#autopilot-letting-gald3r-work-the-queue-itself" title="Permanent link">&para;</a></h1>
+<p>Everything in <a href="../task-bug-workflow/"><code>task-bug-workflow.md</code></a> can be driven by hand, one
+command at a time. This page covers the verbs that let gald3r claim, implement, and review
+work with progressively less manual intervention — from "do one step" to "run until the
+backlog is empty."</p>
+<h2 id="the-escalation-ladder">The escalation ladder<a class="headerlink" href="#the-escalation-ladder" title="Permanent link">&para;</a></h2>
+<p>For headless startup, verdict-exit grace, and dirty-controller waits, see
+<a href="../autopilot-recovery/">worker lifecycle and recovery</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Verb</th>
+<th>What it does</th>
+<th>Stops when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gald3r go</code></td>
+<td>Claim the next ready task, work it one step at a time</td>
+<td>You take back control after each step</td>
+</tr>
+<tr>
+<td><code>gald3r go-code</code></td>
+<td>Implement a specific task through to <code>awaiting-verification</code></td>
+<td>The implementation is done (never runs review itself)</td>
+</tr>
+<tr>
+<td><code>gald3r go-review</code></td>
+<td>Review a task's acceptance criteria as a FRESH agent (never the implementer)</td>
+<td>A PASS/FAIL verdict is recorded</td>
+</tr>
+<tr>
+<td><code>gald3r autoclaim</code></td>
+<td>Work through several pending tasks in a row, unattended</td>
+<td>The batch finishes, or nothing is left ready</td>
+</tr>
+<tr>
+<td><code>gald3r swarm</code></td>
+<td>Split a batch of work across several parallel agents</td>
+<td>The swarm's defined session ends</td>
+</tr>
+<tr>
+<td><code>gald3r autopilot</code></td>
+<td>Implement + review + repeat, continuously</td>
+<td>The backlog clears, or you call it off</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gald3r-go-one-step"><code>gald3r go</code> — one step<a class="headerlink" href="#gald3r-go-one-step" title="Permanent link">&para;</a></h3>
+<p><code>gald3r go</code> claims the next eligible task itself; to see what it would pick <strong>without</strong>
+claiming anything, ask the queue directly first — <code>gald3r task next</code> is read-only:</p>
+<pre><code>gald3r task next
+</code></pre>
+<pre><code>T2: Fix broken footer link
+Status: pending
+Priority: medium
+</code></pre>
+<p>Then run <code>gald3r go</code> for real to claim and work it. Useful flags: <code>--subsystem &lt;name&gt;</code> /
+<code>--priority &lt;level&gt;</code> to narrow which task gets picked; <code>--backend dev-echo</code> to run against the
+offline deterministic backend instead of a real provider (same flag <code>run</code> uses, see the
+<a href="../quickstart/">quickstart</a>).</p>
+<h3 id="gald3r-go-code-gald3r-go-review-the-two-phase-pipeline"><code>gald3r go-code</code> / <code>gald3r go-review</code> — the two-phase pipeline<a class="headerlink" href="#gald3r-go-code-gald3r-go-review-the-two-phase-pipeline" title="Permanent link">&para;</a></h3>
+<p>This is the pattern behind every <code>autopilot</code>/<code>swarm</code> run under the hood: implementation and
+review are <strong>always separate agent sessions</strong>, never the same one. <code>go-code</code> never marks a
+task <code>completed</code> — only <code>awaiting-verification</code>. <code>go-review</code> is the fresh reviewer: it never
+runs against the same session that implemented the task, checks acceptance criteria one by
+one, and writes the actual <code>task verify --pass</code>/<code>--fail</code> verdict (a real DB-authoritative
+write, not just a status-history sentence describing one — see <code>task-bug-workflow.md</code>'s
+verify section).</p>
+<h3 id="gald3r-autoclaim-sequential-batch"><code>gald3r autoclaim</code> — sequential batch<a class="headerlink" href="#gald3r-autoclaim-sequential-batch" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r autoclaim
+</code></pre>
+<p>Works through several pending tasks in a row without stopping to ask "what's next" between
+each one. <code>--online</code> extends the same claim logic across your whole team's shared board
+(multiple people/agents claiming from the same backlog without double-picking the same task).</p>
+<h3 id="gald3r-swarm-parallel-batch"><code>gald3r swarm</code> — parallel batch<a class="headerlink" href="#gald3r-swarm-parallel-batch" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r swarm run &lt;swarm.yaml&gt;
+gald3r swarm status
+</code></pre>
+<p>Splits a batch of work across several agents running concurrently, each in its own
+<a href="#worktrees-isolating-parallel-agents">worktree</a> so they never step on each other's
+uncommitted changes. <code>gald3r swarm status</code> lists active swarm sessions from the discoverable
+registry; <code>gald3r swarm config &lt;swarm.yaml&gt;</code> inspects a swarm definition without launching it.</p>
+<h3 id="gald3r-autopilot-the-continuous-loop"><code>gald3r autopilot</code> — the continuous loop<a class="headerlink" href="#gald3r-autopilot-the-continuous-loop" title="Permanent link">&para;</a></h3>
+<pre><code>gald3r autopilot enqueue         # add a task to the autopilot queue
+gald3r autopilot run                 # start the service, drain the queue until empty
+gald3r autopilot status              # current queue stats
+gald3r autopilot stop                # finish the in-flight iteration, then exit gracefully
+gald3r autopilot loop                # the outer-loop conductor (rolling implement+review cycles)
+gald3r autopilot replay RUN_ID       # forensic reconstruction of a past run, from disk artifacts alone
+</code></pre>
+<p><code>autopilot loop</code> is what keeps cycling implementation and review across the whole workspace
+until a hard stop condition (backlog empty, rate limit, or an explicit <code>stop</code>) — the automated
+version of manually alternating <code>go-code</code> then <code>go-review</code> for every task in
+sequence. Inside a supporting IDE this is the same thing as running <code>/g-go-go</code> (Claude Code) or
+<code>@g-go-go</code> (Cursor) — the CLI verb and the IDE command are the same implementation, just
+invoked from a different surface.</p>
+<p><strong>Attempt budgets are implementation-only.</strong> <code>--budget N</code> caps how many <code>go-code</code>/<code>go-bug</code>
+<em>implement</em> starts a run will make (0 = unlimited) — it is <strong>not</strong> a coordinator-iteration cap
+and it never counts against review turns. A task that keeps failing review gets a bounded
+number of re-implement passes before it's handed back to you as <code>requires-user-attention</code>
+rather than looping forever, but reviewing an item is always free: a slow reviewer queue never
+starves the implementer side, and a fresh review never "spends" budget.</p>
+<p><strong>Gauntlet mode (<code>--gauntlet</code>, engine / <code>@g-go*</code> surface).</strong> Off by default.
+Same flag dialect on <code>gald3r autopilot loop</code> and every <code>@g-go*</code> command including swarm
+aliases — <code>@g-go-go --gauntlet</code> passes the flag and its scoped knobs through to the compiled
+engine; it does not invent a second meaning. Requires an inspectable oracle bar
+(tests/benchmark/answer-key/golden, or <code>--gauntlet-bar PATH</code>) and refuses rather than
+inventing "good." Review-only runs replace (never blend with) the AC-checklist verifier.
+<code>@g-go-bugs</code> / <code>-swarm</code> refuse a bug that has no inspectable repro. Hard caps:
+<code>--gauntlet-inner-round-cap</code> (default 8), <code>--gauntlet-max-spend-usd</code>,
+<code>--gauntlet-iteration-cost-ceiling-usd</code>, <code>--gauntlet-wall-clock-minutes</code>, plus the existing
+<code>--budget</code>. Coordinator judgment: <code>gald3r prompt get playbook.pipeline_gauntlet</code>.</p>
+<p><strong><code>gald3r autopilot replay RUN_ID</code></strong> reconstructs exactly what happened during a past <code>loop</code>
+run from its durable event ledger and correlated logs alone — never a live process, never the
+database. It renders a per-lane timeline and flags anything the on-disk artifacts can't
+substantiate (a missing brief, a verdict with no matching reviewer spawn) as an invariant
+violation, so you can audit an unattended overnight run after the fact with the same rigor as
+watching it live. <code>RUN_ID</code> accepts the full timestamp or any unambiguous prefix of it.</p>
+<h2 id="watching-a-run-event-ledger-heartbeat-and-the-stall-watchdog">Watching a run — event ledger, heartbeat, and the stall watchdog<a class="headerlink" href="#watching-a-run-event-ledger-heartbeat-and-the-stall-watchdog" title="Permanent link">&para;</a></h2>
+<p>A swarm must never run dark for hours. Every <code>autopilot loop</code> run writes a durable,
+append-only, versioned event ledger (<code>event_schema: 1</code>) alongside its run marker under
+<code>.gald3r/logs/</code> — <code>run_started</code>, <code>preflight_claimed</code>, <code>capacity_intended</code>, <code>bucket_spawned</code> /
+<code>bucket_completed</code> / <code>bucket_failed</code>, <code>merge_result</code>, <code>harvest_result</code>, <code>claim_released</code>,
+<code>breaker_tripped</code>, <code>provider_fallback</code>, <code>cost_update</code>, <code>heartbeat</code>, <code>stall_detected</code>,
+<code>stop_requested</code>, and <code>run_end</code>. Every one of these also prints inline as an
+<code>[AUTOPILOT][EVENT] ...</code> line while the run is live, but the ledger's whole point is that it
+survives — and is readable — after the fact, or from a different terminal:</p>
+<pre><code>gald3r autopilot status                      # run marker + the SAME swarm-candidate board the loop itself sees
+gald3r autopilot events --follow             # tail the active run's event ledger live, from another session
+gald3r autopilot events --follow --json      # same, as raw NDJSON
+gald3r autopilot events --run-id &lt;stamp&gt;     # replay a specific past run's ledger by its stamp
+</code></pre>
+<p><code>autopilot status</code> and a live run's own startup line both compute the swarm-candidate count
+(open tasks + open bugs, floor-eligible) through the exact same function, and <code>status</code> names
+the floor it applied — so the two can never again disagree about whether there is work to do.
+<code>--max-severity</code>/<code>--max-value</code> (owner: "assigning work to a lower end model") are the ceiling
+twin of <code>--min-severity</code>/<code>--min-value</code> — default 10 (no ceiling), refused at the CLI when set
+below the floor, and named on the same <code>status</code> line whenever a run has one active.</p>
+<h3 id="live-view-watching-what-a-bucket-or-coordinator-is-actually-saying">Live view: watching what a bucket or coordinator is actually saying<a class="headerlink" href="#live-view-watching-what-a-bucket-or-coordinator-is-actually-saying" title="Permanent link">&para;</a></h3>
+<p>The ledger above narrates <em>lifecycle occurrences</em> (a bucket spawned, a merge landed) — it does
+not carry a bucket agent's or the coordinator's own running commentary. That commentary used to
+be captured only for post-mortem (a 256 KiB in-memory tail plus a per-bucket
+<code>.gald3r/logs/bucket_&lt;id&gt;_iter&lt;N&gt;_live.log</code>, itself OVERWRITTEN on every poll tick), never teed
+anywhere live. Every implementer/reviewer bucket and every coordinator invocation now ALSO tees
+its own combined stdout+stderr, byte-for-byte, to an append-only stream file:</p>
+<pre><code>.gald3r/logs/bucket_&lt;safe-id&gt;_iter&lt;N&gt;_&lt;stamp&gt;.stream       # implementer bucket
+.gald3r/logs/review_&lt;safe-id&gt;_iter&lt;N&gt;_&lt;stamp&gt;.stream       # reviewer bucket
+.gald3r/logs/coordinator_iter&lt;N&gt;_&lt;primary|fallback&gt;_&lt;run-id&gt;.stream   # coordinator invocation
+</code></pre>
+<p>A bounded, THROTTLED <code>stream_progress</code> ledger event (kind/id/role/bytes/last_line/stream_path —
+never the raw stream content) is sampled at most once every ~10 seconds per stream, and only
+when new bytes actually arrived, so a busy or wedged bucket can never make the durable ledger
+grow unboundedly with run duration or verbosity — see <code>gald3r_swarm/autopilot/stream_tee.go</code>'s
+own doc comment for the full bounded-ledger contract.</p>
+<p><code>gald3r autopilot watch</code> (from a second terminal) multiplexes the ledger AND every currently-live
+<code>.stream</code> file into one annotated view — the terminal equivalent of the Claude-harness agent
+panel:</p>
+<pre><code>gald3r autopilot watch                       # marker snapshot + ledger events + live agent lines, e.g. &quot;[] agent: editing file foo.go&quot;
+gald3r autopilot watch --once                # one snapshot pass instead of following
+gald3r autopilot watch --no-streams          # pre- marker-only behavior
+</code></pre>
+<p><code>autopilot events --follow</code> (below) still exists for a ledger-only tail; <code>watch</code> is the one
+command that also shows what the swarm is actually doing while it does it.</p>
+<h3 id="publishing-events-live-to-world_tree-opt-in">Publishing events live to world_tree (opt-in)<a class="headerlink" href="#publishing-events-live-to-world_tree-opt-in" title="Permanent link">&para;</a></h3>
+<p><code>autopilot events --follow</code> above requires shell/file access to the machine running the loop.
+<code>--publish-events</code> (or the AGENT_CONFIG.md <code>publish_run_events: true</code> key) additionally pushes
+every ledger event through the Valkyrie world_tree channel as it happens, so a different
+session or a teammate can observe the SAME run remotely:</p>
+<pre><code>gald3r autopilot loop --budget 20 --publish-events   # opt in; --budget is attempt cap (0 = unlimited)
+</code></pre>
+<p>Publishing is a pure consumer of the ledger (never a second writer), bound to the run's own
+start/end, and never blocks or fails the run: when the connector is offline, events queue
+durably and flush automatically on the next reconnect. Under normal operation no event is ever
+lost — the one documented exception is abnormal: if the outbox directory itself becomes
+unwritable mid-run (disk full, permissions), that single event is logged and permanently
+dropped rather than retried, instead of silently vanishing.</p>
+<h3 id="heartbeat">Heartbeat<a class="headerlink" href="#heartbeat" title="Permanent link">&para;</a></h3>
+<p><code>--heartbeat-minutes</code> (default 15) now fires <strong>during</strong> a long-running coordinator invocation,
+not only between iterations — a run whose entire budget is spent inside one multi-hour
+coordinator call still narrates liveness (elapsed time, age of the last coordinator stream
+byte, last extracted thought, and claims-vs-buckets state) on schedule. <code>claims 0/0</code> while
+stream bytes are growing means the coordinator CLI still owns in-session swarm work — that is
+expected on the old path, not an idle hang.</p>
+<h3 id="deterministic-dispatch-is-the-default">Deterministic dispatch is the default<a class="headerlink" href="#deterministic-dispatch-is-the-default" title="Permanent link">&para;</a></h3>
+<p>Ready tasks/bugs already come back from the database in the correct status with dependencies
+cleared. The outer loop dispatches those implementers itself, directly from that queue — it
+does <strong>not</strong> wait for a coordinator CLI to pick the work first, which is what made an early
+version of this loop capable of sitting silently idle for tens of minutes per iteration.
+<code>--no-deterministic-dispatch</code> keeps the old coordinator-first path available as an explicit
+fallback, kept for compatibility rather than as the recommended path.</p>
+<p>If a run still takes that fallback, the model's "thinking" stream is no longer invisible while
+you wait: a periodic wait line includes elapsed time, stream bytes, and the last extracted
+thought; <code>.gald3r/logs/coordinator_thoughts/iter_N_live.log</code> is a live thought tape; and
+<code>gald3r logs tail</code> sees the same thoughts as rows in the local logs database. A startup line
+names which dispatch path the run is using — if you see the loop invoking a fresh coordinator
+on an iteration with a non-empty ready queue, the binary on <code>PATH</code> is stale or you passed the
+fallback flag; reinstall, or drop <code>--no-deterministic-dispatch</code>.</p>
+<h3 id="supervision-gates-breakers-and-the-liveness-watchdog">Supervision: gates, breakers, and the liveness watchdog<a class="headerlink" href="#supervision-gates-breakers-and-the-liveness-watchdog" title="Permanent link">&para;</a></h3>
+<p>A long unattended run needs more than a stall detector — it needs to notice when its own
+safety machinery has quietly stopped mattering, and it needs a way to tell a genuinely wedged
+worker from one that's just being quiet while it works. Three layers, all active by default:</p>
+<ul>
+<li><strong>A once-per-run inert-gate banner.</strong> If a safety gate can't actually evaluate under the
+  current provider (no usable telemetry to check against), the run says so loudly exactly once
+  — naming which gates are inert and why — instead of repeating the same warning on every
+  single iteration until it becomes background noise nobody reads anymore.</li>
+<li><strong>Proxy breakers for telemetry-less providers.</strong> When a provider gives the loop nothing to
+  measure cost or time against directly, three proxy ceilings still arm: a per-iteration
+  wall-clock outlier ceiling, a fallback iteration ceiling (only when you haven't set
+  <code>--max-iterations</code> yourself — it never overrides an explicit choice; <code>-1</code> is an
+  explicit deactivate that skips the proxy ceiling too), and a cumulative
+  output-byte budget. Each one trips a real breaker and records which kind of signal armed it
+  (measured, estimated, or proxy), so a post-run read of the log tells you how much to trust
+  the number that stopped things.</li>
+<li><strong>A no-progress breaker.</strong> Twenty consecutive iterations with zero completions — no task or
+  bug reaching a terminal or verified state, no commits — stops the run and names the top
+  items that kept spinning without landing, instead of burning the rest of the budget on a run
+  that's already stuck.</li>
+</ul>
+<p><strong>The per-bucket liveness watchdog reads gald3r's own side channel</strong>, not just raw process
+output. Some CLI backends stay byte-quiet on stdout while genuinely working, and some stay
+noisy while wedged — watching stdout alone can kill a healthy worker or miss a dead one. The
+watchdog instead arms a union of gald3r-owned signals as its primary evidence: database writes
+attributable to the bucket's own claimed item, and real worktree activity (git status changes,
+<code>HEAD</code> movement, file modification times), with stdout growth only as secondary
+corroboration. A kill from this watchdog specifically records a distinct <code>watchdog_killed</code>
+outcome rather than blending into an ordinary failure — so a post-run summary (or <code>autopilot
+replay</code>, above) can tell you exactly which items were killed for going quiet versus which ones
+genuinely failed.</p>
+<h3 id="stall-watchdog">Stall watchdog<a class="headerlink" href="#stall-watchdog" title="Permanent link">&para;</a></h3>
+<p>Two more, simpler independent detectors, each of which kills the frozen invocation, releases
+any stranded preflight claims, retries once, and halts loudly (naming why) if the retry stalls
+too — never a silent multi-hour freeze:</p>
+<ul>
+<li><strong>Claims-to-buckets</strong> (<code>--claims-window-minutes</code>, default 10): a coordinator claimed tasks but
+  no implementer bucket (worktree) ever started for any of them.</li>
+<li><strong>Stream-silence</strong> (<code>--stream-silence-minutes</code>, default 10): the coordinator subprocess is
+  alive but has produced zero output for the whole window.</li>
+</ul>
+<p>Disable both with <code>--no-stall-watchdog</code> (the heartbeat keeps running regardless).</p>
+<h3 id="color-on-the-human-tty">Color on the human TTY<a class="headerlink" href="#color-on-the-human-tty" title="Permanent link">&para;</a></h3>
+<p><code>autopilot loop</code> paints the live narration (<code>[outer-loop]</code>, <code>[AUTOPILOT][EVENT]</code>, swarm verbs, PASS/FAIL, task/bug keywords) with the same TEL regex engine as <code>gald3r tel wrap</code>. Color is display-only: the per-run log file, <code>--json</code> NDJSON, and anything sent to an agent stay plain. Disable with <code>NO_COLOR=1</code> or <code>GALD3R_TEL_DISABLE=1</code>, or override the builtin <code>narration</code> class via <code>gald3r tel class narration off</code> / a rule file in <code>~/.gald3r/tel</code> or <code>.gald3r/tel</code>.</p>
+<h2 id="worktrees-isolating-parallel-agents">Worktrees: isolating parallel agents<a class="headerlink" href="#worktrees-isolating-parallel-agents" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r worktree create
+gald3r worktree report
+</code></pre>
+<p>Every parallel agent (swarm bucket, or a standalone background implementer like the one that
+wrote this page) gets its own git worktree — a separate checkout sharing the same <code>.git</code>
+history, so N agents can have N different uncommitted change sets without colliding. Other
+worktree verbs worth knowing: <code>checkpoint</code>/<code>resume</code> (crash-safe continuity across a session
+restart), <code>steer</code>/<code>queue</code> (inject a follow-up instruction into a running worktree session
+without interrupting it — see <code>gald3r steer</code> / <code>gald3r queue</code>), <code>merge</code> (fast-forward-only
+integration back to <code>main</code>), <code>janitor</code> (auto-prune stale worktrees).</p>
+<h2 id="branch-discipline-the-isolation-tier">Branch discipline: the isolation tier<a class="headerlink" href="#branch-discipline-the-isolation-tier" title="Permanent link">&para;</a></h2>
+<p>Worktrees are one of two isolation mechanisms, and the loop picks the cheaper one that still
+fits the run's shape. The tier, from lightest to heaviest:</p>
+<ol>
+<li><strong>Default — direct commits, no extra branches.</strong> Out of the box the coordinator commits
+   its checkpoint and housekeeping work straight onto whatever branch the project is checked
+   out on, and parallel agents get worktrees. This basic mode is always the default; the
+   modes below are opt-in flags that leave it byte-identical when off.</li>
+<li><strong>Serial branch-in-place</strong> (<code>--no-code-swarm --branch-in-place</code>). A single sequential
+   agent doesn't need a separate checkout directory at all — it runs on a short-lived
+   feature branch cut <em>in</em> the primary checkout: create branch, implement, checkpoint-commit,
+   merge back, return to the base branch. No worktree directory churn, no antivirus
+   file-lock friction on Windows (swarm worktree <em>remove</em> now retries that same
+   lock class instead of leaving remnant directories behind), cheaper for solo flows. It refuses to start on a dirty
+   checkout, and if the agent crashes mid-run the loop rescue-commits anything dirty and
+   returns the checkout to the base branch cleanly, leaving the bucket branch intact for
+   recovery. Swarm (parallel) runs ignore this flag with a logged warning — N concurrent
+   agents genuinely need N isolated directories, so they escalate to worktrees.</li>
+<li><strong>Session branches</strong> (<code>--session-branch [NAME]</code>). Independent of the above: the
+   <em>coordinator's own</em> writes — housekeeping commits, integration merges, checkpoint
+   commits — land on a session branch (auto-named <code>burn/YYYYMMDD-HHMM</code>, or the name you
+   give) cut from the current branch at run start, instead of directly on it. At run end
+   the loop integrates the session branch back with a fast-forward (falling back to a merge
+   commit, never a rebase); a real conflict leaves the session branch intact and reports
+   exactly what to run to finish the merge by hand. The whole run becomes one reviewable,
+   cleanly revertible unit.</li>
+</ol>
+<p>Software-development projects default branch-first when solo and escalate to worktrees at
+swarm parallelism; both flags are advanced settings — leave them off and nothing changes.</p>
+<h2 id="housekeeping-during-unattended-runs">Housekeeping during unattended runs<a class="headerlink" href="#housekeeping-during-unattended-runs" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r housekeep --orchestration-root &lt;root&gt; --mode preflight
+</code></pre>
+<p>Autonomous runs still need to write routine <code>.gald3r/</code> coordination state (status updates,
+review-result commits) without stalling on a human to approve every single one. <code>housekeep</code>
+auto-commits ONLY paths it classifies as safe, routine controller coordination changes —
+anything it can't classify as safe stays blocked for a human, by design.</p>
+<h2 id="completing-a-capped-critical-pass">Completing a capped critical PASS<a class="headerlink" href="#completing-a-capped-critical-pass" title="Permanent link">&para;</a></h2>
+<p>A reviewer PASS on a task/bug whose priority or severity score resolves to <strong>8 or above</strong>
+(High/Critical on the 1-10 rubric) never auto-completes, even when the reviewer scored it a
+clean PASS. <code>applyGoReviewVerdict</code>/<code>applyGoBugReviewVerdict</code>
+(<code>gald3r_cli/internal/commands/bug1140_close_cap.go</code>) leave the item at
+<code>awaiting-verification</code> and append a note recording the reviewer's verdict plus the exact
+completion command — the item stays there until something <em>outside the agent loop</em> confirms
+it. This is deliberate (beta.36): an agent reviewer alone is not "outside the agent"
+for a critical item, so autopilot cannot self-certify its own critical closes.</p>
+<p><strong>The operator vocabulary that completes a capped item:</strong></p>
+<ul>
+<li><strong>Tasks</strong> — <code>gald3r task verify &lt;id&gt; --pass --summary "EXTERNAL-CONFIRMATION: &lt;how you
+  confirmed it&gt;"</code>. The literal <code>EXTERNAL-CONFIRMATION:</code> prefix on <code>--summary</code> is the
+  falsifiable marker the cap logic checks for (<code>bug1140ExternalConfirmationToken</code> in
+  <code>bug1140_close_cap.go</code>) — nothing inside the autopilot loop ever emits that string, so its
+  presence can only come from a human or an external system (CI result, runtime probe,
+  operator ack) attaching it by hand.</li>
+<li><strong>Bugs</strong> — <code>gald3r bug resolve &lt;id&gt;</code> completes the bug directly; <code>gald3r bug resolve</code> carries
+  no <code>--summary</code> flag. If you want the same durable EXTERNAL-CONFIRMATION record on the bug,
+  append it as a note first (or after): <code>gald3r bug update &lt;id&gt; --note "EXTERNAL-CONFIRMATION:
+  &lt;how you confirmed it&gt;"</code>.</li>
+</ul>
+<p>Read <code>bug1140_close_cap.go</code>'s file-doc comment for the full rationale (the "WHY A LITERAL
+TOKEN" section) if you need to know why this is a fixed string and not a prose heuristic.</p>
+<h2 id="evidence-based-triage-sweep">Evidence-based triage sweep<a class="headerlink" href="#evidence-based-triage-sweep" title="Permanent link">&para;</a></h2>
+<pre><code>gald3r triage sweep [--kind all|task|bug] [--apply] [--json] [--dup-threshold 0.6]
+</code></pre>
+<p>Field evidence that motivated this: (a feature already landed via a later attempt),
+(implemented twice), (skipped as already_fixed on a reverted branch) — a 475-record
+board needed a hand-built 14-agent sweep to find the dead fraction. <code>gald3r triage sweep</code> walks
+every open task/bug and classifies each one <code>already_done</code> / <code>duplicate</code> / <code>obsolete</code> /
+<code>leave_open</code>, always with <strong>verified</strong> evidence:</p>
+<ul>
+<li><strong><code>duplicate</code></strong> — the record's normalized title shares enough significant tokens
+  (<code>--dup-threshold</code>, default 0.6) with a strictly OLDER open record of the same kind. The older
+  record is always the survivor.</li>
+<li><strong><code>already_done</code></strong> — either an automatically-discovered git citation (the own
+  already-fixed-in-code detector, reused directly for bugs; generalized to tasks via the
+  mandatory <code>Task: #&lt;id&gt;</code> commit trailer every task-related commit already carries — see
+  <code>g-rl-02</code>), or an explicit citation you write into the record's own text:
+  <code>TRIAGE-EVIDENCE: already_done commit=&lt;sha&gt;
+  TRIAGE-EVIDENCE: already_done file=&lt;path&gt; symbol=&lt;name&gt;</code></li>
+<li><strong><code>obsolete</code></strong> — an explicit citation naming what superseded it, verified against the board or
+  git before it counts as evidence:
+  <code>TRIAGE-EVIDENCE: obsolete ref=
+  TRIAGE-EVIDENCE: obsolete ref=
+  TRIAGE-EVIDENCE: obsolete ref=path/to/file.go</code></li>
+</ul>
+<p>An unverifiable citation — a commit that does not exist, a symbol absent from the named file, a
+T/BUG id that was never real — never counts as evidence; the record stays <code>leave_open</code>. This
+sweep never invents evidence, only checks it.</p>
+<p><strong>Report-only by default</strong> (<code>g-skl-backlog-curate</code>'s own "never auto-cancel" discipline): <code>sweep</code>
+alone prints every actionable finding with its evidence and a <code>DO NOT APPLY</code> notice. Pass
+<code>--apply</code> to actually close the subset that is BOTH verified AND not capped.</p>
+<p><strong>The contract applies here too.</strong> A candidate carrying the literal
+<code>-CAPPED-PASS</code> marker (see the section above), or whose priority/severity score resolves
+to 8 or above (High/Critical), is never auto-closed by <code>--apply</code> — it is reported as <code>HELD
+(capped)</code> instead. This sweep never self-certifies a high-value close any more than a reviewer
+PASS does.</p>
+<p><strong>Loop integration</strong>: pass <code>--triage-sweep</code> to <code>gald3r autopilot run</code>/<code>loop</code> to run the same
+engine as a pre-dispatch phase, right after the own already-fixed preflight. A candidate
+the sweep both classifies AND verifies is closed before an implementer is ever spawned — no
+wasted worktree, no wasted turn — and the outcome is recorded <code>triage_closed</code> (never a failure,
+never an implement/review attempt, mirroring <code>StatusAlreadyFixed</code>'s own contract). Default off;
+a capped or unverified finding is left in the dispatch queue exactly as if the flag were absent.</p>
+<h2 id="pre-dispatch-alignment-gate">Pre-dispatch alignment gate<a class="headerlink" href="#pre-dispatch-alignment-gate" title="Permanent link">&para;</a></h2>
+<p>The prose-era g-go-code pipeline verified two things before dispatching an implementer at a
+candidate: that the work was still aligned with the code on main, and that it did not
+contradict another open backlog item. The Go loop restores both as a pre-dispatch gate that is
+<strong>on by default</strong> (<code>--no-alignment-gate</code> on <code>autopilot loop</code> and on standalone <code>go-code</code> is the
+operator opt-out):</p>
+<ul>
+<li><strong>Already-aligned (impact scan)</strong> — a conservative <code>git grep</code> for a backtick-quoted symbol
+  named in the candidate's title. A hit never closes anything by itself: the item routes
+  through the same merge-noop → awaiting-verification path the already-landed gate uses, so a
+  human-grade review still confirms the verdict. Undecidable candidates dispatch normally.</li>
+<li><strong>Open-backlog contradiction</strong> — an explicit <code>ALIGNMENT-CONFLICT: {kind} {id}</code> marker in a
+  candidate's body naming another item in the same batch parks <em>both</em> via
+  requires-user-attention (the <code>TODO[TASK-X→TASK-Y]</code> explicit-annotation idiom, not fuzzy
+  matching). Structurally a no-op for single-item <code>go-code</code> runs.</li>
+</ul>
+<p>Verdicts are cached per item + HEAD SHA, so an unchanged main never pays the git shell-out
+twice. Dry-run previews never mutate state (the split).</p>
+<h2 id="stranded-branch-salvage-sweep-autopilot-reconcile">Stranded-branch salvage sweep (<code>autopilot reconcile</code>)<a class="headerlink" href="#stranded-branch-salvage-sweep-autopilot-reconcile" title="Permanent link">&para;</a></h2>
+<p>Items parked <code>requires-user-attention</code> by the unmerged-prior-work gate used to re-park on
+every run with the same generic text — silently defeating rulings the owner had already
+given. <code>gald3r autopilot reconcile [--kind all|task|bug] [--apply] [--json]</code> ends that:
+each parked item's stranded branch is probed read-only via <code>git merge-tree</code>; a clean branch
+lands through the existing merge machinery and the item returns to awaiting-verification
+citing the landed SHA; a conflicted branch runs the triage engine's already-done evidence
+detector ( caps inherited — a capped item's evidence is reported, never
+self-certified); anything else receives a durable reconcile marker carrying the exact
+branch, conflict files, and a recommendation — and the park gate structurally skips marked
+items, so a reconciled needs-human item can never be re-parked. Report-only by default;
+<code>--apply</code> lands/closes/marks. Fail-closed: a land attempt that cannot complete leaves the
+branch and checkout untouched.</p>
+<h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../coordination/"><code>coordination.md</code></a> — running autopilot across MULTIPLE related projects,
+  not just one</li>
+<li><a href="../troubleshooting/"><code>troubleshooting.md</code></a> — <code>gald3r go-status</code> for checking on a run
+  without interrupting it, and what to do when a run looks stuck</li>
+</ul>
+<h2 id="cost-and-auth-choosing-how-you-loop">Cost and auth: choosing how you loop<a class="headerlink" href="#cost-and-auth-choosing-how-you-loop" title="Permanent link">&para;</a></h2>
+<p>The three ways to run autonomous work have different cost profiles. Pick
+deliberately -- the wrong default can burn subscription quota or API dollars
+you did not intend to spend. (owner ruling 2026-08-11 -- see also
+<code>gald3r autopilot loop --help</code> and <code>gald3r prompt get playbook.pipeline_route</code>,
+which carry the same ladder for an agent to load at routing time.)</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Auth it uses</th>
+<th>Cost profile</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/g-go</code>, <code>/g-go-code(-swarm)</code>, <code>/g-go-bugs-swarm</code>, <code>/g-go-review(-swarm)</code> (in-session engine pipelines)</td>
+<td>Your IDE session's own login (Cursor/Claude subscription OAuth)</td>
+<td><strong>Cheapest.</strong> Runs inside the session you already pay for; subagents ride the IDE's included subagent tool (<code>SendMessage</code>/<code>Handoff</code>). No spawned CLI-agent processes, no extra auth.</td>
+<td>You are at the keyboard with a session open and want a bounded implement/review pass now.</td>
+</tr>
+<tr>
+<td><code>/g-go-go</code>, or <code>gald3r autopilot loop</code>/<code>run</code> invoked directly</td>
+<td><code>--executor session</code> (the default): THIS session's own login. <code>--executor headless</code>: the same subscription logins, via spawned headless CLI sessions</td>
+<td><strong>Cheap by default, middle tier opt-in.</strong> <code>/g-go-go</code> invokes this SAME deterministic Go outer loop. Under the default <code>--executor session</code>, the implementer AND reviewer roles never spawn a headless CLI-agent subprocess at all -- each bucket's brief is handed to THIS session's own subagent facility (<code>SendMessage</code>/<code>Handoff</code>) via a manifest/results sidecar handshake (<code>gald3r autopilot session-dispatch peek</code>/<code>report</code>; design: <code>docs/design/t1205_in_session_executor_seam.md</code>), billed to this session's OAuth2 login exactly like the cheapest tier above -- the loop's own gates/claims/triage/ledger/breakers stay 100% unchanged and Go-native either way. Only the <strong>coordinator</strong> role (when a coordinator-first dispatch actually runs) and <code>--executor headless</code> spawn real headless <code>claude</code>/<code>cursor-agent</code> sessions, drawing from the SAME included-usage subscription pool interactive use draws from as of today (: there is no currently-documented, Anthropic-confirmed separate quota split between headless and interactive Claude Code usage). <code>--executor headless</code> REFUSES a RED-classified role without <code>--allow-usage-spend</code>; the real per-role risk on that tier is not a separate pool -- it is an env-var auth-precedence footgun and an unresolved upstream gating defect; see "Billing surfaces and consent" below. <code>/g-go-go</code>, invoked from the live session you're already in, is still the right default for interactive "loop it"/"put it on autopilot" phrasing -- attended, judgment-loaded, stoppable with <code>autopilot stop</code>. Invoking the bare verb directly (bypassing <code>/g-go-go</code>) is reserved for detached/scheduled/headless contexts where no interactive session exists to act as the executor (<code>--executor headless</code> is required there), or when the user names the verb explicitly.</td>
+<td>Continuous multi-iteration autopilot work, from either surface.</td>
+</tr>
+<tr>
+<td><code>gald3r autopilot loop</code> with registry providers (<code>anthropic</code>, <code>openai</code>, <code>gemini</code>) or <code>gald3r run</code></td>
+<td>Direct API keys (<code>providers.yaml</code> / env)</td>
+<td><strong>Most expensive.</strong> Real per-token API billing on every turn, regardless of which surface dispatched it.</td>
+<td>You have API budget and want provider control, model pinning, or providers your IDE does not offer. <code>local-compat</code> (Ollama/LM Studio) is the zero-dollar exception in this tier.</td>
+</tr>
+</tbody>
+</table>
+<p>Two facts worth knowing:</p>
+<ul>
+<li>The in-session <code>/g-go</code>, <code>/g-go-code(-swarm)</code>, <code>/g-go-bugs-swarm</code>, and
+  <code>/g-go-review(-swarm)</code> pipelines never invoke <code>gald3r autopilot</code> underneath
+  -- they are engine-backed playbooks your session executes itself via its own
+  subagent tool. <code>/g-go-go</code> is the one exception: its own command doc names
+  <code>gald3r autopilot loop --executor session</code> as exactly what it runs. As of
+that no longer means a per-role headless CLI-session cost by default
+  -- the implementer and reviewer roles execute through <code>/g-go-go</code>'s own
+  session, the SAME way the fully in-session pipelines above do; only
+  <code>--executor headless</code> (detached/scheduled contexts, or an explicit ask)
+  restores the older per-role spawned-subprocess shape. <code>/g-go-go</code> remains
+  the right interactive answer to "loop it" because it is attended and
+  stoppable, not because it happens to be free -- but under its own default
+  it now IS free of extra CLI-session spend, not merely "attended despite the
+  cost."</li>
+<li><strong>Reviewer staffing under <code>--executor session</code> splits evidence-gathering
+ from judgment ().</strong> A session-executor reviewer bucket's own turn
+  used to spend its first several tool calls on mechanical <code>git diff</code>/file
+  reads before doing any real review judgment. The driving agent now
+  dispatches two cheap, parallel evidence-gathering subagent calls per
+  reviewer bucket first (diff + full changed-file contents), then hands the
+  assembled evidence plus the bucket's own review brief to a single
+  judgment-only reviewer turn -- see <code>playbook.session_executor.md</code>
+  (<code>gald3r prompt get playbook.session_executor</code>) §3a for the full contract
+  and a real measured wave (reviewer-turn tool calls: 12 -&gt; 0; reviewer-turn
+  wall time: -92%). This is a driving-agent staffing optimization only, so
+  it applies to <code>--executor session</code> (both <code>/g-go-go</code> and the bare verb);
+  <code>--executor headless</code>'s spawned <code>go-review</code>/<code>go-bug-review</code> subprocess
+  already gathers its own evidence inside a single metered CLI-agent
+  process rather than being staffed by a driving agent's own subagent
+  facility, so this split has no seam to attach to there.</li>
+<li>Local models (<code>local-compat</code> via Ollama or LM Studio) cost nothing per token
+  in any tier and can serve implementer turns while a subscription CLI
+  coordinates -- the cheapest fully-autonomous configuration on a machine with
+  a capable GPU.</li>
+<li><strong>Coordinator provider matrix (local-fleet inversion).</strong> The
+  coordinator used to be locked to <code>claude</code>/<code>cursor-agent</code> -- the one
+  unavoidable paid/subscription seat in an otherwise-free local-fleet loop.
+  Two additions close that gap:</li>
+<li><code>--coordinator-provider codex</code> and <code>--coordinator-provider gemini-cli</code>
+    join <code>claude</code>/<code>cursor-agent</code> as real coordinator-CLI vocabulary (the same
+    <code>providerLaunchSpecs</code> mechanism, <code>gald3r_swarm/autopilot/role_routing.go</code>)
+    -- a host with OpenAI's <code>codex</code> or Google's <code>gemini</code> CLI installed and
+    authenticated, but no Claude/Cursor subscription, can now coordinate at
+    all, closing the "35+ platform support" gap for the flagship loop. The
+    provider id is <code>gemini-cli</code>, not bare <code>gemini</code> -- that id names the
+    SEPARATE <code>gald3r_llm/providers</code> registry vocabulary (see
+    <code>docs/providers_template.yaml</code>'s own <code>gemini</code> block) implementer/reviewer
+    already accept; <code>gemini-cli</code> is the standalone agentic CLI tool.</li>
+<li><code>--coordinator-provider gald3r --coordinator-model &lt;providers.yaml spec&gt;</code>
+    (e.g. <code>local-compat:qwen2.5:7b-instruct</code>, or an OpenRouter model) is the
+    <strong>self-hosted registry route</strong>: the coordinator re-spawns gald3r's own
+    binary (<code>gald3r run --model &lt;spec&gt; --output-mode stream-json</code>) instead of
+    an external agent CLI, so a loop can coordinate against a fully local or
+    OpenRouter model -- the zero-dollar-coordinator configuration the
+    no-budget ruling asked for. <code>autopilot loop</code>'s own startup banner prints
+    a QUALITY WARNING whenever the resolved coordinator is this route (or any
+    other non-frontier id): a registry model's own task-selection/dispatch
+    judgment driving the full outer loop is meaningfully weaker than a
+    frontier CLI agent's, which is exactly why deterministic dispatch (this
+    loop's default) carries most of the fan-out -- see
+    <code>gald3r_swarm/autopilot/role_routing.go</code>'s <code>IsFrontierCoordinatorProvider</code>
+and /'s own design notes for the full rationale. This route
+    does not (yet) get the richer provider-refusal/reset-time classification
+    cloud CLI-vocab providers get -- a registry error still fails the
+    iteration honestly via a non-zero exit code, just without that extra
+    detail.</li>
+<li><code>--provider cursor-agent</code> model slugs (item 5): the <code>cursor-agent</code>
+  vendor binary has no <code>ls-models</code> (or similar list-and-exit) subcommand --
+  passing an unrecognized <code>--model</code>/<code>--*-model</code> value does NOT error, it
+  silently starts a real, billed conversational turn. Never guess a slug.
+  <code>claude-sonnet-5-medium</code> is field-verified working as of beta.39 (see
+  <code>docs/field_reports/20260809_coordinator_provider_routing_apigard.md</code>); the
+  vendor's own current catalog (it changes with your Cursor plan) is
+  authoritative -- see https://cursor.com/help/models-and-usage/available-models
+  and <code>cursor-agent --help</code>.</li>
+</ul>
+<h2 id="billing-surfaces-and-consent">Billing surfaces and consent<a class="headerlink" href="#billing-surfaces-and-consent" title="Permanent link">&para;</a></h2>
+<p>Every <code>/g-go*</code> dispatch entry point (<code>go</code>, <code>go-code</code>, <code>go-review</code>, <code>go-bug</code>,
+<code>go-bug-review</code>) and <code>autopilot loop</code>/<code>run</code> now classifies and declares each
+resolved role's billing surface at launch, per the owner's binding color
+semantics:</p>
+<ul>
+<li><strong>GREEN</strong> -- rides the session/user's own OAuth2 subscription (<code>claude</code>,
+  <code>cursor-agent</code>, <code>codex</code> on ChatGPT sign-in, <code>gemini-cli</code> on Google login,
+  GitHub Copilot CLI, all by default).</li>
+<li><strong>BLUE</strong> -- external but zero-dollar: local endpoints (Ollama, LM Studio,
+  Unsloth Studio), an OpenRouter <code>:free</code>-suffixed model, or a genuine free-tier
+  API key. Still declared loudly -- never silently folded into GREEN.</li>
+<li><strong>RED</strong> -- spends real money beyond any subscription: a registry-vocab API
+  key (<code>anthropic</code>, <code>openai</code>, <code>sakana</code>, ...), an OpenRouter paid model, or a
+  <code>claude</code>/<code>codex</code>/<code>gemini-cli</code> spawn whose environment carries the vendor's
+  own API-key env var alongside its subscription login.</li>
+</ul>
+<p>Under <code>--executor session</code> (the default), the implementer and
+reviewer roles are declared with a synthetic <strong>GREEN</strong> session-executor
+surface instead of being classified against whatever
+<code>--implementer-provider</code>/<code>--reviewer-provider</code> happens to be configured --
+classifying against a provider that will never actually be spawned for
+those two roles under this executor mode would be meaningless at best and a
+false RED/refusal at worst. GREEN never needs the <code>--allow-usage-spend</code>
+consent gate below, so a session-executor run never prompts or refuses on
+their account. <code>--executor headless</code> restores normal per-provider
+classification for both roles.</p>
+<p>The full decision table (and the research this classifier compiles)
+lives in <code>docs/20260826_113000_Claude_T1207_BILLING_SURFACE_SURVEY.md</code>; the
+code is <code>gald3r_swarm/autopilot/billing_surface.go</code>.</p>
+<h3 id="troubleshooting-unexpected-api-billing-on-a-headless-run">Troubleshooting: unexpected API billing on a headless run<a class="headerlink" href="#troubleshooting-unexpected-api-billing-on-a-headless-run" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom</strong> -- a headless <code>claude -p</code> run bills Console/Platform API dollars even though the
+account signed in has an active Claude subscription.</p>
+<p><strong>Cause</strong> -- <code>claude -p</code> (headless Claude Code) resolves credentials in a fixed precedence order
+every request, and its own docs state plainly: "<code>ANTHROPIC_API_KEY</code> ... In non-interactive mode,
+the key is always used when present" -- with <strong>zero interactive confirmation</strong>, unlike the
+one-time approval prompt an interactive session gets. If a shell that spawns <code>claude -p</code> also
+carries <code>ANTHROPIC_API_KEY</code>/<code>ANTHROPIC_AUTH_TOKEN</code> (for example, left over from configuring the
+registry-vocab <code>anthropic</code> provider in the same shell), every headless <code>claude</code> turn silently
+bills those dollars instead of the included subscription.</p>
+<p><strong>What gald3r does about it</strong> -- the choke point every coordinator/implementer/reviewer
+CLI-vocab spawn passes through (<code>buildCoordinatorEnv</code>, <code>coordinator_invoke.go</code>) strips both vars
+from a <code>claude</code>-provider child's environment unless you have explicitly consented via
+<code>--allow-usage-spend</code>.</p>
+<h3 id="the-allow-usage-spend-gate">The <code>--allow-usage-spend</code> gate<a class="headerlink" href="#the-allow-usage-spend-gate" title="Permanent link">&para;</a></h3>
+<p>A RED-classified role refuses to dispatch at all without <code>--allow-usage-spend</code>
+-- the refusal names the account, the provider, and the exact flag. With the
+flag:</p>
+<ul>
+<li>In an <strong>interactive terminal</strong>, you still get a y/N intent-verification
+  prompt naming the account and provider before the turn dispatches.</li>
+<li>In a <strong>non-interactive context</strong> (a spawned bucket subprocess, a scheduled/
+  headless run), the flag itself is the consent -- no prompt is possible, so
+  none is attempted; the loud RED banner and audible cue still fire.</li>
+</ul>
+<p>Passing <code>--allow-usage-spend</code> on <code>autopilot loop</code>/<code>run</code> arms the
+<code>GALD3R_ALLOW_USAGE_SPEND</code> env var for the whole process, which every
+self-exec'd <code>go-code</code>/<code>go-bug</code>/<code>go-review</code> bucket subprocess inherits --
+you do not need to pass the flag again per bucket.</p>
+<h3 id="account-identity-and-credential-swap-detection">Account identity and credential-swap detection<a class="headerlink" href="#account-identity-and-credential-swap-detection" title="Permanent link">&para;</a></h3>
+<p>Where cheaply obtainable (<code>claude auth status</code>'s <code>email</code> field today), the
+authenticated account identity is shown in every banner line -- never
+omitted, rendered as "unknown identity" when unavailable. The first time you
+consent to a RED surface, that account is recorded per-provider under
+<code>~/.gald3r/billing_trust/approved_accounts.json</code> (a per-USER file,
+deliberately outside any project's <code>.gald3r/</code>). Every later launch compares
+the currently-authenticated identity against that record; a mismatch --
+the exact incident this defends against: a <code>claude login</code> silently swapping
+the CLI's own credential store to a different account than the one an
+interactive session stayed on -- forces RED regardless of the provider's
+normal color and prints:</p>
+<pre><code>credential changed since last approval: was &lt;old-account&gt;, now &lt;new-account&gt; -- headless spawns will bill &lt;new-account&gt;
+</code></pre>
+<p>and requires fresh consent (which updates the record) before dispatching.</p>
+<h3 id="the-audible-cue">The audible cue<a class="headerlink" href="#the-audible-cue" title="Permanent link">&para;</a></h3>
+<p>A RED banner plays an audible cue exactly once per launch (never repeating
+during the run): the owner-supplied <code>sounds/coins.wav</code> when it resolves
+(<code>GALD3R_SPEND_SOUND_FILE</code>, an AGENT_CONFIG <code>spend_sound_file:</code> key, or
+<code>&lt;project-root&gt;/sounds/coins.wav</code>, in that order -- <code>GALD3R_SPEND_SOUND=0</code>
+disables sound entirely), falling back to a terminal bell when no sound file
+resolves (<code>GALD3R_SPEND_BELL=0</code> disables the bell). Playback is best-effort
+and fire-and-forget on every platform (winmm <code>PlaySoundW</code> on Windows,
+<code>afplay</code> on macOS, <code>paplay</code>/<code>aplay</code> on Linux) -- it never crashes or delays
+launch if unavailable.</p>
+<h2 id="global-config-layer-and-the-verify-settings-gate">Global config layer and the verify-settings gate<a class="headerlink" href="#global-config-layer-and-the-verify-settings-gate" title="Permanent link">&para;</a></h2>
+<p>Per-project <code>.gald3r/config/AGENT_CONFIG.md</code> overrides are easy to forget once
+you have not touched a project in a while -- and a stale <code>implementer_model:</code>
+or <code>reviewer_provider:</code> pin silently steers a whole run. Two things address
+that:</p>
+<p><strong>A global config layer.</strong> <code>&lt;gald3r home&gt;/config/AGENT_CONFIG.md</code> (the same
+per-user directory <code>GALD3R_HOME</code> already points at) is a NEW, optional second
+layer with the same "key: value" scalar shape as the project file. Resolution
+order for every provider/model key is `flags &gt; project config &gt; global config</p>
+<blockquote>
+<p>engine defaults` -- a project's own override always wins, but a project
+with no override falls back to a sensible operator-wide default instead of a
+hardcoded one. View or edit either layer with:</p>
+</blockquote>
+<pre><code class="language-bash">gald3r config agent show              # every key set in either layer, with the winning source
+gald3r config agent get KEY           # one key's resolved value + source (project|global|unset)
+gald3r config agent set KEY VALUE --yes            # writes the PROJECT layer
+gald3r config agent set --global KEY VALUE --yes   # writes the GLOBAL layer
+</code></pre>
+<p><code>gald3r providers explain</code> also lints both layers now (not just the project
+file), including a "how many minor <code>gald3r_rel_version</code> releases behind this
+binary" distance when the two are comparable.</p>
+<p><strong>An opt-in verify-settings launch gate.</strong> <code>autopilot loop --verify-settings</code>
+prints the resolved provider/model/effort/lanes/budget receipt (the same
+information the launch banner already shows, plus any stale-config
+warnings) and requires an explicit <code>y</code>/<code>N</code> confirm in an interactive
+terminal, or <code>--verify-settings-yes</code> headless, before any claim/worktree/
+spend happens. This is deliberately <strong>opt-in</strong>, not the default: <code>autopilot
+loop</code> already hard-refuses a run that omits explicit per-role
+<code>--*-provider</code>/<code>--*-model</code> flags, and flipping this gate to mandatory
+for every launch would break any existing headless script/wrapper that
+invokes it without <code>--verify-settings-yes</code> -- that default flip is a
+separate, deliberate decision for the owner, not something bundled into this
+change.</p>
+<p><code>--stale-config-margin N</code> (default 2) tunes how many minor <code>gald3r_rel_version</code>
+releases behind is tolerated before <code>--verify-settings</code> warns that a
+config file predates this binary. The same run also warns if a role
+resolved to the self-hosted <code>gald3r</code> provider with a <code>&lt;provider&gt;:&lt;model&gt;</code>
+registry spec whose model id is not (or no longer) in <code>providers.yaml</code>'s
+roster for that provider.</p>
+<p><strong>A Throne surface for the same two layers.</strong> Settings &gt; Agent Config
+(<code>gald3r_throne/frontend/src/components/settings_pages/AgentConfigPage.tsx</code>)
+renders the same merged view <code>gald3r config agent show</code> prints -- every key
+set in either layer, tagged with the layer that won -- and a small form to
+write a new key into either the loaded project's layer or the global layer.
+It calls straight into the same Go <code>EffectiveAgentConfig</code>/
+<code>SetAgentConfigScalar</code> functions the CLI verbs call
+(<code>gald3r_throne/internal/bindings/agentconfig</code>), so the CLI receipt and the
+Throne view can never drift into two different readers/writers of
+<code>AGENT_CONFIG.md</code>. Read-only inspection works with no project loaded (global
+layer only); writing the project layer requires one.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

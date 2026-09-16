@@ -1,0 +1,2065 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="End-user documentation for the gald3r CLI -- install, core concepts, task/ bug workflow, autopilot, multi-project coordination, memory, plugins, and the full command reference.">
+      
+      
+      
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/reference/platforms/gald3r/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PLATFORM_SPEC.md — gald3r (native harness) - gald3r_core Product Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#platform_specmd-gald3r-native-harness" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-header__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gald3r_core Product Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PLATFORM_SPEC.md — gald3r (native harness)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Gald3r-Labs/gald3r_core" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../install/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../first-project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  First Project Walkthrough
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../commands/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Commands
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../skills/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Skills
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../agents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Agents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../verbs/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Verbs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../crash/" class="md-tabs__link">
+          
+  
+  
+  CRASH Explained
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../task-bug-workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Task & Bug Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../autopilot/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Autopilot
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../worktree-lanes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Worktree Lanes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../platform-usage/" class="md-tabs__link">
+          
+  
+  
+  Platforms
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../coordination/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Multi-Project Coordination
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../memory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Memory & Vault
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../providers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Models & Providers
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../local-ai/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Local AI (Ollama, LM Studio)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../plugins/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Plugins & Skill Packs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../longship/" class="md-tabs__link">
+          
+  
+  
+  Other gald3r Apps
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="gald3r_core Product Docs" class="md-nav__button md-logo" aria-label="gald3r_core Product Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gald3r_core Product Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Gald3r-Labs/gald3r_core" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Gald3r-Labs/gald3r_core
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../first-project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Project Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../verbs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verbs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRASH Explained
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CRASH Explained
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../crash/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../task-bug-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task & Bug Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autopilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../worktree-lanes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worktree Lanes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platform-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using gald3r With Your Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../platforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Setup by Tool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Support Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../coordination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Project Coordination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory & Vault
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models & Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../local-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local AI (Ollama, LM Studio)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins & Skill Packs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other gald3r Apps
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Other gald3r Apps
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../longship/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Longship (Terminal UI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../throne/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Throne (Desktop App)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-folder-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Folder Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ai-instruction-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. AI Instruction File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agents-support-not-yet-wired-execution-layer-exists-the-recursive-agent-primitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Agents Support — ❌ not yet wired (execution layer exists: the recursive agent primitive)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-skills-support-not-yet-wired" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Skills Support — ❌ not yet wired
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commands-workflows-not-yet-wired-dispatch-exists-chat-verb-dispatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commands / Workflows — ❌ not yet wired (dispatch exists: chat verb dispatch)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-hooks-system-not-yet-wired-engine-events-exist-gald3r_enginehooks-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Hooks System — ❌ not yet wired (engine events exist: gald3r_engine/hooks + stream)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rules-memory-not-yet-wired" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Rules / Memory — ❌ not yet wired
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-mcp-support-not-applicable-in-the-usual-sense" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. MCP Support — ❌ not applicable in the usual sense
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-owners-suggested-sequencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Owner's Suggested Sequencing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-relationship-to-the-self-coordinator-provider-and-the-recursive-agent-primitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Relationship to the Self-Coordinator Provider and the Recursive Agent Primitive
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atypical-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atypical Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gald3r-integration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gald3r Integration Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-evidence-internal-source-read-2026-08-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Evidence (internal source read, 2026-08-22)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="platform_specmd-gald3r-native-harness">PLATFORM_SPEC.md — gald3r (native harness)<a class="headerlink" href="#platform_specmd-gald3r-native-harness" title="Permanent link">&para;</a></h1>
+<p><strong>gald3r itself</strong> — a user driving <code>gald3r run</code> / <code>gald3r chat</code> directly as their harness,
+without any external IDE/agent tool in front of it. Today the platform roster has <strong>37 EXTERNAL
+targets</strong> (Claude Code, Cursor, Codex, ...) and gald3r is the one harness NOT on its own roster:
+<code>run</code>/<code>chat</code> load CRASH from the compiled binary (<code>gald3r_engine/crash</code>) but expose no
+user-extensible overlay the way an installed <code>.claude/</code>/<code>.cursor/</code> tree does for those platforms.
+This work makes gald3r the <strong>38th roster entry</strong>, closing that strange loop.</p>
+<blockquote>
+<p><strong>Authoring path: NEW.</strong> There is no prior spec for this platform — it did not exist on the
+roster before this. Unlike every other spec in this tree, <code>docs_url</code> is <code>internal</code>: there is no
+external product page to crawl: the "documentation" IS this repo's own source
+(<code>gald3r_engine/</code>, <code>gald3r_platforms/</code>) and the task's own Agent/Status History record.
+<code>crawl_max_age_days: 0</code> signals "not a live-docs-crawl candidate" rather than "always stale" —
+<code>@g-platform-scan-docs</code> has nothing external to re-check here.</p>
+<p><strong>Status: ❌ across the board — by decision, not by absence of a mechanism.</strong> This is the
+<code>gald3r</code>/<code>astrbot</code> distinction from <code>subq</code>'s ❌: subq has <strong>no native surface of its own, ever</strong>
+(a plugin, host owns everything). gald3r has a <strong>real, already-built runtime surface</strong> — see
+§3–8 below — but WHERE that surface should be exposed as a user-extensible overlay (root dirs
+vs <code>.gald3r/platform/</code>) is an <strong>explicit open owner decision</strong> this task's own description
+defers to Friday ratification (owner ask, 2026-08-12). Filling in a guessed placement here would
+repeat the exact mistake <code>layout_map.yaml</code>'s own header exists to prevent ("a missing LayoutMap
+entry is an explicit gap, never a silent guessed placement") — so every cell below stays ❌
+until that ratification happens and a follow-up task wires the runtime.</p>
+</blockquote>
+<hr />
+<h2 id="1-folder-hierarchy">1. Folder Hierarchy<a class="headerlink" href="#1-folder-hierarchy" title="Permanent link">&para;</a></h2>
+<p><strong>Status: ❓ undecided — the Friday ratification question itself.</strong></p>
+<p>Two candidate overlay locations, both structurally viable today:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Shape</th>
+<th>Tradeoffs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A. Root dirs</strong> (mirrors every other platform)</td>
+<td>A gald3r-specific dot-directory tree at the project root, e.g. <code>.gald3r-agent/{commands,rules,hooks,agents,skills}/</code>, sibling to <code>.claude/</code>/<code>.cursor/</code>/etc.</td>
+<td><strong>For</strong>: identical shape to every other <code>layout_map.yaml</code> entry — <code>generate_overlay</code> needs zero special-casing, <code>CheckPlatformSpec</code>/<code>ResolveSpecPath</code>/<code>GenerateOverlay</code> all already work generically over <code>dir</code>/<code>file</code> layout entries. <strong>Against</strong>: gald3r already owns <code>.gald3r/</code> at the project root for coordination state (tasks/bugs/plans) — a second dot-directory reads as two competing "the gald3r folder" concepts to a new user, and risks the exact ambiguous-naming collision <code>g-rl-42</code> warns about.</td>
+</tr>
+<tr>
+<td><strong>B. Nested under <code>.gald3r/platform/</code></strong></td>
+<td><code>.gald3r/platform/{commands,rules,hooks,agents,skills}/</code>, inside the SAME folder gald3r already writes coordination state to.</td>
+<td><strong>For</strong>: one folder, one mental model — "everything gald3r-owned is under <code>.gald3r/</code>" (matches this repo's own <code>g-rl-33</code> doctrine that <code>.gald3r/</code> is the coordination surface of record). No new dot-directory to explain. <strong>Against</strong>: <code>.gald3r/</code> is already governed by the <code>.gald3r/ Folder Gate</code> (agent-selection required before any read/write) and the <code>.gald3r/ Gitignore Gate</code> (controller/WPAC repos must NOT gitignore it) — a platform overlay living inside it inherits those gates whether or not they make sense for "my personal hook scripts", and a controller/WPAC repo's <code>.gald3r/</code> is coordination-owned board state, not a place individual contributors expect to drop their own commands/rules.</td>
+</tr>
+</tbody>
+</table>
+<p>No default is asserted here. <code>layout_map.yaml</code>'s <code>gald3r: {}</code> entry stays empty (§ this file's own
+header) until one of these is ratified.</p>
+<pre><code>&lt;project-root&gt;/
+└── (no gald3r-native overlay tree yet -- pending ratification, see table above)
+</code></pre>
+<hr />
+<h2 id="2-ai-instruction-file">2. AI Instruction File<a class="headerlink" href="#2-ai-instruction-file" title="Permanent link">&para;</a></h2>
+<p><strong>Status: ❌ not yet wired</strong>, same reasoning as §1: <code>root_instructions</code> in <code>layout_map.yaml</code>
+needs a <code>file:</code> target, and that target's location is gated on the same overlay-location decision.
+Once ratified, gald3r's own generic <code>AGENTS.md</code> template (the same package-embedded body every
+other <code>root_instructions</code> platform already emits, per <code>layout_map.yaml</code>'s own <code>root_instructions</code>
+documentation) is the obvious candidate — gald3r has no reason to invent a second convention here.</p>
+<hr />
+<h2 id="3-agents-support-not-yet-wired-execution-layer-exists-the-recursive-agent-primitive">3. Agents Support — ❌ not yet wired (execution layer exists: the recursive agent primitive)<a class="headerlink" href="#3-agents-support-not-yet-wired-execution-layer-exists-the-recursive-agent-primitive" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>What already exists</strong>: <code>gald3r_engine/agent</code> is the harness's own agent-loop package
+  (<code>act_halting.go</code>, <code>context.go</code>, ...) — the runtime that runs a session at all. The
+  recursive agent primitive is the layer that makes a <strong>subagent</strong> invocation possible from
+  inside that loop — i.e. the mechanism a <code>g-agnt-*.md</code> persona would actually execute through,
+  the same way Claude Code's <code>Agent</code> tool or Cursor's subagent dispatch does today.</li>
+<li><strong>What's missing</strong>: a rendered <code>agents:</code> overlay location (§1) PLUS the actual wiring from a
+  discovered <code>g-agnt-*.md</code> persona file to a recursive-agent invocation. Neither exists
+  yet. This depends on the recursive agent primitive landing first
+  — do not build a parallel, competing agent-dispatch mechanism here.</li>
+<li>Relationship: the recursive agent primitive is the <em>execution primitive</em>; this platform's
+  <code>agents:</code> layout entry is the <em>discovery/placement convention</em> that would point at personas
+  for it to run. Two different, sequenced pieces of work.</li>
+</ul>
+<h2 id="4-skills-support-not-yet-wired">4. Skills Support — ❌ not yet wired<a class="headerlink" href="#4-skills-support-not-yet-wired" title="Permanent link">&para;</a></h2>
+<ul>
+<li>gald3r already has a skill-authoring convention (<code>g-skl-*/SKILL.md</code>, this very file's sibling)
+  and a skill-pack install mechanism (<code>g-skill-pack-add</code> et al.) for EXTERNAL platforms. Making
+  gald3r itself a skill-consuming platform means deciding whether <code>gald3r chat</code> reads
+  <code>SKILL.md</code> frontmatter/discovery the same way, and from where (§1). Lower priority than
+  hooks/commands per the owner's suggested sequencing (§9) — no runtime skill-discovery loader
+  exists in <code>gald3r_engine</code> today.</li>
+</ul>
+<h2 id="5-commands-workflows-not-yet-wired-dispatch-exists-chat-verb-dispatch">5. Commands / Workflows — ❌ not yet wired (dispatch exists: chat verb dispatch)<a class="headerlink" href="#5-commands-workflows-not-yet-wired-dispatch-exists-chat-verb-dispatch" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>What already exists</strong>: <code>gald3r chat</code> already dispatches slash-style verbs inside a chat
+  session ("chat verb dispatch exists"). This
+  is the SAME class of mechanism a <code>@g-*</code>/<code>/g-*</code> command needs to hook into.</li>
+<li><strong>What's missing</strong>: a rendered <code>commands:</code> overlay location (§1) that projects
+  <code>g-*.md</code>/<code>g-command-new</code>-authored command files into something the existing chat-verb dispatcher
+  actually discovers and routes to. The dispatcher itself is not gated on the ratification — only
+  the "where do USER-authored command files live on disk" question is.</li>
+<li>Named by the owner as one of the two components to wire <strong>first</strong> (§9), alongside hooks, because
+  this runtime hook already exists and needs the least new engine work.</li>
+</ul>
+<h2 id="6-hooks-system-not-yet-wired-engine-events-exist-gald3r_enginehooks-stream">6. Hooks System — ❌ not yet wired (engine events exist: gald3r_engine/hooks + stream)<a class="headerlink" href="#6-hooks-system-not-yet-wired-engine-events-exist-gald3r_enginehooks-stream" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>What already exists</strong>: <code>gald3r_engine/hooks</code> is the native lifecycle hook system —
+  session/compact/tool-use events already fire user-configured command/http/llm_prompt hooks,
+  optionally blocking the guarded operation on failure (see that package's own doc comment).
+  <code>gald3r_engine/stream</code> independently folds the harness's fine-grained event stream into
+  render-ready blocks (text/reasoning/tool_group/error/lifecycle) tagged with agent/depth/turn —
+  hook-shaped events per the stream protocol.</li>
+<li><strong>What's missing</strong>: <code>gald3r_engine/hooks</code>' loader currently reads hook CONFIG from wherever the
+  engine's own caller points it (not yet a platform-overlay convention), and there is no
+  <code>hooks:</code> <code>layout_map.yaml</code> entry projecting <code>g-hk-*.py</code>-style neutral hook scripts into that
+  loader's discovery path. Named by the owner as one of the two components to wire <strong>first</strong>
+  (§9) — the mechanism to hang a <code>hooks:</code> layout entry off of is the closest to "already built"
+  of every component type here.</li>
+</ul>
+<h2 id="7-rules-memory-not-yet-wired">7. Rules / Memory — ❌ not yet wired<a class="headerlink" href="#7-rules-memory-not-yet-wired" title="Permanent link">&para;</a></h2>
+<ul>
+<li>gald3r has no system-prompt-injection convention today for user-authored <code>g-rl-*.md</code> rule
+  files the way Claude Code's <code>.claude/rules/</code> or Cursor's <code>.cursor/rules/</code> do. This needs new
+  engine work (a rules-injection point in the session/context-assembly path,
+  <code>gald3r_engine/contextassembly</code> is the closest existing package) beyond the ratification
+  question alone — lowest priority per the owner's suggested sequencing (§9).</li>
+</ul>
+<h2 id="8-mcp-support-not-applicable-in-the-usual-sense">8. MCP Support — ❌ not applicable in the usual sense<a class="headerlink" href="#8-mcp-support-not-applicable-in-the-usual-sense" title="Permanent link">&para;</a></h2>
+<ul>
+<li>gald3r-the-harness is not itself an MCP <em>client target</em> the way an IDE is (a user's own MCP
+  servers are configured for whatever harness they run, and <code>gald3r_mcp</code>/<code>gald3r_sdk_plugins</code>
+  already exist as gald3r's own MCP-adjacent packages for other purposes). This cell tracks
+  "does a <code>gald3r</code>-platform overlay register an MCP server the same way other platforms' <code>mcp:</code>
+  layout entries do" — undecided, not prioritized in the owner's suggested first wave (§9).</li>
+</ul>
+<hr />
+<h2 id="9-owners-suggested-sequencing">9. Owner's Suggested Sequencing<a class="headerlink" href="#9-owners-suggested-sequencing" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>"which components the runtime can actually honor first (suggest hooks + commands first --
+engine events exist, chat verb dispatch exists)"</p>
+</blockquote>
+<p>Ranked by "how much of the runtime seam already exists, independent of the ratification question":</p>
+<ol>
+<li><strong>Hooks</strong> — <code>gald3r_engine/hooks</code> + <code>gald3r_engine/stream</code> already exist; needs a
+   <code>hooks:</code> layout entry projecting scripts into the existing loader, once §1 is ratified.</li>
+<li><strong>Commands</strong> — chat verb dispatch already exists; needs a <code>commands:</code> layout entry
+   projecting <code>g-*.md</code> files into the existing dispatcher, once §1 is ratified.</li>
+<li><strong>CRASH folders</strong> — <code>gald3r_engine/crash</code> already loads CRASH from the compiled binary;
+   extending it to also load a user overlay is a natural
+   next step once §1 lands, since the mechanism (dispatch/activation) already exists.</li>
+<li><strong>Agents</strong> — blocked on the recursive-agent execution primitive landing;
+   the <code>agents:</code> layout entry alone does not make subagents runnable.</li>
+<li><strong>Rules</strong> — needs new context-assembly injection work beyond the ratification question.</li>
+<li><strong>Skills</strong> — lowest priority; no runtime skill-discovery loader exists yet.</li>
+</ol>
+<h2 id="10-relationship-to-the-self-coordinator-provider-and-the-recursive-agent-primitive">10. Relationship to the Self-Coordinator Provider and the Recursive Agent Primitive<a class="headerlink" href="#10-relationship-to-the-self-coordinator-provider-and-the-recursive-agent-primitive" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>The self-coordinator provider</strong> — a <em>different feature</em> with the <em>same self-hosting
+  theme</em> as this one: gald3r acting as its own coordinator/provider. This platform work is
+  about gald3r users getting the CRASH/Commands/Rules/Agents/Skills/Hooks <em>component surface</em>;
+  the self-coordinator provider is about gald3r <em>coordinating itself</em> as a provider. Related
+  in spirit, not a dependency in either direction as currently scoped — flag for the owner if
+  Friday's ratification reveals a real shared mechanism (e.g. both wanting the same
+  overlay-location decision).</li>
+<li><strong>The recursive agent primitive</strong> — a <strong>real dependency</strong> for §3 (Agents Support) only:
+  it is the execution layer a discovered <code>g-agnt-*.md</code> persona would run through. Every other
+  component (hooks, commands, rules, skills, CRASH) is independent of it.</li>
+</ul>
+<hr />
+<h2 id="atypical-handling">Atypical Handling<a class="headerlink" href="#atypical-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>No external docs to crawl.</strong> Unlike every other platform in this roster, gald3r's own
+  "documentation" is its own source tree + this task's Agent/Status History. <code>@g-platform-scan-docs
+  gald3r</code> has nothing external to diff against — re-verification here means re-reading
+  <code>gald3r_engine/{hooks,stream,crash,agent}</code> for drift, not re-crawling a URL.</li>
+<li><strong><code>layout_map.yaml</code> entry stays <code>gald3r: {}</code></strong> (deliberately empty, mirroring <code>subq</code>'s
+  precedent) until the Friday ratification lands. Do not fill it in speculatively.</li>
+</ul>
+<h2 id="gald3r-integration-notes">gald3r Integration Notes<a class="headerlink" href="#gald3r-integration-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>There is nothing to "install" for this platform in the usual <code>gald3r platform install
+  --platform gald3r</code> sense yet — the compiled binary already ships CRASH natively for <code>run</code>/
+  <code>chat</code>; what's missing is the user-EXTENSIBLE overlay this spec is scoping.</li>
+<li>Once §1 is ratified, follow-up implementation work should land a real <code>layout_map.yaml</code>
+  <code>hooks:</code> and <code>commands:</code> entry (per §9's sequencing), then extend <code>selftest.CheckPlatformSpec</code>
+  and this repo's roster-driven test suite the same way every other platform's real entries are
+  already covered (see <code>gald3r_platforms/generate/hooks_roster_test.go</code> for the pattern every
+  JSON-hooks-shaped platform already goes through).</li>
+</ul>
+<hr />
+<h2 id="capability-summary">Capability Summary<a class="headerlink" href="#capability-summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Hooks</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>MCP</th>
+<th>Docs Fresh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ verified working · ⚠️ partial / Cursor-generic · ❌ not supported yet · ❓ untested.</p>
+<p>Overall platform <code>status: ❌</code> — <strong>honest, decision-gated, not fabricated.</strong> gald3r has real
+runtime seams for hooks and commands (§6, §5) and a real execution-primitive dependency for
+agents (§3) — none are wired to a user-extensible overlay yet because WHERE that
+overlay lives (§1) is an explicit open owner decision, not an oversight.</p>
+<hr />
+<h2 id="verification-evidence-internal-source-read-2026-08-22">Verification Evidence (internal source read, 2026-08-22)<a class="headerlink" href="#verification-evidence-internal-source-read-2026-08-22" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>How verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Roster today is 37, not 38</td>
+<td><code>gald3r_platforms/registry/registry.go</code> <code>FallbackPlatforms</code> (before this spec) enumerated exactly 37 canonical names</td>
+</tr>
+<tr>
+<td>Hook events exist</td>
+<td><code>gald3r_engine/hooks/doc.go</code> — native lifecycle hook system (session/compact/tool-use)</td>
+</tr>
+<tr>
+<td>Stream protocol exists</td>
+<td><code>gald3r_engine/stream/doc.go</code> — folds harness event stream into render-ready blocks tagged agent/depth/turn</td>
+</tr>
+<tr>
+<td>CRASH loads from compiled binary</td>
+<td><code>gald3r_engine/crash/cli_dispatch.go</code> — <code>RecordActivation</code>/<code>DispatchLoad</code>/<code>dispatch.BuildDefaultEngine</code></td>
+</tr>
+<tr>
+<td>Chat verb dispatch exists</td>
+<td>owner-asserted 2026-08-12; not independently re-verified by this session (out of this session's declared scope)</td>
+</tr>
+<tr>
+<td>The recursive agent primitive is the agents execution layer</td>
+<td>this spec's own framing: "agents (subagent personas via the recursive primitive)"</td>
+</tr>
+<tr>
+<td>No prior <code>layout_map.yaml</code>/roster entry for gald3r</td>
+<td><code>git log</code> on <code>gald3r_platforms/assets/layout_map.yaml</code> / <code>registry.go</code> before this task's commit</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Reference page — canonical source: <code>g-skl-platform-gald3r/PLATFORM_SPEC.md</code> in the engine repo, generated by <code>scripts/generate_platform_support_docs.py</code>. Pages marked </em>curated<em> are hand-assessed and not yet live-verified.</em></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
