@@ -19,6 +19,16 @@ See the [FreeToken setup guide](https://gald3r-labs.github.io/gald3r_core/latest
 for configuration and a first agent run. Model fit, speed and tool-calling quality
 depend on your hardware and selected model.
 
+<!-- BEGIN: gald3r-release-highlights -->
+## New in 5.1.0: a rebuilt foundation for autonomous software delivery
+
+**From selecting a ticket to landing reviewed code, Gald3r's SDLC and swarm workflow has been overhauled.** Run compatible swarms simultaneously against one coordinated project board, retain accepted reviews across interrupted integration, escalate difficult work to a configured higher-level model, and recover unfinished work with a recorded next action.
+
+Worktrees are leaner: disposable checkouts no longer rebuild code graphs by default. Cleanup verifies ownership and actual removal while preserving dirty or unmerged work. The release's final signed CLI passed 33 upgrade checks across 11 real repositories.
+
+[Explore the 5.1.0 release](https://github.com/Gald3r-Labs/gald3r_core/releases/tag/v5.1.0) · [Read the changelog](CHANGELOG.md)
+<!-- END: gald3r-release-highlights -->
+
 <!-- BEGIN: gald3r-downloads -->
 ## Downloads
 
