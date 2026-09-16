@@ -24,6 +24,28 @@ recommended for general use.
 
 ---
 
+## [5.1.0] - 2026-09-16
+
+Gald3r 5.1.0 makes swarm work easier to resume, review and coordinate across parallel runs.
+
+### Clearer progress and recovery
+
+- Tasks and bugs follow a shared lifecycle, with consistent eligibility checks and clearer status, failure reasons and next actions.
+- Accepted reviews remain available when integration is interrupted. Recovery can continue from the recorded result without repeating a successful review.
+- Retries preserve failure history. Work escalates as failures accumulate, and an owner-approved retry grants a bounded additional attempt.
+- Work that needs human input or a particular environment stays out of automatic dispatch until its requirements are met.
+
+### Safer parallel work
+
+- Multiple controllers can work in separate checkouts while sharing one project board. Ownership checks prevent overlapping claims, and integration is serialized at the target branch.
+- Bug dispatch prioritizes severity and separates conflicting scopes while retaining individual review results.
+- Cleanup retains dirty, unmerged or ambiguously owned worktrees and reports why they remain, keeping unfinished work available for recovery.
+
+### Consistent project state
+
+- Board exports and status views distinguish accepted work awaiting integration from completed work, and expose pending cleanup or export work.
+- PostgreSQL-backed World Tree projects gain matching lifecycle, retry and integration checks, including authenticated access to retained review evidence. Server-backed use requires a compatible World Tree server; updating the CLI does not deploy the server.
+
 ## [5.0.58] - 2026-09-12
 
 - Project upgrades preserve local customizations and unknown file provenance, retain recovery backups, and report incomplete or failed migrations explicitly. Maintainer release checks now exercise upgrades across the full workspace.
