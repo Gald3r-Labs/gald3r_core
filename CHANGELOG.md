@@ -24,10 +24,6 @@ recommended for general use.
 
 ---
 
-## [5.1.1] - 2026-09-19
-
-Retry-safety fixture notes.
-
 ## [5.1.0] - 2026-09-16
 
 **A rebuilt foundation for autonomous software delivery.** Gald3r 5.1.0 overhauls the workflow behind autopilot and the `g-go-*` commands: selecting work, assigning agents, tracking attempts, reviewing changes, merging results, recovering interruptions, and cleaning up afterward.
