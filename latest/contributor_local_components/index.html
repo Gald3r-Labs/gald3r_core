@@ -23,7 +23,7 @@
     
     
       
-        <title>Contributor-local components, and how a canon component gets retired - gald3r_core Product Docs</title>
+        <title>Framework and local CRASH+ ownership - gald3r_core Product Docs</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#contributor-local-components-and-how-a-canon-component-gets-retired" class="md-skip">
+        <a href="#framework-and-local-crash-ownership" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Contributor-local components, and how a canon component gets retired
+              Framework and local CRASH+ ownership
             
           </span>
         </div>
@@ -1570,10 +1570,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-actually-ships" class="md-nav__link">
+  <a href="#source-and-names" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What actually ships
+        Source and names
       
     </span>
   </a>
@@ -1581,10 +1581,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#can-i-add-my-own-personal-skillsrules-locally-yes-with-one-naming-rule" class="md-nav__link">
+  <a href="#standard-upgrade" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Can I add my own personal skills/rules locally? Yes — with one naming rule
+        Standard upgrade
       
     </span>
   </a>
@@ -1592,54 +1592,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-paritydrift-audits-treat-a-personal-component-list-never-flag" class="md-nav__link">
+  <a href="#maintainer-changes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How parity/drift audits treat a personal component: list, never flag
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#retiring-a-canon-component-the-tombstone-registry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Retiring a canon component: the tombstone registry
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-retirement-stays-safe-against-the-contributor-local-case" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How retirement stays safe against the contributor-local case
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#surfacing-gald3r-doctors-tombstone_retirement-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Surfacing: gald3r doctor's tombstone_retirement check
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick reference
+        Maintainer changes
       
     </span>
   </a>
@@ -1666,144 +1622,71 @@
   
 
 
-<h1 id="contributor-local-components-and-how-a-canon-component-gets-retired">Contributor-local components, and how a canon component gets retired<a class="headerlink" href="#contributor-local-components-and-how-a-canon-component-gets-retired" title="Permanent link">&para;</a></h1>
-<p>, slices (a) and (d). Written directly from the owner's own verbatim question that
-opened this task: <em>"can I start putting my extra skills into the .claude and .cursor folders
-here or are they still used as the basis of what ships"</em> and <em>"how do we retire old gald3r
-CRASH, or does it just get left out there and might be causing behaviour issues?"</em> This page is
-the answer to both, and the two turn out to be one lifecycle gap, not two.</p>
-<h2 id="what-actually-ships">What actually ships<a class="headerlink" href="#what-actually-ships" title="Permanent link">&para;</a></h2>
-<p>Only one tree is the source of truth for what a <code>gald3r platform install</code>/<code>gald3r sync</code> run
-projects into a project's <code>.claude</code>/<code>.cursor</code>/etc. folders: the package-embedded neutral
-component set under <code>gald3r_platforms/assets/neutral_source/{commands,rules,hooks,agents,skills}</code>
-(the Go port; the historical Python source is
-<code>src/gald3r_core/platform/pipeline/neutral_source/</code> — see <code>gald3r_platforms/generate/overlay.go</code>'s
-own doc comment for the "one convention only" architectural note). <code>gald3r.ai/platforms/generate.
-GenerateOverlay</code> reads <em>that</em> tree and nothing else, and projects it per-platform through each
-<code>profile.PlatformProfile</code>'s layout map.</p>
-<p>This repo's own <code>.claude/</code> and <code>.cursor/</code> folders are <strong>not</strong> a second source of truth. They are
-this checkout's own dev-tool install of that same neutral component set — the same overlay a
-consumer project ends up with, kept current via <code>gald3r sync</code> (<code>gald3r_cli/internal/commands/
-sync.go</code>, <code>gald3r_maintainer</code>-build-tag-gated, checkout-only). Editing a file inside this repo's
-<code>.claude/rules/g-rl-43-*.md</code> directly, instead of editing <code>neutral_source/rules/g-rl-43-*.md</code> and
-re-running <code>gald3r sync --apply</code>, edits a <em>copy</em> that the next sync will either overwrite (if
-<code>neutral_source</code> never caught up's own regression guard now catches and flags that
-case rather than silently reverting it) or leave stale forever (if nobody remembers this
-checkout even has its own drifted copy). Either way, a canon-named file is the wrong place for
-one-off local content.</p>
-<h2 id="can-i-add-my-own-personal-skillsrules-locally-yes-with-one-naming-rule">Can I add my own personal skills/rules locally? Yes — with one naming rule<a class="headerlink" href="#can-i-add-my-own-personal-skillsrules-locally-yes-with-one-naming-rule" title="Permanent link">&para;</a></h2>
-<p>Yes. A contributor (this repo's owner very much included) can drop a personal, draft, or
-scratch component directly into this repo's <code>.claude/</code>/<code>.cursor/</code> folders, or into any installed
-consumer project's own overlay folders, without going anywhere near <code>neutral_source</code>. It will
-never be shipped, never be synced away, and never collide with a canon component — <strong>as long as
-it does not use the "g-" naming prefix.</strong></p>
-<p>Every canon CRASH component this project ships is named with a "g-" prefix: <code>g-status</code>,
-<code>g-rl-43-gald3r-search-mandate</code>, <code>g-skl-tasks</code>, <code>g-agnt-verifier</code>. That prefix is the entire
-contract. A personal component should use anything else — your own initials, a project
-codename, plain English (<code>wrm-scratch-notes</code>, <code>my-local-helper</code>, <code>draft-idea-tracker</code>). This is
-enforced in exactly one automated place today
-(<code>gald3r_platforms/pipeline.IsCanonicalComponentName</code>, task1208d): it decides which basenames are
-even eligible to be listed in the tombstone-retirement registry below, so a personal file can
-never accidentally become a deletion target — see "How retirement stays safe" below for why that
-matters beyond naming hygiene.</p>
-<h2 id="how-paritydrift-audits-treat-a-personal-component-list-never-flag">How parity/drift audits treat a personal component: list, never flag<a class="headerlink" href="#how-paritydrift-audits-treat-a-personal-component-list-never-flag" title="Permanent link">&para;</a></h2>
-<p><code>gald3r sync</code>'s drift report (this repo's own dev-tool resync) already separates its findings
-into <code>to_add</code> / <code>to_change</code> / <code>identical</code> / <code>orphaned</code> / <code>guarded</code>. A personal, non-canon
-component sitting inside a swept component directory (e.g. <code>.claude/rules/wrm-scratch-notes.md</code>)
-shows up as <code>orphaned</code> — present on disk, not part of the generated overlay — and <code>sync.go</code>'s own
-doc comment is explicit that <code>orphaned</code> paths are <strong>"only ever reported, never deleted"</strong> even
-with <code>--apply</code>. There is no <code>--prune</code> in this Go port at all (see <code>sync.go</code>'s "Scope trim" note).
-<code>gald3r doctor</code> follows the same posture: every check this task adds or touches
-(<code>user_mod_pairing</code>, <code>tombstone_retirement</code>) reports <code>warn</code> at worst, never <code>fail</code> — resolving
-either is framed as a deliberate human decision, not an automatically-corrected defect.</p>
-<p>In short: an <code>orphaned</code> listing is informational. It is not a parity gap, not a lint error, and
-never blocks a sync or an install. If you are building tooling on top of <code>gald3r sync --json</code>'s
-<code>orphaned</code> array, do not treat a non-"g-"-prefixed entry as a problem to fix — that is exactly
-the contributor-local shape this contract exists to protect.</p>
-<h2 id="retiring-a-canon-component-the-tombstone-registry">Retiring a canon component: the tombstone registry<a class="headerlink" href="#retiring-a-canon-component-the-tombstone-registry" title="Permanent link">&para;</a></h2>
-<p>Before, there was no way to actually <em>remove</em> a canon component from an
-already-installed project. Deleting a rule from <code>neutral_source</code> (as did for
-<code>g-rl-09-python_venv.md</code>, once the product stopped being Python/UV-based) only ever stops it
-from being written to <em>new</em> installs — every project that had already run <code>platform install</code>
-before that change keeps the retired file forever, still always-applying, with no cleanup path.
-That is the "does it just get left out there" half of the owner's question, and the answer used
-to be yes.</p>
-<p><code>gald3r_platforms/pipeline/tombstones.go</code>'s <code>RetiredOverlayPaths</code> registry closes that gap. It is
-an explicit, owner-curated list — never inferred from "not in the current overlay" (that would
-risk treating a contributor's personal file as a retirement target the moment its name happened
-to collide with a stale sweep). Retiring a canon component going forward means adding one entry
-per affected platform:</p>
-<pre><code class="language-go">{
-    Platform: &quot;claude&quot;,
-    RelPath:  &quot;.claude/rules/g-rl-09-python_venv.md&quot;,
-    Reason:   &quot; (2026-08-25 owner ruling): the product is no longer Python/UV-based; ...&quot;,
-}
-</code></pre>
-<p>From that point on, every <code>gald3r platform install</code> (default behavior; opt out with
-<code>--no-retire-tombstones</code>) deletes the file <strong>only</strong> when all three of these hold — see
-<code>pipeline.ApplyTombstoneRetirement</code>'s own doc comment for the full mechanism:</p>
-<ol>
-<li><strong>tombstoned</strong> — explicitly listed in <code>RetiredOverlayPaths</code> for this platform.</li>
-<li><strong>manifest-tracked</strong> — this platform's install-provenance ledger
- (<code>pipeline.UserModLedgerPath</code>, the same ledger (b)'s <code>--preserve-user-mods</code> reads)
-   has a recorded baseline for this exact path, i.e. gald3r itself is proven to have written it.</li>
-<li><strong>content-hash-matches-shipped</strong> — the current on-disk bytes still hash to that recorded
-   baseline. Any mismatch means something (almost certainly the user) touched the file since
-   gald3r last wrote it, and it is reported (<code>guarded_user_modified</code>) but <strong>never</strong> deleted.</li>
-</ol>
-<p>A retired path with no ledger entry at all (<code>skipped_not_manifest_tracked</code>) is likewise never
-deleted — no proof of gald3r authorship means no deletion, full stop, mirroring
-<code>ClassifyUserModifiedPaths</code>' identical fail-closed posture on the overwrite side.</p>
-<h2 id="how-retirement-stays-safe-against-the-contributor-local-case">How retirement stays safe against the contributor-local case<a class="headerlink" href="#how-retirement-stays-safe-against-the-contributor-local-case" title="Permanent link">&para;</a></h2>
-<p>The two halves of this task lock together on purpose: <code>RetiredOverlayPaths</code> can only ever name a
-path whose basename is canon-shaped (<code>IsCanonicalComponentName</code> returns true) —
-<code>TestRetiredOverlayPaths_AllEntriesUseCanonicalNaming</code> in
-<code>gald3r_platforms/pipeline/tombstones_test.go</code> fails the build the moment a non-canonical path is
-ever added to the registry by mistake. Combined with gate (1) above (a path must be <em>explicitly</em>
-listed, never inferred), a contributor's personal <code>wrm-scratch-notes.md</code> living in the exact same
-directory as a retired canon rule is structurally never a deletion candidate — it is simply never
-named anywhere the deletion logic looks.</p>
-<h2 id="surfacing-gald3r-doctors-tombstone_retirement-check">Surfacing: <code>gald3r doctor</code>'s <code>tombstone_retirement</code> check<a class="headerlink" href="#surfacing-gald3r-doctors-tombstone_retirement-check" title="Permanent link">&para;</a></h2>
-<p>Running <code>gald3r doctor</code> on any project reports a <code>tombstone_retirement</code> check (always <code>warn</code>,
-never <code>fail</code>) naming every <code>RetiredOverlayPaths</code> entry still present on disk, whether it would be
-cleaned up automatically on the next install (<code>would_delete</code>) or needs a human look
-(<code>guarded_user_modified</code>, <code>skipped_not_manifest_tracked</code>). A clean project (nothing retired ever
-installed there) reports <code>ok</code>.</p>
-<h2 id="quick-reference">Quick reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<h1 id="framework-and-local-crash-ownership">Framework and local CRASH+ ownership<a class="headerlink" href="#framework-and-local-crash-ownership" title="Permanent link">&para;</a></h1>
+<p>Owner clarification, 2026-09-18; supersedes the earlier hash-only retirement contract
+().</p>
+<h2 id="source-and-names">Source and names<a class="headerlink" href="#source-and-names" title="Permanent link">&para;</a></h2>
+<p>Shipped assets are authored in <code>gald3r_platforms/assets/neutral_source</code> and compiled
+into the installed runtime. Platform folders are generated installations.</p>
 <table>
 <thead>
 <tr>
-<th>Question</th>
-<th>Answer</th>
+<th>Name or surface</th>
+<th>Upgrade behavior</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>What actually ships to a consumer project?</td>
-<td>Only <code>gald3r_platforms/assets/neutral_source</code>, projected by <code>generate.GenerateOverlay</code>.</td>
+<td><code>g-*</code> CRASH+ component in a declared platform component directory</td>
+<td>Replace from the current embedded source; retire files absent from the current projection.</td>
 </tr>
 <tr>
-<td>Can I add my own local skill/rule to <code>.claude</code>/<code>.cursor</code>?</td>
-<td>Yes — name it without the <code>g-</code> prefix.</td>
+<td><code>g[a-z0-9]-*</code>, such as <code>gm-*</code>, <code>gd-*</code>, or <code>g0-*</code></td>
+<td>Preserve unchanged, including entire extension skill trees.</td>
 </tr>
 <tr>
-<td>Will <code>gald3r sync</code>/<code>doctor</code> complain about my local component?</td>
-<td>No — it is listed (<code>orphaned</code>), never flagged as an error, never auto-deleted.</td>
+<td>Other non-framework component names</td>
+<td>Preserve unchanged.</td>
 </tr>
 <tr>
-<td>How do I retire a canon (<code>g-</code>-prefixed) component for good?</td>
-<td>Delete it from <code>neutral_source</code> AND add an entry to <code>pipeline.RetiredOverlayPaths</code> for every affected platform.</td>
+<td>A system skill's <code>learned.md</code></td>
+<td>Preserve as durable user data, including after the skill is retired.</td>
 </tr>
 <tr>
-<td>Will retirement ever delete a file I modified?</td>
-<td>No — <code>guarded_user_modified</code> is reported, never deleted.</td>
+<td>Shared hook/MCP configuration</td>
+<td>Refresh framework entries while retaining local entries.</td>
 </tr>
 <tr>
-<td>Will retirement ever delete my personal component?</td>
-<td>No — only paths explicitly named in the registry are ever candidates, and the registry may only carry canon-named paths.</td>
+<td>Root instructions</td>
+<td>Refresh managed spans; retain local text outside them and unmarked legacy text.</td>
 </tr>
 </tbody>
 </table>
+<p>A namespace is an update ownership contract, not authentication or a security boundary.
+Put local CRASH+ outside <code>g-*</code>. Editing a system-named component does not transfer its
+ownership to the user. Explicitly declared framework support modules (the embedded
+hook README and bootstrap modules) are refreshed with their owning overlay.</p>
+<h2 id="standard-upgrade">Standard upgrade<a class="headerlink" href="#standard-upgrade" title="Permanent link">&para;</a></h2>
+<p><code>gald3r upgrade-project</code> calls the shared installer with <code>--refresh-framework</code>,
+<code>--force</code> and <code>--preserve-user-mods</code>. Refresh uses the selected platform's declarative
+component directories and <code>legacy_dirs</code>, not a repository-wide prefix sweep. It
+backs up every replacement and retirement before writing. Missing or mismatched
+install hashes do not prevent replacement of reserved framework components.</p>
+<p>The installer reports a read-only <code>framework_refresh</code> plan on dry-run. Apply replaces
+current files and retires obsolete files individually, including old framework
+<code>.gald3r-new</code> candidates. It never deletes an entire platform folder. Linked paths,
+a changed retirement plan, a failed backup, or an unresolved shared merge fail rather
+than producing a false completion claim. Repeated application must converge.</p>
+<p>Standalone <code>platform install --force --preserve-user-mods</code> retains its conservative
+reconciliation behavior unless <code>--refresh-framework</code> is requested. Framework refresh
+requires backups and retirement enabled. The old explicit tombstone registry remains
+available to conservative installs; it is no longer the only retirement mechanism
+used by a normal upgrade.</p>
+<h2 id="maintainer-changes">Maintainer changes<a class="headerlink" href="#maintainer-changes" title="Permanent link">&para;</a></h2>
+<p>Change reusable behavior in neutral source and shared installer/playbook code, then
+build the runtime and run normal project upgrades. Do not repair only one generated
+platform copy. Keep maintainer rules, hooks and skills in their own namespace. Hook
+registrations for those components must survive along with the files themselves.</p>
 
 
 

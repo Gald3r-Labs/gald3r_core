@@ -1406,6 +1406,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#grounded-inquiries-and-account-provider-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grounded inquiries and account provider configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#providersyaml-anatomy" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2116,6 +2127,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#grounded-inquiries-and-account-provider-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grounded inquiries and account provider configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#providersyaml-anatomy" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2643,6 +2665,36 @@ discipline applied to <code>doctor</code>/<code>selftest</code>/<code>errors</co
 </tr>
 </tbody>
 </table>
+<h2 id="grounded-inquiries-and-account-provider-configuration">Grounded inquiries and account provider configuration<a class="headerlink" href="#grounded-inquiries-and-account-provider-configuration" title="Permanent link">&para;</a></h2>
+<p><code>gald3r valk inquire QUESTION</code> asks world_tree for an answer grounded in project
+context. <code>gald3r valk ask QUESTION --project-id TARGET</code> sends a question to another
+project's agent through the event relay. A successful relay receipt does not mean
+that the peer has answered.</p>
+<p>For grounded inquiries, world_tree can return a successful context dump when the
+account has no usable model provider. The CLI renders the retrieved context with
+<code>model=structured</code> and <code>fallback=structured_only</code>, keeps <code>outcome=ok</code>, and exits
+successfully. The text output labels the answer as structured project context.
+Streaming responses carry the same meaning, including servers whose final frame
+supplies only the reserved <code>structured</code> model name.</p>
+<p>A routed chat requiring a model can instead return HTTP 409 with
+<code>no_provider_available</code>. The client accepts both FastAPI's <code>detail</code> envelope and
+older flat bodies. It surfaces <code>account_config</code>, the selector's <code>cause</code>, and
+<code>next_action=configure_provider</code>. Terminal inquiry stream errors carrying that
+condition use the same classification. The CLI exits 1 because no answer was
+completed; JSON retains the typed provider fields. Queued requests with this
+condition are parked rather than retried unchanged.</p>
+<p>Configure a BYO provider credential or a reachable local model endpoint in the
+account's world_tree routing preferences (<code>PUT /api/v1/ai/routing-preferences</code>),
+then retry the question. A terminal provider error may contain a cause such as
+<code>missing_credential</code>, <code>invalid_credential</code>, <code>unsupported_model</code>, or
+<code>provider_unavailable</code>; legacy messages without a cause use <code>unknown</code>.
+world_tree currently provides no hosted managed model for this route.
+Local <code>providers.yaml</code> settings and account routing preferences are separate
+configuration surfaces.</p>
+<p>Connection failures retain <code>offline</code>; rejected sessions retain <code>auth_required</code>;
+HTTP 402 retains <code>upgrade_required</code>. Server failures and other terminal stream
+errors retain their existing error classification. Changing provider
+configuration is the recovery action for the typed account condition.</p>
 <h2 id="providersyaml-anatomy"><code>providers.yaml</code> anatomy<a class="headerlink" href="#providersyaml-anatomy" title="Permanent link">&para;</a></h2>
 <h3 id="gald3r-init-providers"><code>gald3r init-providers</code><a class="headerlink" href="#gald3r-init-providers" title="Permanent link">&para;</a></h3>
 <pre><code>gald3r init-providers --help
