@@ -1206,6 +1206,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#check-a-lanes-declared-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check a lane's declared scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#why-gald3r-still-shows-up-in-lanes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1722,6 +1733,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#check-a-lanes-declared-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check a lane's declared scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#why-gald3r-still-shows-up-in-lanes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1795,7 +1817,7 @@ colliding on the same working tree. No new product: same git repo, same
 </tr>
 <tr>
 <td><strong>Implementer lane</strong></td>
-<td>A gald3r-owned worktree under <code>.gald3r-worktrees/&lt;repo&gt;/</code></td>
+<td>A gald3r-owned worktree under the sibling <code>&lt;repo&gt;_worktrees/</code></td>
 <td>Code, tests, CHANGELOG for one task/bug. Commit <strong>on that branch</strong>. Do not hand-edit the live board here — use <code>gald3r … --dir &lt;primary&gt;</code>.</td>
 </tr>
 <tr>
@@ -1831,6 +1853,44 @@ housekeep, spawn, and merge. Human or chat dirt <strong>on primary</strong> is t
 <li>Talk to the project with <code>gald3r project-agent</code> / <code>@g-project-agent</code>
    or Throne, not by treating primary as a scratch tree.</li>
 </ol>
+<h2 id="check-a-lanes-declared-scope">Check a lane's declared scope<a class="headerlink" href="#check-a-lanes-declared-scope" title="Permanent link">&para;</a></h2>
+<p>Run scope checks against the <strong>primary repository that owns the lane</strong>. The
+explicit binding is portable from the primary, a linked lane, or a nested
+source directory:</p>
+<pre><code class="language-powershell">gald3r worktree scope-check `
+  --repo-path G:/gald3r_labs/gald3r_core_exp `
+  --task-id  --role code-swarm --owner claude-sonnet
+</code></pre>
+<p><code>--repo-path</code> names the coordination owner; it does not change where source,
+board, or ordinary project commands operate. Current worktree resolution also
+recognizes a linked lane when the flag is omitted, but use the explicit primary
+path in bootstrap and handoff instructions so the owner is visible and the
+same command can be replayed from any directory.</p>
+<p>For a <code>code-swarm</code> lane, reserve a newly planned repository-relative path
+before editing it:</p>
+<pre><code class="language-powershell">gald3r worktree scope-check `
+  --repo-path G:/gald3r_labs/gald3r_core_exp `
+  --task-id  --role code-swarm --owner claude-sonnet `
+  --expand gald3r_project/board/statedb/new_file.go
+</code></pre>
+<p>Expansion changes only the invoking lane's existing lock manifest. It refuses
+the entire request if another live lane already holds a requested path; do not
+edit lock manifests by hand or proceed after that refusal. A normal scope check
+reports a <code>SCOPE_ESCAPE</code> for a changed path outside the lane's declared scope.</p>
+<p>Preserve a nonzero command result when a shell transcript formats both output
+streams. In PowerShell, capture the exit code immediately after the native
+command, print the captured output, then return that code:</p>
+<pre><code class="language-powershell">$scopeOutput = &amp; gald3r worktree scope-check --repo-path G:/gald3r_labs/gald3r_core_exp --task-id  --role code-swarm --owner claude-sonnet 2&gt;&amp;1
+$scopeExit = $LASTEXITCODE
+$scopeOutput | Write-Output
+if ($scopeExit -ne 0) { exit $scopeExit }
+</code></pre>
+<p>'s two observed incidents are acceptance evidence for this binding:
+and each first failed from an owned Core lane, then returned the
+expected owner, base, branch, and bucket after the explicit primary
+<code>--repo-path</code>; also expanded two planned statedb files before editing.
+The resolver now supports the lane invocation too, while the explicit form
+remains the canonical bootstrap command.</p>
 <h2 id="why-gald3r-still-shows-up-in-lanes">Why <code>.gald3r/</code> still shows up in lanes<a class="headerlink" href="#why-gald3r-still-shows-up-in-lanes" title="Permanent link">&para;</a></h2>
 <p>Git worktrees check out tracked files. <code>gald3r.db</code> is already gitignored.
 Lane sparse-checkout hides <code>tasks/</code> and <code>bugs/</code> so a stale

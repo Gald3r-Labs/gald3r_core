@@ -10,13 +10,9 @@
       
       
       
-        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/task-bug-workflow/">
+        <link rel="canonical" href="https://gald3r-labs.github.io/gald3r_core/latest/board-recovery/">
       
       
-        <link rel="prev" href="../reference/crash/hooks/">
-      
-      
-        <link rel="next" href="../autopilot/">
       
       
         
@@ -27,7 +23,7 @@
     
     
       
-        <title>Task & Bug Workflow - gald3r_core Product Docs</title>
+        <title>Recover malformed board scalars - gald3r_core Product Docs</title>
       
     
     
@@ -78,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#task-bug-workflow" class="md-skip">
+        <a href="#recover-malformed-board-scalars" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Task & Bug Workflow
+              Recover malformed board scalars
             
           </span>
         </div>
@@ -414,11 +410,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../task-bug-workflow/" class="md-tabs__link">
         
   
   
@@ -1056,37 +1050,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Task & Bug Workflow
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../task-bug-workflow/" class="md-nav__link">
         
   
   
@@ -1102,186 +1069,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-state-model-sqlite-first-markdown-second" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The state model: SQLite first, Markdown second
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tasks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Tasks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Create
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#find-what-to-work-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Find what to work on
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#claim-and-work" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Claim and work
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#acceptance-criteria" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Acceptance criteria
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add-criteria-to-an-existing-record" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Add criteria to an existing record
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recover-from-a-partial-update" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recover from a partial update
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hand-off-for-review" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hand off for review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#verify-reviewer-side-never-the-implementer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verify (reviewer side — never the implementer)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#housekeeping" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Housekeeping
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bugs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bugs
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#validation-and-drift" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validation and drift
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-next" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where next
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1783,10 +1570,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-state-model-sqlite-first-markdown-second" class="md-nav__link">
+  <a href="#prepare-and-preview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The state model: SQLite first, Markdown second
+        Prepare and preview
       
     </span>
   </a>
@@ -1794,148 +1581,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tasks" class="md-nav__link">
+  <a href="#apply-and-finish" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tasks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Tasks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Create
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#find-what-to-work-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Find what to work on
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#claim-and-work" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Claim and work
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#acceptance-criteria" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Acceptance criteria
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add-criteria-to-an-existing-record" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Add criteria to an existing record
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recover-from-a-partial-update" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recover from a partial update
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hand-off-for-review" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hand off for review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#verify-reviewer-side-never-the-implementer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verify (reviewer side — never the implementer)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#housekeeping" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Housekeeping
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bugs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bugs
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#validation-and-drift" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validation and drift
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-next" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where next
+        Apply and finish
       
     </span>
   </a>
@@ -1962,141 +1611,71 @@
   
 
 
-<h1 id="task-bug-workflow">Task &amp; Bug Workflow<a class="headerlink" href="#task-bug-workflow" title="Permanent link">&para;</a></h1>
-<p>The full lifecycle of tracked work in gald3r: how tasks and bugs are created, claimed,
-completed, and verified. Check the installed command's <code>--help</code> for the flags available
-in that deployed version.</p>
-<h2 id="the-state-model-sqlite-first-markdown-second">The state model: SQLite first, Markdown second<a class="headerlink" href="#the-state-model-sqlite-first-markdown-second" title="Permanent link">&para;</a></h2>
-<p><code>.gald3r/gald3r.db</code> is the source of truth for task/bug <strong>status transitions</strong>.
-<code>.gald3r/TASKS.md</code>, <code>.gald3r/BUGS.md</code>, and the individual files under <code>.gald3r/tasks/</code> and
-<code>.gald3r/bugs/</code> are a <strong>generated, portable cache</strong> that a database write regenerates — never
-the other way around. If the database doesn't exist yet (fresh clone, or you've been
-hand-editing Markdown), <code>gald3r db backfill</code> imports the files into it:</p>
-<pre><code>gald3r db backfill
+<h1 id="recover-malformed-board-scalars">Recover malformed board scalars<a class="headerlink" href="#recover-malformed-board-scalars" title="Permanent link">&para;</a></h1>
+<p><code>gald3r board recover-scalars</code> repairs a task or bug's malformed <code>title</code> or
+<code>reason</code> using the exact original value from a Git commit in the same repository.
+The source record must have the same immutable UUID. The operation preserves
+status, failure counts, lifecycle versions, history and unselected document bytes.
+It does not issue a review verdict.</p>
+<h2 id="prepare-and-preview">Prepare and preview<a class="headerlink" href="#prepare-and-preview" title="Permanent link">&para;</a></h2>
+<p>Save a JSON request with the record kind, ID and UUID, its current document
+SHA-256, and the source for each selected field. This is a template; replace each
+placeholder with observed evidence:</p>
+<pre><code class="language-json">{
+  &quot;kind&quot;: &quot;task&quot;,
+  &quot;id&quot;: &quot;123&quot;,
+  &quot;uuid&quot;: &quot;&lt;existing record UUID&gt;&quot;,
+  &quot;expected_before_sha256&quot;: &quot;&lt;SHA-256 of current document bytes&gt;&quot;,
+  &quot;fields&quot;: [{
+    &quot;field&quot;: &quot;title&quot;,
+    &quot;source_revision&quot;: &quot;&lt;full 40-character Git commit&gt;&quot;,
+    &quot;source_path&quot;: &quot;.gald3r/project/tasks/task123_example.md&quot;,
+    &quot;selector&quot;: &quot;heading&quot;,
+    &quot;value_sha256&quot;: &quot;&lt;SHA-256 of the exact selected UTF-8 value&gt;&quot;
+  }]
+}
 </code></pre>
-<pre><code>Backfilled 12 task(s), 4 bug(s), 9 document(s), 3 artifact record(s) into .gald3r/gald3r.db.
-  Tasks: 12 valid, 0 normalized, 0 skipped, 0 FAILED.
-  Bugs:  4 valid, 0 normalized, 0 skipped, 0 FAILED.
-  Documents: 9 ingested, 0 skipped.
-  Artifact records: 3 valid, 0 normalized, 0 skipped.
+<p>The value hash covers the extracted string without an added newline. The
+<code>heading</code> selector obtains a title from the matching record heading;
+<code>frontmatter</code> reads a valid scalar, and <code>reason-line</code> recovers an unambiguous
+historical reason line. Source-free replacement text is not accepted.</p>
+<pre><code class="language-text">gald3r board recover-scalars --request repair.json --json
 </code></pre>
-<p>Other database-sync verbs:</p>
-<pre><code>gald3r db verify              # report drift between the DB and the .gald3r/ files
-gald3r db rebuild             # regenerate the .gald3r/ files FROM the DB (opposite direction of backfill)
-gald3r db regenerate-index    # rebuild slim indexes (TASKS.md / BUGS.md / ADRS.md / ...) from SELECT; --kind and --apply
+<p>Inspect the field changes and <code>after_sha256</code>. Set <code>expected_after_sha256</code> in the
+request to that exact preview hash before applying.</p>
+<h2 id="apply-and-finish">Apply and finish<a class="headerlink" href="#apply-and-finish" title="Permanent link">&para;</a></h2>
+<pre><code class="language-text">gald3r board recover-scalars --request repair.json --apply --json
+gald3r board export
 </code></pre>
-<p>Work clones install the compiled <code>gald3r</code> binary and talk to <code>.gald3r/gald3r.db</code>
-directly — no <code>uv</code>, no Python venv. <code>uv run gald3r</code> exists only in this source
-checkout. world_tree Postgres mapping for each board kind is specified in
-<code>gald3r_project/board/worldtreesync</code> and remains GATED while / /
-world_tree are blocked (the mapping does not pretend the server already
-has the kinds).</p>
-<h2 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h2>
-<h3 id="create">Create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h3>
-<pre><code>gald3r task add &quot;Title&quot; -d &quot;Description&quot; --type feature --priority medium
+<p>Applying a tracked repair requires clean board files and creates a forward Git
+commit for the recovered record. Checkpoint unrelated board work first. Active
+controllers, target relocation debt, duplicate records, stale hashes, local
+divergence and ambiguous source evidence are refused. Investigate the named
+conflict before preparing a new request; changing a hash alone does not resolve it.</p>
+<p>For a reviewed batch, apply each exact request before the final <code>board export</code>.
+The export settles retained intent and refreshes derived indexes. Confirm the
+restored values and unchanged lifecycle data, then commit any derived index
+changes through the normal project workflow.</p>
+<p>Before replacing the file, apply saves an exact recovery intent with the original
+and repaired bytes and their source proof. While it is pending, other changes to
+that record are refused, including deletion, projection refresh and rebuild.
+Unrelated records can still change; a bulk rebuild may finish earlier records
+before reporting the pending-record refusal. Preserve the returned intent ID and
+phase if interrupted.</p>
+<p>Repeat the same request to resume the recorded repair and finish its forward
+commit, or load the saved request by its applied intent ID:</p>
+<pre><code class="language-text">gald3r board recover-scalars --resume &lt;full intent_id&gt; --apply --json
 </code></pre>
-<p>Task types: <code>feature</code>, <code>bug_fix</code>, <code>refactor</code>, <code>docs</code>, <code>test</code>, <code>chore</code> (see <code>gald3r task add
---help</code> for the current, authoritative list — it's enforced at creation time, not just a
-convention). Priority: <code>low</code> / <code>medium</code> / <code>high</code> / <code>critical</code>, or a direct <code>--priority-score
-1-10</code> for finer-grained ranking (higher scores surface first when several tasks are ready at
-once).</p>
-<h3 id="find-what-to-work-on">Find what to work on<a class="headerlink" href="#find-what-to-work-on" title="Permanent link">&para;</a></h3>
-<pre><code>gald3r task ready
-</code></pre>
-<p>Lists every task that is <code>pending</code>, has no unmet <code>dependencies:</code>, and clears the active value
-floor — i.e. genuinely pickable right now. <code>gald3r task next</code> narrows that to a single
-recommendation. <code>gald3r task list</code> shows everything (any status), with a compact value-bar
-chart rather than a plain table:</p>
-<pre><code>gald3r task list
-</code></pre>
-<pre><code>1        v8  high       pending    Write the landing page copy
-2        v5  medium     in-progress  Fix broken footer link
-</code></pre>
-<p>Status indicators used across the CLI: <code>pending</code>, <code>in-progress</code> (claimed), <code>awaiting-verification</code>,
-<code>completed</code>, <code>failed</code>, <code>paused</code>, <code>cancelled</code>.</p>
-<h3 id="claim-and-work">Claim and work<a class="headerlink" href="#claim-and-work" title="Permanent link">&para;</a></h3>
-<pre><code>gald3r task update T1 --status in-progress
-</code></pre>
-<p>Moves a task from <code>pending</code> to <code>in-progress</code> and records the claim. In an autonomous/swarm run,
-<code>gald3r go-preflight</code> is the concurrency-safe way to claim several tasks at once — only one
-agent wins any given task even when several are racing for the same queue. See
-<a href="../autopilot/"><code>autopilot.md</code></a>.</p>
-<h3 id="acceptance-criteria">Acceptance criteria<a class="headerlink" href="#acceptance-criteria" title="Permanent link">&para;</a></h3>
-<p>Every task can carry an acceptance-criteria checklist. Tick items individually as you satisfy
-them (per-criterion attestation, not a single "done" flag):</p>
-<pre><code>gald3r task ac-check T1 1        # tick criterion #1
-gald3r task ac-status T1         # see checked/unchecked status
-</code></pre>
-<h3 id="add-criteria-to-an-existing-record">Add criteria to an existing record<a class="headerlink" href="#add-criteria-to-an-existing-record" title="Permanent link">&para;</a></h3>
-<p>Supply explicit criteria, one per line, from a file:</p>
-<pre><code class="language-text">gald3r task update T1 --acceptance-criteria-file criteria.txt --json
-gald3r bug update BUG-1 --acceptance-criteria-file criteria.txt --json
-</code></pre>
-<p>These commands append unchecked items and create a missing acceptance-criteria
-section on a legacy record. They preserve existing checked items and other
-authored sections. Repeating an append adds another copy of the supplied items;
-inspect the record before retrying. Ambiguous competing checklist sections are
-refused. A fenced example is not the authoritative criteria section.</p>
-<p>For tasks, <code>--ac-replace</code> explicitly replaces all checklist items, including
-checked items, while preserving other prose in that section. Use it only when
-replacement is intended. An absent section is never filled with invented criteria.</p>
-<h3 id="recover-from-a-partial-update">Recover from a partial update<a class="headerlink" href="#recover-from-a-partial-update" title="Permanent link">&para;</a></h3>
-<p>A command with several update options applies separate operations in sequence.
-If a later operation fails, earlier successful changes remain. The command exits
-nonzero and reports those confirmed changes; JSON output includes <code>partial: true</code>,
-<code>changed</code> and <code>next_action</code>. The failed operation may also have persisted state
-before an export error, so inspect the current record before retrying any option.
-This report does not claim rollback or declare that every unlisted change failed.</p>
-<h3 id="hand-off-for-review">Hand off for review<a class="headerlink" href="#hand-off-for-review" title="Permanent link">&para;</a></h3>
-<pre><code>gald3r task update T1 --status awaiting-verification
-</code></pre>
-<h3 id="verify-reviewer-side-never-the-implementer">Verify (reviewer side — never the implementer)<a class="headerlink" href="#verify-reviewer-side-never-the-implementer" title="Permanent link">&para;</a></h3>
-<pre><code>gald3r task verify T1 --pass    # -&gt; completed
-gald3r task verify T1 --fail    # -&gt; back to pending, with the failure reason recorded
-</code></pre>
-<p><code>gald3r verify</code> (no task id — the standalone verb) is the completion GATE: it checks whether
-a task's acceptance criteria are actually satisfied before you call it done, rather than
-trusting a self-report.</p>
-<h3 id="housekeeping">Housekeeping<a class="headerlink" href="#housekeeping" title="Permanent link">&para;</a></h3>
-<pre><code>gald3r task-sync-check           # validate TASKS.md against the tasks/ files (--fix repairs)
-gald3r task archive               # move completed/failed/cancelled tasks into .gald3r/archive/
-gald3r task delete            # HARD delete -- only for tasks created in the wrong project
-gald3r task stale-claims           # find and resolve in-progress tasks whose claim has expired
-gald3r db rebuild                  # regenerate TASKS.md and the task files from the database
-</code></pre>
-<h2 id="bugs">Bugs<a class="headerlink" href="#bugs" title="Permanent link">&para;</a></h2>
-<p>Bugs mirror the task shape (<code>gald3r bug add/list/show/update/ac-check/archive/delete</code>), with
-one difference at the terminal state: instead of <code>task verify --pass</code>, a bug is closed with:</p>
-<pre><code>gald3r bug add &quot;Title&quot; -d &quot;What's broken&quot; --severity high --file path/to/file.py --line 42
-gald3r bug list
-gald3r bug resolve BUG-1
-</code></pre>
-<p>Bug severity uses a 1-10 damage scale (a cosmetic typo is 1-2, a crash on a common path or a
-security gap is 7-8, secret leaks or data destruction top out at 9-10) — the mirror image of a
-task's value score. <code>gald3r status</code> renders open bugs on the same style of bar chart as tasks,
-scored by damage instead of value:</p>
-<pre><code>Bugs (1 open, 4 all statuses)
-  9-10 (crit) │                                         0
-  7-8 (high)  │████████████████████████████████████████ 1
-  5-6 (med)   │                                         0
-  1-4 (nit)   │                                         0
-</code></pre>
-<h2 id="validation-and-drift">Validation and drift<a class="headerlink" href="#validation-and-drift" title="Permanent link">&para;</a></h2>
-<pre><code>gald3r validate            # schema/status-vocabulary/folder-placement checks on tasks|bugs
-gald3r validate --fix      # normalize what's safely auto-fixable
-gald3r db verify           # database-vs-Markdown drift report
-</code></pre>
-<p><code>gald3r validate</code> is designed to run as a fail-closed pre-commit hook on staged
-<code>.gald3r/tasks/**</code> and <code>.gald3r/bugs/**</code> — a malformed frontmatter field, or an open-family
-task/bug filed under a retired per-status subfolder instead of the flat <code>tasks/</code> / <code>bugs/</code>
-root, is caught before it merges rather than discovered later by a human reading <code>TASKS.md</code>.
-Terminal records belong in <code>tasks/completed|failed|cancelled/</code> and <code>bugs/done|cancelled/</code>.</p>
-<h2 id="where-next">Where next<a class="headerlink" href="#where-next" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="../autopilot/"><code>autopilot.md</code></a> — letting gald3r work the task queue itself instead of
-  running each step by hand</li>
-<li><a href="../verbs/"><code>verbs.md</code></a> — the full CLI verb catalog, grouped by purpose</li>
-</ul>
+<p>Use either <code>--request</code> or <code>--resume</code>. Resume accepts no new values or hashes. Use
+the intent ID from apply or a pending-record refusal. A new preview reports
+<code>phase=preview</code> and no intent ID; apply creates the durable ID after the reviewed
+after hash is supplied.</p>
+<p>The current file and database must still match the captured original or
+repaired state. An after hash alone cannot authorize a retry or include unrelated
+dirty changes. Do not overwrite newer document or database content.</p>
+<p>This command accompanies the shared scalar fixes for and.
+Historical reasons remain historical text; recovering their representation does
+not grant old approvals or reactivate old gates.</p>
 
 
 

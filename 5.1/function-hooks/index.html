@@ -1603,6 +1603,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#plain-event-payloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plain event payloads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#registration-order-is-nesting" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1651,6 +1662,17 @@
     <span class="md-ellipsis">
       
         Coexistence with shell hooks (unchanged)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-hook-files-and-trust-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project hook files and trust records
       
     </span>
   </a>
@@ -1750,6 +1772,22 @@ ability to <strong>reach into the runtime</strong> (call real methods, not just 
 </tr>
 </tbody>
 </table>
+<h2 id="plain-event-payloads">Plain event payloads<a class="headerlink" href="#plain-event-payloads" title="Permanent link">&para;</a></h2>
+<p><code>NewEvent</code>, <code>Event.With</code> and <code>Event.Get</code> recursively copy payload containers.
+Supported values are nil, booleans, strings, numeric scalars (including complex
+numbers), maps, slices and arrays, including named concrete types. Map keys and
+interface contents follow the same rules. Typed nil maps and slices remain nil;
+shared acyclic inputs are copied independently. Container identity and spare slice
+capacity are not part of the event contract.</p>
+<p>Pointers (including typed nil pointers), unsafe pointers, functions, channels,
+structs, cyclic containers and nesting beyond 256 levels are rejected with
+<code>ErrInvalidEventValue</code>. <code>NewEventChecked</code> and <code>WithChecked</code> return that error without
+publishing a partial event. Existing <code>NewEvent</code> and <code>With</code> signatures panic with
+that sentinel for invalid input, treating it as a programmer error. Use checked
+forms for fallible input. Do not mutate input concurrently while a snapshot is
+being constructed. <code>Get</code> returns a fresh copy; modifying it changes no event until
+it is explicitly passed to <code>With</code>. This protects event data, not other native Go
+side effects or arbitrary values returned in <code>Result.Value</code>.</p>
 <h2 id="registration-order-is-nesting">Registration order is nesting<a class="headerlink" href="#registration-order-is-nesting" title="Permanent link">&para;</a></h2>
 <p>Hooks register onto a <code>Bus</code> in order. Dispatch composes them <strong>onion-style</strong>: the
 <strong>first-registered</strong> hook is the <strong>outermost</strong> wrapper. It runs first, and its own call to
@@ -1839,6 +1877,41 @@ path.</p>
 through <code>gald3r_engine/crash/dispatch</code>'s existing <code>ComponentHook</code> participant exactly as before.
 Function hooks are an <em>additional</em>, coexisting path — a project may use either, both, or
 neither.</p>
+<h2 id="project-hook-files-and-trust-records">Project hook files and trust records<a class="headerlink" href="#project-hook-files-and-trust-records" title="Permanent link">&para;</a></h2>
+<p>Project hooks are JSON files in <code>.gald3r/hooks/functions/*.json</code>. Their file name determines
+stable registration order. A hook contains an <code>id</code>, an event glob <code>match</code>, and an <code>actions</code>
+array. The finite action vocabulary is <code>log</code>, <code>read</code>, <code>modify</code>, <code>next</code>, <code>return</code>, and
+<code>return-denied</code>. Each program has one control action: <code>next</code> continues to the wrapped core and
+may have <code>log</code> or <code>read</code> actions after it; <code>return</code> and <code>return-denied</code> stop the operation.
+<code>return</code> carries a JSON-shaped tool result (<code>success</code>, <code>output</code>, and optional <code>error</code>), so a
+replacement has the same typed result shape as a real tool call.</p>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;audit-read&quot;,
+  &quot;match&quot;: &quot;tool.call&quot;,
+  &quot;actions&quot;: [
+    {&quot;op&quot;: &quot;log&quot;, &quot;value&quot;: {&quot;message&quot;: &quot;tool operation begins&quot;}},
+    {&quot;op&quot;: &quot;modify&quot;, &quot;value&quot;: {&quot;tool_input&quot;: {&quot;path&quot;: &quot;README.md&quot;}}},
+    {&quot;op&quot;: &quot;next&quot;},
+    {&quot;op&quot;: &quot;read&quot;, &quot;value&quot;: {&quot;noun&quot;: &quot;context.read&quot;}}
+  ]
+}
+</code></pre>
+<p>The loader rejects a present malformed, unknown, stale, or unconsented hook before a tool runs.
+Use <code>gald3r function-hook local-author &lt;id&gt; .gald3r/hooks/functions/&lt;id&gt;.json --source ...</code>
+for a local-author record. For external bytes, use
+<code>gald3r function-hook external-consent &lt;id&gt; .gald3r/hooks/functions/&lt;id&gt;.json --source ... --consented-by ...</code>.
+Origin rows live in
+<code>.gald3r/config/CRASH_PRIMITIVE_ORIGINS.md</code>; external consent and explicit grants live beside it
+in <code>CRASH_EXTERNAL_CONSENT.md</code> and <code>CRASH_PRIMITIVE_GRANTS.md</code>.</p>
+<p>At runtime <code>tool.call</code> spans the guarded operation. A modified tool name and input pass through
+the ordinary hygiene, tool-set, permission, legacy <code>pre_tool_use</code>, registry default-hook, and
+sandbox checks before a handler runs. The outer adapter emits the final outcome and legacy
+<code>post_tool_use</code> for both a core result and a function-hook replacement.</p>
+<p>Each project primitive receives its own user-level, folded <code>$</code> engine. The available host
+adapters are <code>log.emit</code> and <code>context.read</code>; unsupported safe-default names are absent rather
+than advertised as working capabilities. Every adapter call itself emits <code>engine.call.&lt;noun&gt;</code>
+and remains subject to the final withholding fold. This controls the declarative runtime surface;
+it does not provide OS isolation for native Go code or shell hooks.</p>
 <h2 id="render-and-interaction-events-deferred-by-design">Render and interaction events — deferred by design<a class="headerlink" href="#render-and-interaction-events-deferred-by-design" title="Permanent link">&para;</a></h2>
 <p><code>ui.render</code> / <code>ui.press</code>-style events are the visual-extensibility half of this model: they are
 what make it matter for a desktop harness (Throne, <code>gald3r_ide</code>, Longship), not just a CLI one.

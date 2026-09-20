@@ -1180,6 +1180,45 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#review-proof-and-release-acceptance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Review proof and release acceptance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review proof and release acceptance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-the-registration-through-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prepare the registration through the CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#earlier-ordinary-reviews" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Earlier ordinary reviews
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gald3r-autoclaim-sequential-batch" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1994,6 +2033,45 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#review-proof-and-release-acceptance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Review proof and release acceptance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review proof and release acceptance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-the-registration-through-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prepare the registration through the CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#earlier-ordinary-reviews" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Earlier ordinary reviews
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gald3r-autoclaim-sequential-batch" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2386,6 +2464,102 @@ runs against the same session that implemented the task, checks acceptance crite
 one, and writes the actual <code>task verify --pass</code>/<code>--fail</code> verdict (a real DB-authoritative
 write, not just a status-history sentence describing one — see <code>task-bug-workflow.md</code>'s
 verify section).</p>
+<h3 id="review-proof-and-release-acceptance">Review proof and release acceptance<a class="headerlink" href="#review-proof-and-release-acceptance" title="Permanent link">&para;</a></h3>
+<p><code>autopilot loop --review-only</code> supports ordinary task and bug review. Its lifecycle
+PASS is a review decision. Registered integration acceptance also preserves the
+original two-stage artifact, criterion evidence and exact source manifests, then
+tracks landing to an explicit completion ref.</p>
+<p>The additive <code>review_proof</code> object appears in startup, per-item reviewer results,
+post-iteration and final summaries, in both text and JSON output:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>capability</code></td>
+<td><code>ordinary_lifecycle</code> or <code>registered_integration</code></td>
+</tr>
+<tr>
+<td><code>registration_status</code></td>
+<td><code>absent</code>, <code>active</code>, <code>invalid</code>, or <code>unknown</code></td>
+</tr>
+<tr>
+<td><code>acceptance_status</code></td>
+<td><code>absent</code>, <code>pending</code>, <code>accepted</code>, or <code>unknown</code></td>
+</tr>
+<tr>
+<td><code>landing_status</code></td>
+<td><code>unproven</code>, <code>pending</code>, <code>landed</code>, or <code>unknown</code></td>
+</tr>
+<tr>
+<td><code>items</code></td>
+<td>Exact task/bug identities observed in this run; each includes its current attempt/spec and native receipt digest when available</td>
+</tr>
+<tr>
+<td><code>observed_item_count</code>, <code>accepted_count</code>, <code>landed_count</code>, <code>unknown_count</code></td>
+<td>Counts for observed identities and their proof; an observed item may have been refused before a reviewer started</td>
+</tr>
+<tr>
+<td><code>next_action</code></td>
+<td>The supported step still needed</td>
+</tr>
+</tbody>
+</table>
+<p>An ordinary PASS normally reports acceptance <code>absent</code> and landing <code>unproven</code>.
+An accepted registration starts <code>active</code> with acceptance/landing <code>pending</code>.
+<code>accepted</code> requires the matching canonical artifact and native receipt for the
+current item, attempt and specification. <code>landed</code> additionally requires matching
+promotion metadata, fenced queue receipt and verified ancestry to the completion
+ref. These observations are read-only and timestamped; they do not alter verdicts
+or certify all release gates. Read failures report <code>unknown</code>. Selected server
+authority currently reports <code>unknown</code> when a complete native receipt/landing read
+is unavailable; a local cache is never treated as authoritative evidence.</p>
+<p>For a release cut, use <code>--release-review</code> together with <code>--review-only</code> and an
+accepted <code>--integration-registration</code> receipt. Both session and headless executors
+refuse missing, malformed, stale or mismatched registration before dispatch.</p>
+<h4 id="prepare-the-registration-through-the-cli">Prepare the registration through the CLI<a class="headerlink" href="#prepare-the-registration-through-the-cli" title="Permanent link">&para;</a></h4>
+<p>From the intended integration checkout, save an input JSON document containing
+these explicit choices (replace each placeholder with the actual value):</p>
+<pre><code class="language-json">{
+  &quot;operation_id&quot;: &quot;UNIQUE_REGISTRATION_OPERATION_ID&quot;,
+  &quot;run_id&quot;: &quot;ACTUAL_NEW_RUN_ID&quot;,
+  &quot;integration_ref&quot;: &quot;refs/heads/ACTUAL_INTEGRATION_BRANCH&quot;,
+  &quot;completion_ref&quot;: &quot;refs/heads/ACTUAL_COMPLETION_BRANCH&quot;,
+  &quot;base_sha&quot;: &quot;FULL_BASE_COMMIT_SHA&quot;,
+  &quot;reason&quot;: &quot;Why this run is collecting independent release acceptance&quot;
+}
+</code></pre>
+<p>Prepare the request, then submit it to the selected authority:</p>
+<pre><code class="language-text">gald3r project-agent lifecycle integration registration-template --request-file INPUT.json
+gald3r project-agent lifecycle integration register --request-file REQUEST.json
+</code></pre>
+<p>Save the first command's JSON output as <code>REQUEST.json</code>. The template observes the
+active project's authority/epoch, opaque repository identity and current full
+HEAD SHA; it checks the explicit branch/base/completion choices. It does not
+register a run, claim work, select an authority, or write a journal entry.
+Save the second command's accepted JSON receipt as <code>RECEIPT.json</code>. A template is
+an unaccepted request and cannot be used as the launch receipt.</p>
+<p>Launch with actual selectors and routing (use <code>--bugs BUG-ID,BUG-ID</code> alongside
+or instead of <code>--tasks</code> as appropriate):</p>
+<pre><code class="language-text">gald3r autopilot loop --executor session --review-only --release-review --integration-registration RECEIPT.json --tasks ID,ID --provider PROVIDER --model MODEL --max-iterations 5
+</code></pre>
+<p>Use the same flags with <code>--executor headless</code> for its supported execution path.
+The session executor must service the issued reviewer manifests as described by
+<code>gald3r prompt get playbook.session_executor</code>. Keep the original registration and
+manifest identities; the engine checks the original artifact before applying
+registered PASS and reports remaining integration work.</p>
+<h4 id="earlier-ordinary-reviews">Earlier ordinary reviews<a class="headerlink" href="#earlier-ordinary-reviews" title="Permanent link">&para;</a></h4>
+<p>Keep historical PASS/FAIL receipts and failure counters. Use the supported task
+or bug lifecycle to create a fresh forward attempt, make the actual implementation
+ready for verification, and obtain a new independent registered review. Do not
+attach an invented artifact to an old receipt or create a cosmetic implementation
+commit. Existing source already on the target supports the registered no-op
+landing path. <code>--resume</code> preserves a release run's proof requirement and exact
+registration; an ordinary historical run cannot acquire a registration on resume.</p>
 <h3 id="gald3r-autoclaim-sequential-batch"><code>gald3r autoclaim</code> — sequential batch<a class="headerlink" href="#gald3r-autoclaim-sequential-batch" title="Permanent link">&para;</a></h3>
 <pre><code>gald3r autoclaim
 </code></pre>
