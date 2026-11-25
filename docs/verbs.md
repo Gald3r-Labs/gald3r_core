@@ -72,6 +72,7 @@ from an older binary version, both point you at it by name.
 | `gald3r idea` | Capture, list, review, and promote ideas (`IDEA_BOARD.md`). |
 | `gald3r adr` | Record an architecture decision with its context, alternatives, and consequences (`ADRS.md`). |
 | `gald3r feature` | Validate the project's feature hierarchy. |
+| `gald3r function-hook local-author` / `external-consent` | Record authorship and consent for a declarative function hook: bind a local author's current hook bytes to the project, or record an imported hook and consent to its current bytes. |
 | `gald3r subsystem` | Validate and regenerate the project's subsystem hierarchy. |
 | `gald3r prd` | Keep a formal, sign-off-ready spec for a feature â€” Product Requirements Docs that stay frozen once released, with a clean revision trail when they need to change. |
 | `gald3r constraint` | Declare and enforce ad-hoc, per-project rules on agent writes. |
