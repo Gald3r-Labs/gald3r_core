@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1753,6 +1753,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-agnt-sdlc-lite-reviewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @g-agnt-sdlc-lite-reviewer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#g-agnt-task-manager" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1837,11 +1848,12 @@
 <p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>gald3r_platforms/assets/neutral_source/agents/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>go run -tags gald3r_maintainer ./gald3r_cli/cmd/gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>An agent definition narrows a whole session to one job -- invoke one directly (<code>@g-agnt-&lt;name&gt;</code> on Cursor; your platform's subagent/persona mechanism elsewhere, e.g. Claude Code's Task tool with a matching <code>subagent_type</code>) when you specifically want that narrower framing, such as forcing a fresh, unbiased verification pass. Most day-to-day work never needs a direct agent invocation -- commands route to the right skill on their own.</p>
-<p><strong>13 agents total.</strong></p>
+<p><strong>14 agents total.</strong></p>
 <h2 id="browse-by-category">Browse by category<a class="headerlink" href="#browse-by-category" title="Permanent link">&para;</a></h2>
 <h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
 <p><em>Creating, updating, and tracking work in .gald3r/tasks/.</em></p>
 <ul>
+<li><a href="#g-agnt-sdlc-lite-reviewer"><code>@g-agnt-sdlc-lite-reviewer</code></a> -- Independently review a Lite change and its existing test evidence without editing or launching checks.</li>
 <li><a href="#g-agnt-task-manager"><code>@g-agnt-task-manager</code></a> -- Use when creating, updating, completing, or querying tasks in .gald3r/.</li>
 </ul>
 <h3 id="bugs-quality">Bugs &amp; Quality<a class="headerlink" href="#bugs-quality" title="Permanent link">&para;</a></h3>
@@ -1997,6 +2009,21 @@
 <p><strong>Related:</strong> <a href="#g-agnt-code-reviewer"><code>@g-agnt-code-reviewer</code></a>, <a href="#g-agnt-test"><code>@g-agnt-test</code></a>, <a href="#g-agnt-verifier"><code>@g-agnt-verifier</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/agents/g-agnt-qa-engineer.md</code></p>
 <hr />
+<h3 id="g-agnt-sdlc-lite-reviewer"><code>@g-agnt-sdlc-lite-reviewer</code><a class="headerlink" href="#g-agnt-sdlc-lite-reviewer" title="Permanent link">&para;</a></h3>
+<p><strong>Agent ID:</strong> <code>g-agnt-sdlc-lite-reviewer</code><br />
+<strong>Group:</strong> Tasks</p>
+<p><strong>Purpose:</strong> Independently review a Lite change and its existing test evidence without editing or launching checks.</p>
+<p><strong>When to use:</strong> Invoke this agent directly when you specifically want: independently review a Lite change and its existing test evidence without editing or launching checks. Use when an item is awaiting-verification under SDLC Lite.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Cursor:</strong> <code>@g-agnt-sdlc-lite-reviewer</code></li>
+<li><strong>Claude Code:</strong> Task tool, subagent_type: "g-agnt-sdlc-lite-reviewer"</li>
+</ul>
+<p><strong>Tools:</strong> Read, Glob, Grep  </p>
+<p><strong>Related:</strong> <a href="#g-agnt-task-manager"><code>@g-agnt-task-manager</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/agents/g-agnt-sdlc-lite-reviewer.md</code></p>
+<hr />
 <h3 id="g-agnt-task-manager"><code>@g-agnt-task-manager</code><a class="headerlink" href="#g-agnt-task-manager" title="Permanent link">&para;</a></h3>
 <p><strong>Agent ID:</strong> <code>g-agnt-task-manager</code><br />
 <strong>Group:</strong> Tasks</p>
@@ -2009,7 +2036,7 @@
 <li><strong>Claude Code:</strong> Task tool, subagent_type: "gald3r-task-manager"</li>
 </ul>
 <p><strong>Tools:</strong> Read, Write, Edit, Bash, Glob, Grep  </p>
-<p><strong>Related:</strong> none in the same group</p>
+<p><strong>Related:</strong> <a href="#g-agnt-sdlc-lite-reviewer"><code>@g-agnt-sdlc-lite-reviewer</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/agents/g-agnt-task-manager.md</code></p>
 <hr />
 <h3 id="g-agnt-test"><code>@g-agnt-test</code><a class="headerlink" href="#g-agnt-test" title="Permanent link">&para;</a></h3>
@@ -2127,10 +2154,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

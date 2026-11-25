@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -3293,6 +3293,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-sdlc-lite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /g-sdlc-lite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#g-sesh-goal-add" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4257,7 +4268,7 @@
 <p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>gald3r_platforms/assets/neutral_source/commands/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>go run -tags gald3r_maintainer ./gald3r_cli/cmd/gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>Commands are the slash-command layer of CRASH -- what you actually type in an AI IDE (<code>/g-&lt;name&gt;</code> in Claude Code, <code>@g-&lt;name&gt;</code> in Cursor and most of the rest of the supported roster) to dispatch a piece of gald3r's workflow. Every command below is a thin, generated dispatcher onto a skill; the description, arguments, and grouping come straight from that command's own frontmatter -- nothing here is hand-guessed.</p>
-<p><strong>227 commands total.</strong></p>
+<p><strong>228 commands total.</strong></p>
 <h2 id="browse-by-category">Browse by category<a class="headerlink" href="#browse-by-category" title="Permanent link">&para;</a></h2>
 <h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
 <p><em>Creating, updating, and tracking work in .gald3r/tasks/.</em></p>
@@ -4281,6 +4292,7 @@
 <li><a href="#g-pt"><code>/g-pt</code></a> -- List, switch, copy, or validate gald3r workflow profiles (project types) via gald3r project-type</li>
 <li><a href="#g-queue"><code>/g-queue</code></a> -- Append a follow-up prompt to a running g-go-code worktree's queue.md, or list pending items</li>
 <li><a href="#g-report"><code>/g-report</code></a> -- Generate a backlog status report: last commit, available/in-progress/blocked tasks, recommendations</li>
+<li><a href="#g-sdlc-lite"><code>/g-sdlc-lite</code></a> -- Plan or implement one task or bug with the single-coder SDLC Lite playbook.</li>
 <li><a href="#g-sesh-goal-add"><code>/g-sesh-goal-add</code></a> -- Record a session goal for the CURRENT session only, via gald3r sesh-goal add</li>
 <li><a href="#g-sesh-goal-loop"><code>/g-sesh-goal-loop</code></a> -- Register, list, or tick a session-scoped recurring directive via gald3r sesh-goal loop</li>
 <li><a href="#g-sesh-goal-rem"><code>/g-sesh-goal-rem</code></a> -- Remove a session goal by its list number or matching text, via gald3r sesh-goal rem.</li>
@@ -6665,6 +6677,21 @@
 <p><strong>Related:</strong> <a href="#g-cleanup"><code>/g-cleanup</code></a>, <a href="#g-codename"><code>/g-codename</code></a>, <a href="#g-command-new"><code>/g-command-new</code></a>, <a href="#g-commandment-add"><code>/g-commandment-add</code></a>, <a href="#g-commandment-list"><code>/g-commandment-list</code></a>, <a href="#g-commandment-propose"><code>/g-commandment-propose</code></a>, <a href="#g-constraint-add"><code>/g-constraint-add</code></a>, <a href="#g-constraint-check"><code>/g-constraint-check</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-rule-new.md</code></p>
 <hr />
+<h3 id="g-sdlc-lite"><code>/g-sdlc-lite</code><a class="headerlink" href="#g-sdlc-lite" title="Permanent link">&para;</a></h3>
+<p><strong>Command ID:</strong> <code>g-sdlc-lite</code><br />
+<strong>Group:</strong> Tasks</p>
+<p><strong>Purpose:</strong> Plan or implement one task or bug with the single-coder SDLC Lite playbook.</p>
+<p><strong>When to use:</strong> Reach for this when you need to plan or implement one task or bug with the single-coder SDLC Lite playbook.</p>
+<p><strong>Arguments:</strong> <code>&lt;record-or-request&gt; [plan | spec | work | review | resume | stop]</code></p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Claude Code:</strong> <code>/g-sdlc-lite</code></li>
+<li><strong>Cursor:</strong> <code>@g-sdlc-lite</code></li>
+</ul>
+<p><strong>Execution tier:</strong> guarded_prompt  </p>
+<p><strong>Related:</strong> <a href="#g-backlog-consolidate"><code>/g-backlog-consolidate</code></a>, <a href="#g-backlog-curate"><code>/g-backlog-curate</code></a>, <a href="#g-carver-matrix"><code>/g-carver-matrix</code></a>, <a href="#g-cm"><code>/g-cm</code></a>, <a href="#g-go"><code>/g-go</code></a>, <a href="#g-go-code"><code>/g-go-code</code></a>, <a href="#g-go-code-swarm"><code>/g-go-code-swarm</code></a>, <a href="#g-go-go"><code>/g-go-go</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/commands/g-sdlc-lite.md</code></p>
+<hr />
 <h3 id="g-sesh-goal-add"><code>/g-sesh-goal-add</code><a class="headerlink" href="#g-sesh-goal-add" title="Permanent link">&para;</a></h3>
 <p><strong>Command ID:</strong> <code>g-sesh-goal-add</code><br />
 <strong>Group:</strong> Tasks</p>
@@ -7995,10 +8022,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

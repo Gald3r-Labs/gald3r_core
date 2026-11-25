@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1613,7 +1613,7 @@
 
 <h1 id="use-gald3r-with-github-copilot">Use gald3r with GitHub Copilot<a class="headerlink" href="#use-gald3r-with-github-copilot" title="Permanent link">&para;</a></h1>
 <p>GitHub Copilot — GitHub's AI coding assistant across VS Code, Visual Studio 2026 18.4+, JetBrains, the Copilot CLI, and the Copilot coding agent on GitHub.com. Each surface supports a different subset of customization, so capabilities must be stated per surface.</p>
-<p>Installing gald3r into a GitHub Copilot project writes the CRASH overlay this tool actually reads into <code>.github/</code> — the same task board, bug tracker, and <code>gald3r &lt;verb&gt;</code> CLI every other supported platform gets, wired the way GitHub Copilot itself expects it. Today that's commands native, rules native, skills native, hooks partial, MCP native via the gald3r engine's MCP (L2). Cheapest high-parity install: ship gald3r's .claude/skills/ tree, plus a generated .github/copilot-instructions.md (from always-apply rules) and AGENTS.md — Copilot loads them natively. Map g-agnt-<em> → .github/agents/AGENT-NAME.md, g-rl-</em> → copilot-instructions.md (or .github/instructions/ for path-scoped, adv tier), g-hk-<em>.py → .github/hooks/</em>.json (python <path> invocation, CLI surface), @g-<em> → .github/prompts/</em>.prompt.md (VS Code surface).</p>
+<p>Installing gald3r into a GitHub Copilot project writes the CRASH overlay this tool actually reads into <code>.github/</code> — the same task board, bug tracker, and <code>gald3r &lt;verb&gt;</code> CLI every other supported platform gets, wired the way GitHub Copilot itself expects it. Today that's commands native, rules native, skills native, hooks partial, MCP native via the gald3r engine's MCP (L2). Cheapest high-parity install: ship gald3r's .claude/skills/ tree, plus a generated .github/copilot-instructions.md (from always-apply rules) and AGENTS.md — Copilot loads them natively. Map g-agnt-* → .github/agents/AGENT-NAME.md, g-rl-* → copilot-instructions.md (or .github/instructions/ for path-scoped, adv tier), g-hk-<em>.py → .github/hooks/</em>.json (python <path> invocation, CLI surface), @g-* → .github/prompts/*.prompt.md (VS Code surface).</p>
 <p>Once installed, the same <code>.gald3r/TASKS.md</code> task board, bug tracker, and full <code>gald3r &lt;verb&gt;</code> CLI work identically to every other supported platform — GitHub Copilot is one of 37 platforms gald3r reads and writes today. Commonly searched as Copilot, GitHub Copilot CLI.</p>
 <h2 id="get-started">Get started<a class="headerlink" href="#get-started" title="Permanent link">&para;</a></h2>
 <pre><code class="language-bash">gald3r setup
@@ -1684,10 +1684,10 @@ gald3r platform install copilot
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

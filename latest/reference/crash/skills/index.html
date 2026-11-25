@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -27,10 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -2930,6 +2930,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#g-skl-sdlc-lite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        g-skl-sdlc-lite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#g-skl-security-scan" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3388,7 +3399,7 @@
 <p><strong>GENERATED FILE -- do not hand-edit.</strong> Produced from every item under <code>gald3r_platforms/assets/neutral_source/skills/</code> by <code>gald3r platform crash-reference</code>. To regenerate: <code>go run -tags gald3r_maintainer ./gald3r_cli/cmd/gald3r platform crash-reference --apply</code>.</p>
 </blockquote>
 <p>A skill (<code>SKILL.md</code>) is the actual instruction package a command hands off to -- commands themselves are thin dispatchers. A skill loads either because a command invoked it, or because your agent's own judgment matched its frontmatter <code>description:</code> field without you typing a slash command at all. You never hand-edit a skill's local copy; behavior changes land upstream in <code>neutral_source/</code> and arrive on your next <code>platform install</code>/<code>update</code>.</p>
-<p><strong>148 skills total.</strong></p>
+<p><strong>149 skills total.</strong></p>
 <h2 id="browse-by-category">Browse by category<a class="headerlink" href="#browse-by-category" title="Permanent link">&para;</a></h2>
 <h3 id="tasks">Tasks<a class="headerlink" href="#tasks" title="Permanent link">&para;</a></h3>
 <p><em>Creating, updating, and tracking work in .gald3r/tasks/.</em></p>
@@ -3397,6 +3408,7 @@
 <li><a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a> -- Thorough backlog-vs-code curation.</li>
 <li><a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a> -- CARVER weighted prioritization matrix invoked by g-cm / g-carver-matrix: score items on Criticality, Accessibility, Recuperability, Vulnerability, Effect, and Recognizability with a documented 1–5 rubric and configurable weights, then render a ranked matrix.</li>
 <li><a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a> -- Generate and update .gald3r/DEPENDENCY_GRAPH.md from task file dependencies.</li>
+<li><a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a> -- Use SDLC Lite for single-coder task and bug work with scoped checks and an independent read-only review, selected per record by <code>sdlc_mode</code> or by the project's type.</li>
 <li><a href="#g-skl-sesh"><code>g-skl-sesh</code></a> -- Session-only goal control (Sunstone)</li>
 <li><a href="#g-skl-status"><code>g-skl-status</code></a> -- Show project status</li>
 <li><a href="#g-skl-tasks"><code>g-skl-tasks</code></a> -- Own and manage all task data</li>
@@ -3614,7 +3626,7 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
+<p><strong>Related:</strong> <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-adrs/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code><a class="headerlink" href="#g-skl-api-doc-gen" title="Permanent link">&para;</a></h3>
@@ -3678,7 +3690,7 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> high  </p>
-<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
+<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-backlog-curate/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-browser-use"><code>g-skl-browser-use</code><a class="headerlink" href="#g-skl-browser-use" title="Permanent link">&para;</a></h3>
@@ -3740,7 +3752,7 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
+<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-carver-matrix/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-cli-claude"><code>g-skl-cli-claude</code><a class="headerlink" href="#g-skl-cli-claude" title="Permanent link">&para;</a></h3>
@@ -4068,7 +4080,7 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
-<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
+<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-dependency-graph/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-design"><code>g-skl-design</code><a class="headerlink" href="#g-skl-design" title="Permanent link">&para;</a></h3>
@@ -5272,6 +5284,22 @@
 <p><strong>Related:</strong> <a href="#g-skl-api-doc-gen"><code>g-skl-api-doc-gen</code></a>, <a href="#g-skl-bugs"><code>g-skl-bugs</code></a>, <a href="#g-skl-code-review"><code>g-skl-code-review</code></a>, <a href="#g-skl-qa"><code>g-skl-qa</code></a>, <a href="#g-skl-security-scan"><code>g-skl-security-scan</code></a>, <a href="#g-skl-swot-review"><code>g-skl-swot-review</code></a>, <a href="#g-skl-test"><code>g-skl-test</code></a>, <a href="#g-skl-verify-ladder"><code>g-skl-verify-ladder</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-review/SKILL.md</code></p>
 <hr />
+<h3 id="g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code><a class="headerlink" href="#g-skl-sdlc-lite" title="Permanent link">&para;</a></h3>
+<p><strong>Skill ID:</strong> <code>g-skl-sdlc-lite</code><br />
+<strong>Group:</strong> Tasks</p>
+<p><strong>Purpose:</strong> Use SDLC Lite for single-coder task and bug work with scoped checks and an independent read-only review, selected per record by <code>sdlc_mode</code> or by the project's type.</p>
+<p><strong>When to use:</strong> This skill is relevant when you need to use SDLC Lite for single-coder task and bug work with scoped checks and an independent read-only review, selected per record by <code>sdlc_mode</code> or by the project's type. Also routes the g-go family to the right workflow.</p>
+<p><strong>Arguments:</strong> none</p>
+<p><strong>Example invocation:</strong></p>
+<ul>
+<li><strong>Claude Code:</strong> <code>/g-go (also: /g-go-bug, /g-go-bugs, /g-go-bugs-swarm, /g-go-code, /g-go-code-swarm)</code></li>
+<li><strong>Cursor:</strong> <code>@g-go</code></li>
+</ul>
+<p><strong>Maturity:</strong> unspecified<br />
+<strong>Token budget:</strong> low  </p>
+<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a></p>
+<p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-sdlc-lite/SKILL.md</code></p>
+<hr />
 <h3 id="g-skl-security-scan"><code>g-skl-security-scan</code><a class="headerlink" href="#g-skl-security-scan" title="Permanent link">&para;</a></h3>
 <p><strong>Skill ID:</strong> <code>g-skl-security-scan</code><br />
 <strong>Group:</strong> Bugs &amp; Quality</p>
@@ -5300,7 +5328,7 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
+<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-sesh/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-setup"><code>g-skl-setup</code><a class="headerlink" href="#g-skl-setup" title="Permanent link">&para;</a></h3>
@@ -5347,7 +5375,7 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
+<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-status/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-stz"><code>g-skl-stz</code><a class="headerlink" href="#g-skl-stz" title="Permanent link">&para;</a></h3>
@@ -5425,7 +5453,7 @@
 </ul>
 <p><strong>Maturity:</strong> production<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
+<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-tasks/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-territory"><code>g-skl-territory</code><a class="headerlink" href="#g-skl-territory" title="Permanent link">&para;</a></h3>
@@ -5518,7 +5546,7 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> low  </p>
-<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-wishlist-mine"><code>g-skl-wishlist-mine</code></a></p>
+<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-todos/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-toon-output"><code>g-skl-toon-output</code><a class="headerlink" href="#g-skl-toon-output" title="Permanent link">&para;</a></h3>
@@ -5687,7 +5715,7 @@
 </ul>
 <p><strong>Maturity:</strong> unspecified<br />
 <strong>Token budget:</strong> medium  </p>
-<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a>, <a href="#g-skl-todos"><code>g-skl-todos</code></a></p>
+<p><strong>Related:</strong> <a href="#g-skl-adrs"><code>g-skl-adrs</code></a>, <a href="#g-skl-backlog-curate"><code>g-skl-backlog-curate</code></a>, <a href="#g-skl-carver-matrix"><code>g-skl-carver-matrix</code></a>, <a href="#g-skl-dependency-graph"><code>g-skl-dependency-graph</code></a>, <a href="#g-skl-sdlc-lite"><code>g-skl-sdlc-lite</code></a>, <a href="#g-skl-sesh"><code>g-skl-sesh</code></a>, <a href="#g-skl-status"><code>g-skl-status</code></a>, <a href="#g-skl-tasks"><code>g-skl-tasks</code></a></p>
 <p><strong>Source:</strong> <code>gald3r_platforms/assets/neutral_source/skills/g-skl-wishlist-mine/SKILL.md</code></p>
 <hr />
 <h3 id="g-skl-workspace"><code>g-skl-workspace</code><a class="headerlink" href="#g-skl-workspace" title="Permanent link">&para;</a></h3>
@@ -5936,10 +5964,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>
